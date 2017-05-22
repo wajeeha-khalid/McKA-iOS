@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Raleway-Medium.ttf">
+            <string>Raleway-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OEXPageContentViewController">
+            <connections>
+                <outlet property="backgroundImageView" destination="pYP-iJ-ihe" id="zGZ-g5-bOH"/>
+                <outlet property="tutorialTextLabel" destination="WEs-ex-GAa" id="pof-6x-D5b"/>
+                <outlet property="view" destination="6bL-BV-E1u" id="sgb-SF-Kg6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="6bL-BV-E1u">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="slide_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="5XE-wB-mtk"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pYP-iJ-ihe">
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build your management and leadership skills, learning from leading global experts" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEs-ex-GAa">
+                    <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="WEs-ex-GAa" firstAttribute="leading" secondItem="6bL-BV-E1u" secondAttribute="leading" constant="20" id="2vT-ir-MGJ"/>
+                <constraint firstItem="pYP-iJ-ihe" firstAttribute="centerY" secondItem="6bL-BV-E1u" secondAttribute="centerY" id="5e0-uz-oRV"/>
+                <constraint firstItem="WEs-ex-GAa" firstAttribute="centerY" secondItem="6bL-BV-E1u" secondAttribute="centerY" id="6gc-GA-xhe"/>
+                <constraint firstItem="pYP-iJ-ihe" firstAttribute="top" secondItem="6bL-BV-E1u" secondAttribute="top" id="JuY-fC-Qa0"/>
+                <constraint firstItem="5XE-wB-mtk" firstAttribute="centerY" secondItem="6bL-BV-E1u" secondAttribute="centerY" id="Jwm-Bw-a0s"/>
+                <constraint firstAttribute="bottom" secondItem="pYP-iJ-ihe" secondAttribute="bottom" id="OaB-yA-EOD"/>
+                <constraint firstItem="pYP-iJ-ihe" firstAttribute="leading" secondItem="6bL-BV-E1u" secondAttribute="leading" id="Ptn-RD-PSu"/>
+                <constraint firstItem="5XE-wB-mtk" firstAttribute="centerX" secondItem="6bL-BV-E1u" secondAttribute="centerX" id="RH0-OW-PTe"/>
+                <constraint firstAttribute="trailing" secondItem="WEs-ex-GAa" secondAttribute="trailing" constant="20" id="qyQ-Ux-SZX"/>
+                <constraint firstAttribute="trailing" secondItem="pYP-iJ-ihe" secondAttribute="trailing" id="xc9-ac-9BS"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="5e0-uz-oRV"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+    <resources>
+        <image name="slide_placeholder" width="100" height="74"/>
+    </resources>
+</document>

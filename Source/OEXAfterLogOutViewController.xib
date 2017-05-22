@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Raleway-Bold.ttf">
+            <string>Raleway-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OEXAfterLogOutViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pique_launch.png" translatesAutoresizingMaskIntoConstraints="NO" id="rF5-8k-RLu"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdt-JN-30C">
+                    <fontDescription key="fontDescription" name="Raleway-Bold" family="Raleway" pointSize="14"/>
+                    <state key="normal" title="Already have an account? Sign in">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="signInButtonAction:" destination="-1" eventType="touchUpInside" id="UAk-rq-kcF"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5mu-hM-KfS">
+                    <color key="backgroundColor" red="0.01176470588" green="0.01176470588" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="GtW-Jx-FRp"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Raleway-Bold" family="Raleway" pointSize="16"/>
+                    <state key="normal" title="Sign up and start learning">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="signUpButtonAction:" destination="-1" eventType="touchUpInside" id="0bH-Fw-Cjq"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="rF5-8k-RLu" secondAttribute="bottom" id="1LB-n9-bPF"/>
+                <constraint firstAttribute="bottom" secondItem="wdt-JN-30C" secondAttribute="bottom" constant="50" id="BDj-LW-ggY"/>
+                <constraint firstAttribute="trailing" secondItem="rF5-8k-RLu" secondAttribute="trailing" id="Bft-3z-pd8"/>
+                <constraint firstItem="wdt-JN-30C" firstAttribute="top" secondItem="5mu-hM-KfS" secondAttribute="bottom" constant="25" id="R3a-a2-VFG"/>
+                <constraint firstItem="rF5-8k-RLu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Zxw-yl-hlW"/>
+                <constraint firstItem="rF5-8k-RLu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aMc-5d-O58"/>
+                <constraint firstItem="wdt-JN-30C" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jAe-rL-qm8"/>
+                <constraint firstAttribute="trailing" secondItem="5mu-hM-KfS" secondAttribute="trailing" constant="50" id="orR-Bk-hQU"/>
+                <constraint firstItem="5mu-hM-KfS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="xiW-mn-Ps5"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="pique_launch.png" width="375" height="642"/>
+    </resources>
+</document>

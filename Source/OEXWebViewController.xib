@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Raleway-Bold.ttf">
+            <string>Raleway-Bold</string>
+        </array>
+        <array key="Raleway-Medium.ttf">
+            <string>Raleway-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OEXWebViewController" customModule="edX" customModuleProvider="target">
+            <connections>
+                <outlet property="errorView" destination="ft9-4p-Xsi" id="y21-Lq-KGf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="nfR-GU-LHT" id="hhS-wt-3id"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nfR-GU-LHT">
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="cHw-aW-vWB"/>
+                    </connections>
+                </webView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft9-4p-Xsi">
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was an issue when loading your Account Settings. Please check your connection and try again." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m4Q-kH-h3P">
+                            <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="23"/>
+                            <color key="textColor" red="0.18823529411764706" green="0.19215686274509802" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XyZ-a2-sy5">
+                            <color key="backgroundColor" red="0.0" green="1" blue="0.73725490196078436" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Raleway-Bold" family="Raleway" pointSize="17"/>
+                            <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <state key="normal" title="Reload">
+                                <color key="titleColor" red="0.46666666666666667" green="0.47450980392156861" blue="0.4823529411764706" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="reloadPage:" destination="-1" eventType="touchUpInside" id="wtd-gY-13m"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="m4Q-kH-h3P" firstAttribute="leading" secondItem="ft9-4p-Xsi" secondAttribute="leading" constant="20" id="15S-NA-62K"/>
+                        <constraint firstAttribute="trailing" secondItem="m4Q-kH-h3P" secondAttribute="trailing" constant="20" id="1z2-l4-rv9"/>
+                        <constraint firstItem="m4Q-kH-h3P" firstAttribute="centerY" secondItem="ft9-4p-Xsi" secondAttribute="centerY" id="deL-fj-xbg"/>
+                        <constraint firstItem="XyZ-a2-sy5" firstAttribute="top" secondItem="m4Q-kH-h3P" secondAttribute="bottom" constant="40" id="tKF-PQ-240"/>
+                        <constraint firstItem="XyZ-a2-sy5" firstAttribute="centerX" secondItem="ft9-4p-Xsi" secondAttribute="centerX" id="zIF-aK-NOf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ft9-4p-Xsi" firstAttribute="centerX" secondItem="nfR-GU-LHT" secondAttribute="centerX" id="AL9-jo-3yM"/>
+                <constraint firstItem="ft9-4p-Xsi" firstAttribute="height" secondItem="nfR-GU-LHT" secondAttribute="height" id="Ira-7V-SPw"/>
+                <constraint firstItem="ft9-4p-Xsi" firstAttribute="centerY" secondItem="nfR-GU-LHT" secondAttribute="centerY" id="QiB-ws-1zb"/>
+                <constraint firstAttribute="bottom" secondItem="nfR-GU-LHT" secondAttribute="bottom" id="XYp-ff-LxI"/>
+                <constraint firstAttribute="trailing" secondItem="nfR-GU-LHT" secondAttribute="trailing" constant="10" id="bvF-jN-mC3"/>
+                <constraint firstItem="nfR-GU-LHT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="llP-xg-YCo"/>
+                <constraint firstItem="nfR-GU-LHT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="q07-Vh-bMv"/>
+                <constraint firstItem="ft9-4p-Xsi" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="ui3-68-OzH"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+</document>

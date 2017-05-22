@@ -1,0 +1,22 @@
+//
+//  OEXConfig.swift
+//  edX
+//
+//  Created by Michael Katz on 1/5/16.
+//  Copyright © 2016 edX. All rights reserved.
+//
+
+import Foundation
+
+//MARK: - Basic & Helper Operations
+extension OEXConfig {
+
+    subscript(value : RawStringExtractable) -> Any? {
+        return self.objectForKey(value.rawValue)
+    }
+
+    subscript(value : String) -> Any? {
+        return self.objectForKey(value)
+    }
+
+}
