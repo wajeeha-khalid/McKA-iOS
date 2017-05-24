@@ -999,7 +999,8 @@ typedef  enum OEXAlertType
         int currentTime = self.videoPlayerInterface.moviePlayerController.currentPlaybackTime;
         int totalTime = self.videoPlayerInterface.moviePlayerController.duration;
 
-        if(currentTime > totalTime*0.9 && totalTime > 0) {
+        BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:currentTime totalDuration:totalTime];
+        if(shouldMarkComplete) {
             [_dataInterface markLastPlayedInterval:0.0 forVideo:_currentTappedVideo];
 
             self.videoPlayerInterface.moviePlayerController.currentPlaybackTime = 0.0;

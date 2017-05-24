@@ -130,6 +130,8 @@
 		5DD0FFCF1B1D225C00837121 /* DiscussionNewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0FFCD1B1D225C00837121 /* DiscussionNewPostViewController.swift */; };
 		5DD0FFD21B1D23DA00837121 /* DiscussionNewPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DD0FFD11B1D23DA00837121 /* DiscussionNewPostViewController.xib */; };
 		5DEA47D71B62F64300831EC9 /* DiscussionObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEA47D61B62F64300831EC9 /* DiscussionObjectModel.swift */; };
+		63049D1A1EE544DB00B9D18D /* MediaPlaybackDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */; };
+		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
 		6919F5FF1D65CD27006935C8 /* OEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6919F5FE1D65CD27006935C8 /* OEXColors.swift */; };
 		6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA41D59BE3600A16E22 /* ic_next_press.png */; };
 		6926CDAC1D59BE3600A16E22 /* ic_next.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA51D59BE3600A16E22 /* ic_next.png */; };
@@ -1042,6 +1044,8 @@
 		5DD0FFD11B1D23DA00837121 /* DiscussionNewPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscussionNewPostViewController.xib; sourceTree = "<group>"; };
 		5DEA47D61B62F64300831EC9 /* DiscussionObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionObjectModel.swift; sourceTree = "<group>"; };
 		61FAB193553EE11419D767E9 /* libPods-edXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-edXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlaybackDecision.swift; sourceTree = "<group>"; };
+		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
 		6919F5FE1D65CD27006935C8 /* OEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXColors.swift; sourceTree = "<group>"; };
 		6926CDA41D59BE3600A16E22 /* ic_next_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next_press.png; sourceTree = "<group>"; };
 		6926CDA51D59BE3600A16E22 /* ic_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next.png; sourceTree = "<group>"; };
@@ -2080,6 +2084,7 @@
 		199B9B6419349DE800081A09 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */,
 				77FDF4101AFBF0C300E8C639 /* VideoBlockViewController.swift */,
 				BECB7B4C1924C9EA009C77F1 /* Video Player */,
 				B498404F19753C1400019D1F /* CutomePlayer */,
@@ -3532,7 +3537,6 @@
 		BECB7B141924C0C3009C77F1 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				1894051D1E34BA9900AD6776 /* Audio */,
 				1972E3B619BF474900085F08 /* Analytics */,
 				772619B41ADC5CE8005BD7E4 /* Application */,
 				B4B6D5E21A94901A000F44E8 /* Authentication */,
@@ -3563,6 +3567,7 @@
 				1A6B23CE1BAB4A5100FD7309 /* User Profiles */,
 				9EAFFA211B2F00B600B100AB /* Utils */,
 				E09B9D691D06C91D0080BAE0 /* VersionUpgrade */,
+				1894051D1E34BA9900AD6776 /* Audio */,
 				199B9B6419349DE800081A09 /* Videos */,
 				77ADF4A01AC1AD3500AC8955 /* XIB/Storyboard */,
 			);
@@ -3683,6 +3688,7 @@
 				1A6D90921D0A05D500D01BEA /* StartupViewControllerTests.swift */,
 				E0A246201D5DB3FD0066C766 /* AppUpgradeConfigTests.swift */,
 				694D34A11D76B75F0047F3F4 /* UIAlertController+OEXBlockActionsTests.swift */,
+				63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */,
 				77FDF4171B0269FA00E8C639 /* Test Data */,
 				77FFA2C41AC30D6300B4D69B /* Data Factories */,
 				7772BE901AF90C8A0081CA7A /* Helpers */,
@@ -4818,6 +4824,7 @@
 				B4B6D62E1A949F1B000F44E8 /* OEXRegistrationFieldTextAreaController.m in Sources */,
 				714239931E64473D0013FD1E /* CourseWareView.swift in Sources */,
 				B4B285E51A9A49FF00DD603A /* OEXFabricConfig.m in Sources */,
+				63049D1A1EE544DB00B9D18D /* MediaPlaybackDecision.swift in Sources */,
 				1A81971B1C060FA50030254D /* ShareHelper.swift in Sources */,
 				77F76A6E1B0BD32A00ED3E39 /* OEXSession+Authorization.swift in Sources */,
 				7E053D2E1E9E1EDD006A3DEE /* NSData+Additions.m in Sources */,
@@ -4917,6 +4924,7 @@
 				B4B285EA1A9B182900DD603A /* OEXConfigTests.m in Sources */,
 				77864DD71B1002A800182FC2 /* MockNetworkManager.swift in Sources */,
 				778CC8271BBEDD9700DCCAE4 /* MockAnalyticsTracker.swift in Sources */,
+				63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */,
 				778F177E1C0E049B0099BF93 /* CourseCatalogViewControllerTests.swift in Sources */,
 				77E00B731B83997E00573622 /* DiscussionNewCommentViewControllerTests.swift in Sources */,
 				1A6D90931D0A05D500D01BEA /* StartupViewControllerTests.swift in Sources */,

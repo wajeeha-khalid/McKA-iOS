@@ -290,8 +290,8 @@ typedef NS_ENUM(NSInteger, OEXVRPlayState){
         [self.sliderView setValue:position];
     }
     
-    // Calclulate end of movie id seen more than 90%
-    if (self.currentVideo.watchedState != OEXPlayedStateWatched && position > self.gvrVideoView.duration * 0.9) {
+    BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:position totalDuration:self.gvrVideoView.duration];
+    if (self.currentVideo.watchedState != OEXPlayedStateWatched && shouldMarkComplete) {
         
         // Mark the video as watched
         self.currentVideo.watchedState = OEXPlayedStateWatched;

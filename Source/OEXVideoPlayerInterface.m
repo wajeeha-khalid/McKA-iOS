@@ -192,7 +192,8 @@
 }
 
 - (void)movieWatched {
-    if ( _moviePlayerController.currentPlaybackTime > _moviePlayerController.duration * 0.9) {
+    BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:_moviePlayerController.currentPlaybackTime totalDuration:_moviePlayerController.duration];
+    if (shouldMarkComplete) {
 
         // Mark the video as watched
         self.currentVideo.watchedState = OEXPlayedStateWatched;
@@ -217,7 +218,8 @@
     {
         case MPMoviePlaybackStateStopped:
             OEXLogInfo(@"VIDEO", @"Stopped");
-            if ( _moviePlayerController.currentPlaybackTime > _moviePlayerController.duration * 0.9) {
+            BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:_moviePlayerController.currentPlaybackTime totalDuration:_moviePlayerController.duration];
+            if (shouldMarkComplete) {
 
                 // Mark the video as watched
                 self.currentVideo.watchedState = OEXPlayedStateWatched;
@@ -239,7 +241,8 @@
             break;
         case MPMoviePlaybackStatePaused:
             OEXLogInfo(@"VIDEO", @"Playing");
-            if ( _moviePlayerController.currentPlaybackTime > _moviePlayerController.duration * 0.9) {
+            shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:_moviePlayerController.currentPlaybackTime totalDuration:_moviePlayerController.duration];
+            if (shouldMarkComplete) {
 
                 // Mark the video as watched
                 self.currentVideo.watchedState = OEXPlayedStateWatched;
@@ -273,7 +276,8 @@
     if(reason == MPMovieFinishReasonPlaybackEnded) {
         //NSLog(@"Reason: movie finished playing");
         // Mark the video as watched
-        if ( _moviePlayerController.currentPlaybackTime > _moviePlayerController.duration * 0.9) {
+        BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:_moviePlayerController.currentPlaybackTime totalDuration:_moviePlayerController.duration];
+        if (shouldMarkComplete) {
 
             // Mark the video as watched
             self.currentVideo.watchedState = OEXPlayedStateWatched;
