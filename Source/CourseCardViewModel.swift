@@ -8,7 +8,14 @@
 
 import Foundation
 
+enum CourseProgress {
+    case completed
+    case inPorgress(progress: Int)
+    case notStarted
+}
+
 class CourseCardViewModel : NSObject {
+    
     private let detailText: String
     private let bottomTrailingText: String?
     private let persistImage: Bool
@@ -48,6 +55,8 @@ class CourseCardViewModel : NSObject {
     }
     
     func apply(card : CourseCardView, networkManager: NetworkManager) {
+        
+        
         card.titleText = title
         card.detailText = detailText
         card.bottomTrailingText = bottomTrailingText
@@ -74,7 +83,6 @@ class CourseCardViewModel : NSObject {
 
         card.coverImage = remoteImage
     }
-    
 }
 
 extension OEXCourse {

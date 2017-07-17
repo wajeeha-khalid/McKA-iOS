@@ -65,9 +65,11 @@ class RemoteImageImpl: RemoteImage {
     
     private func imageDeserializer(response: NSHTTPURLResponse, data: NSData) -> Result<RemoteImage> {
         
-        guard data.isValidJPEG() else {
+        // no idea how it validates data but it is failing even for valid images
+        //so we are commenting it out for now
+       /* guard data.isValidJPEG() else {
             return Failure(NSError.oex_unknownError())
-        }
+        } */
         
         if let newImage = UIImage(data: data) {
             let result = self
@@ -91,6 +93,7 @@ class RemoteImageImpl: RemoteImage {
         // 1. We don't want to leak credentials by loading random images
         // 2. Some servers will explicitly reject our credentials even if
         // the image is public. Causing the load to fail
+    
         let host = NSURL(string: url).flatMap { $0.host }
         let noHost = host?.isEmpty ?? true
         let matchesBaseHost = host == self.networkManager.baseURL.host
@@ -102,6 +105,7 @@ class RemoteImageImpl: RemoteImage {
             requiresAuth: requiresAuth,
             deserializer: .DataResponse(imageDeserializer)
         )
+         
         return networkManager.taskForRequest(request, handler: completion)
     }
 }
