@@ -236,7 +236,8 @@
 }
 
 - (void)movieWatched {
-    if ( _moviePlayerController.currentPlaybackTime > _moviePlayerController.duration * 0.9) {
+    BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:_moviePlayerController.currentPlaybackTime totalDuration:_moviePlayerController.duration];
+    if (shouldMarkComplete) {
 
         // Mark the video as watched
         self.currentAudio.watchedState = OEXPlayedStateWatched;
@@ -260,8 +261,8 @@
     {
         case MPMoviePlaybackStateStopped:
             OEXLogInfo(@"VIDEO", @"Stopped");
-            // Calclulate end of movie id seen more than 90%
-            if (_moviePlayerController.currentPlaybackTime > _moviePlayerController.duration * 0.9) {
+            BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:_moviePlayerController.currentPlaybackTime totalDuration:_moviePlayerController.duration];
+            if (shouldMarkComplete) {
 
                 // Mark the video as watched
                 self.currentAudio.watchedState = OEXPlayedStateWatched;
@@ -281,7 +282,8 @@
             break;
         case MPMoviePlaybackStatePaused:
             OEXLogInfo(@"VIDEO", @"Paused");
-            if (_moviePlayerController.currentPlaybackTime > _moviePlayerController.duration * 0.9) {
+            shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:_moviePlayerController.currentPlaybackTime totalDuration:_moviePlayerController.duration];
+            if (shouldMarkComplete) {
 
                 // Mark the video as watched
                 self.currentAudio.watchedState = OEXPlayedStateWatched;

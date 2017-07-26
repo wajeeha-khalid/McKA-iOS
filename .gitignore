@@ -1,4 +1,5 @@
 buildSrc/
+*.xcscmblueprint
 
 #########################
 # .gitignore file for Xcode 7 Source Projects

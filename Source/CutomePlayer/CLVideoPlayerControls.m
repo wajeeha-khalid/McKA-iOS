@@ -1415,7 +1415,8 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
         [self setTimeLabelValues:currentTime totalTime:totalTime];
         self.durationSlider.value = floor(currentTime);
 
-        if (self.shouldSendProgressNotification && currentTime > totalTime*0.9) {
+        BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:currentTime totalDuration:totalTime];
+        if (self.shouldSendProgressNotification && shouldMarkComplete) {
             self.shouldSendProgressNotification = NO;
             if (self.delegate != nil && [self.delegate respondsToSelector:@selector(movieWatched)]) {
 
