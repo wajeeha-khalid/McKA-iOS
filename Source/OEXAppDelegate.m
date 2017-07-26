@@ -225,6 +225,7 @@
     EVURLCache.LOGGING = true; // We want to see all caching actions
 #endif
     
+    EVURLCache.MAX_AGE = @"2592000"; // cache age increased to 30 days
     EVURLCache.MAX_FILE_SIZE = 26; // We want more than the default: 2^26 = 64MB
     EVURLCache.MAX_CACHE_SIZE = 30; // We want more than the default: 2^30 = 1GB
     
@@ -274,6 +275,11 @@
     }];
     
     [EVURLCache activate];
+    NetworkRequestLoader *loader = [[NetworkRequestLoader alloc] initWithSession:[NSURLSession sharedSession]];
+    CachedRequestLoader *cachedLoader = [[CachedRequestLoader alloc] initWithCache:[EVURLCache sharedURLCache] loader:loader];
+    [WebViewLoadingProtocol setRequestLoader:cachedLoader];
+    [NSURLProtocol registerClass:[WebViewLoadingProtocol class]];
+    
 }
 
 @end

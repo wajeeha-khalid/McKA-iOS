@@ -55,9 +55,6 @@
         }
     }
     
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-    [[EVURLCache sharedURLCache] removeAllCachedResponses];
-    [EVURLCache clearPersistentCache];
 }
 
 - (OEXAccessToken*)storedAccessToken {
