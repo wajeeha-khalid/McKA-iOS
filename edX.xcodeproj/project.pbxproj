@@ -132,6 +132,10 @@
 		5DD0FFCF1B1D225C00837121 /* DiscussionNewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0FFCD1B1D225C00837121 /* DiscussionNewPostViewController.swift */; };
 		5DD0FFD21B1D23DA00837121 /* DiscussionNewPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DD0FFD11B1D23DA00837121 /* DiscussionNewPostViewController.xib */; };
 		5DEA47D71B62F64300831EC9 /* DiscussionObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEA47D61B62F64300831EC9 /* DiscussionObjectModel.swift */; };
+		631B35201F1D1F3A00914C59 /* CourseLessonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B351E1F1D1F3A00914C59 /* CourseLessonsViewController.swift */; };
+		631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */; };
+		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
+		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
 		6919F5FF1D65CD27006935C8 /* OEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6919F5FE1D65CD27006935C8 /* OEXColors.swift */; };
 		6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA41D59BE3600A16E22 /* ic_next_press.png */; };
 		6926CDAC1D59BE3600A16E22 /* ic_next.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA51D59BE3600A16E22 /* ic_next.png */; };
@@ -1046,6 +1050,10 @@
 		5DD0FFD11B1D23DA00837121 /* DiscussionNewPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscussionNewPostViewController.xib; sourceTree = "<group>"; };
 		5DEA47D61B62F64300831EC9 /* DiscussionObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionObjectModel.swift; sourceTree = "<group>"; };
 		61FAB193553EE11419D767E9 /* libPods-edXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-edXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		631B351E1F1D1F3A00914C59 /* CourseLessonsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonsViewController.swift; sourceTree = "<group>"; };
+		631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonsViewController.xib; sourceTree = "<group>"; };
+		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
+		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
 		6919F5FE1D65CD27006935C8 /* OEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXColors.swift; sourceTree = "<group>"; };
 		6926CDA41D59BE3600A16E22 /* ic_next_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next_press.png; sourceTree = "<group>"; };
 		6926CDA51D59BE3600A16E22 /* ic_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next.png; sourceTree = "<group>"; };
@@ -2868,6 +2876,7 @@
 				D0FA80351E1FAF1800FB1226 /* OEXAfterLogOutViewController.xib */,
 				D05B077E1E2CDB3C00ED8184 /* OEXWebViewController.xib */,
 				D0712CD31E376C8D0080E9D4 /* OEXCoursewareViewController.xib */,
+				631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */,
 			);
 			name = XIB/Storyboard;
 			sourceTree = "<group>";
@@ -3244,6 +3253,8 @@
 				D0871E581E3F590D00B2C41F /* CourseUnitsViewCell.xib */,
 				D0871E5B1E3F592F00B2C41F /* CourseLiveUnitViewCell.swift */,
 				D0871E5C1E3F592F00B2C41F /* CourseLiveUnitViewCell.xib */,
+				631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */,
+				631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -3443,6 +3454,7 @@
 				770C514A1B1685E3009B9696 /* HTMLBlockViewController.swift */,
 				773A04771AF2D5DE0076532C /* CourseOutlineViewController.swift */,
 				D0712CD21E376C8D0080E9D4 /* OEXCoursewareViewController.swift */,
+				631B351E1F1D1F3A00914C59 /* CourseLessonsViewController.swift */,
 				7772BE721AF2FECC0081CA7A /* CourseOutlineHeaderCell.swift */,
 				773A047F1AF2E6DA0076532C /* CourseOutlineTableSource.swift */,
 				9E30B4011B00BFB0007F673E /* CourseDashboardViewController.swift */,
@@ -4066,11 +4078,13 @@
 				B4B6D5EA1A9490FC000F44E8 /* OEXRegistrationViewController.xib in Resources */,
 				D05B25CC1E13CED400D1E77F /* FTUE1@2x.png in Resources */,
 				69ECC5FE1D50D1170030CF87 /* OpenSans-Bold.ttf in Resources */,
+				631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */,
 				69ECC60F1D50D1170030CF87 /* arrow_next@2x.png in Resources */,
 				69ECC6451D50D1170030CF87 /* separator.png in Resources */,
 				D0249F821E68592000A55613 /* ic_leftTriangle.png in Resources */,
 				69ECC6131D50D1170030CF87 /* loginScreenImage.png in Resources */,
 				69ECC6011D50D1170030CF87 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
+				631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */,
 				D0871E641E4050B800B2C41F /* ic_downloading.png in Resources */,
 				D0249F841E68592000A55613 /* ic_leftTriangle@3x.png in Resources */,
 				19A1339719CAE108003ADD24 /* EULA.htm in Resources */,
@@ -4650,6 +4664,7 @@
 				B4B6D6061A949EFC000F44E8 /* OEXRegistrationErrorMessage.m in Sources */,
 				80056C9A1B0CDE1A0004D85C /* DiscussionResponsesViewController.swift in Sources */,
 				775716B91CB804E40091AB10 /* UserProfilePresenter.swift in Sources */,
+				631B35201F1D1F3A00914C59 /* CourseLessonsViewController.swift in Sources */,
 				BECB7B691924EE11009C77F1 /* OEXLoginViewController.m in Sources */,
 				775434891AD8121200635A40 /* OEXParsePushProvider.m in Sources */,
 				1AAD95F61CEA222500BBF70C /* StartupViewController.swift in Sources */,
@@ -4910,6 +4925,7 @@
 				77B463971A30F65E0083453A /* OEXStyles.m in Sources */,
 				D0249F691E67110600A55613 /* ProgressAPI.swift in Sources */,
 				7772BEB21AFA6C0F0081CA7A /* FontAwesome.swift in Sources */,
+				631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */,
 				7772BEA41AFA68330081CA7A /* ConstraintDescription.swift in Sources */,
 				1AB539F51BFDFBC10065501F /* DebugMenuViewController.swift in Sources */,
 				5D43B18A1B0C1F9200448B52 /* MenuOptionsViewController.swift in Sources */,

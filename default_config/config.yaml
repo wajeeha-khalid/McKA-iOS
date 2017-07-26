@@ -1,4 +1,4 @@
-API_HOST_URL: 'http://34.195.237.21'
+API_HOST_URL: 'https://courses.qa.mckinsey.edx.org'
 ENVIRONMENT_DISPLAY_NAME: 'PiQUE'
 FEEDBACK_EMAIL_ADDRESS: 'usermatterhorn@gmail.com'
 USER_PROFILES_ENABLED: 'true'

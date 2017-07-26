@@ -17,7 +17,7 @@ extension CourseBlockDisplayType {
         switch self {
         case .Video: return false
         case .Audio: return false //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-        case .Unknown, .HTML(_), .Outline, .Unit, .Discussion: return true
+        case .Unknown, .HTML(_), .Outline, .Lesson, .Unit, .Discussion: return true
         }
     }
 }

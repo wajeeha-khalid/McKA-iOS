@@ -104,7 +104,7 @@ class CoursesTableViewController: UITableViewController {
         
         cell.courseView.tapAction = {[weak self] card in
             //self?.delegate?.coursesTableChoseCourse(course)
-           self!.environment.router?.showCoursewareForCourseWithID(course.course_id!, fromController: self!)
+            self!.environment.router?.showLessonForCourseWithID(course.course_id!, fromController: self!)
         }
         
         switch context {
