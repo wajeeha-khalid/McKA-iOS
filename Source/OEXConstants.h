@@ -138,6 +138,9 @@ typedef NS_ENUM(NSUInteger, OEXVideoSpeed) {
 //Animation Speed
 #define ANIMATION_DURATION 0.35
 
+//The fraction (from 0 to 1) of a media component that users must view in order for it to be considered completed.
+#define MEDIA_COMPLETION_PERCENTAGE 0.5
+
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 

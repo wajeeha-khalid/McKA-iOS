@@ -136,6 +136,9 @@
 		631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */; };
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
 		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
+		63049D1A1EE544DB00B9D18D /* MediaPlaybackDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */; };
+		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
+		63F40F951EF8388D00DE9A9C /* DownloadProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */; };
 		6919F5FF1D65CD27006935C8 /* OEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6919F5FE1D65CD27006935C8 /* OEXColors.swift */; };
 		6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA41D59BE3600A16E22 /* ic_next_press.png */; };
 		6926CDAC1D59BE3600A16E22 /* ic_next.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA51D59BE3600A16E22 /* ic_next.png */; };
@@ -1054,6 +1057,9 @@
 		631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonsViewController.xib; sourceTree = "<group>"; };
 		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
 		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
+		63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlaybackDecision.swift; sourceTree = "<group>"; };
+		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
+		63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressTests.swift; sourceTree = "<group>"; };
 		6919F5FE1D65CD27006935C8 /* OEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXColors.swift; sourceTree = "<group>"; };
 		6926CDA41D59BE3600A16E22 /* ic_next_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next_press.png; sourceTree = "<group>"; };
 		6926CDA51D59BE3600A16E22 /* ic_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next.png; sourceTree = "<group>"; };
@@ -2092,6 +2098,7 @@
 		199B9B6419349DE800081A09 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */,
 				77FDF4101AFBF0C300E8C639 /* VideoBlockViewController.swift */,
 				BECB7B4C1924C9EA009C77F1 /* Video Player */,
 				B498404F19753C1400019D1F /* CutomePlayer */,
@@ -3588,6 +3595,7 @@
 				1A6B23CE1BAB4A5100FD7309 /* User Profiles */,
 				9EAFFA211B2F00B600B100AB /* Utils */,
 				E09B9D691D06C91D0080BAE0 /* VersionUpgrade */,
+				1894051D1E34BA9900AD6776 /* Audio */,
 				199B9B6419349DE800081A09 /* Videos */,
 				77ADF4A01AC1AD3500AC8955 /* XIB/Storyboard */,
 			);
@@ -3709,6 +3717,8 @@
 				1A6D90921D0A05D500D01BEA /* StartupViewControllerTests.swift */,
 				E0A246201D5DB3FD0066C766 /* AppUpgradeConfigTests.swift */,
 				694D34A11D76B75F0047F3F4 /* UIAlertController+OEXBlockActionsTests.swift */,
+				63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */,
+				63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */,
 				77FDF4171B0269FA00E8C639 /* Test Data */,
 				77FFA2C41AC30D6300B4D69B /* Data Factories */,
 				7772BE901AF90C8A0081CA7A /* Helpers */,
@@ -4847,6 +4857,7 @@
 				B4B6D62E1A949F1B000F44E8 /* OEXRegistrationFieldTextAreaController.m in Sources */,
 				714239931E64473D0013FD1E /* CourseWareView.swift in Sources */,
 				B4B285E51A9A49FF00DD603A /* OEXFabricConfig.m in Sources */,
+				63049D1A1EE544DB00B9D18D /* MediaPlaybackDecision.swift in Sources */,
 				1A81971B1C060FA50030254D /* ShareHelper.swift in Sources */,
 				77F76A6E1B0BD32A00ED3E39 /* OEXSession+Authorization.swift in Sources */,
 				7E053D2E1E9E1EDD006A3DEE /* NSData+Additions.m in Sources */,
@@ -4948,6 +4959,7 @@
 				B4B285EA1A9B182900DD603A /* OEXConfigTests.m in Sources */,
 				77864DD71B1002A800182FC2 /* MockNetworkManager.swift in Sources */,
 				778CC8271BBEDD9700DCCAE4 /* MockAnalyticsTracker.swift in Sources */,
+				63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */,
 				778F177E1C0E049B0099BF93 /* CourseCatalogViewControllerTests.swift in Sources */,
 				77E00B731B83997E00573622 /* DiscussionNewCommentViewControllerTests.swift in Sources */,
 				1A6D90931D0A05D500D01BEA /* StartupViewControllerTests.swift in Sources */,
@@ -4957,6 +4969,7 @@
 				77A340211AB2461800C8E141 /* OEXRegistrationViewControllerTests.m in Sources */,
 				775434911AD8594A00635A40 /* OEXParsePushProviderTests.m in Sources */,
 				7754348F1AD83FC100635A40 /* OEXMockCredentialStorage.m in Sources */,
+				63F40F951EF8388D00DE9A9C /* DownloadProgressTests.swift in Sources */,
 				77BECB0A1B0A8AD800894276 /* UIEdgeInsets+GeometryTests.swift in Sources */,
 				778B40DE1C2F85C50009F33E /* FeedTests.swift in Sources */,
 				77CBF55A1BFBE89300B4F121 /* CourseAnnouncementsViewControllerTests.swift in Sources */,

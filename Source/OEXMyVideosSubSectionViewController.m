@@ -1036,7 +1036,8 @@ typedef NS_ENUM (NSUInteger, OEXAlertType) {
     int currentTime = self.videoPlayerInterface.moviePlayerController.currentPlaybackTime;
     int totalTime = self.videoPlayerInterface.moviePlayerController.duration;
     
-    if(currentTime > totalTime*0.9 && totalTime > 0) {
+    BOOL shouldMarkComplete = [MediaPlaybackDecision shouldMediaPlaybackCompleted:currentTime totalDuration:totalTime];
+    if(shouldMarkComplete) {
         self.videoPlayerInterface.moviePlayerController.currentPlaybackTime = 0.0;
         
         _currentTappedVideo.watchedState = OEXPlayedStateWatched;

@@ -109,15 +109,20 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receivedSavingNotification), name: kLocalSavingNotification, object: nil)
         
         // Register for download progress notifications
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXDownloadEndedNotification) { (notification, observer, _) -> Void in
-            
-            if let visibleIndexPaths = observer.unitsTableView.indexPathsForVisibleRows {
-                observer.unitsTableView.beginUpdates()
-                observer.unitsTableView.reloadRowsAtIndexPaths(visibleIndexPaths, withRowAnimation: .None)
-                observer.unitsTableView.endUpdates()
+        for notification in OEXCoursewareViewController.getContentDownloadNotificationTypes() {
+            NSNotificationCenter.defaultCenter().oex_addObserver(self, name: notification) { (notification, observer, _) -> Void in
+                if let visibleIndexPaths = observer.unitsTableView.indexPathsForVisibleRows {
+                    observer.unitsTableView.beginUpdates()
+                    observer.unitsTableView.reloadRowsAtIndexPaths(visibleIndexPaths, withRowAnimation: .None)
+                    observer.unitsTableView.endUpdates()
+                }
             }
         }
 		setupSectionNavButtons()
+    }
+    
+    class func getContentDownloadNotificationTypes() -> [String] {
+        return [OEXDownloadProgressChangedNotification, OEXDownloadEndedNotification]
     }
     
     public override func viewWillAppear(animated: Bool) {
