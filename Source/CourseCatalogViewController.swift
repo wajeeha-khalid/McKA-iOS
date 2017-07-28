@@ -9,7 +9,7 @@
 import UIKit
 
 class CourseCatalogViewController: UIViewController, CoursesTableViewControllerDelegate {
-    typealias Environment = protocol<NetworkManagerProvider, OEXRouterProvider, OEXSessionProvider, OEXConfigProvider>
+    typealias Environment = protocol<NetworkManagerProvider, OEXRouterProvider, OEXSessionProvider, OEXConfigProvider,DataManagerProvider>
     
     private let environment : Environment
     private let tableController : CoursesTableViewController
@@ -58,7 +58,7 @@ class CourseCatalogViewController: UIViewController, CoursesTableViewControllerD
         paginationController.stream.listen(self, success:
             {[weak self] courses in
                 self?.loadController.state = .Loaded
-                self?.tableController.courses = courses
+                self?.tableController.courses = []//courses
                 self?.tableController.tableView.reloadData()
             }, failure: {[weak self] error in
                 self?.loadController.state = LoadState.failed(error)

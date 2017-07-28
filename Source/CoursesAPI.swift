@@ -12,14 +12,22 @@ import edXCore
 struct CoursesAPI {
     
     static func enrollmentsDeserializer(response: NSHTTPURLResponse, json: JSON) -> Result<[UserCourseEnrollment]> {
-        return (json.array?.flatMap { UserCourseEnrollment(json: $0) }).toResult()
+        
+        let enrollments = json.arrayValue.flatMap { enrollmentJSON -> UserCourseEnrollment? in
+            let courseJSON = enrollmentJSON["course"]
+            let progress = enrollmentJSON["progress"].double
+            let course = courseJSON.dictionaryObject.map {
+                OEXCourse(JSON: $0, progress: progress)
+            }
+            return course.map {
+                UserCourseEnrollment(course: $0, created: enrollmentJSON["created"].string, isActive: enrollmentJSON["is_active"].boolValue)
+            }
+        }
+        return .Success(enrollments)
     }
     
-    static func getUserEnrollments(username: String, organizationCode: String?) -> NetworkRequest<[UserCourseEnrollment]> {
-        var path = "api/mobile/v0.5/users/{username}/course_enrollments/".oex_formatWithParameters(["username": username])
-        if let orgCode = organizationCode {
-            path = "api/mobile/v0.5/users/{username}/course_enrollments/?org={org}".oex_formatWithParameters(["username": username, "org": orgCode])
-        }
+    static func getUserEnrollments(userID: Int, organizationCode: String?) -> NetworkRequest<[UserCourseEnrollment]> {
+        let path = "/api/server/users/{user_id}/courses/progress?mobile_only=true".oex_formatWithParameters(["user_id": userID])
         return NetworkRequest(
             method: .GET,
             path: path,

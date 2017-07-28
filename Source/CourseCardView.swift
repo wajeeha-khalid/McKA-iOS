@@ -8,6 +8,191 @@
 
 import UIKit
 
+final class CourseProgressView: UIView {
+    
+    var progressView: UIView?
+    
+    var progress: CourseProgress = .notStarted {
+        didSet {
+            progressView?.removeFromSuperview()
+            switch progress {
+            case .completed:
+                let image = UIImage(named: "CheckMark")
+                progressView = UIImageView(image: image)
+                addSubview(progressView!)
+                addConstraints(to: progressView!)
+            case .inPorgress(progress: let value):
+                let view = MBCircularProgressBarView()
+                view.maxValue = 100
+                view.value = CGFloat(value)
+                view.unitString = "%"
+                view.fontColor = UIColor.whiteColor()
+                view.valueFontSize = 14.0
+                view.unitFontSize = 14.0
+                let fontName = UIFont.systemFontOfSize(12.0).fontName
+                view.unitFontName = fontName
+                view.valueFontName = fontName
+                view.progressColor = UIColor.whiteColor()
+                view.progressStrokeColor = UIColor.clearColor()
+                view.progressLineWidth = 2.0
+                view.emptyLineWidth = 3.0
+                view.emptyLineColor = UIColor(colorLiteralRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+                view.emptyLineStrokeColor = UIColor.clearColor()
+                view.progressRotationAngle = 50
+                view.progressAngle = 100
+                view.progressCapType = 1
+                view.backgroundColor = UIColor.clearColor()
+                progressView = view
+                addSubview(view)
+                addConstraints(to: view)
+            case .notStarted:
+                let image = UIImage(named: "RightArrow")
+                progressView = UIImageView(image: image)
+                addSubview(progressView!)
+                addConstraints(to: progressView!)
+            }
+        }
+    }
+    
+    private func addConstraints(to progressView: UIView) {
+        progressView.snp_makeConstraints { (make) in
+            make.centerY.equalTo(self)
+            make.centerX.equalTo(self)
+            make.height.equalTo(self)
+            make.width.equalTo(self)
+        }
+    }
+}
+
+
+//TODO: Remove `CourseCardView` and rename this class to `CourseCardView`
+class NewCourseCardView: UIView {
+    private let courseTitleLabel = UILabel()
+    private let lessonLabel = UILabel()
+    private let progressView = CourseProgressView()
+    let imageView = UIImageView()
+    private let overlayView = UIView()
+    private let labelsStackView = UIView()
+    
+    var tapAction : (NewCourseCardView -> ())?
+    
+    var coverImage: RemoteImage? {
+        get {
+            return imageView.remoteImage
+        } set {
+            imageView.remoteImage = newValue
+        }
+    }
+    
+    var couseTitle: String? {
+        get {
+            return courseTitleLabel.text
+        } set  {
+            courseTitleLabel.text = newValue
+        }
+    }
+    
+    var lessonText: String? {
+        get {
+            return lessonLabel.text
+        } set {
+            lessonLabel.text = newValue
+        }
+    }
+    
+    
+    var progress: CourseProgress {
+        get {
+            return progressView.progress
+        }
+        set {
+           progressView.progress = newValue
+            if case .completed = newValue {
+                overlayView.backgroundColor = UIColor(colorLiteralRed: 39/255.0, green: 144/255.0, blue: 240/255.0, alpha: 0.95)
+            } else {
+                overlayView.backgroundColor = UIColor.clearColor()
+            }
+        }
+    }
+    
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(imageView)
+        addSubview(overlayView)
+        addSubview(labelsStackView)
+        addSubview(progressView)
+        labelsStackView.addSubview(courseTitleLabel)
+        labelsStackView.addSubview(lessonLabel)
+        imageView.contentMode = .ScaleAspectFill
+        imageView.hidesLoadingSpinner = true
+        lessonLabel.textColor = UIColor.whiteColor()
+        courseTitleLabel.textColor = UIColor.whiteColor()
+        courseTitleLabel.font = UIFont.boldSystemFontOfSize(16.0)
+        lessonLabel.font = UIFont.systemFontOfSize(12.0)
+        progressView.backgroundColor = UIColor.clearColor()
+        courseTitleLabel.numberOfLines = 2
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
+        userInteractionEnabled = true
+        addGestureRecognizer(tapGestureRecognizer)
+        setUpViews()
+    }
+    
+    @objc private func tapAction(sender: UITapGestureRecognizer) {
+        tapAction?(self)
+    }
+    
+    private func setUpViews() {
+        
+        imageView.snp_makeConstraints { (make) in
+            make.top.equalTo(self)
+            make.bottom.equalTo(self)
+            make.leading.equalTo(self)
+            make.trailing.equalTo(self)
+        }
+        
+        overlayView.snp_makeConstraints { (make) in
+            make.top.equalTo(self)
+            make.bottom.equalTo(self)
+            make.leading.equalTo(self)
+            make.trailing.equalTo(self)
+        }
+        
+        progressView.snp_makeConstraints { (make) in
+            make.width.equalTo(46)
+            make.height.equalTo(46)
+            make.centerY.equalTo(labelsStackView)
+            make.trailing.equalTo(self).offset(-StandardHorizontalMargin)
+        }
+        
+        labelsStackView.snp_makeConstraints { (make) in
+            make.bottom.equalTo(self).offset(-30)
+            make.leading.equalTo(self).offset(StandardHorizontalMargin)
+            make.trailing.lessThanOrEqualTo(progressView.snp_leading).offset(-StandardHorizontalMargin)
+        }
+        
+        courseTitleLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(labelsStackView)
+            make.leading.equalTo(labelsStackView)
+            make.trailing.equalTo(labelsStackView)
+        }
+        
+        lessonLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(courseTitleLabel.snp_bottom).offset(7)
+            make.leading.equalTo(labelsStackView)
+            make.trailing.equalTo(labelsStackView)
+            make.bottom.equalTo(labelsStackView)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
 @IBDesignable
 class CourseCardView: UIView, UIGestureRecognizerDelegate {
     private let arrowHeight = 15.0
