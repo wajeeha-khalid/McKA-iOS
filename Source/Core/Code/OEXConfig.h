@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSURL*)apiHostURL;
 - (nullable NSString*)feedbackEmailAddress;
 - (nullable NSString*)oauthClientID;
+- (NSString *)authAPIKey;
 
 /** Feature flag for the debug menu */
 - (BOOL)shouldShowDebug;

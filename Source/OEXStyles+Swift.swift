@@ -40,8 +40,12 @@ extension OEXStyles {
     }
     
     public func applyGlobalAppearance() {
-        UINavigationBar.appearance().backgroundColor = UIColor.clearColor()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "Mountain_header.png"), forBarMetrics: UIBarMetrics.Default)
+        if let image = UIImage(named: "navigationBarBackground") {
+            let color = UIColor(colorLiteralRed: 39/255.0, green: 144/255.0, blue: 240/255.0, alpha: 0.9)
+            let colorImage = UIImage.image(from: color, size: image.size)
+            let blended = image.blendendImage(with: colorImage, blendMode: .Normal, alpha: 1.0)
+            UINavigationBar.appearance().setBackgroundImage(blended, forBarMetrics: UIBarMetrics.Default)
+        }
         UINavigationBar.appearance().tintColor = navigationItemTintColor()
         UINavigationBar.appearance().titleTextAttributes = navigationTitleTextStyle.attributes
         UIBarButtonItem.appearance().setTitleTextAttributes(navigationButtonTextStyle.attributes, forState: .Normal)

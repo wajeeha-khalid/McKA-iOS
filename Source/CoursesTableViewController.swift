@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CourseCardCell : UITableViewCell {
-    static let margin = StandardVerticalMargin
+    static let margin = 15.0
     
     private static let cellIdentifier = "CourseCardCell"
-    private let courseView = CourseCardView(frame: CGRectZero)
+    private let courseView = NewCourseCardView(frame: CGRectZero)
     private var course : OEXCourse?
     private let courseCardBorderStyle = BorderStyle()
     
@@ -38,10 +39,61 @@ class CourseCardCell : UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        courseView.imageView.lastRemoteTask?.remove()
+    } 
 }
 
 protocol CoursesTableViewControllerDelegate : class {
     func coursesTableChoseCourse(course : OEXCourse)
+}
+
+struct CourseViewModel {
+    var title: String? {
+        return course.name
+    }
+    var lessonCount: Int?
+    var progress: CourseProgress {
+        if let progress = (course.progress?.doubleValue).map({round($0)}).map({Int($0)}) {
+            if  progress == 100 {
+                return .completed
+            }
+            if progress == 0 {
+                return .notStarted
+            }
+            return .inPorgress(progress: Int(progress))
+        } else {
+            return .notStarted
+        }
+    }
+    var courseImageURL: String? {
+        return course.courseImageURL
+    }
+    let persistImage: Bool
+    let course: OEXCourse
+    var courseID: String? {
+        return course.course_id
+    }
+    
+    func apply(newCard card: NewCourseCardView, networkManager: NetworkManager) {
+        if let lessonCount = lessonCount {
+            card.lessonText = "\(lessonCount) lessons"
+        } else {
+            card.lessonText = "fetching lesson count..."
+        }
+        card.couseTitle = title
+        card.progress = progress
+        
+        let placeholder = UIImage(named: "placeholderCourseCardImage")
+        let URL = courseImageURL.flatMap {
+            NSURL(string: $0, relativeToURL: networkManager.baseURL)
+        }
+        // We are switching to Kingfisher because `RemoteImage` currently has some probelms 
+        // especially with cell reuse in tableView...
+        card.imageView.kf_setImageWithURL(URL, placeholderImage: placeholder)
+    }
 }
 
 class CoursesTableViewController: UITableViewController {
@@ -51,13 +103,62 @@ class CoursesTableViewController: UITableViewController {
         case EnrollmentList
     }
     
-    typealias Environment = protocol<NetworkManagerProvider, OEXRouterProvider>
+    typealias Environment = protocol<NetworkManagerProvider, OEXRouterProvider, DataManagerProvider>
     
     private let environment : Environment
     private let context: Context
-    
     weak var delegate : CoursesTableViewControllerDelegate?
-    var courses : [OEXCourse] = []
+    var streams: [Stream<Int>] = []
+    private var _courses: [CourseViewModel] = []
+    
+    var courses : [CourseViewModel]  {
+        get {
+            return _courses
+        }
+        set(courses) {
+           _courses = courses
+            streams.removeAll()
+            courses.forEach { (course) in
+                let querier = self.environment.dataManager.courseDataManager.querierForCourseWithID(course.courseID!)
+                let stream = querier.childrenOfBlockWithID(nil).transform({ group in
+                    return Stream(value: group.children.count)
+                })
+                stream.listen(self) { [weak self] result in
+                    guard let owner = self else {
+                        return
+                    }
+                    
+                    let indexOfStream = owner.streams.indexOf {
+                        $0 === stream
+                    }
+                    if let indexOfStream = indexOfStream {
+                        owner.streams.removeAtIndex(indexOfStream)
+                    }
+                    
+                    switch result {
+                    case .Success(let count):
+                        if let index = owner.index(for: course.courseID!) {
+                            var course = owner.courses[index]
+                            course.lessonCount = count
+                            owner._courses[index] = course
+                            //TODO: Ideally we would like to reload individual rows but currently that is having some problem when a user is un enrolled from course...
+                            owner.tableView.reloadData()
+                        }
+                    case .Failure:
+                        break
+                    }
+                }
+                streams.append(stream)
+            }
+        }
+    }
+    
+    func index(for courseID: String) -> Int? {
+        return courses.indexOf { course in
+            course.courseID == courseID
+        }
+    }
+    
     let insetsController = ContentInsetsController()
     
     init(environment : Environment, context: Context) {
@@ -82,8 +183,6 @@ class CoursesTableViewController: UITableViewController {
             make.edges.equalTo(self.view)
         }
         
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.registerClass(CourseCardCell.self, forCellReuseIdentifier: CourseCardCell.cellIdentifier)
         
         self.insetsController.addSource(
@@ -94,26 +193,38 @@ class CoursesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.courses.count ?? 0
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let availableHeight = tableView.frame.size.height
+        let numberOfRows = courses.count
+        let rowHeight = availableHeight / CGFloat(numberOfRows)
+        let maxRowsWithMinHeight = Int(availableHeight - 15) / 120
+        let maxHeight = availableHeight / 2
+        if rowHeight > maxHeight {
+            return maxHeight
+        }
+        if numberOfRows <= maxRowsWithMinHeight {
+            return (availableHeight - 15) / CGFloat(numberOfRows)
+        } else {
+            return 160
+        }
+    }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let course = self.courses[indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier(CourseCardCell.cellIdentifier, forIndexPath: indexPath) as! CourseCardCell
-        cell.accessibilityLabel = cell.courseView.updateAcessibilityLabel()
+
+        cell.accessibilityLabel = course.title
         cell.accessibilityHint = Strings.accessibilityShowsCourseContent
         
         cell.courseView.tapAction = {[weak self] card in
             //self?.delegate?.coursesTableChoseCourse(course)
-            self!.environment.router?.showLessonForCourseWithID(course.course_id!, fromController: self!)
+            self!.environment.router?.showLessonForCourseWithID(course.courseID!, fromController: self!)
         }
         
-        switch context {
-        case .CourseCatalog:
-            CourseCardViewModel.onCourseCatalog(course).apply(cell.courseView, networkManager: self.environment.networkManager)
-        case .EnrollmentList:
-            CourseCardViewModel.onHome(course).apply(cell.courseView, networkManager: self.environment.networkManager)
-        }
-        cell.course = course
+        course.apply(newCard: cell.courseView, networkManager: environment.networkManager)
+        cell.course = course.course
 
         return cell
     }

@@ -86,6 +86,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
     }
 
     private func setupListener() {
+        
         enrollmentFeed.output.listen(self) {[weak self] result in
             if !(self?.enrollmentFeed.output.active ?? false) {
                 self?.refreshController.endRefreshing()
@@ -94,7 +95,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
             switch result {
             case let .Success(enrollments):
                 if let enrollments = enrollments {
-                    self?.tableController.courses = enrollments.flatMap { $0.course } ?? []
+                    self?.tableController.courses = enrollments.filter{$0.isActive}.flatMap { CourseViewModel(lessonCount: nil,  persistImage: true, course: $0.course) } ?? []
                     self?.tableController.tableView.reloadData()
                     self?.loadController.state = .Loaded
                     if enrollments.count <= 0 {

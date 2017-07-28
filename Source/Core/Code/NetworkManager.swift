@@ -294,7 +294,7 @@ public class NetworkManager : NSObject {
                     let raw : AnyObject = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
                 {
                     let json = JSON(raw)
-                    print ("Response is %@", json)
+                   // print ("Response is %@", json)
                     let result = interceptors.reduce(.Success(json)) {(current : Result<JSON>, interceptor : (_response : NSHTTPURLResponse, _json : JSON) -> Result<JSON>) -> Result<JSON> in
                         return current.flatMap {interceptor(_response : response, _json: $0)}
                     }
@@ -355,11 +355,11 @@ public class NetworkManager : NSObject {
                 case let .Some(.ReauthenticationRequest(authHandler, originalData)):
                     authHandler(_networkManager: self, _completion: {success in
                         if success {
-                            Logger.logInfo(NetworkManager.NETWORK, "Reauthentication, reattempting original request")
+                           // Logger.logInfo(NetworkManager.NETWORK, "Reauthentication, reattempting original request")
                             self.taskForRequest(networkRequest, handler: handler)
                         }
                         else {
-                            Logger.logInfo(NetworkManager.NETWORK, "Reauthentication unsuccessful")
+                           // Logger.logInfo(NetworkManager.NETWORK, "Reauthentication unsuccessful")
                             handler(NetworkResult<Out>(request: request, response: response, data: nil, baseData: originalData, error: error))
                         }
                     })

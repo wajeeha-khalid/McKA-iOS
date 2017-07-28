@@ -87,10 +87,24 @@ NSString* NSStringForOEXStartType(OEXStartType type) {
 @property (nonatomic, strong) OEXCoursewareAccess* courseware_access;
 @property (nonatomic, copy) NSString* discussionUrl;
 @property (nonatomic, copy) NSDictionary<NSString*, CourseMediaInfo*>* mediaInfo;
-
+@property ( nonatomic, strong) NSNumber* progress;
 @end
 
 @implementation OEXCourse
+
+- (id)initWithJSON:(NSDictionary *)json progress:(nullable NSNumber*)progress {
+    self = [super init];
+    if (self != nil) {
+        self.course_id = [json objectForKey:@"id"];
+        if ([json[@"end"] isEqual:[NSNull null]] == false) {
+            self.end = [OEXDateFormatting dateWithServerString:[json objectForKey:@"end"]];
+        }
+        self.name = json[@"display_name"];
+        self.course_image_url = json[@"course_image_url"];
+        self.progress = progress;
+    }
+    return self;
+}
 
 - (id)initWithDictionary:(NSDictionary *)info {
     self = [super init];
