@@ -9,17 +9,17 @@
 import Foundation
 import edXCore
 
-@objc public class SessionUsernameProvider : NSObject, PathProvider {
-    private let session : OEXSession
+@objc open class SessionUsernameProvider : NSObject, PathProvider {
+    fileprivate let session : OEXSession
     public init(session : OEXSession) {
         self.session = session
     }
 
-    private var currentUsername : String? {
+    fileprivate var currentUsername : String? {
         return self.session.currentUser?.username
     }
 
-    public func pathForRequestKey(key: String?) -> NSURL? {
-        return OEXFileUtility.filePathForRequestKey(key, username: self.currentUsername).flatMap {NSURL(fileURLWithPath: $0)}
+    open func pathForRequestKey(_ key: String?) -> URL? {
+        return OEXFileUtility.filePath(forRequestKey: key, username: self.currentUsername).flatMap {URL(fileURLWithPath: $0)}
     }
 }

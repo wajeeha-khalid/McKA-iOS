@@ -8,6 +8,7 @@
 
 import Foundation
 import edXCore
+import SwiftyJSON
 
 public typealias CourseBlockID = String
 
@@ -32,7 +33,7 @@ public struct CourseOutline {
     
     public let root : CourseBlockID
     public let blocks : [CourseBlockID:CourseBlock]
-    private let parents : [CourseBlockID:CourseBlockID]
+    fileprivate let parents : [CourseBlockID:CourseBlockID]
     
     public init(root : CourseBlockID, blocks : [CourseBlockID:CourseBlock]) {
         self.root = root
@@ -48,7 +49,7 @@ public struct CourseOutline {
     }
     
     public init?(json : JSON) {
-        if let root = json[Fields.Root].string, blocks = json[Fields.Blocks].dictionaryObject {
+        if let root = json[Fields.Root].string, let blocks = json[Fields.Blocks].dictionaryObject {
             var validBlocks : [CourseBlockID:CourseBlock] = [:]
             for (blockID, blockBody) in blocks {
                 let body = JSON(blockBody)
@@ -68,39 +69,39 @@ public struct CourseOutline {
                 if let category = CourseBlock.Category(rawValue: typeName) {
                     switch category {
                     case CourseBlock.Category.Course:
-                        type = .Course
+                        type = .course
                     case CourseBlock.Category.Chapter:
-                        type = .Chapter
+                        type = .chapter
                     case CourseBlock.Category.Section:
-                        type = .Section
+                        type = .section
                     case CourseBlock.Category.Unit:
-                        type = .Unit
+                        type = .unit
                     case CourseBlock.Category.HTML:
-                        type = .HTML
+                        type = .html
                     case CourseBlock.Category.Problem:
-                        type = .Problem
+                        type = .problem
                     case CourseBlock.Category.Video :
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXVideoSummary(dictionary: bodyData ?? [:], videoID: blockID, name : name ?? Strings.untitled)
-                        type = .Video(summary)
+                        type = .video(summary)
                         //Added By Ravi on 22Jan'17 to Implement AudioPodcast
                     case CourseBlock.Category.Audio:
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXAudioSummary(dictionary: bodyData ?? [:], studentUrl:blockID ,name : name ?? Strings.untitled )
-                        type = .Audio(summary)
+                        type = .audio(summary)
                     case CourseBlock.Category.Discussion:
                         // Inline discussion is in progress feature. Will remove this code when it's ready to ship
-                        type = .Unknown(typeName)
+                        type = .unknown(typeName)
                         
-                        if OEXConfig.sharedConfig().discussionsEnabled {
+                        if OEXConfig.shared().discussionsEnabled {
                             let bodyData = body[Fields.StudentViewData].object as? NSDictionary
                             let discussionModel = DiscussionModel(dictionary: bodyData ?? [:])
-                            type = .Discussion(discussionModel)
+                            type = .discussion(discussionModel)
                         }
                     }
                 }
                 else {
-                    type = .Unknown(typeName)
+                    type = .unknown(typeName)
                 }
                 
                 validBlocks[blockID] = CourseBlock(
@@ -109,8 +110,8 @@ public struct CourseOutline {
                     blockID: blockID,
                     name: name,
                     blockCounts : blockCounts,
-                    blockURL : blockURL,
-                    webURL: webURL,
+                    blockURL : blockURL as URL?,
+                    webURL: webURL as URL?,
                     format : format,
                     multiDevice : multiDevice,
                     viewed : viewed,
@@ -124,26 +125,26 @@ public struct CourseOutline {
         }
     }
     
-    func parentOfBlockWithID(blockID : CourseBlockID) -> CourseBlockID? {
+    func parentOfBlockWithID(_ blockID : CourseBlockID) -> CourseBlockID? {
         return self.parents[blockID]
     }
 }
 
 public enum CourseBlockType {
-    case Unknown(String)
-    case Course
-    case Chapter // child of course
-    case Section // child of chapter
-    case Unit // child of section
-    case Video(OEXVideoSummary)
-    case Problem
-    case HTML
-    case Discussion(DiscussionModel)
-    case Audio(OEXAudioSummary)// Added by Ravi on 18/01/17 to implement Audio Podcasts.
+    case unknown(String)
+    case course
+    case chapter // child of course
+    case section // child of chapter
+    case unit // child of section
+    case video(OEXVideoSummary)
+    case problem
+    case html
+    case discussion(DiscussionModel)
+    case audio(OEXAudioSummary)// Added by Ravi on 18/01/17 to implement Audio Podcasts.
     
     public var asVideo : OEXVideoSummary? {
         switch self {
-        case let .Video(summary):
+        case let .video(summary):
             return summary
         default:
             return nil
@@ -153,7 +154,7 @@ public enum CourseBlockType {
     // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     public var asAudio : OEXAudioSummary? {
         switch self {
-        case let .Audio(summary):
+        case let .audio(summary):
             return summary
         default:
             return nil
@@ -163,7 +164,7 @@ public enum CourseBlockType {
     public var asDiscussion : DiscussionModel? {
         
         switch self {
-        case let .Discussion(discussionModel):
+        case let .discussion(discussionModel):
             return discussionModel
         default :
             return nil
@@ -172,7 +173,7 @@ public enum CourseBlockType {
     
 }
 
-public class CourseBlock {
+open class CourseBlock {
     
     /// Simple list of known block categories strings
     public enum Category : String {
@@ -187,64 +188,64 @@ public class CourseBlock {
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
-    public let type : CourseBlockType
-    public let blockID : CourseBlockID
+    open let type : CourseBlockType
+    open let blockID : CourseBlockID
     
     /// Children in the navigation hierarchy.
     /// Note that this may be different than the block's list of children, server side
     /// Since we flatten out the hierarchy for display
-    public var children : [CourseBlockID]
+    open var children : [CourseBlockID]
     
     /// Title of block. Keep this private so people don't use it as the displayName by accident
-    private let name : String?
+    fileprivate let name : String?
     
     /// Actual title of the block. Not meant to be user facing - see displayName
-    public var internalName : String? {
+    open var internalName : String? {
         return name
     }
     
     /// User visible name of the block.
-    public var displayName : String {
-        guard let name = name where !name.isEmpty else {
+    open var displayName : String {
+        guard let name = name, !name.isEmpty else {
             return Strings.untitled
         }
         return name
     }
     
     ///Discussion Block for Unit
-    public var discussionBlock : CourseBlock?
+    open var discussionBlock : CourseBlock?
     
     /// TODO: Match final API name
     /// The type of graded component
-    public let format : String?
+    open let format : String?
     
     /// Mapping between block types and number of blocks of that type in this block's
     /// descendants (recursively) for example ["video" : 3]
-    public let blockCounts : [String:Int]
+    open let blockCounts : [String:Int]
     
     /// Just the block content itself as a web page.
     /// Suitable for embedding in a web view.
-    public let blockURL : NSURL?
+    open let blockURL : URL?
     
     /// If this is web content, can we actually display it.
-    public let multiDevice : Bool
+    open let multiDevice : Bool
     
     /// A full web page for the block.
     /// Suitable for opening in a web browser.
-    public let webURL : NSURL?
+    open let webURL : URL?
     
     /// Whether or not the block is graded.
     /// TODO: Match final API name
-    public let graded : Bool?
-    public var viewedState : CellType?
-    public let viewed : Bool?
+    open let graded : Bool?
+    open var viewedState : CellType?
+    open let viewed : Bool?
     public init(type : CourseBlockType,
         children : [CourseBlockID],
         blockID : CourseBlockID,
         name : String?,
         blockCounts : [String:Int] = [:],
-        blockURL : NSURL? = nil,
-        webURL : NSURL? = nil,
+        blockURL : URL? = nil,
+        webURL : URL? = nil,
         format : String? = nil,
         multiDevice : Bool,
         viewed : Bool = false,

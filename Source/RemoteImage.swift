@@ -14,11 +14,11 @@ protocol RemoteImage {
     var image: UIImage? { get }
     
     /** Callback should be on main thread */
-    func fetchImage(completion: (remoteImage : NetworkResult<RemoteImage>) -> ()) -> Removable
+    func fetchImage(_ completion: (_ remoteImage : NetworkResult<RemoteImage>) -> ()) -> Removable
 }
 
 
-private let imageCache = NSCache()
+private let imageCache = NSCache<AnyObject, AnyObject>()
 
 class RemoteImageImpl: RemoteImage {
     let placeholder: UIImage?
@@ -34,28 +34,28 @@ class RemoteImageImpl: RemoteImage {
         self.persist = persist
     }
     
-    private var filename: String {
+    fileprivate var filename: String {
         return url.oex_md5
     }
     
-    private var localFile: String {
-        let cachesDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0]
-        let remoteImageDir = (cachesDir as NSString).stringByAppendingPathComponent("remoteimages")
-        if !NSFileManager.defaultManager().fileExistsAtPath(remoteImageDir) {
-            _ = try? NSFileManager.defaultManager().createDirectoryAtPath(remoteImageDir, withIntermediateDirectories: true, attributes: nil)
+    fileprivate var localFile: String {
+        let cachesDir = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
+        let remoteImageDir = (cachesDir as NSString).appendingPathComponent("remoteimages")
+        if !FileManager.default.fileExists(atPath: remoteImageDir) {
+            _ = try? FileManager.default.createDirectory(atPath: remoteImageDir, withIntermediateDirectories: true, attributes: nil)
         }
-        return (remoteImageDir as NSString).stringByAppendingPathComponent(filename)
+        return (remoteImageDir as NSString).appendingPathComponent(filename)
     }
     
     var image: UIImage? {
         if localImage != nil { return localImage }
         
-        if let cachedImage = imageCache.objectForKey(filename) {
+        if let cachedImage = imageCache.object(forKey: filename as AnyObject) {
             return cachedImage as? UIImage
         }
         else if let localImage = UIImage(contentsOfFile: localFile) {
             let cost = Int(localImage.size.height * localImage.size.width)
-            imageCache.setObject(localImage, forKey: filename, cost: cost)
+            imageCache.setObject(localImage, forKey: filename as AnyObject, cost: cost)
             return localImage
         }
         else {
@@ -63,7 +63,7 @@ class RemoteImageImpl: RemoteImage {
         }
     }
     
-    private func imageDeserializer(response: NSHTTPURLResponse, data: NSData) -> Result<RemoteImage> {
+    fileprivate func imageDeserializer(_ response: HTTPURLResponse, data: Data) -> Result<RemoteImage> {
         
         // no idea how it validates data but it is failing even for valid images
         //so we are commenting it out for now
@@ -71,15 +71,15 @@ class RemoteImageImpl: RemoteImage {
             return Failure(NSError.oex_unknownError())
         } */
         
-        if let newImage = UIImage(data: data) {
+        if let newImage = UIImage(data: data as Data) {
             let result = self
             result.localImage = newImage
             
-            let cost = data.length
-            imageCache.setObject(newImage, forKey: filename, cost: cost)
+            let cost = data.count
+            imageCache.setObject(newImage, forKey: filename as AnyObject, cost: cost)
             
             if persist {
-                data.writeToFile(localFile, atomically: false)
+                (data as NSData).write(toFile: localFile, atomically: false)
             }
             return Success(result)
         }
@@ -87,14 +87,14 @@ class RemoteImageImpl: RemoteImage {
         return Failure(NSError.oex_unknownError())
     }
     
-    func fetchImage(completion: (remoteImage : NetworkResult<RemoteImage>) -> ()) -> Removable {
+    @discardableResult func fetchImage(_ completion: @escaping (_ remoteImage : NetworkResult<RemoteImage>) -> ()) -> Removable {
         // Only authorize requests to the API host
         // This is necessary for two reasons:
         // 1. We don't want to leak credentials by loading random images
         // 2. Some servers will explicitly reject our credentials even if
         // the image is public. Causing the load to fail
     
-        let host = NSURL(string: url).flatMap { $0.host }
+        let host = URL(string: url).flatMap { $0.host }
         let noHost = host?.isEmpty ?? true
         let matchesBaseHost = host == self.networkManager.baseURL.host
 
@@ -103,7 +103,7 @@ class RemoteImageImpl: RemoteImage {
         let request = NetworkRequest(method: .GET,
             path: url,
             requiresAuth: requiresAuth,
-            deserializer: .DataResponse(imageDeserializer)
+            deserializer: .dataResponse(imageDeserializer)
         )
          
         return networkManager.taskForRequest(request, handler: completion)
@@ -122,15 +122,15 @@ struct RemoteImageJustImage : RemoteImage {
 
 extension RemoteImage {
     var brokenImage:UIImage? { return placeholder }
-    func fetchImage(completion: (remoteImage : NetworkResult<RemoteImage>) -> ()) -> Removable {
+    func fetchImage(_ completion: (_ remoteImage : NetworkResult<RemoteImage>) -> ()) -> Removable {
         let result = NetworkResult<RemoteImage>(request: nil, response: nil, data: self, baseData: nil, error: nil)
-        completion(remoteImage: result)
+        completion(result)
         return BlockRemovable {}
     }
 }
 
 extension UIImageView {
-    private struct AssociatedKeys {
+    fileprivate struct AssociatedKeys {
         static var SpinerName = "remoteimagespinner"
         static var LastRemoteTask = "lastremotetask"
         static var HidesLoadingSpinner = "hidesLoadingSpinner"
@@ -158,7 +158,7 @@ extension UIImageView {
             if let oldTask = objc_getAssociatedObject(self, &AssociatedKeys.LastRemoteTask) as? Removable {
                 oldTask.remove()
             }
-            if let newTask = newValue as? AnyObject {
+            if let newTask = newValue {
                 objc_setAssociatedObject(self, &AssociatedKeys.LastRemoteTask, newTask, .OBJC_ASSOCIATION_RETAIN)
             }
         }
@@ -169,7 +169,7 @@ extension UIImageView {
             return (objc_getAssociatedObject(self, &AssociatedKeys.HidesLoadingSpinner) as? NSNumber)?.boolValue ?? false
         }
         set {
-            objc_setAssociatedObject(self, &AssociatedKeys.HidesLoadingSpinner, NSNumber(bool: newValue), .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &AssociatedKeys.HidesLoadingSpinner, NSNumber(value: newValue as Bool), .OBJC_ASSOCIATION_RETAIN)
         }
     }
     
@@ -193,7 +193,7 @@ extension UIImageView {
         }
     }
     
-    func handleRemoteLoaded(result : NetworkResult<RemoteImage>) {
+    func handleRemoteLoaded(_ result : NetworkResult<RemoteImage>) {
         self.stopSpinner()
         
         if let remoteImage = result.data {
@@ -206,16 +206,16 @@ extension UIImageView {
     }
     
     func startSpinner() {
-        let spinner = self.spinner ?? SpinnerView(size: .Large, color: .Primary)
+        let spinner = self.spinner ?? SpinnerView(size: .large, color: .primary)
         self.spinner = spinner
         
         superview?.insertSubview(spinner, aboveSubview: self)
        // superview?.addSubview(spinner)
-        spinner.snp_makeConstraints { (make) -> Void in
-            make.center.equalTo(snp_center)
+        spinner.snp.makeConstraints { (make) -> Void in
+            make.center.equalTo(snp.center)
         }
         spinner.startAnimating()
-        spinner.hidden = false
+        spinner.isHidden = false
     }
     
     func stopSpinner() {

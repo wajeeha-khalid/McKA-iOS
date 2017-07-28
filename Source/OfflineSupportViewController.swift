@@ -11,9 +11,9 @@ import Foundation
 /// Convenient class for supporting an offline snackbar at the bottom of the controller
 /// Override reloadViewData function
 
-public class OfflineSupportViewController: UIViewController {
-    typealias Env = protocol<ReachabilityProvider, DataManagerProvider, OEXSessionProvider, NetworkManagerProvider>
-    private let environment : Env
+open class OfflineSupportViewController: UIViewController {
+    typealias Env = ReachabilityProvider & DataManagerProvider & OEXSessionProvider & NetworkManagerProvider
+    fileprivate let environment : Env
     init(env: Env) {
         self.environment = env
         super.init(nibName: nil, bundle: nil)
@@ -23,25 +23,25 @@ public class OfflineSupportViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         setupObservers()
     }
     
-    override public func viewWillAppear(animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showOfflineSnackBarIfNecessary()
     }
     
-    private func setupObservers() {
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: kReachabilityChangedNotification) { [weak self] (notification, observer, _) -> Void in
+    fileprivate func setupObservers() {
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.reachabilityChanged.rawValue) { [weak self] (notification, observer, _) -> Void in
             guard let blockSelf = self else { return }
             observer.showOfflineSnackBarIfNecessary()
             blockSelf.updateComponentsViewed()
         }
     }
     
-    private func showOfflineSnackBarIfNecessary() {
+    fileprivate func showOfflineSnackBarIfNecessary() {
         if !environment.reachability.isReachable() {
             showOfflineSnackBar(Strings.offline, selector: #selector(reloadViewData))
         }
@@ -60,10 +60,10 @@ public class OfflineSupportViewController: UIViewController {
             
             if let unsyncComponents = unsyncedComponents{
                 
-                for (index, componentID) in unsyncComponents.enumerate(){
-                    componentIDs.appendContentsOf(componentID as! String)
+                for (index, componentID) in unsyncComponents.enumerated(){
+                    componentIDs.append(componentID as! String)
                     guard case index = unsyncComponents.count - 1 else {
-                        componentIDs.appendContentsOf(",")
+                        componentIDs.append(",")
                         continue
                     }
                 }
@@ -73,7 +73,7 @@ public class OfflineSupportViewController: UIViewController {
                     if success == true{
                         if let unsyncComponents = unsyncedComponents{
                             unsyncComponents.forEach({ (componentID) in
-                                blockSelf.environment.dataManager.interface?.updateViewedComponentsForID(componentID as! String, synced: true)
+                                blockSelf.environment.dataManager.interface?.updateViewedComponents(forID: componentID as! String, synced: true)
                             })
                         }
                     }

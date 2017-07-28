@@ -20,19 +20,19 @@ struct LessonViewModel {
     let number: Int
 }
 
-public class CourseLessonsViewController: OfflineSupportViewController, UITableViewDelegate, UITableViewDataSource {
+open class CourseLessonsViewController: OfflineSupportViewController, UITableViewDelegate, UITableViewDataSource {
     
-    public typealias Environment = protocol<OEXAnalyticsProvider, OEXConfigProvider, DataManagerProvider, NetworkManagerProvider, ReachabilityProvider, OEXRouterProvider, OEXInterfaceProvider, OEXRouterProvider, OEXSessionProvider, OEXConfigProvider>
+    public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & ReachabilityProvider & OEXRouterProvider & OEXInterfaceProvider & OEXRouterProvider & OEXSessionProvider & OEXConfigProvider
     
-    private let environment: Environment
-    private let courseID: String
-    private let blockIDStream = BackedStream<CourseBlockID?>()
-    private let courseQuerier : CourseOutlineQuerier
-    private let loadController : LoadStateViewController
-    private var courseLoadingStream: Stream<CourseOutlineQuerier.BlockGroup>
-    private var progressLoadingStream: Any?
-    private var titleType : TitleType
-    private var lesssons : [CourseBlock] = []
+    fileprivate let environment: Environment
+    fileprivate let courseID: String
+    fileprivate let blockIDStream = BackedStream<CourseBlockID?>()
+    fileprivate let courseQuerier : CourseOutlineQuerier
+    fileprivate let loadController : LoadStateViewController
+    fileprivate var courseLoadingStream: edXCore.Stream<CourseOutlineQuerier.BlockGroup>
+    fileprivate var progressLoadingStream: Any?
+    fileprivate var titleType : TitleType
+    fileprivate var lesssons : [CourseBlock] = []
     var downloadController  : DownloadController
     var lessonViewModel: [LessonViewModel] = []
     
@@ -44,7 +44,7 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
         courseQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
         courseLoadingStream = courseQuerier.childrenOfBlockWithID(nil)
         loadController = LoadStateViewController()
-        titleType = TitleType.NavTitle
+        titleType = TitleType.navTitle
         downloadController  = DownloadController(courseQuerier: courseQuerier, analytics: environment.analytics)
         super.init(env : environment)
     }
@@ -54,10 +54,10 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
     }
     
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
-        self.lessonsTableView.registerNib(UINib(nibName: "CourseLessonTableViewCell", bundle: nil), forCellReuseIdentifier: "CourseLessonTableViewCell")
+        self.lessonsTableView.register(UINib(nibName: "CourseLessonTableViewCell", bundle: nil), forCellReuseIdentifier: "CourseLessonTableViewCell")
         
         let courseStream = BackedStream<UserCourseEnrollment>()
         courseStream.backWithStream(environment.dataManager.enrollmentManager.streamForCourseWithID(courseID))
@@ -66,28 +66,28 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
         }
     }
     
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.addListeners()
     }
     
-    private func resultLoaded(result : Result<UserCourseEnrollment>) {
+    fileprivate func resultLoaded(_ result : Result<UserCourseEnrollment>) {
         switch result {
-        case let .Success(enrollment):
+        case let .success(enrollment):
             self.loadedCourseWithEnrollment(enrollment)
-        case let .Failure(error):
+        case let .failure(error):
             debugPrint("Enrollment error: \(error)")
             break
         }
     }
     
-    private func loadedCourseWithEnrollment(enrollment: UserCourseEnrollment) {
+    fileprivate func loadedCourseWithEnrollment(_ enrollment: UserCourseEnrollment) {
         navigationItem.title = enrollment.course.name
     }
     
     //MARK: Listener Method
-    private func addListeners() {
-        let progressStreams = courseLoadingStream.transform { group -> Stream<[(CourseBlock, LessonProgressState)]> in
+    fileprivate func addListeners() {
+        let progressStreams = courseLoadingStream.transform { group -> edXCore.Stream<[(CourseBlock, LessonProgressState)]> in
             let streams =  group.children.map { lesson in
                 return self.progressForLesson(withID: lesson.blockID).map { progress in
                     (lesson, progress)
@@ -95,17 +95,17 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
             }
             return joinStreams(streams)
             }.map { progressStates in
-                progressStates.enumerate().map{ (index, blockState)  in
+                progressStates.enumerated().map{ (index, blockState)  in
                     return LessonViewModel(state: blockState.1, title: blockState.0.displayName, number:index )
                 }
         }
         
         progressStreams.listen(self) { result in
             switch result {
-            case .Success(let values):
+            case .success(let values):
                 self.lessonViewModel = values
                 self.lessonsTableView.reloadData()
-            case .Failure:
+            case .failure:
                 break
             }
         }
@@ -114,10 +114,10 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
     }
     
     //MARK: Calculate Progress
-    private func progressForLesson(withID lessonID: CourseBlockID)  -> Stream<LessonProgressState> {
+    fileprivate func progressForLesson(withID lessonID: CourseBlockID)  -> edXCore.Stream<LessonProgressState> {
         
-        func units(for lessonID: CourseBlockID) -> Stream<[CourseBlock]> {
-            return courseQuerier.childrenOfBlockWithID(lessonID).transform { lesson -> Stream<[CourseBlock]> in
+        func units(for lessonID: CourseBlockID) -> edXCore.Stream<[CourseBlock]> {
+            return courseQuerier.childrenOfBlockWithID(lessonID).transform { lesson -> edXCore.Stream<[CourseBlock]> in
                 let x = lesson.children.map({ section in
                     self.courseQuerier.childrenOfBlockWithID(section.blockID).map {
                         $0.children
@@ -132,20 +132,20 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
             }
         }
         
-        func numberOfUnits(for lessonID: CourseBlockID) -> Stream<Int> {
+        func numberOfUnits(for lessonID: CourseBlockID) -> edXCore.Stream<Int> {
             return units(for: lessonID).map { $0.count }
         }
         
         
         return numberOfUnits(for: lessonID).transform { totalUnitCount in
-            let completedUnits = self.environment.interface?.getCompletedUnitsForChapterID(lessonID)
+            let completedUnits = self.environment.interface?.getCompletedUnits(forChapterID: lessonID)
             if completedUnits?.count == totalUnitCount {
                 return Stream(value: .complete)
-            } else if completedUnits?.count > 0 {
+            } else if let count = completedUnits?.count, count > 0 {
                 return Stream(value: .inProgress)
             } else {
                 
-                let lessonUnits = units(for: lessonID).transform { units -> Stream<[LessonProgressState]> in
+                let lessonUnits = units(for: lessonID).transform { units -> edXCore.Stream<[LessonProgressState]> in
                     let streams = units.map {
                         self.progressForUnit(withID: $0.blockID)
                     }
@@ -163,19 +163,19 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
         }
     }
     
-    private func progressForUnit(withID unitID: CourseBlockID) -> Stream<LessonProgressState> {
+    fileprivate func progressForUnit(withID unitID: CourseBlockID) -> edXCore.Stream<LessonProgressState> {
         
-        func numberOfComponentsInUnit(withID unitID: CourseBlockID) -> Stream<Int> {
+        func numberOfComponentsInUnit(withID unitID: CourseBlockID) -> edXCore.Stream<Int> {
             return courseQuerier.childrenOfBlockWithID(unitID).map {
                 $0.children.count
             }
         }
         
         return numberOfComponentsInUnit(withID: unitID).map { totalComponentCount in
-            let viewedComponents = self.environment.interface?.getViewedComponentsForVertical(unitID)
+            let viewedComponents = self.environment.interface?.getViewedComponents(forVertical: unitID)
             if viewedComponents?.count == totalComponentCount {
                 return .complete
-            } else if viewedComponents?.count > 0 {
+            } else if let count = viewedComponents?.count, count > 0 {
                 return .inProgress
             } else {
                 return .notStarted
@@ -184,41 +184,41 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
     }
     
     //MARK: Tableview DataSource
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 125
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.lessonViewModel.count
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let lessonCell = tableView.dequeueReusableCellWithIdentifier("CourseLessonTableViewCell") as! CourseLessonTableViewCell
-        lessonCell.selectionStyle = UITableViewCellSelectionStyle.None
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let lessonCell = tableView.dequeueReusableCell(withIdentifier: "CourseLessonTableViewCell") as! CourseLessonTableViewCell
+        lessonCell.selectionStyle = UITableViewCellSelectionStyle.none
         lessonCell.lessonViewModel = lessonViewModel[indexPath.row]
         return lessonCell
     }
     
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
     
-    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = UIColor.clearColor()
+        headerView.backgroundColor = UIColor.clear
         return headerView
     }
     
     //MARK: Table view delegate
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.environment.router?.showCoursewareForCourseWithID(self.courseID, fromController: self)
     }
     
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

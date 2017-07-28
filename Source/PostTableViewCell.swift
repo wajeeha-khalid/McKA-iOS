@@ -13,35 +13,35 @@ class PostTableViewCell: UITableViewCell {
     
     static let identifier = "PostCell"
     
-    private let typeLabel = UILabel()
-    private let infoLabel = UILabel()
-    private let titleLabel = UILabel()
-    private let countLabel = UILabel()
+    fileprivate let typeLabel = UILabel()
+    fileprivate let infoLabel = UILabel()
+    fileprivate let titleLabel = UILabel()
+    fileprivate let countLabel = UILabel()
     
-    private var postReadStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color: OEXStyles.sharedStyles().neutralXDark())
+    fileprivate var postReadStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralXDark())
     }
     
-    private var postUnreadStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Bold, size: .Base, color: OEXStyles.sharedStyles().neutralXDark())
+    fileprivate var postUnreadStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .bold, size: .base, color: OEXStyles.shared().neutralXDark())
     }
     
-    private var questionStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color: OEXStyles.sharedStyles().secondaryDarkColor())
+    fileprivate var questionStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().secondaryDarkColor())
     }
     
-    private var answerStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color: OEXStyles.sharedStyles().utilitySuccessDark())
+    fileprivate var answerStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().utilitySuccessDark())
     }
     
-    private var infoTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .XSmall, color: OEXStyles.sharedStyles().neutralDark())
+    fileprivate var infoTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared().neutralDark())
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = OEXStyles.sharedStyles().neutralWhite()
+        contentView.backgroundColor = OEXStyles.shared().neutralWhite()
         
         contentView.addSubview(typeLabel)
         contentView.addSubview(titleLabel)
@@ -57,43 +57,43 @@ class PostTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func addConstraints() {
-        typeLabel.snp_makeConstraints { (make) -> Void in
+    fileprivate func addConstraints() {
+        typeLabel.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(contentView).offset(StandardHorizontalMargin)
             make.top.equalTo(titleLabel)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(typeLabel.snp_trailing).offset(StandardHorizontalMargin)
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(typeLabel.snp.trailing).offset(StandardHorizontalMargin)
             make.top.equalTo(contentView).offset(StandardVerticalMargin)
         }
         
-        countLabel.snp_makeConstraints { (make) -> Void in
+        countLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(titleLabel)
-            make.leading.greaterThanOrEqualTo(titleLabel.snp_trailing).offset(StandardHorizontalMargin)
+            make.leading.greaterThanOrEqualTo(titleLabel.snp.trailing).offset(StandardHorizontalMargin)
             make.trailing.equalTo(contentView).offset(-StandardHorizontalMargin)
         }
         
-        infoLabel.snp_makeConstraints { (make) -> Void in
+        infoLabel.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp_bottom)
+            make.top.equalTo(titleLabel.snp.bottom)
             make.bottom.equalTo(contentView).offset(-StandardVerticalMargin)
         }
     }
     
-    private var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color : OEXStyles.sharedStyles().neutralXDark())
+    fileprivate var titleTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralXDark())
     }
     
-    private var activeCountStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Bold, size: .Base, color : OEXStyles.sharedStyles().primaryBaseColor())
+    fileprivate var activeCountStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .bold, size: .base, color : OEXStyles.shared().primaryBaseColor())
     }
     
-    private var inactiveCountStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color : OEXStyles.sharedStyles().neutralDark())
+    fileprivate var inactiveCountStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralDark())
     }
     
-    private var typeText : NSAttributedString? {
+    fileprivate var typeText : NSAttributedString? {
         get {
             return typeLabel.attributedText
         }
@@ -102,46 +102,46 @@ class PostTableViewCell: UITableViewCell {
         }
     }
 
-    private func updateThreadCount(count : String) {
-        countLabel.attributedText = activeCountStyle.attributedStringWithText(count)
+    fileprivate func updateThreadCount(_ count : String) {
+        countLabel.attributedText = activeCountStyle.attributedString(withText: count)
     }
     
-    func useThread(thread : DiscussionThread, selectedOrderBy : DiscussionPostsSort) {
+    func useThread(_ thread : DiscussionThread, selectedOrderBy : DiscussionPostsSort) {
         self.typeText = threadTypeText(thread)
         
-        titleLabel.attributedText = thread.read ? postReadStyle.attributedStringWithText(thread.title) : postUnreadStyle.attributedStringWithText(thread.title)
+        titleLabel.attributedText = thread.read ? postReadStyle.attributedString(withText: thread.title) : postUnreadStyle.attributedString(withText: thread.title)
         
         var options = [NSAttributedString]()
         
-        if thread.closed { options.append(Icon.Closed.attributedTextWithStyle(infoTextStyle, inline : true)) }
-        if thread.pinned { options.append(Icon.Pinned.attributedTextWithStyle(infoTextStyle, inline : true)) }
-        if thread.following { options.append(Icon.FollowStar.attributedTextWithStyle(infoTextStyle)) }
-        if options.count > 0 { options.append(infoTextStyle.attributedStringWithText(Strings.pipeSign)) }
-        options.append(infoTextStyle.attributedStringWithText(Strings.Discussions.repliesCount(count: formatdCommentsCount(thread.commentCount))))
+        if thread.closed { options.append(Icon.closed.attributedTextWithStyle(infoTextStyle, inline : true)) }
+        if thread.pinned { options.append(Icon.pinned.attributedTextWithStyle(infoTextStyle, inline : true)) }
+        if thread.following { options.append(Icon.followStar.attributedTextWithStyle(infoTextStyle)) }
+        if options.count > 0 { options.append(infoTextStyle.attributedString(withText: Strings.pipeSign)) }
+        options.append(infoTextStyle.attributedString(withText: Strings.Discussions.repliesCount(count: formatdCommentsCount(thread.commentCount))))
         
         if let updatedAt = thread.updatedAt {
-            options.append(infoTextStyle.attributedStringWithText(Strings.pipeSign))
-            options.append(infoTextStyle.attributedStringWithText(Strings.Discussions.lastPost(date: updatedAt.displayDate)))
+            options.append(infoTextStyle.attributedString(withText: Strings.pipeSign))
+            options.append(infoTextStyle.attributedString(withText: Strings.Discussions.lastPost(date: updatedAt.displayDate)))
         }
         
         infoLabel.attributedText = NSAttributedString.joinInNaturalLayout(options)
         
         let count = formatdCommentsCount(thread.unreadCommentCount)
-        countLabel.attributedText = activeCountStyle.attributedStringWithText(count)
-        countLabel.hidden = !Bool(thread.unreadCommentCount)
+        countLabel.attributedText = activeCountStyle.attributedString(withText: count)
+        countLabel.isHidden = !NSNumber(value: thread.unreadCommentCount).boolValue
         
         setAccessibility(thread)
     }
     
-    private func styledCellTextWithIcon(icon : Icon, text : String?) -> NSAttributedString? {
+    fileprivate func styledCellTextWithIcon(_ icon : Icon, text : String?) -> NSAttributedString? {
         return text.map {text in
             let style = infoTextStyle
             return NSAttributedString.joinInNaturalLayout([icon.attributedTextWithStyle(style),
-                style.attributedStringWithText(text)])
+                style.attributedString(withText: text)])
         }
     }
     
-    private func formatdCommentsCount(count: NSInteger) -> String {
+    fileprivate func formatdCommentsCount(_ count: NSInteger) -> String {
         if count > 99 {
             return "99+"
         }
@@ -149,16 +149,16 @@ class PostTableViewCell: UITableViewCell {
         return String(count)
     }
     
-    private func threadTypeText(thread : DiscussionThread) -> NSAttributedString {
+    fileprivate func threadTypeText(_ thread : DiscussionThread) -> NSAttributedString {
         switch thread.type {
         case .Discussion:
-            return (thread.unreadCommentCount > 0) ? Icon.Comments.attributedTextWithStyle(activeCountStyle) : Icon.Comments.attributedTextWithStyle(inactiveCountStyle)
+            return (thread.unreadCommentCount > 0) ? Icon.comments.attributedTextWithStyle(activeCountStyle) : Icon.comments.attributedTextWithStyle(inactiveCountStyle)
         case .Question:
-            return thread.hasEndorsed ? Icon.Answered.attributedTextWithStyle(answerStyle) : Icon.Question.attributedTextWithStyle(questionStyle)
+            return thread.hasEndorsed ? Icon.answered.attributedTextWithStyle(answerStyle) : Icon.question.attributedTextWithStyle(questionStyle)
         }
     }
     
-    private func setAccessibility(thread : DiscussionThread) {
+    fileprivate func setAccessibility(_ thread : DiscussionThread) {
         var accessibilityString = ""
         
         switch thread.type {
@@ -202,9 +202,9 @@ class PostTableViewCell: UITableViewCell {
 extension DiscussionPostsSort {
     var canHide : Bool {
         switch self {
-        case .RecentActivity, .MostActivity:
+        case .recentActivity, .mostActivity:
             return true
-        case .VoteCount:
+        case .voteCount:
             return false
         }
     }

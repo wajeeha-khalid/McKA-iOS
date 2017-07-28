@@ -9,24 +9,24 @@
 import UIKit
 
 protocol CourseOutlineTableControllerDelegate : class {
-    func outlineTableController(controller : CourseOutlineTableController, choseBlock:CourseBlock, withParentID:CourseBlockID)
-    func outlineTableController(controller : CourseOutlineTableController, choseDownloadVideos videos:[OEXHelperVideoDownload], rootedAtBlock block: CourseBlock)
-    func outlineTableController(controller : CourseOutlineTableController, choseDownloadVideoForBlock block:CourseBlock)
-    func outlineTableController(controller : CourseOutlineTableController, choseDownloadAudios audios:[OEXHelperAudioDownload], rootedAtBlock block: CourseBlock)
-    func outlineTableController(controller : CourseOutlineTableController, choseDownloadAudioForBlock block:CourseBlock)
-    func outlineTableControllerChoseShowDownloads(controller : CourseOutlineTableController)
+    func outlineTableController(_ controller : CourseOutlineTableController, choseBlock:CourseBlock, withParentID:CourseBlockID)
+    func outlineTableController(_ controller : CourseOutlineTableController, choseDownloadVideos videos:[OEXHelperVideoDownload], rootedAtBlock block: CourseBlock)
+    func outlineTableController(_ controller : CourseOutlineTableController, choseDownloadVideoForBlock block:CourseBlock)
+    func outlineTableController(_ controller : CourseOutlineTableController, choseDownloadAudios audios:[OEXHelperAudioDownload], rootedAtBlock block: CourseBlock)
+    func outlineTableController(_ controller : CourseOutlineTableController, choseDownloadAudioForBlock block:CourseBlock)
+    func outlineTableControllerChoseShowDownloads(_ controller : CourseOutlineTableController)
 }
 
 class CourseOutlineTableController : UITableViewController, CourseVideoTableViewCellDelegate, CourseAudioTableViewCellDelegate, CourseSectionTableViewCellDelegate {
     
-    typealias Environment = protocol<DataManagerProvider, OEXInterfaceProvider>
+    typealias Environment = DataManagerProvider & OEXInterfaceProvider
     
     weak var delegate : CourseOutlineTableControllerDelegate?
-    private let environment : Environment
-    private let courseQuerier : CourseOutlineQuerier
+    fileprivate let environment : Environment
+    fileprivate let courseQuerier : CourseOutlineQuerier
     
-    private let headerContainer = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
-    private let lastAccessedView = CourseOutlineHeaderView(frame: CGRectZero, styles: OEXStyles.sharedStyles(), titleText : Strings.lastAccessed, subtitleText : "Placeholder")
+    fileprivate let headerContainer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
+    fileprivate let lastAccessedView = CourseOutlineHeaderView(frame: CGRect.zero, styles: OEXStyles.shared(), titleText : Strings.lastAccessed, subtitleText : "Placeholder")
     let refreshController = PullRefreshController()
     
     init(environment : Environment, courseID : String) {
@@ -45,166 +45,166 @@ class CourseOutlineTableController : UITableViewController, CourseVideoTableView
     override func viewDidLoad() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.registerClass(CourseOutlineHeaderCell.self, forHeaderFooterViewReuseIdentifier: CourseOutlineHeaderCell.identifier)
-        tableView.registerClass(CourseVideoTableViewCell.self, forCellReuseIdentifier: CourseVideoTableViewCell.identifier)
-        tableView.registerClass(CourseHTMLTableViewCell.self, forCellReuseIdentifier: CourseHTMLTableViewCell.identifier)
-        tableView.registerClass(CourseProblemTableViewCell.self, forCellReuseIdentifier: CourseProblemTableViewCell.identifier)
-        tableView.registerClass(CourseUnknownTableViewCell.self, forCellReuseIdentifier: CourseUnknownTableViewCell.identifier)
-        tableView.registerClass(CourseSectionTableViewCell.self, forCellReuseIdentifier: CourseSectionTableViewCell.identifier)
-        tableView.registerClass(DiscussionTableViewCell.self, forCellReuseIdentifier: DiscussionTableViewCell.identifier)
-        tableView.registerClass(CourseAudioTableViewCell.self, forCellReuseIdentifier: CourseAudioTableViewCell.identifier) //Added By Ravi on 22Jan'17 to Implement AudioPodcast
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.register(CourseOutlineHeaderCell.self, forHeaderFooterViewReuseIdentifier: CourseOutlineHeaderCell.identifier)
+        tableView.register(CourseVideoTableViewCell.self, forCellReuseIdentifier: CourseVideoTableViewCell.identifier)
+        tableView.register(CourseHTMLTableViewCell.self, forCellReuseIdentifier: CourseHTMLTableViewCell.identifier)
+        tableView.register(CourseProblemTableViewCell.self, forCellReuseIdentifier: CourseProblemTableViewCell.identifier)
+        tableView.register(CourseUnknownTableViewCell.self, forCellReuseIdentifier: CourseUnknownTableViewCell.identifier)
+        tableView.register(CourseSectionTableViewCell.self, forCellReuseIdentifier: CourseSectionTableViewCell.identifier)
+        tableView.register(DiscussionTableViewCell.self, forCellReuseIdentifier: DiscussionTableViewCell.identifier)
+        tableView.register(CourseAudioTableViewCell.self, forCellReuseIdentifier: CourseAudioTableViewCell.identifier) //Added By Ravi on 22Jan'17 to Implement AudioPodcast
 
 
         
         headerContainer.addSubview(lastAccessedView)
-        lastAccessedView.snp_makeConstraints { (make) -> Void in
+        lastAccessedView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(self.headerContainer)
         }
         
         refreshController.setupInScrollView(self.tableView)
     }
     
-    private func indexPathForBlockWithID(blockID : CourseBlockID) -> NSIndexPath? {
-        for (i, group) in groups.enumerate() {
-            for (j, block) in group.children.enumerate() {
+    fileprivate func indexPathForBlockWithID(_ blockID : CourseBlockID) -> IndexPath? {
+        for (i, group) in groups.enumerated() {
+            for (j, block) in group.children.enumerated() {
                 if block.blockID == blockID {
-                    return NSIndexPath(forRow: j, inSection: i)
+                    return IndexPath(row: j, section: i)
                 }
             }
         }
         return nil
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let path = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRowAtIndexPath(path, animated: false)
+            self.tableView.deselectRow(at: path, animated: false)
         }
-        if let highlightID = highlightedBlockID, indexPath = indexPathForBlockWithID(highlightID)
+        if let highlightID = highlightedBlockID, let indexPath = indexPathForBlockWithID(highlightID)
         {
-            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
+            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: false)
         }
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return groups.count
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let group = groups[section]
         return group.children.count
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Will remove manual heights when dropping iOS7 support and move to automatic cell heights.
         return 60.0
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let group = groups[section]
-        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier(CourseOutlineHeaderCell.identifier) as! CourseOutlineHeaderCell
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CourseOutlineHeaderCell.identifier) as! CourseOutlineHeaderCell
         header.block = group.block
         return header
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let group = groups[indexPath.section]
         let nodes = group.children
         let block = nodes[indexPath.row]
         switch nodes[indexPath.row].displayType {
-        case .Video:
-            let cell = tableView.dequeueReusableCellWithIdentifier(CourseVideoTableViewCell.identifier, forIndexPath: indexPath) as! CourseVideoTableViewCell
+        case .video:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseVideoTableViewCell.identifier, for: indexPath) as! CourseVideoTableViewCell
             cell.block = block
-            cell.localState = environment.dataManager.interface?.stateForVideoWithID(block.blockID, courseID : courseQuerier.courseID)
+            cell.localState = environment.dataManager.interface?.stateForVideo(withID: block.blockID, courseID : courseQuerier.courseID)
             cell.delegate = self
             return cell
-        case .Audio:
-            let cell = tableView.dequeueReusableCellWithIdentifier(CourseAudioTableViewCell.identifier, forIndexPath: indexPath) as! CourseAudioTableViewCell
+        case .audio:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseAudioTableViewCell.identifier, for: indexPath) as! CourseAudioTableViewCell
             cell.block = block
-            cell.localState = environment.dataManager.interface?.stateForAudioWithID(block.blockID)
+            cell.localState = environment.dataManager.interface?.stateForAudio(withID: block.blockID)
             cell.delegate = self
             return cell
-        case .HTML(.Base):
-            let cell = tableView.dequeueReusableCellWithIdentifier(CourseHTMLTableViewCell.identifier, forIndexPath: indexPath) as! CourseHTMLTableViewCell
+        case .html(.base):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseHTMLTableViewCell.identifier, for: indexPath) as! CourseHTMLTableViewCell
             cell.block = block
             return cell
-        case .HTML(.Problem):
-            let cell = tableView.dequeueReusableCellWithIdentifier(CourseProblemTableViewCell.identifier, forIndexPath: indexPath) as! CourseProblemTableViewCell
+        case .html(.problem):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseProblemTableViewCell.identifier, for: indexPath) as! CourseProblemTableViewCell
             cell.block = block
             return cell
-        case .Unknown:
-            let cell = tableView.dequeueReusableCellWithIdentifier(CourseUnknownTableViewCell.identifier, forIndexPath: indexPath) as! CourseUnknownTableViewCell
+        case .unknown:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseUnknownTableViewCell.identifier, for: indexPath) as! CourseUnknownTableViewCell
             cell.block = block
             return cell
-        case .Outline, .Unit, .Lesson:
-            let cell = tableView.dequeueReusableCellWithIdentifier(CourseSectionTableViewCell.identifier, forIndexPath: indexPath) as! CourseSectionTableViewCell
+        case .outline, .unit, .lesson:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseSectionTableViewCell.identifier, for: indexPath) as! CourseSectionTableViewCell
             cell.block = nodes[indexPath.row]
             let videoStream = courseQuerier.flatMapRootedAtBlockWithID(block.blockID) { block in
                 (block.type.asVideo != nil) ? block.blockID : nil
             }
             let courseID = courseQuerier.courseID
             cell.videos = videoStream.map({[weak self] videoIDs in
-                let videos = self?.environment.dataManager.interface?.statesForVideosWithIDs(videoIDs, courseID: courseID) ?? []
+                let videos = self?.environment.dataManager.interface?.statesForVideos(withIDs: videoIDs, courseID: courseID) ?? []
                 return videos.filter { video in (video.summary?.isSupportedVideo ?? false)}
             })
             cell.delegate = self
             return cell
-        case .Discussion:
-            let cell = tableView.dequeueReusableCellWithIdentifier(DiscussionTableViewCell.identifier, forIndexPath: indexPath) as! DiscussionTableViewCell
+        case .discussion:
+            let cell = tableView.dequeueReusableCell(withIdentifier: DiscussionTableViewCell.identifier, for: indexPath) as! DiscussionTableViewCell
             cell.block = block
             return cell
         }
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CourseBlockContainerCell else {
             assertionFailure("All course outline cells should implement CourseBlockContainerCell")
             return
         }
         
         let highlighted = cell.block?.blockID != nil && cell.block?.blockID == self.highlightedBlockID
-        cell.applyStyle(highlighted ? .Highlighted : .Normal)
+        cell.applyStyle(highlighted ? .highlighted : .normal)
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let group = groups[indexPath.section]
         let chosenBlock = group.children[indexPath.row]
         self.delegate?.outlineTableController(self, choseBlock: chosenBlock, withParentID: group.block.blockID)
     }
     
-    func videoCellChoseDownload(cell: CourseVideoTableViewCell, block : CourseBlock) {
+    func videoCellChoseDownload(_ cell: CourseVideoTableViewCell, block : CourseBlock) {
         self.delegate?.outlineTableController(self, choseDownloadVideoForBlock: block)
     }
     
-    func videoCellChoseShowDownloads(cell: CourseVideoTableViewCell) {
+    func videoCellChoseShowDownloads(_ cell: CourseVideoTableViewCell) {
         self.delegate?.outlineTableControllerChoseShowDownloads(self)
     }
     
     //Added By Ravi On 22Jan'17 to implement Audio Podcast Download
-    func audioCellChoseDownload(cell: CourseAudioTableViewCell, block : CourseBlock) {
+    func audioCellChoseDownload(_ cell: CourseAudioTableViewCell, block : CourseBlock) {
         self.delegate?.outlineTableController(self, choseDownloadAudioForBlock: block)
     }
     
     //Added By Ravi On 22Jan'17 to implement Audio Podcast Download
-    func audioCellChoseShowDownloads(cell: CourseAudioTableViewCell) {
+    func audioCellChoseShowDownloads(_ cell: CourseAudioTableViewCell) {
         self.delegate?.outlineTableControllerChoseShowDownloads(self)
     }
 
-    func sectionCellChoseShowDownloads(cell: CourseSectionTableViewCell) {
+    func sectionCellChoseShowDownloads(_ cell: CourseSectionTableViewCell) {
         self.delegate?.outlineTableControllerChoseShowDownloads(self)
     }
     
-    func sectionCellChoseDownload(cell: CourseSectionTableViewCell, videos: [OEXHelperVideoDownload], forBlock block : CourseBlock) {
+    func sectionCellChoseDownload(_ cell: CourseSectionTableViewCell, videos: [OEXHelperVideoDownload], forBlock block : CourseBlock) {
         self.delegate?.outlineTableController(self, choseDownloadVideos: videos, rootedAtBlock:block)
     }
     
-    func choseViewLastAccessedWithItem(item : CourseLastAccessed) {
+    func choseViewLastAccessedWithItem(_ item : CourseLastAccessed) {
         for group in groups {
             let childNodes = group.children
             let currentLastViewedIndex = childNodes.firstIndexMatching({$0.blockID == item.moduleId})
@@ -216,7 +216,7 @@ class CourseOutlineTableController : UITableViewController, CourseVideoTableView
     }
     
     /// Shows the last accessed Header from the item as argument. Also, sets the relevant action if the course block exists in the course outline.
-    func showLastAccessedWithItem(item : CourseLastAccessed) {
+    func showLastAccessedWithItem(_ item : CourseLastAccessed) {
         tableView.tableHeaderView = self.headerContainer
         lastAccessedView.subtitleText = item.moduleName
         lastAccessedView.setViewButtonAction { [weak self] _ in

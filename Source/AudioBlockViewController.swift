@@ -7,13 +7,13 @@
 //
 
 import UIKit
-
+import SnapKit
 private let StandardVideoAspectRatio : CGFloat = 0.6
 
 
 class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAudioPlayerInterfaceDelegate, StatusBarOverriding, InterfaceOrientationOverriding {
 
-    typealias Environment = protocol<DataManagerProvider, OEXInterfaceProvider, ReachabilityProvider>
+    typealias Environment = DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider
     
     let environment : Environment
     let blockID : CourseBlockID?
@@ -38,7 +38,7 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
         super.init(nibName: nil, bundle: nil)
         
         addChildViewController(audioController)
-        audioController.didMoveToParentViewController(self)
+        audioController.didMove(toParentViewController: self)
         audioController.delegate = self
         
         
@@ -58,13 +58,13 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
     func addLoadListener() {
         loader.listen (self,
                        success : { [weak self] block in
-                        if let video = block.type.asVideo where video.isYoutubeVideo,
+                        if let video = block.type.asVideo, video.isYoutubeVideo,
                             let url = block.blockURL
                         {
-                            self?.showYoutubeMessage(url)
+                            self?.showYoutubeMessage(url as URL)
                         }
                         else if
-                            let audioUrl = self?.environment.interface?.stateForAudioWithID((self?.blockID!)!)
+                            let audioUrl = self?.environment.interface?.stateForAudio(withID: (self?.blockID!)!)
                         {
                             self?.showLoadedBlock(audioUrl)
                         }
@@ -80,7 +80,7 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        contentView = UIView(frame: CGRectZero)
+        contentView = UIView(frame: CGRect.zero)
         view.addSubview(contentView!)
         loadController.setupInController(self, contentView : contentView!)
         
@@ -90,14 +90,14 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
         audioController.hidesNextPrev = true
         
         
-        rotateDeviceMessageView = IconMessageView(icon: .HeadPhones, message: Strings.audioPodcast)
+        rotateDeviceMessageView = IconMessageView(icon: .headPhones, message: Strings.audioPodcast)
         contentView!.addSubview(rotateDeviceMessageView!)
         
-        view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
         view.setNeedsUpdateConstraints()
         
 
-        let audioString = self.environment.interface?.stateForAudioId(self.blockID)
+        let audioString = self.environment.interface?.state(forAudioId: self.blockID)
         
         audioController.reqAudioString = audioString!;
         
@@ -106,12 +106,12 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
     
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.loadVideoIfNecessary()
     }
     
-    override func viewDidAppear(animated : Bool) {
+    override func viewDidAppear(_ animated : Bool) {
         
         // There's a weird OS bug where the bottom layout guide doesn't get set properly until
         // the layout cycle after viewDidAppear so cause a layout cycle
@@ -122,7 +122,7 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
         super.viewDidAppear(animated)
         
         guard canDownloadVideo() else {
-            guard let video = self.environment.interface?.stateForVideoWithID(self.blockID, courseID : self.courseID) where video.downloadState == .Complete else {
+            guard let video = self.environment.interface?.stateForVideo(withID: self.blockID, courseID : self.courseID), video.downloadState == .complete else {
                // self.showOverlayMessage(Strings.noWifiMessage)
                 return
             }
@@ -133,12 +133,12 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
 		showFTUEIfNeeded()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         audioController.setAutoPlaying(false)
     }
     
-    private func loadVideoIfNecessary() {
+    fileprivate func loadVideoIfNecessary() {
         if !loader.hasBacking {
             loader.backWithStream(courseQuerier.blockWithID(self.blockID).firstSuccess())
         }
@@ -166,47 +166,51 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
     
     
     
-    private func applyPortraitConstraints() {
+    fileprivate func applyPortraitConstraints() {
         
-        contentView?.snp_remakeConstraints {make in
+        contentView?.snp.remakeConstraints {make in
             make.edges.equalTo(view)
         }
             audioController.height = view.bounds.size.width * StandardVideoAspectRatio
             audioController.width = view.bounds.size.width
             
-            audioController.view.snp_remakeConstraints {make in
+            audioController.view.snp.remakeConstraints {make in
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
-                if #available(iOS 9, *) {
-                    make.top.equalTo(self.topLayoutGuide.bottomAnchor)
+                //TODO: snp verify
+               /* if #available(iOS 9, *) {
+                    make.top.equalTo(topLayoutGuide.snp.bottom)
                 }
                 else {
                     make.top.equalTo(self.snp_topLayoutGuideBottom)
-                }
-                
+                }*/
+                make.top.equalTo(topLayoutGuide.snp.bottom)
                 make.height.equalTo(view.bounds.size.width * StandardVideoAspectRatio)
             }
             
-            rotateDeviceMessageView?.snp_remakeConstraints {make in
-                make.top.equalTo(audioController.view.snp_bottom)
+            rotateDeviceMessageView?.snp.remakeConstraints {make in
+                make.top.equalTo(audioController.view.snp.bottom)
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
                 // There's a weird OS bug where the bottom layout guide doesn't get set properly until
                 // the layout cycle after viewDidAppear, so use the parent in the mean time
+                //TODO: snp verify
+                /*
                 if #available(iOS 9, *) {
                     make.bottom.equalTo(self.bottomLayoutGuide.topAnchor)
                 }
                 else {
-                    make.bottom.equalTo(self.snp_bottomLayoutGuideTop)
-                }
+                    make.bottom.equalTo(self.snp.bottomLayoutGuideTop)
+                }*/
+                make.bottom.equalTo(bottomLayoutGuide.snp.top)
             }
         
         
     }
     
-    private func applyLandscapeConstraints() {
+    fileprivate func applyLandscapeConstraints() {
         
-        contentView?.snp_remakeConstraints {make in
+        contentView?.snp.remakeConstraints {make in
             make.edges.equalTo(view)
         }
         
@@ -215,7 +219,7 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
 //            videoController.height = playerHeight
 //            videoController.width = view.bounds.size.width
 //            
-//            videoController.view.snp_remakeConstraints {make in
+//            videoController.view.snp.remakeConstraints {make in
 //                make.leading.equalTo(contentView!)
 //                make.trailing.equalTo(contentView!)
 //                if #available(iOS 9, *) {
@@ -229,7 +233,7 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
 //            }
 //            
 //            
-//            rotateDeviceMessageView?.snp_remakeConstraints {make in
+//            rotateDeviceMessageView?.snp.remakeConstraints {make in
 //                make.height.equalTo(0.0)
 //            }
     }
@@ -244,43 +248,43 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
 //        }
     }
     
-    private func showError(error : NSError?) {
-        loadController.state = LoadState.failed(error, icon: .UnknownError, message: Strings.videoContentNotAvailable)
+    fileprivate func showError(_ error : NSError?) {
+        loadController.state = LoadState.failed(error, icon: .unknownError, message: Strings.videoContentNotAvailable)
     }
     
-    private func showYoutubeMessage(url: NSURL) {
+    fileprivate func showYoutubeMessage(_ url: URL) {
         let buttonInfo = MessageButtonInfo(title: Strings.Video.viewOnYoutube) {
-            if UIApplication.sharedApplication().canOpenURL(url){
-                UIApplication.sharedApplication().openURL(url)
+            if UIApplication.shared.canOpenURL(url){
+                UIApplication.shared.openURL(url)
             }
         }
-        loadController.state = LoadState.empty(icon: .CourseModeVideo, message: Strings.Video.onlyOnYoutube, attributedMessage: nil, accessibilityMessage: nil, buttonInfo: buttonInfo)
+        loadController.state = LoadState.empty(icon: .courseModeVideo, message: Strings.Video.onlyOnYoutube, attributedMessage: nil, accessibilityMessage: nil, buttonInfo: buttonInfo)
     }
     
-    private func showLoadedBlock(audio : OEXHelperAudioDownload?) {
+    fileprivate func showLoadedBlock(_ audio : OEXHelperAudioDownload?) {
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.loadController.state = .Loaded
+        DispatchQueue.main.async {
+            self.loadController.state = .loaded
         }
         
-    audioController.playAudioFor(audio!)
+    audioController.playAudio(for: audio!)
         
         
     }
     
-    private func canDownloadVideo() -> Bool {
-        let hasWifi = environment.reachability.isReachableViaWiFi() ?? false
+    fileprivate func canDownloadVideo() -> Bool {
+        let hasWifi = environment.reachability.isReachableViaWiFi() 
         let onlyOnWifi = environment.dataManager.interface?.shouldDownloadOnlyOnWifi ?? false
         return !onlyOnWifi || hasWifi
     }
     
-    override func childViewControllerForStatusBarStyle() -> UIViewController? {
+    override var childViewControllerForStatusBarStyle : UIViewController? {
      
         return audioController
         
     }
     
-    override func childViewControllerForStatusBarHidden() -> UIViewController? {
+    override var childViewControllerForStatusBarHidden : UIViewController? {
        
         return audioController
         
@@ -302,17 +306,17 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
 ////        }
 //    }
     
-    func audioPlayerTapped(sender: UIGestureRecognizer) {
+    func audioPlayerTapped(_ sender: UIGestureRecognizer) {
         guard let audioPlayer = audioController.moviePlayerController else { return }
         
-        if self.isVerticallyCompact() && !audioPlayer.fullscreen{
-            audioPlayer.setFullscreen(true, withOrientation: self.currentOrientation())
+        if self.isVerticallyCompact() && !audioPlayer.isFullscreen{
+            audioPlayer.setFullscreen(true, with: self.currentOrientation())
         }
     }
 
 	func showFTUEIfNeeded() {
-		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-		dispatch_after(delayTime, dispatch_get_main_queue()) { [weak self] in
+		let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
 			guard let stongSelf = self else {
 				return
 			}
@@ -321,21 +325,21 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
 	}
 
 	func showUnitFTUE(){
-		let showedFTUE = NSUserDefaults.standardUserDefaults().boolForKey("Unit FTUE")
+		let showedFTUE = UserDefaults.standard.bool(forKey: "Unit FTUE")
 		guard !showedFTUE,
-			let rootController = UIApplication.sharedApplication().delegate?.window??.rootViewController else { return }
+			let rootController = UIApplication.shared.delegate?.window??.rootViewController else { return }
 
 		let coachController = UnitCoachmarkViewController()
 
 		rootController.addChildViewController(coachController)
 		coachController.view.frame = rootController.view.bounds
 		rootController.view.addSubview(coachController.view)
-		coachController.didMoveToParentViewController(rootController)
+		coachController.didMove(toParentViewController: rootController)
 		coachController.view.alpha = 0.01
-		UIView.animateWithDuration(0.2) {
+		UIView.animate(withDuration: 0.2, animations: {
 			coachController.view.alpha = 1.0
-		}
-		NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Unit FTUE")
+		}) 
+		UserDefaults.standard.set(true, forKey: "Unit FTUE")
 	}
 
 }

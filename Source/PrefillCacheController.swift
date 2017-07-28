@@ -12,51 +12,51 @@ import UIKit
 /// Allows preactive filling of the cache with course content that requires authentication.
 class PrefillCacheController: NSObject, UIWebViewDelegate {
     
-    private var state = WebControllerState.CreatingSession
+    fileprivate var state = WebControllerState.creatingSession
     
-    private var webController: UIWebViewContentController?
+    fileprivate var webController: UIWebViewContentController?
     
-    private var urlQueue = [NSURL]()
-    private var isLoading = false
+    fileprivate var urlQueue = [URL]()
+    fileprivate var isLoading = false
     
     // MARK: Initializers
 
     static let sharedController = PrefillCacheController()
     
-    private override init() {
+    fileprivate override init() {
         //This prevents others from using the default '()' initializer for this class.
         super.init()
         
-        state = .CreatingSession
+        state = .creatingSession
     }
 
 	func reset() {
-		state = .CreatingSession
+		state = .creatingSession
 	}
     
     
     // MARK: Requests Loading
     
-    private func loadOAuthRefreshRequest() {
+    fileprivate func loadOAuthRefreshRequest() {
         
-        if let hostURL = OEXConfig.sharedConfig().apiHostURL(), let authorizationHeaders = OEXSession.sharedSession()?.authorizationHeaders {
+        if let hostURL = OEXConfig.shared().apiHostURL(), let authorizationHeaders = OEXSession.shared()?.authorizationHeaders {
             
-            guard let URL = hostURL.URLByAppendingPathComponent(OAuthExchangePath) else { return }
-            let exchangeRequest = NSMutableURLRequest(URL: URL)
-            exchangeRequest.HTTPMethod = HTTPMethod.POST.rawValue
+            let URL = hostURL.appendingPathComponent(OAuthExchangePath) 
+            let exchangeRequest = NSMutableURLRequest(url: URL)
+            exchangeRequest.httpMethod = HTTPMethod.POST.rawValue
             
             for (key, value) in authorizationHeaders {
                 exchangeRequest.addValue(value, forHTTPHeaderField: key)
             }
             
-            loadRequest(exchangeRequest)
+            loadRequest(exchangeRequest as URLRequest)
         }
     }
     
     
     // MARK: Public Methods
     
-    func cacheWebContent(urls : [NSURL]) {
+    func cacheWebContent(_ urls : [URL]) {
         
         guard urls.count > 0 else {
             return
@@ -77,21 +77,21 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
         
         if let url = urlQueue.first {
             
-            let request = NSURLRequest(URL: url)
+            let request = URLRequest(url: url)
             
-            if state == .CreatingSession && EVURLCache.storagePathForRequest(request) == nil {
+            if state == .creatingSession && EVURLCache.storagePathForRequest(request) == nil {
                 loadOAuthRefreshRequest()
             }
             else {
-                debugPrint("Loading Request: \(request.URLString)")
+                debugPrint("Loading Request: \(request.url!.absoluteString)")
 
-                state = .LoadingContent
+                state = .loadingContent
                 loadRequest(request)
             }
         }
     }
     
-    func stateOfWebContent(urls : [NSURL]) -> [DownloadState] {
+    func stateOfWebContent(_ urls : [URL]) -> [DownloadState] {
         
         var resultStates = [DownloadState]()
         
@@ -99,32 +99,32 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
             
             if self.urlQueue.first == url {
                 // Currently downloading
-                resultStates.append(DownloadState(state: .Active, progress: 50.0))
+                resultStates.append(DownloadState(state: .active, progress: 50.0))
                 
             } else if self.urlQueue.contains(url) {
                 // In the download queue
-                resultStates.append(DownloadState(state: .Active, progress: 0.0))
+                resultStates.append(DownloadState(state: .active, progress: 0.0))
                 
-            } else if (EVURLCache.sharedURLCache().cachedResponseForRequest(NSURLRequest(URL: url)) != nil) {
+            } else if (EVURLCache.shared.cachedResponse(for: URLRequest(url: url)) != nil) {
                 // On the disk
-                resultStates.append(DownloadState(state: .Complete, progress: 100.0))
+                resultStates.append(DownloadState(state: .complete, progress: 100.0))
                 
             } else {
                 // Not cached
-                resultStates.append(DownloadState(state: .Available, progress: 0.0))
+                resultStates.append(DownloadState(state: .available, progress: 0.0))
             }        
         }
         
         return resultStates
     }
     
-    func cancelDownload(urls : [NSURL]) {
+    func cancelDownload(_ urls : [URL]) {
         
         debugPrint("Canceling URLs: \(urls)")
         
         urls.forEach { (incomingURL) in
             
-            if state == .LoadingContent && incomingURL == urlQueue.first {
+            if state == .loadingContent && incomingURL == urlQueue.first {
                 // Stop loading of the curret URL
                 isLoading = false
                 webController?.webView.stopLoading()
@@ -132,8 +132,8 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
                 urlQueue.removeFirst()
                 
             } else {
-                if let index = urlQueue.indexOf(incomingURL) {
-                    urlQueue.removeAtIndex(index)
+                if let index = urlQueue.index(of: incomingURL) {
+                    urlQueue.remove(at: index)
                 }
             }
         }
@@ -145,7 +145,7 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
             
             if let url = urlQueue.first {
                 
-                let request = NSURLRequest(URL: url)
+                let request = URLRequest(url: url)
                 loadRequest(request)
                 
             } else {
@@ -159,46 +159,45 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
     
     // MARK: UIWebView delegate
     
-    @objc internal func webViewDidFinishLoad(webView: UIWebView) {
+    @objc internal func webViewDidFinishLoad(_ webView: UIWebView) {
         
         switch state {
-        case .CreatingSession:
+        case .creatingSession:
             if let url = urlQueue.first {
-                state = .LoadingContent
-                loadRequest(NSURLRequest(URL: url))
+                state = .loadingContent
+                loadRequest(URLRequest(url: url))
             }
             else {
                 cleanWebViewIfNeeded()
                 postUpdateNotification()
             }
             
-        case .LoadingContent:
+        case .loadingContent:
             // Call the progress block
-            debugPrint("Finished caching: \(urlQueue.first)")
-            
+    
             // Move to the next request
             if urlQueue.isEmpty == false {
                 urlQueue.removeFirst()
             }
             
             if let url = urlQueue.first {
-                loadRequest(NSURLRequest(URL: url))
+                loadRequest(URLRequest(url: url))
             } else {
                 cleanWebViewIfNeeded()
             }
             
             postUpdateNotification()
             
-        case .NeedingSession:
-            state = .CreatingSession
+        case .needingSession:
+            state = .creatingSession
             loadOAuthRefreshRequest()
         }
     }
     
-    @objc internal func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+    @objc internal func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         // Call the completion block with error
         
-        if state == .CreatingSession {
+        if state == .creatingSession {
             debugPrint("Failed caching authentication: \(error)")
             
             urlQueue.removeAll()
@@ -209,15 +208,13 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
             return
         }
         
-        debugPrint("Failed caching: \(urlQueue.first)")
-        
         // Move to the next request
         if urlQueue.isEmpty == false {
             urlQueue.removeFirst()
         }
         
         if let url = urlQueue.first {
-            loadRequest(NSURLRequest(URL: url))
+            loadRequest(URLRequest(url: url))
         } else {
             cleanWebViewIfNeeded()
         }
@@ -228,7 +225,7 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
     
     //MARK:- Helper Methods
     
-    private func loadRequest(request: NSURLRequest) {
+    fileprivate func loadRequest(_ request: URLRequest) {
         
         if let webController = webController {
             
@@ -249,14 +246,14 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
 
     
     ///Post download update notification
-    private func postUpdateNotification() {
+    fileprivate func postUpdateNotification() {
         
-        dispatch_async(dispatch_get_main_queue(), {
-            NSNotificationCenter.defaultCenter().postNotificationName(OEXDownloadEndedNotification, object: nil)
+        DispatchQueue.main.async(execute: {
+            NotificationCenter.default.post(name: NSNotification.Name.OEXDownloadEnded, object: nil)
         })
     }
     
-    private func cleanWebViewIfNeeded() {
+    fileprivate func cleanWebViewIfNeeded() {
         isLoading = false
         webController?.clearDelegate()
         webController = nil

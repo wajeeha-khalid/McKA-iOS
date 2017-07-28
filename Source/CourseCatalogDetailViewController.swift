@@ -12,23 +12,23 @@ import UIKit
 import edXCore
 
 class CourseCatalogDetailViewController: UIViewController {
-    private let courseID: String
+    fileprivate let courseID: String
     
-    typealias Environment = protocol<OEXAnalyticsProvider, DataManagerProvider, NetworkManagerProvider, OEXRouterProvider>
+    typealias Environment = OEXAnalyticsProvider & DataManagerProvider & NetworkManagerProvider & OEXRouterProvider
     
-    private let environment: Environment
-    private lazy var loadController = LoadStateViewController()
-    private lazy var aboutView : CourseCatalogDetailView = {
-        return CourseCatalogDetailView(frame: CGRectZero, environment: self.environment)
+    fileprivate let environment: Environment
+    fileprivate lazy var loadController = LoadStateViewController()
+    fileprivate lazy var aboutView : CourseCatalogDetailView = {
+        return CourseCatalogDetailView(frame: CGRect.zero, environment: self.environment)
     }()
-    private let courseStream = BackedStream<(OEXCourse, enrolled: Bool)>()
+    fileprivate let courseStream = BackedStream<(OEXCourse, enrolled: Bool)>()
     
     init(environment : Environment, courseID : String) {
         self.courseID = courseID
         self.environment = environment
         super.init(nibName: nil, bundle: nil)
         self.navigationItem.title = Strings.findCourses
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -38,10 +38,10 @@ class CourseCatalogDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(aboutView)
-        aboutView.snp_makeConstraints { make in
+        aboutView.snp.makeConstraints { make in
             make.edges.equalTo(self.view)
         }
-        self.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
         
         self.loadController.setupInController(self, contentView: aboutView)
         
@@ -51,7 +51,7 @@ class CourseCatalogDetailViewController: UIViewController {
         load()
     }
     
-    private func listen() {
+    fileprivate func listen() {
         self.courseStream.listen(self,
             success: {[weak self] (course, enrolled) in
                 self?.aboutView.applyCourse(course)
@@ -64,6 +64,7 @@ class CourseCatalogDetailViewController: UIViewController {
                 }
                 else {
                     self?.aboutView.actionText = Strings.CourseDetail.enrollNow
+                    
                     self?.aboutView.action = {[weak self] completion in
                         self?.enrollInCourse(completion)
                     }
@@ -73,32 +74,32 @@ class CourseCatalogDetailViewController: UIViewController {
             }
         )
         self.aboutView.loaded.listen(self) {[weak self] _ in
-            self?.loadController.state = .Loaded
+            self?.loadController.state = .loaded
         }
     }
     
-    private func load() {
+    fileprivate func load() {
         let request = CourseCatalogAPI.getCourse(courseID)
         let courseStream = environment.networkManager.streamForRequest(request)
         let enrolledStream = environment.dataManager.enrollmentManager.streamForCourseWithID(courseID).resultMap {
-            return .Success($0.isSuccess)
+            return .success($0.isSuccess)
         }
         let stream = joinStreams(courseStream, enrolledStream).map{($0, enrolled: $1) }
         self.courseStream.backWithStream(stream)
     }
     
-    private func showCourseScreen(message message: String? = nil) {
+    fileprivate func showCourseScreen(message: String? = nil) {
         self.environment.router?.showMyCourses(animated: true, pushingCourseWithID:courseID)
         
         if let message = message {
-            let after = dispatch_time(DISPATCH_TIME_NOW, Int64(EnrollmentShared.overlayMessageDelay * NSTimeInterval(NSEC_PER_SEC)))
-            dispatch_after(after, dispatch_get_main_queue()) {
-                NSNotificationCenter.defaultCenter().postNotificationName(EnrollmentShared.successNotification, object: message, userInfo: nil)
+            let after = DispatchTime.now() + Double(Int64(EnrollmentShared.overlayMessageDelay * TimeInterval(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: after) {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: EnrollmentShared.successNotification), object: message, userInfo: nil)
             }
         }
     }
     
-    private func enrollInCourse(completion : () -> Void) {
+    fileprivate func enrollInCourse(_ completion : @escaping () -> Void) {
         
         let notEnrolled = environment.dataManager.enrollmentManager.enrolledCourseWithID(self.courseID) == nil
         
@@ -112,7 +113,7 @@ class CourseCatalogDetailViewController: UIViewController {
         let request = CourseCatalogAPI.enroll(courseID)
         environment.networkManager.taskForRequest(request) {[weak self] response in
             if response.response?.httpStatusCode.is2xx ?? false {
-                self?.environment.analytics.trackUserEnrolledInCourse(courseID)
+                self?.environment.analytics.trackUserEnrolled(inCourse: courseID)
                 self?.showCourseScreen(message: Strings.findCoursesEnrollmentSuccessfulMessage)
             }
             else {
@@ -126,7 +127,7 @@ class CourseCatalogDetailViewController: UIViewController {
 // Testing only
 extension CourseCatalogDetailViewController {
     
-    var t_loaded : Stream<()> {
+    var t_loaded : edXCore.Stream<()> {
         return self.aboutView.loaded
     }
     
@@ -134,7 +135,7 @@ extension CourseCatalogDetailViewController {
         return self.aboutView.actionText
     }
     
-    func t_enrollInCourse(completion : () -> Void) {
+    func t_enrollInCourse(_ completion : @escaping () -> Void) {
         enrollInCourse(completion)
     }
     

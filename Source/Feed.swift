@@ -8,25 +8,25 @@
 
 import Foundation
 
-public class Feed<A> : LifetimeTrackable {
-    public let lifetimeToken = NSObject()
+open class Feed<A> : LifetimeTrackable {
+    open let lifetimeToken = NSObject()
     
-    private let backing = BackedStream<A>()
-    private let refreshTrigger : BackedStream<A> -> Void
+    fileprivate let backing = BackedStream<A>()
+    fileprivate let refreshTrigger : (BackedStream<A>) -> Void
     
-    public var output : Stream<A> {
+    open var output : edXCore.Stream<A> {
         return backing
     }
     
-    public init(refreshTrigger : BackedStream<A> -> Void) {
+    public init(refreshTrigger : @escaping (BackedStream<A>) -> Void) {
         self.refreshTrigger = refreshTrigger
     }
     
-    public func refresh() {
+    open func refresh() {
         self.refreshTrigger(backing)
     }
     
-    public func map<B>(f : A -> B) -> Feed<B> {
+    open func map<B>(_ f : @escaping (A) -> B) -> Feed<B> {
         let backing = BackedStream<A>()
         let result = Feed<B> { stream in
             self.refreshTrigger(backing)
@@ -36,11 +36,11 @@ public class Feed<A> : LifetimeTrackable {
     }
 }
 
-public class BackedFeed<A> : Feed<A> {
-    private var feed : Feed<A>?
-    private var backingRemover : Removable?
+open class BackedFeed<A> : Feed<A> {
+    fileprivate var feed : Feed<A>?
+    fileprivate var backingRemover : Removable?
     
-    public var backingStream : BackedStream<A> {
+    open var backingStream : BackedStream<A> {
         return self.backing
     }
     
@@ -48,20 +48,20 @@ public class BackedFeed<A> : Feed<A> {
         super.init {_ in } // we override refresh so we don't need this
     }
     
-    public func backWithFeed(feed : Feed<A>) {
+    open func backWithFeed(_ feed : Feed<A>) {
         self.removeBacking()
         
         self.feed = feed
         self.backingRemover = self.backing.addBackingStream(feed.backing)
     }
     
-    public func removeBacking() {
+    open func removeBacking() {
         self.feed = nil
         self.backingRemover?.remove()
         self.backingRemover = nil
     }
     
-    override public func refresh() {
+    override open func refresh() {
         self.feed?.refresh()
     }
 }

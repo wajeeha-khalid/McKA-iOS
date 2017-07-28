@@ -8,7 +8,7 @@
 
 import UIKit
 import XCTest
-
+import SwiftyJSON
 import edXCore
 import edX
 

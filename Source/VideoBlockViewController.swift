@@ -9,12 +9,13 @@
 import Foundation
 import MediaPlayer
 import UIKit
+import SnapKit
 
 private let StandardVideoAspectRatio : CGFloat = 0.6
 
 class VideoBlockViewController : UIViewController, CourseBlockViewController, OEXVideoPlayerInterfaceDelegate,GVRVideoPlayerInterfaceDelegate, StatusBarOverriding, InterfaceOrientationOverriding {
     
-    typealias Environment = protocol<DataManagerProvider, OEXInterfaceProvider, ReachabilityProvider>
+    typealias Environment = DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider
     
     let environment : Environment
     let blockID : CourseBlockID?
@@ -46,11 +47,11 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         super.init(nibName: nil, bundle: nil)
         
         addChildViewController(videoController)
-        videoController.didMoveToParentViewController(self)
+        videoController.didMove(toParentViewController: self)
         videoController.delegate = self
         
         addChildViewController(gvrVideoController)
-        gvrVideoController.didMoveToParentViewController(self)
+        gvrVideoController.didMove(toParentViewController: self)
         gvrVideoController.delegate = self
         
         addLoadListener()
@@ -69,14 +70,13 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     func addLoadListener() {
         loader.listen (self,
                        success : { [weak self] block in
-                        if let video = block.type.asVideo where video.isYoutubeVideo,
+                        if let video = block.type.asVideo, video.isYoutubeVideo,
                             let url = block.blockURL
                         {
-                            self?.showYoutubeMessage(url)
+                            self?.showYoutubeMessage(url as URL)
                         }
                         else if
-                            let video = self?.environment.interface?.stateForVideoWithID(self?.blockID, courseID : self?.courseID)
-                            where block.type.asVideo?.preferredEncoding != nil
+                            let video = self?.environment.interface?.stateForVideo(withID: self?.blockID, courseID : self?.courseID), block.type.asVideo?.preferredEncoding != nil
                         {
                             self?.showLoadedBlock(block, forVideo: video)
                         }
@@ -92,21 +92,21 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        contentView = UIView(frame: CGRectZero)
+        contentView = UIView(frame: CGRect.zero)
         view.addSubview(contentView!)
         loadController.setupInController(self, contentView : contentView!)
         
         // Added by Ravi for VR Video functionality.
         
-        let video = self.environment.interface?.stateForVideoWithID(self.blockID, courseID : self.courseID)
+        let video = self.environment.interface?.stateForVideo(withID: self.blockID, courseID : self.courseID)
         let videoUrl = video?.summary?.videoURL
         
         gvrTransitionView.frame = self.revealViewController().view.frame
         self.revealViewController().view.addSubview(gvrTransitionView)
-        self.revealViewController().view.bringSubviewToFront(gvrTransitionView)
+        self.revealViewController().view.bringSubview(toFront: gvrTransitionView)
         gvrTransitionView.updateConstraints()
         
-        if (videoUrl?.rangeOfString(VR_VIDEO_IDENTIFIER)) != nil
+        if (videoUrl?.range(of: VR_VIDEO_IDENTIFIER)) != nil
         {
             loadVRVideoView()
         }
@@ -115,13 +115,13 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             loadVideoView()
         }
 
-        view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
         view.setNeedsUpdateConstraints()
     }
 
 	func showFTUEIfNeeded() {
-		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-		dispatch_after(delayTime, dispatch_get_main_queue()) { [weak self] in
+		let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
 			guard let stongSelf = self else {
 				return
 			}
@@ -134,27 +134,27 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
 	}
 
 	func showUnitFTUE(){
-		let showedFTUE = NSUserDefaults.standardUserDefaults().boolForKey("Unit FTUE")
+		let showedFTUE = UserDefaults.standard.bool(forKey: "Unit FTUE")
 		guard !showedFTUE,
-			let rootController = UIApplication.sharedApplication().delegate?.window??.rootViewController else { return }
+			let rootController = UIApplication.shared.delegate?.window??.rootViewController else { return }
 
 		let coachController = UnitCoachmarkViewController()
 
 		rootController.addChildViewController(coachController)
 		coachController.view.frame = rootController.view.bounds
 		rootController.view.addSubview(coachController.view)
-		coachController.didMoveToParentViewController(rootController)
+		coachController.didMove(toParentViewController: rootController)
 		coachController.view.alpha = 0.01
-		UIView.animateWithDuration(0.2) {
+		UIView.animate(withDuration: 0.2, animations: {
 			coachController.view.alpha = 1.0
-		}
-		NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Unit FTUE")
+		}) 
+		UserDefaults.standard.set(true, forKey: "Unit FTUE")
 	}
 
 	func showUnitVRFTUE(){
-		let showedFTUE = NSUserDefaults.standardUserDefaults().boolForKey("Unit VR FTUE")
+		let showedFTUE = UserDefaults.standard.bool(forKey: "Unit VR FTUE")
 		guard !showedFTUE,
-			let rootController = UIApplication.sharedApplication().delegate?.window??.rootViewController else { return }
+			let rootController = UIApplication.shared.delegate?.window??.rootViewController else { return }
 
 		let coachController = VRCoachmarkViewController()
 		coachController.completion = {
@@ -164,12 +164,12 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
 		rootController.addChildViewController(coachController)
 		coachController.view.frame = rootController.view.bounds
 		rootController.view.addSubview(coachController.view)
-		coachController.didMoveToParentViewController(rootController)
+		coachController.didMove(toParentViewController: rootController)
 		coachController.view.alpha = 0.01
-		UIView.animateWithDuration(0.2) {
+		UIView.animate(withDuration: 0.2, animations: {
 			coachController.view.alpha = 1.0
-		}
-		NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Unit VR FTUE")
+		}) 
+		UserDefaults.standard.set(true, forKey: "Unit VR FTUE")
 	}
 
     
@@ -194,10 +194,10 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             
             if self.gvrVideoController.didFinishLoading {
                 self.gvrVideoController.gvrVideoView?.pause()
-                self.gvrTransitionView.hidden = false
-                self.gvrTransitionView.startCountdownFrom(10, withCompletion: {
+                self.gvrTransitionView.isHidden = false
+                self.gvrTransitionView.startCountdown(from: 10, withCompletion: {
                     
-                    self.gvrTransitionView.hidden = true
+                    self.gvrTransitionView.isHidden = true
                     self.gvrVideoController.displayVRPlayerInStereoMode()
                     self.gvrVideoController.gvrVideoView?.play()
                 })
@@ -219,17 +219,17 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         videoController.fadeInOnLoad = false
         videoController.hidesNextPrev = true
         
-        rotateDeviceMessageView = IconMessageView(icon: .RotateDevice, message: Strings.rotateDevice)
+        rotateDeviceMessageView = IconMessageView(icon: .rotateDevice, message: Strings.rotateDevice)
         contentView!.addSubview(rotateDeviceMessageView!)
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.loadVideoIfNecessary()
     }
     
-    override func viewDidAppear(animated : Bool) {
+    override func viewDidAppear(_ animated : Bool) {
         
         // There's a weird OS bug where the bottom layout guide doesn't get set properly until
         // the layout cycle after viewDidAppear so cause a layout cycle
@@ -240,7 +240,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         super.viewDidAppear(animated)
         
         guard canDownloadVideo() else {
-            guard let video = self.environment.interface?.stateForVideoWithID(self.blockID, courseID : self.courseID) where video.downloadState == .Complete else {
+            guard let video = self.environment.interface?.stateForVideo(withID: self.blockID, courseID : self.courseID), video.downloadState == .complete else {
                 self.showOverlayMessage(Strings.noWifiMessage)
                 return
             }
@@ -251,12 +251,12 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
 		showFTUEIfNeeded()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         videoController.setAutoPlaying(false)
     }
     
-    private func loadVideoIfNecessary() {
+    fileprivate func loadVideoIfNecessary() {
         if !loader.hasBacking {
             loader.backWithStream(courseQuerier.blockWithID(self.blockID).firstSuccess())
         }
@@ -286,9 +286,9 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     
     
     
-    private func applyPortraitConstraints() {
+    fileprivate func applyPortraitConstraints() {
         
-        contentView?.snp_remakeConstraints {make in
+        contentView?.snp.remakeConstraints {make in
             make.edges.equalTo(view)
         }
         
@@ -297,31 +297,34 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             gvrVideoController.height = view.bounds.size.width * StandardVideoAspectRatio
             gvrVideoController.width = view.bounds.size.width
             
-            gvrVideoController.view.snp_remakeConstraints {make in
+            gvrVideoController.view.snp.remakeConstraints {make in
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
-                if #available(iOS 9, *) {
+                //TODO: snp verify
+               /* if #available(iOS 9, *) {
                     make.top.equalTo(self.topLayoutGuide.bottomAnchor)
                 }
                 else {
                     make.top.equalTo(self.snp_topLayoutGuideBottom)
-                }
-                
+                } */
+                make.top.equalTo(topLayoutGuide.snp.bottom)
                 make.height.equalTo(view.bounds.size.width * StandardVideoAspectRatio) //0.8
             }
             
-            cardBoardMessageView?.snp_remakeConstraints {make in
-                make.top.equalTo(gvrVideoController.view.snp_bottom)
+            cardBoardMessageView?.snp.remakeConstraints {make in
+                make.top.equalTo(gvrVideoController.view.snp.bottom)
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
                 // There's a weird OS bug where the bottom layout guide doesn't get set properly until
                 // the layout cycle after viewDidAppear, so use the parent in the mean time
-                if #available(iOS 9, *) {
+                //TODO: snp verify
+               /* if #available(iOS 9, *) {
                     make.bottom.equalTo(self.bottomLayoutGuide.topAnchor)
                 }
                 else {
-                    make.bottom.equalTo(self.snp_bottomLayoutGuideTop)
-                }
+                    make.bottom.equalTo(self.snp.bottomLayoutGuideTop)
+                }*/
+                make.bottom.equalTo(bottomLayoutGuide.snp.top)
             }
         }
         else
@@ -330,31 +333,34 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             videoController.height = view.bounds.size.width * StandardVideoAspectRatio
             videoController.width = view.bounds.size.width
             
-            videoController.view.snp_remakeConstraints {make in
+            videoController.view.snp.remakeConstraints {make in
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
-                if #available(iOS 9, *) {
+                //TODO: snp verify
+               /* if #available(iOS 9, *) {
                     make.top.equalTo(self.topLayoutGuide.bottomAnchor)
                 }
                 else {
                     make.top.equalTo(self.snp_topLayoutGuideBottom)
-                }
-                
+                } */
+                make.top.equalTo(topLayoutGuide.snp.bottom)
                 make.height.equalTo(view.bounds.size.width * StandardVideoAspectRatio)
             }
             
-            rotateDeviceMessageView?.snp_remakeConstraints {make in
-                make.top.equalTo(videoController.view.snp_bottom)
+            rotateDeviceMessageView?.snp.remakeConstraints {make in
+                make.top.equalTo(videoController.view.snp.bottom)
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
                 // There's a weird OS bug where the bottom layout guide doesn't get set properly until
                 // the layout cycle after viewDidAppear, so use the parent in the mean time
-                if #available(iOS 9, *) {
+                //TODO: snp verify
+               /* if #available(iOS 9, *) {
                     make.bottom.equalTo(self.bottomLayoutGuide.topAnchor)
                 }
                 else {
-                    make.bottom.equalTo(self.snp_bottomLayoutGuideTop)
-                }
+                    make.bottom.equalTo(self.snp.bottomLayoutGuideTop)
+                } */
+                make.bottom.equalTo(bottomLayoutGuide.snp.top)
             }
             
             
@@ -362,9 +368,9 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         
     }
     
-    private func applyLandscapeConstraints() {
+    fileprivate func applyLandscapeConstraints() {
         
-        contentView?.snp_remakeConstraints {make in
+        contentView?.snp.remakeConstraints {make in
             make.edges.equalTo(view)
         }
         
@@ -375,21 +381,24 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             videoController.height = playerHeight
             videoController.width = view.bounds.size.width
             
-            videoController.view.snp_remakeConstraints {make in
+            videoController.view.snp.remakeConstraints {make in
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
+                //TODO: snp verify
+                /*
                 if #available(iOS 9, *) {
                     make.top.equalTo(self.topLayoutGuide.bottomAnchor)
                 }
                 else {
                     make.top.equalTo(self.snp_topLayoutGuideBottom)
-                }
+                }*/
+                make.top.equalTo(topLayoutGuide.snp.bottom)
                 
                 make.height.equalTo(playerHeight)
             }
             
             
-            rotateDeviceMessageView?.snp_remakeConstraints {make in
+            rotateDeviceMessageView?.snp.remakeConstraints {make in
                 make.height.equalTo(0.0)
             }
         }
@@ -397,7 +406,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     
     func movieTimedOut() {
         
-        if let controller = videoController.moviePlayerController where controller.fullscreen {
+        if let controller = videoController.moviePlayerController, controller.isFullscreen {
             UIAlertView(title: Strings.videoContentNotAvailable, message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: Strings.close).show()
         }
         else {
@@ -405,49 +414,49 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         }
     }
     
-    private func showError(error : NSError?) {
-        loadController.state = LoadState.failed(error, icon: .UnknownError, message: Strings.videoContentNotAvailable)
+    fileprivate func showError(_ error : NSError?) {
+        loadController.state = LoadState.failed(error, icon: .unknownError, message: Strings.videoContentNotAvailable)
     }
     
-    private func showYoutubeMessage(url: NSURL) {
+    fileprivate func showYoutubeMessage(_ url: URL) {
         let buttonInfo = MessageButtonInfo(title: Strings.Video.viewOnYoutube) {
-            if UIApplication.sharedApplication().canOpenURL(url){
-                UIApplication.sharedApplication().openURL(url)
+            if UIApplication.shared.canOpenURL(url){
+                UIApplication.shared.openURL(url)
             }
         }
-        loadController.state = LoadState.empty(icon: .CourseModeVideo, message: Strings.Video.onlyOnYoutube, attributedMessage: nil, accessibilityMessage: nil, buttonInfo: buttonInfo)
+        loadController.state = LoadState.empty(icon: .courseModeVideo, message: Strings.Video.onlyOnYoutube, attributedMessage: nil, accessibilityMessage: nil, buttonInfo: buttonInfo)
     }
     
-    private func showLoadedBlock(block : CourseBlock, forVideo video: OEXHelperVideoDownload) {
+    fileprivate func showLoadedBlock(_ block : CourseBlock, forVideo video: OEXHelperVideoDownload) {
         navigationItem.title = block.displayName
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.loadController.state = .Loaded
+        DispatchQueue.main.async {
+            self.loadController.state = .loaded
         }
         
         if self.isVRVideo == true
         {
 
             //Added by Ravi on 24Feb'17 for smooth scrolling.
-            dispatch_async(dispatch_get_main_queue()) {
-                self.gvrVideoController.playVideoFor(video)
+            DispatchQueue.main.async {
+                self.gvrVideoController.playVideo(for: video)
             }
         }
         else
         {
-            videoController.playVideoFor(video)
+            videoController.playVideo(for: video)
         }
         
         
     }
     
-    private func canDownloadVideo() -> Bool {
-        let hasWifi = environment.reachability.isReachableViaWiFi() ?? false
+    fileprivate func canDownloadVideo() -> Bool {
+        let hasWifi = environment.reachability.isReachableViaWiFi() 
         let onlyOnWifi = environment.dataManager.interface?.shouldDownloadOnlyOnWifi ?? false
         return !onlyOnWifi || hasWifi
     }
     
-    override func childViewControllerForStatusBarStyle() -> UIViewController? {
+    override var childViewControllerForStatusBarStyle : UIViewController? {
         if self.isVRVideo == true
         {
             return gvrVideoController
@@ -459,7 +468,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         
     }
     
-    override func childViewControllerForStatusBarHidden() -> UIViewController? {
+    override var childViewControllerForStatusBarHidden : UIViewController? {
         if self.isVRVideo == true
         {
             return gvrVideoController
@@ -471,27 +480,27 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         
     }
     
-    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         
         
         guard let videoPlayer = videoController.moviePlayerController else { return }
         
-        if videoPlayer.fullscreen {
+        if videoPlayer.isFullscreen {
             
-            if newCollection.verticalSizeClass == .Regular {
-                videoPlayer.setFullscreen(false, withOrientation: self.currentOrientation())
+            if newCollection.verticalSizeClass == .regular {
+                videoPlayer.setFullscreen(false, with: self.currentOrientation())
             }
             else {
-                videoPlayer.setFullscreen(true, withOrientation: self.currentOrientation())
+                videoPlayer.setFullscreen(true, with: self.currentOrientation())
             }
         }
     }
     
-    func videoPlayerTapped(sender: UIGestureRecognizer) {
+    func videoPlayerTapped(_ sender: UIGestureRecognizer) {
         guard let videoPlayer = videoController.moviePlayerController else { return }
         
-        if self.isVerticallyCompact() && !videoPlayer.fullscreen{
-            videoPlayer.setFullscreen(true, withOrientation: self.currentOrientation())
+        if self.isVerticallyCompact() && !videoPlayer.isFullscreen{
+            videoPlayer.setFullscreen(true, with: self.currentOrientation())
         }
     }
 }

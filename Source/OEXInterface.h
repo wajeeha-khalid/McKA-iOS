@@ -77,7 +77,7 @@ extern NSString* const OEXDownloadEndedNotification;
 // videos : OEXHelperVideoDownload
 #pragma CC methods
 + (void)setCCSelectedLanguage:(NSString*)language;
-+ (NSString*)getCCSelectedLanguage;
++ (nullable NSString*)getCCSelectedLanguage;
 
 + (void)setCCSelectedPlaybackSpeed:(OEXVideoSpeed) speed;
 + (OEXVideoSpeed)getCCSelectedPlaybackSpeed;

@@ -14,15 +14,15 @@ final class OEXTestInterface: OEXInterface {
     var videoStateMap: [String : OEXPlayedState] = [:]
     var audioStateMap: [String : OEXPlayedState] = [:]
     
-    func set(state: OEXPlayedState, forVideoID videoID: CourseBlockID) {
+    func set(_ state: OEXPlayedState, forVideoID videoID: CourseBlockID) {
         videoStateMap[videoID] = state
     }
     
-    func set(state: OEXPlayedState, forAudioID audioID: CourseBlockID) {
+    func set(_ state: OEXPlayedState, forAudioID audioID: CourseBlockID) {
         audioStateMap[audioID] = state
     }
     
-    override func watchedStateForVideoWithID(videoID: String?) -> OEXPlayedState {
+    override func watchedStateForVideo(withID videoID: String?) -> OEXPlayedState {
         guard let videoID = videoID else {
             fatalError("video id cannot be nil for test implementation")
         }
@@ -33,7 +33,7 @@ final class OEXTestInterface: OEXInterface {
         }
     }
     
-    override func watchedStateForAudioWithID(audioID: String?) -> OEXPlayedState {
+    override func watchedStateForAudio(withID audioID: String?) -> OEXPlayedState {
         guard let audioID = audioID else {
             fatalError("audio id cannot be nil for test implementation")
         }
@@ -54,7 +54,7 @@ class ContentCompletionPolicyTests: XCTestCase {
         //setup
         let unitID = "35201"
         let testInterface = OEXTestInterface()
-        testInterface.set(.Watched, forVideoID: unitID)
+        testInterface.set(.watched, forVideoID: unitID)
         
         XCTAssertTrue(
             videoUnitCompleted(unitID, testInterface)
@@ -66,7 +66,7 @@ class ContentCompletionPolicyTests: XCTestCase {
         //setup
         let unitID = "35201"
         let testInterface = OEXTestInterface()
-        testInterface.set(.PartiallyWatched, forVideoID: unitID)
+        testInterface.set(.partiallyWatched, forVideoID: unitID)
         
         XCTAssertFalse(
             videoUnitCompleted(unitID, testInterface)
@@ -77,7 +77,7 @@ class ContentCompletionPolicyTests: XCTestCase {
         //setup
         let unitID = "35201"
         let testInterface = OEXTestInterface()
-        testInterface.set(.Unwatched, forVideoID: unitID)
+        testInterface.set(.unwatched, forVideoID: unitID)
         
         XCTAssertFalse(
             videoUnitCompleted(unitID, testInterface)
@@ -88,7 +88,7 @@ class ContentCompletionPolicyTests: XCTestCase {
         //setup
         let unitID = "35201"
         let testInterface = OEXTestInterface()
-        testInterface.set(.Watched, forAudioID: unitID)
+        testInterface.set(.watched, forAudioID: unitID)
         
         XCTAssertTrue(
             audioUnitCompleted(unitID, testInterface)
@@ -99,7 +99,7 @@ class ContentCompletionPolicyTests: XCTestCase {
         //setup
         let unitID = "35201"
         let testInterface = OEXTestInterface()
-        testInterface.set(.PartiallyWatched, forAudioID: unitID)
+        testInterface.set(.partiallyWatched, forAudioID: unitID)
         
         XCTAssertFalse(
             audioUnitCompleted(unitID, testInterface)
@@ -110,7 +110,7 @@ class ContentCompletionPolicyTests: XCTestCase {
         //setup
         let unitID = "35201"
         let testInterface = OEXTestInterface()
-        testInterface.set(.Unwatched, forAudioID: unitID)
+        testInterface.set(.unwatched, forAudioID: unitID)
         
         XCTAssertFalse(
             audioUnitCompleted(unitID, testInterface)

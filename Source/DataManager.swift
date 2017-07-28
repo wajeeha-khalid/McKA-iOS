@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DataManager : NSObject {
+open class DataManager : NSObject {
     let courseDataManager : CourseDataManager
     let enrollmentManager : EnrollmentManager
     let interface : OEXInterface?

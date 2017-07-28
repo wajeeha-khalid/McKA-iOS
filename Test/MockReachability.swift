@@ -26,8 +26,8 @@ class MockReachability: NSObject, Reachability {
     var networkStatus = (wifi : true, wwan : true) {
         didSet {
             if notifierEnabled {
-                dispatch_async(dispatch_get_main_queue()) {
-                    NSNotificationCenter.defaultCenter().postNotificationName(kReachabilityChangedNotification, object: self)
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: NSNotification.Name.reachabilityChanged, object: self)
                 }
             }
         }

@@ -14,7 +14,7 @@ class DiscussionResponsesDataController: NSObject {
     var endorsedResponses: [DiscussionComment] = []
     
     /// "Given a new comment, looks through responses and increments the childCount of the parent of that comment."
-    func addedChildComment(comment: DiscussionComment) {
+    func addedChildComment(_ comment: DiscussionComment) {
         for i in 0 ..< responses.count {
             if responses[i].commentID == comment.parentID {
                 responses[i].childCount += 1
@@ -31,7 +31,7 @@ class DiscussionResponsesDataController: NSObject {
     }
 
     /// "Given a new comment, looks through responses and update vote information of that comment."
-    func updateResponsesWithComment(comment : DiscussionComment) {
+    func updateResponsesWithComment(_ comment : DiscussionComment) {
         for i in 0 ..< responses.count {
             if responses[i].commentID == comment.commentID {
                 responses[i] = comment

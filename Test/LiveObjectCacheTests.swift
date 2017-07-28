@@ -29,10 +29,10 @@ class LiveObjectCacheTests : XCTestCase {
             counter.value = counter.value + 1
             return NSObject()
         }
-        cache.objectForKey(key, generator: generator)
-        cache.objectForKey(key, generator: generator)
-        cache.objectForKey(key, generator: generator)
-        cache.objectForKey(key, generator: generator)
+        _ = cache.objectForKey(key, generator: generator)
+        _ = cache.objectForKey(key, generator: generator)
+        _ = cache.objectForKey(key, generator: generator)
+        _ = cache.objectForKey(key, generator: generator)
         XCTAssertEqual(counter.value, 1, "Cache should return the original object while object in cache")
     }
     
@@ -41,17 +41,17 @@ class LiveObjectCacheTests : XCTestCase {
         let loaded = MutableBox<Bool>(false)
         func isolation() {
             let object = NSObject()
-            cache.objectForKey(key) {
+            _ = cache.objectForKey(key) {
                 loaded.value = true
                 return object
             }
-            NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
         }
         let fired = MutableBox<Bool>(false)
         autoreleasepool {
             isolation()
         }
-        cache.objectForKey(key) {
+        _ = cache.objectForKey(key) {
             fired.value = true
             return NSObject()
         }
@@ -67,10 +67,10 @@ class LiveObjectCacheTests : XCTestCase {
             counter.value = counter.value + 1
             return object
         }
-        cache.objectForKey(key, generator: generator)
-        NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+        _ = cache.objectForKey(key, generator: generator)
+        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
         // here the NSCache should be cleared, but since the object is live it should still be in cache
-        cache.objectForKey(key, generator: generator)
+        _ = cache.objectForKey(key, generator: generator)
         XCTAssertEqual(counter.value, 1)
 
     }
@@ -83,9 +83,9 @@ class LiveObjectCacheTests : XCTestCase {
             counter.value = counter.value + 1
             return object
         }
-        cache.objectForKey(key, generator: generator)
+        _ = cache.objectForKey(key, generator: generator)
         cache.empty()
-        cache.objectForKey(key, generator: generator)
+        _ = cache.objectForKey(key, generator: generator)
         XCTAssertEqual(counter.value, 2)
         
     }

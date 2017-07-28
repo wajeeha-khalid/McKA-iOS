@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class EnrollmentManager : NSObject {
-    private let interface: OEXInterface?
-    private let networkManager : NetworkManager
-    private let enrollmentFeed = BackedFeed<[UserCourseEnrollment]?>()
-    private let config: OEXConfig
+open class EnrollmentManager : NSObject {
+    fileprivate let interface: OEXInterface?
+    fileprivate let networkManager : NetworkManager
+    fileprivate let enrollmentFeed = BackedFeed<[UserCourseEnrollment]?>()
+    fileprivate let config: OEXConfig
     
     public init(interface: OEXInterface?, networkManager: NetworkManager, config: OEXConfig) {
         self.interface = interface
@@ -21,11 +21,11 @@ public class EnrollmentManager : NSObject {
         
         super.init()
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXSessionEndedNotification) { (_, observer, _) in
+        NotificationCenter.default.oex_addObserver( self, name: NSNotification.Name.OEXSessionEnded.rawValue) { (_, observer, _) in
             observer.clearFeed()
         }
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXSessionStartedNotification) { (notification, observer, _) -> Void in
+        NotificationCenter.default.oex_addObserver( self, name: NSNotification.Name.OEXSessionStarted.rawValue) { (notification, observer, _) -> Void in
             
             if let userDetails = notification.userInfo?[OEXSessionStartedUserDetailsKey] as? OEXUserDetails {
                 observer.setupFeedWithUserDetails(userDetails)
@@ -44,15 +44,15 @@ public class EnrollmentManager : NSObject {
         }
     }
     
-    public var feed: Feed<[UserCourseEnrollment]?> {
+    open var feed: Feed<[UserCourseEnrollment]?> {
         return enrollmentFeed
     }
     
-    public func enrolledCourseWithID(courseID: String) -> UserCourseEnrollment? {
+    open func enrolledCourseWithID(_ courseID: String) -> UserCourseEnrollment? {
         return self.streamForCourseWithID(courseID).value
     }
     
-    public func streamForCourseWithID(courseID: String) -> Stream<UserCourseEnrollment> {
+    open func streamForCourseWithID(_ courseID: String) -> edXCore.Stream<UserCourseEnrollment> {
         let hasCourse = enrollmentFeed.output.value??.contains {
             $0.course.course_id == courseID
             } ?? false
@@ -73,7 +73,7 @@ public class EnrollmentManager : NSObject {
         return courseStream
     }
     
-    private func clearFeed() {
+    fileprivate func clearFeed() {
         let feed = Feed<[UserCourseEnrollment]?> { stream in
             stream.removeAllBackings()
             stream.send(Success(nil))
@@ -83,8 +83,8 @@ public class EnrollmentManager : NSObject {
         self.enrollmentFeed.refresh()
     }
     
-    private func setupFeedWithUserDetails(userDetails: OEXUserDetails) {
-        guard let userId = userDetails.userId?.integerValue else {
+    fileprivate func setupFeedWithUserDetails(_ userDetails: OEXUserDetails) {
+        guard let userId = userDetails.userId?.intValue else {
                 return
         }
         let organizationCode = self.config.organizationCode()
@@ -93,7 +93,7 @@ public class EnrollmentManager : NSObject {
         enrollmentFeed.refresh()
     }
     
-    func freshFeedWithUsername(userID: Int, organizationCode: String?) -> Feed<[UserCourseEnrollment]> {
+    func freshFeedWithUsername(_ userID: Int, organizationCode: String?) -> Feed<[UserCourseEnrollment]> {
         let request = CoursesAPI.getUserEnrollments(userID, organizationCode: organizationCode)
         return Feed(request: request, manager: networkManager, persistResponse: true)
     }

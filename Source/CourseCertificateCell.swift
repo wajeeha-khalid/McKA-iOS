@@ -27,8 +27,8 @@ class CourseCertificateCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureViews() {
-        self.backgroundColor =  OEXStyles.sharedStyles().neutralXLight()
+    fileprivate func configureViews() {
+        self.backgroundColor =  OEXStyles.shared().neutralXLight()
 
         applyStandardSeparatorInsets()
 
@@ -37,51 +37,51 @@ class CourseCertificateCell: UITableViewCell {
         contentView.addSubview(subtitleLabel)
         contentView.addSubview(getButton)
 
-        certificateImageView.contentMode = .ScaleAspectFit
-        certificateImageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Horizontal)
+        certificateImageView.contentMode = .scaleAspectFit
+        certificateImageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
 
-        getButton.backgroundColor = UIColor.greenColor()
+        getButton.backgroundColor = UIColor.green
 
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, forAxis: .Horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
         subtitleLabel.adjustsFontSizeToFitWidth = true
 
-        certificateImageView.snp_makeConstraints(closure: { (make) -> Void in
+        certificateImageView.snp.makeConstraints({ (make) -> Void in
             make.top.equalTo(contentView).offset(15)
             make.bottom.equalTo(contentView).inset(15)
-            make.leading.equalTo(contentView.snp_leading).offset(10)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
         })
 
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(certificateImageView)
-            make.leading.equalTo(certificateImageView.snp_trailing).offset(14)
-            make.trailing.equalTo(contentView.snp_trailingMargin)
+            make.leading.equalTo(certificateImageView.snp.trailing).offset(14)
+            make.trailing.equalTo(contentView.snp.trailingMargin)
         }
 
-        subtitleLabel.snp_makeConstraints { (make) -> Void in
+        subtitleLabel.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(titleLabel)
             make.trailing.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp_bottom)
+            make.top.equalTo(titleLabel.snp.bottom)
         }
 
-        getButton.snp_makeConstraints { (make) -> Void in
+        getButton.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(titleLabel)
             make.trailing.equalTo(titleLabel)
             make.bottom.equalTo(certificateImageView)
         }
     }
 
-    func useItem(item: CertificateDashboardItem) {
+    func useItem(_ item: CertificateDashboardItem) {
         certificateImageView.image = item.certificateImage
 
-        let titleStyle = OEXTextStyle(weight: .Normal, size: .Large, color: OEXStyles.sharedStyles().primaryXDarkColor())
-        let subtitleStyle = OEXTextStyle(weight: .Normal, size: .Base, color: OEXStyles.sharedStyles().neutralDark())
+        let titleStyle = OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared().primaryXDarkColor())
+        let subtitleStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
 
-        titleLabel.attributedText = titleStyle.attributedStringWithText(Strings.Certificates.courseCompletionTitle)
-        subtitleLabel.attributedText = subtitleStyle.attributedStringWithText(Strings.Certificates.courseCompletionSubtitle)
-        getButton.applyButtonStyle(OEXStyles.sharedStyles().filledPrimaryButtonStyle, withTitle: Strings.Certificates.getCertificate)
+        titleLabel.attributedText = titleStyle.attributedString(withText: Strings.Certificates.courseCompletionTitle)
+        subtitleLabel.attributedText = subtitleStyle.attributedString(withText: Strings.Certificates.courseCompletionSubtitle)
+        getButton.applyButtonStyle(OEXStyles.shared().filledPrimaryButtonStyle, withTitle: Strings.Certificates.getCertificate)
 
         getButton.oex_addAction({ _ in
             item.action()
-            }, forEvents: .TouchUpInside)
+            }, for: .touchUpInside)
     }
 }

@@ -10,27 +10,27 @@ import Foundation
 
 class SegmentAnalyticsTracker : NSObject, OEXAnalyticsTracker {
     
-    private let GoogleCategoryKey = "category"
-    private let GoogleLabelKey = "label"
-    private let GoogleActionKey = "action"
+    fileprivate let GoogleCategoryKey = "category"
+    fileprivate let GoogleLabelKey = "label"
+    fileprivate let GoogleActionKey = "action"
     
     var currentOrientationValue : String {
-        return UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) ? OEXAnalyticsValueOrientationLandscape : OEXAnalyticsValueOrientationPortrait
+        return UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) ? OEXAnalyticsValueOrientationLandscape : OEXAnalyticsValueOrientationPortrait
     }
 
-    func identifyUser(user : OEXUserDetails?) {
+    func identifyUser(_ user : OEXUserDetails?) {
         var traits : [String:AnyObject] = [:]
-        traits[key_email] = "abc@abc.com"
-        traits[key_username] = "dummyuser123"
+        traits[key_email] = "abc@abc.com" as AnyObject
+        traits[key_username] = "dummyuser123" as AnyObject
 
-        SEGAnalytics.sharedAnalytics().identify("abc@abc.com", traits:traits)
+        SEGAnalytics.shared().identify("abc@abc.com", traits:traits)
     }
 
     func clearIdentifiedUser() {
-        SEGAnalytics.sharedAnalytics().reset()
+        SEGAnalytics.shared().reset()
     }
     
-    func trackEvent(event: OEXAnalyticsEvent, forComponent component: String?, withProperties properties: [String : AnyObject]) {
+    func trackEvent(_ event: OEXAnalyticsEvent, forComponent component: String?, withProperties properties: [String : Any]) {
         
         var context = [key_app_name : value_app_name]
         if let component = component {
@@ -44,34 +44,34 @@ class SegmentAnalyticsTracker : NSObject, OEXAnalyticsTracker {
         }
         
         var info : [String : AnyObject] = [
-            key_data : properties,
-            key_context : context,
-            key_name : event.name,
-            OEXAnalyticsKeyOrientation : currentOrientationValue
+            key_data : properties as AnyObject,
+            key_context : context as AnyObject,
+            key_name : event.name as AnyObject,
+            OEXAnalyticsKeyOrientation : currentOrientationValue as AnyObject
         ]
         
-        info[GoogleCategoryKey] = event.category
-        info[GoogleLabelKey] = event.label
+        info[GoogleCategoryKey] = event.category as AnyObject
+        info[GoogleLabelKey] = event.label as AnyObject
         
-        SEGAnalytics.sharedAnalytics().track(event.displayName, properties: info)
+        SEGAnalytics.shared().track(event.displayName, properties: info)
     }
     
-    func trackScreenWithName(screenName: String, courseID: String?, value: String?, additionalInfo info: [String : String]?) {
+    func trackScreen(withName screenName: String, courseID: String?, value: String?, additionalInfo info: [String : String]?) {
         
-        var properties: [String:NSObject] = [
+        var properties: [String:Any] = [
             key_context: [
                 key_app_name: value_app_name
             ]
         ]
         if let value = value {
-            properties[GoogleActionKey] = value
+            properties[GoogleActionKey] = value as NSObject
         }
         
-        SEGAnalytics.sharedAnalytics().screen(screenName, properties: properties)
+        SEGAnalytics.shared().screen(screenName, properties: properties)
         
         // adding additional info to event
-        if let info = info where info.count > 0 {
-            properties = properties.concat(info)
+        if let info = info, info.count > 0 {
+            properties = properties.concat(info as [String : NSObject])
         }
         
         let event = OEXAnalyticsEvent()

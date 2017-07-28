@@ -9,26 +9,26 @@
 import UIKit
 
 public protocol CourseLastAccessedControllerDelegate : class {
-    func courseLastAccessedControllerDidFetchLastAccessedItem(item : CourseLastAccessed?)
+    func courseLastAccessedControllerDidFetchLastAccessedItem(_ item : CourseLastAccessed?)
 }
 
-public class CourseLastAccessedController: NSObject {
+open class CourseLastAccessedController: NSObject {
    
-    private let lastAccessedLoader = BackedStream<(CourseBlock, CourseLastAccessed)>()
-    private let blockID : CourseBlockID?
-    private let dataManager : DataManager
-    private let networkManager : NetworkManager
-    private let courseQuerier : CourseOutlineQuerier
-    private let lastAccessedProvider : LastAccessedProvider?
+    fileprivate let lastAccessedLoader = BackedStream<(CourseBlock, CourseLastAccessed)>()
+    fileprivate let blockID : CourseBlockID?
+    fileprivate let dataManager : DataManager
+    fileprivate let networkManager : NetworkManager
+    fileprivate let courseQuerier : CourseOutlineQuerier
+    fileprivate let lastAccessedProvider : LastAccessedProvider?
     
-    private var courseID : String {
+    fileprivate var courseID : String {
         return courseQuerier.courseID
     }
     
-    public weak var delegate : CourseLastAccessedControllerDelegate?
+    open weak var delegate : CourseLastAccessedControllerDelegate?
     
     /// Strictly a test variable used as a trigger flag. Not to be used out of the test scope
-    private var t_hasTriggeredSetLastAccessed = false
+    fileprivate var t_hasTriggeredSetLastAccessed = false
     
     
     public init(blockID : CourseBlockID?, dataManager : DataManager, networkManager : NetworkManager, courseQuerier: CourseOutlineQuerier, lastAccessedProvider : LastAccessedProvider? = nil) {
@@ -43,22 +43,22 @@ public class CourseLastAccessedController: NSObject {
         addListener()
     }
     
-    private var canShowLastAccessed : Bool {
+    fileprivate var canShowLastAccessed : Bool {
         // We only show at the root level
         return blockID == nil
     }
     
-    private var canUpdateLastAccessed : Bool {
+    fileprivate var canUpdateLastAccessed : Bool {
         return blockID != nil
     }
     
-    public func loadLastAccessed() {
+    open func loadLastAccessed() {
         if !canShowLastAccessed {
             return
         }
         
         if let firstLoad = lastAccessedProvider?.getLastAccessedSectionForCourseID(self.courseID) {
-            let blockStream = expandAccessStream(Stream(value : firstLoad))
+            let blockStream = expandAccessStream(edXCore.Stream(value : firstLoad))
             lastAccessedLoader.backWithStream(blockStream)
         }
         
@@ -67,7 +67,7 @@ public class CourseLastAccessedController: NSObject {
         lastAccessedLoader.backWithStream(expandAccessStream(lastAccessed))
     }
     
-    public func saveLastAccessed() {
+    open func saveLastAccessed() {
         if !canUpdateLastAccessed {
             return
         }
@@ -85,7 +85,7 @@ public class CourseLastAccessedController: NSObject {
                         owner.lastAccessedProvider?.setLastAccessedSubSectionWithID(lastAccessedItem.moduleId,
                             subsectionName: block.displayName,
                             courseID: courseID,
-                            timeStamp: OEXDateFormatting.serverStringWithDate(NSDate()))
+                            timeStamp: OEXDateFormatting.serverString(with: Date()))
                     }
                 }
             }
@@ -99,7 +99,7 @@ public class CourseLastAccessedController: NSObject {
                 var item = $0.1
                 item.moduleName = block.displayName
                 
-                self?.lastAccessedProvider?.setLastAccessedSubSectionWithID(item.moduleId, subsectionName: block.displayName, courseID: self?.courseID, timeStamp: OEXDateFormatting.serverStringWithDate(NSDate()))
+                self?.lastAccessedProvider?.setLastAccessedSubSectionWithID(item.moduleId, subsectionName: block.displayName, courseID: self?.courseID, timeStamp: OEXDateFormatting.serverString(with: Date()))
                 self?.delegate?.courseLastAccessedControllerDidFetchLastAccessedItem(item)
             }
             
@@ -110,9 +110,9 @@ public class CourseLastAccessedController: NSObject {
         
     }
     
-    private func expandAccessStream(stream : Stream<CourseLastAccessed>) -> Stream<(CourseBlock, CourseLastAccessed)> {
+    fileprivate func expandAccessStream(_ stream : edXCore.Stream<CourseLastAccessed>) -> edXCore.Stream<(CourseBlock, CourseLastAccessed)> {
         return stream.transform {[weak self] lastAccessed in
-            return joinStreams(self?.courseQuerier.blockWithID(lastAccessed.moduleId) ?? Stream<CourseBlock>(), Stream(value: lastAccessed))
+            return joinStreams(self?.courseQuerier.blockWithID(lastAccessed.moduleId) ?? edXCore.Stream<CourseBlock>(), edXCore.Stream(value: lastAccessed))
         }
     }
 }

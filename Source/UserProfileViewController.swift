@@ -10,25 +10,17 @@ import UIKit
 
 class UserProfileViewController: OfflineSupportViewController, UserProfilePresenterDelegate {
     
-    typealias Environment = protocol<
-        OEXAnalyticsProvider,
-        OEXConfigProvider,
-        NetworkManagerProvider,
-        OEXRouterProvider,
-        ReachabilityProvider,
-        DataManagerProvider,
-        OEXSessionProvider
-    >
+    typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & NetworkManagerProvider & OEXRouterProvider & ReachabilityProvider & DataManagerProvider & OEXSessionProvider
     
-    private let environment : Environment
+    fileprivate let environment : Environment
 
-    private let editable: Bool
+    fileprivate let editable: Bool
 
-    private let loadController = LoadStateViewController()
-    private let contentView = UserProfileView(frame: CGRectZero)
-    private let presenter : UserProfilePresenter
+    fileprivate let loadController = LoadStateViewController()
+    fileprivate let contentView = UserProfileView(frame: CGRect.zero)
+    fileprivate let presenter : UserProfilePresenter
     
-    convenience init(environment : protocol<UserProfileNetworkPresenter.Environment, Environment>, username : String, editable: Bool) {
+    convenience init(environment : UserProfileNetworkPresenter.Environment & Environment, username : String, editable: Bool) {
 
         let presenter = UserProfileNetworkPresenter(environment: environment, username: username)
         self.init(environment: environment, presenter: presenter, editable: editable)
@@ -49,12 +41,12 @@ class UserProfileViewController: OfflineSupportViewController, UserProfilePresen
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(contentView)
-        contentView.snp_makeConstraints {make in
+        contentView.snp.makeConstraints {make in
             make.edges.equalTo(view)
         }
         
         if editable {
-            let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: nil, action: nil)
+            let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: nil, action: nil)
             editButton.oex_setAction() { [weak self] in
                 self?.environment.router?.showProfileEditorFromController(self!)
             }
@@ -62,16 +54,16 @@ class UserProfileViewController: OfflineSupportViewController, UserProfilePresen
             navigationItem.rightBarButtonItem = editButton
         }
 
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
 
         addProfileListener()
         addExtraTabsListener()
 
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        environment.analytics.trackScreenWithName(OEXAnalyticsScreenProfileView)
+        environment.analytics.trackScreen(withName: OEXAnalyticsScreenProfileView)
 
         presenter.refresh()
         contentView.setNeedsUpdateConstraints()
@@ -81,19 +73,19 @@ class UserProfileViewController: OfflineSupportViewController, UserProfilePresen
         presenter.refresh()
     }
 
-    private func addProfileListener() {
+    fileprivate func addProfileListener() {
         let editable = self.editable
         let networkManager = environment.networkManager
         presenter.profileStream.listen(self, success: { [weak self] profile in
             // TODO: Refactor UserProfileView to take a dumb model so we don't need to pass it a network manager
             self?.contentView.populateFields(profile, editable: editable, networkManager: networkManager)
-            self?.loadController.state = .Loaded
+            self?.loadController.state = .loaded
             }, failure : { [weak self] error in
                 self?.loadController.state = LoadState.failed(error, message: Strings.Profile.unableToGet)
             })
     }
 
-    private func addExtraTabsListener() {
+    fileprivate func addExtraTabsListener() {
         presenter.tabStream.listen(self, success: {[weak self] in
             self?.contentView.extraTabs = $0
             }, failure: {_ in
@@ -102,19 +94,19 @@ class UserProfileViewController: OfflineSupportViewController, UserProfilePresen
         )
     }
 
-    func presenter(presenter: UserProfilePresenter, choseShareURL url: NSURL) {
+    func presenter(_ presenter: UserProfilePresenter, choseShareURL url: URL) {
         let message = Strings.Accomplishments.shareText(platformName:self.environment.config.platformName())
         let controller = UIActivityViewController(
             activityItems: [message, url],
             applicationActivities: nil
         )
-        self.presentViewController(controller, animated: true, completion: nil)
+        self.present(controller, animated: true, completion: nil)
     }
 }
 
 
 extension UserProfileViewController {
-    func t_chooseTab(identifier: String) {
+    func t_chooseTab(_ identifier: String) {
         self.contentView.chooseTab(identifier)
     }
 }

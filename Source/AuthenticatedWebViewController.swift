@@ -8,6 +8,8 @@
 
 import UIKit
 import WebKit
+import Alamofire
+import SnapKit
 
 class HeaderViewInsets : ContentInsetsSource {
     weak var insetsDelegate : ContentInsetsSourceDelegate?
@@ -24,9 +26,9 @@ class HeaderViewInsets : ContentInsetsSource {
 }
 
 public enum WebControllerState {
-    case CreatingSession
-    case LoadingContent
-    case NeedingSession
+    case creatingSession
+    case loadingContent
+    case needingSession
 }
 
 public protocol WebContentController {
@@ -37,14 +39,14 @@ public protocol WebContentController {
     
     var initialContentState : WebControllerState { get }
     
-    func loadURLRequest(request : NSURLRequest)
+    func loadURLRequest(_ request : URLRequest)
     
     func clearDelegate()
     func resetState()
 }
 
 private class WKWebViewContentController : WebContentController {
-    private let webView = WKWebView(frame: CGRectZero)
+    fileprivate let webView = WKWebView(frame: CGRect.zero)
     
     var view : UIView {
         return webView
@@ -58,8 +60,8 @@ private class WKWebViewContentController : WebContentController {
         return webView.navigationDelegate = nil
     }
     
-    func loadURLRequest(request: NSURLRequest) {
-        webView.loadRequest(request)
+    func loadURLRequest(_ request: URLRequest) {
+        webView.load(request)
     }
     
     func resetState() {
@@ -72,7 +74,7 @@ private class WKWebViewContentController : WebContentController {
     }
     
     var initialContentState : WebControllerState {
-        return WebControllerState.LoadingContent
+        return WebControllerState.loadingContent
     }
 }
 
@@ -80,27 +82,27 @@ public let OAuthExchangePath = "/oauth2/login/"
 
 // Allows access to course content that requires authentication.
 // Forwarding our oauth token to the server so we can get a web based cookie
-public class AuthenticatedWebViewController: UIViewController, WKNavigationDelegate {
+open class AuthenticatedWebViewController: UIViewController, WKNavigationDelegate {
 
-    public typealias Environment = protocol<OEXAnalyticsProvider, OEXConfigProvider, OEXSessionProvider>
+    public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & OEXSessionProvider
     
     internal let environment : Environment
-    private let loadController : LoadStateViewController
-    private let insetsController : ContentInsetsController
-    private let headerInsets : HeaderViewInsets
+    fileprivate let loadController : LoadStateViewController
+    fileprivate let insetsController : ContentInsetsController
+    fileprivate let headerInsets : HeaderViewInsets
     
-    private lazy var webController : WebContentController = {
+    fileprivate lazy var webController : WebContentController = {
         let controller = WKWebViewContentController()
         controller.webView.navigationDelegate = self
         return controller
     
     }()
     
-    private var state = WebControllerState.CreatingSession
+    fileprivate var state = WebControllerState.creatingSession
     
-    private var contentRequest : NSURLRequest? = nil
-    var currentUrl: NSURL? {
-        return contentRequest?.URL
+    fileprivate var contentRequest : URLRequest? = nil
+    var currentUrl: URL? {
+        return contentRequest?.url
     }
     
     public init(environment : Environment) {
@@ -127,16 +129,16 @@ public class AuthenticatedWebViewController: UIViewController, WKNavigationDeleg
         webController.clearDelegate()
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         
         self.state = webController.initialContentState
         self.view.addSubview(webController.view)
-        webController.view.snp_makeConstraints {make in
+        webController.view.snp.makeConstraints {make in
             make.edges.equalTo(self.view)
         }
         self.loadController.setupInController(self, contentView: webController.view)
-        webController.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
-        webController.scrollView.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        webController.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        webController.scrollView.backgroundColor = OEXStyles.shared().standardBackgroundColor()
         
         self.insetsController.setupInController(self, scrollView: webController.scrollView)
         
@@ -146,12 +148,12 @@ public class AuthenticatedWebViewController: UIViewController, WKNavigationDeleg
         }
     }
     
-    private func resetState() {
-        loadController.state = .Initial
-        state = .CreatingSession
+    fileprivate func resetState() {
+        loadController.state = .initial
+        state = .creatingSession
     }
     
-    public override func didReceiveMemoryWarning() {
+    open override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
         if view.window == nil {
@@ -161,12 +163,12 @@ public class AuthenticatedWebViewController: UIViewController, WKNavigationDeleg
     }
     
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         insetsController.updateInsets()
     }
     
-    public func showError(error : NSError?, icon : Icon? = nil, message : String? = nil) {
+    open func showError(_ error : NSError?, icon : Icon? = nil, message : String? = nil) {
         loadController.state = LoadState.failed(error, icon : icon, message : message)
     }
     
@@ -181,13 +183,16 @@ public class AuthenticatedWebViewController: UIViewController, WKNavigationDeleg
             headerInsets.view = newValue
             if let headerView = newValue {
                 webController.view.addSubview(headerView)
-                headerView.snp_makeConstraints {make in
+                headerView.snp.makeConstraints {make in
+                    //TODO: snp verify
+                    /*
                     if #available(iOS 9.0, *) {
                         make.top.equalTo(self.topLayoutGuide.bottomAnchor)
                     }
                     else {
                         make.top.equalTo(self.snp_topLayoutGuideBottom)
-                    }
+                    }*/
+                    make.top.equalTo(topLayoutGuide.snp.bottom)
                     make.leading.equalTo(webController.view)
                     make.trailing.equalTo(webController.view)
                 }
@@ -197,108 +202,105 @@ public class AuthenticatedWebViewController: UIViewController, WKNavigationDeleg
         }
     }
     
-    private func loadOAuthRefreshRequest() {
+    fileprivate func loadOAuthRefreshRequest() {
         if let hostURL = environment.config.apiHostURL() {
-            guard let URL = hostURL.URLByAppendingPathComponent(OAuthExchangePath) else { return }
-            let exchangeRequest = NSMutableURLRequest(URL: URL)
-            exchangeRequest.HTTPMethod = HTTPMethod.POST.rawValue
+            let URL = hostURL.appendingPathComponent(OAuthExchangePath)
+            let exchangeRequest = NSMutableURLRequest(url: URL)
+            exchangeRequest.httpMethod = HTTPMethod.POST.rawValue
             
             for (key, value) in self.environment.session.authorizationHeaders {
                 exchangeRequest.addValue(value, forHTTPHeaderField: key)
             }
-            self.webController.loadURLRequest(exchangeRequest)
+            self.webController.loadURLRequest(exchangeRequest as URLRequest)
         }
     }
     
     // MARK: Request Loading
     
-    public func loadRequest(request : NSURLRequest) {
+    open func loadRequest(_ request : URLRequest) {
         contentRequest = request
-        loadController.state = .Initial
+        loadController.state = .initial
         state = webController.initialContentState
-        
-        debugPrint("Headers: \(request.allHTTPHeaderFields)")
         
         if webController.alwaysRequiresOAuthUpdate {
             loadOAuthRefreshRequest()
         }
         else {
-            debugPrint("Request: \(request.URLString)")
+            debugPrint("Request: \(request.url!.absoluteString)")
             webController.loadURLRequest(request)
         }
     }
     
     // MARK: WKWebView delegate
 
-    public func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         switch navigationAction.navigationType {
-        case .LinkActivated, .FormSubmitted, .FormResubmitted:
-            if let URL = navigationAction.request.URL {
-                UIApplication.sharedApplication().openURL(URL)
+        case .linkActivated, .formSubmitted, .formResubmitted:
+            if let URL = navigationAction.request.url {
+                UIApplication.shared.openURL(URL)
             }
-            decisionHandler(.Cancel)
+            decisionHandler(.cancel)
         default:
-            decisionHandler(.Allow)
+            decisionHandler(.allow)
         }
     }
     
-    public func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
+    open func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         
         if let
-        httpResponse = navigationResponse.response as? NSHTTPURLResponse,
-        statusCode = OEXHTTPStatusCode(rawValue: httpResponse.statusCode),
-        errorGroup = statusCode.errorGroup
-            where state == .LoadingContent
+        httpResponse = navigationResponse.response as? HTTPURLResponse,
+        let statusCode = OEXHTTPStatusCode(rawValue: httpResponse.statusCode),
+        let errorGroup = statusCode.errorGroup, state == .loadingContent
         {
             switch errorGroup {
-            case .Http4xx:
-                self.state = .NeedingSession
-            case .Http5xx:
+            case .http4xx:
+                self.state = .needingSession
+            case .http5xx:
                 self.loadController.state = LoadState.failed()
-                decisionHandler(.Cancel)
+                decisionHandler(.cancel)
             }
         }
-        decisionHandler(.Allow)
+        decisionHandler(.allow)
         
     }
     
-    public func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         switch state {
-        case .CreatingSession:
+        case .creatingSession:
             if let request = contentRequest {
-                state = .LoadingContent
+                state = .loadingContent
                 webController.loadURLRequest(request)
             }
             else {
                 loadController.state = LoadState.failed()
             }
-        case .LoadingContent:
-            loadController.state = .Loaded
-        case .NeedingSession:
-            state = .CreatingSession
+        case .loadingContent:
+            loadController.state = .loaded
+        case .needingSession:
+            state = .creatingSession
             loadOAuthRefreshRequest()
         }
     }
     
-    public func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
-        showError(error)
+    open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        showError(error as NSError)
     }
     
-    public func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
-        showError(error)
+    open func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        showError(error as NSError)
     }
     
-    public func webView(webView: WKWebView, didReceiveAuthenticationChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+    open func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         // Don't use basic auth on exchange endpoint. That is explicitly non protected
         // and it screws up the authorization headers
-        if let URL = webView.URL where ((URL.absoluteString?.hasSuffix(OAuthExchangePath)) != nil) {
-            completionHandler(.PerformDefaultHandling, nil)
+        if let URL = webView.url, URL.absoluteString.hasSuffix(OAuthExchangePath) {
+            completionHandler(.performDefaultHandling, nil)
         }
-        else if let credential = environment.config.URLCredentialForHost(challenge.protectionSpace.host)  {
-            completionHandler(.UseCredential, credential)
+        else if let credential = environment.config.URLCredentialForHost(challenge.protectionSpace.host as NSString)  {
+            completionHandler(.useCredential, credential)
         }
         else {
-            completionHandler(.PerformDefaultHandling, nil)
+            completionHandler(.performDefaultHandling, nil)
         }
     }
 

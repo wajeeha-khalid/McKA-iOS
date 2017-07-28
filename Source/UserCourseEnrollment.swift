@@ -8,9 +8,10 @@
 
 import Foundation
 import edXCore
+import SwiftyJSON
 
 //TODO: remove NSObject when done with @objc
-public class UserCourseEnrollment : NSObject {
+open class UserCourseEnrollment : NSObject {
     let created: String?
     let mode: String?
     let isActive: Bool
@@ -19,19 +20,19 @@ public class UserCourseEnrollment : NSObject {
     /** Url if the user has completed a certificate */
     let certificateUrl: String?
 
-    init?(dictionary: [String: AnyObject]) {
+    init?(dictionary: [String: Any]) {
         created = dictionary["created"] as? String
         mode = dictionary["mode"] as? String
         isActive = (dictionary["is_active"] as? NSNumber)?.boolValue ?? false
 
 
-        if let certificatesInfo = dictionary["certificate"] as? [NSObject: AnyObject] {
+        if let certificatesInfo = dictionary["certificate"] as? [AnyHashable: Any] {
             certificateUrl = certificatesInfo["url"] as? String
         } else {
             certificateUrl = nil
         }
         
-        if let dictCourse = dictionary["course"] as? [NSObject: AnyObject] {
+        if let dictCourse = dictionary["course"] as? [AnyHashable: Any] {
             course = OEXCourse(dictionary:dictCourse)
         } else {
             course = OEXCourse()

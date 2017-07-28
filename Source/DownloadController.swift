@@ -10,10 +10,10 @@ import UIKit
 
 
 public enum UnitDownloadState {
-    case Available
-    case Active
-    case Complete
-    case NotAvailable
+    case available
+    case active
+    case complete
+    case notAvailable
 }
 
 public struct DownloadState {
@@ -23,10 +23,10 @@ public struct DownloadState {
 
 
 /// Used to track the download status of a course
-public class DownloadController: NSObject {
+open class DownloadController: NSObject {
 
-    private let analytics: OEXAnalytics
-    private let courseQuerier : CourseOutlineQuerier
+    fileprivate let analytics: OEXAnalytics
+    fileprivate let courseQuerier : CourseOutlineQuerier
 
     
     init(courseQuerier: CourseOutlineQuerier, analytics: OEXAnalytics) {
@@ -36,21 +36,21 @@ public class DownloadController: NSObject {
         
         super.init()
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXVideoStateChangedNotification) { (notification, observer, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXVideoStateChanged.rawValue) { (notification, observer, _) -> Void in
 //            print("OEXVideoStateChangedNotification: \(notification.description)")
         }
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXDownloadProgressChangedNotification) { (notification, observer, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXDownloadProgressChanged.rawValue) { (notification, observer, _) -> Void in
 //            print("OEXDownloadProgressChangedNotification: \(notification.description)")
         }
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXDownloadEndedNotification) { (notification, observer, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXDownloadEnded.rawValue) { (notification, observer, _) -> Void in
 //            print("OEXDownloadEndedNotification: \(notification.description)")
         }
     }
     
     
-    public func stateForUnitWithID(unitID: CourseBlockID) -> DownloadState {
+    open func stateForUnitWithID(_ unitID: CourseBlockID) -> DownloadState {
         
         // Video Download State
         var numberOfCompletedDownloads = 0
@@ -70,20 +70,20 @@ public class DownloadController: NSObject {
                 
                 switch helper.downloadState {
                     
-                case .Complete:
+                case .complete:
                     numberOfCompletedDownloads += 1
                     
-                case .New:
+                case .new:
                     break
                     
-                case .Partial:
+                case .partial:
                     //if (helper.isVideoDownloading) {
                     numberOfActiveDownloads += 1
                     activeDownloadProgress += helper.downloadProgress
                     //}
                 }
                 
-                Logger.logInfo("DOWNLOADS", "Video Helper: \(helper.isVideoDownloading) - \(helper.downloadState.rawValue) - \(helper.downloadProgress) - \(helper.completedDate)")
+                Logger.logInfo("DOWNLOADS", "Video Helper: \(helper.isVideoDownloading) - \(helper.downloadState.rawValue) - \(helper.downloadProgress) - \(String(describing: helper.completedDate))")
             }
         }
         
@@ -95,20 +95,20 @@ public class DownloadController: NSObject {
                 totalNumberOfDownloads += 1
                 
                 switch helper.downloadState {
-                case .Complete:
+                case .complete:
                     numberOfCompletedDownloads += 1
                     
-                case .New:
+                case .new:
                     break
                     
-                case .Partial:
+                case .partial:
                     //if (helper.isVideoDownloading) {
                     numberOfActiveDownloads += 1
                     activeDownloadProgress += helper.downloadProgress
                     //}
                 }
                 
-                Logger.logInfo("DOWNLOADS", "Audio Helper: \(helper.isAudioDownloading) - \(helper.downloadState.rawValue) - \(helper.downloadProgress) - \(helper.completedDate)")
+                Logger.logInfo("DOWNLOADS", "Audio Helper: \(helper.isAudioDownloading) - \(helper.downloadState.rawValue) - \(helper.downloadProgress) - \(String(describing: helper.completedDate))")
             }
         }
         
@@ -125,17 +125,17 @@ public class DownloadController: NSObject {
                 totalNumberOfDownloads += 1
 
                 switch stateObject.state {
-                case .Complete:
+                case .complete:
                     numberOfCompletedDownloads += 1
                     
-                case .Available:
+                case .available:
                     break
                     
-                case .Active:
+                case .active:
                     numberOfActiveDownloads += 1
                     activeDownloadProgress += stateObject.progress
                     
-                case .NotAvailable:
+                case .notAvailable:
                     break
                 }
                 
@@ -147,10 +147,10 @@ public class DownloadController: NSObject {
         
         // Calculate the combined state
         if totalNumberOfDownloads == 0 {
-            resultState = DownloadState(state: .NotAvailable, progress: 0.0)
+            resultState = DownloadState(state: .notAvailable, progress: 0.0)
             
         } else if numberOfCompletedDownloads == totalNumberOfDownloads {
-            resultState = DownloadState(state: .Complete, progress: 100.0)
+            resultState = DownloadState(state: .complete, progress: 100.0)
             
         } else if numberOfActiveDownloads > 0 {
             
@@ -169,10 +169,10 @@ public class DownloadController: NSObject {
             
             Logger.logInfo("DOWNLOADS", "Calculating progress: \(totalProgress) - \(numberOfActiveDownloads) - \(activeDownloadProgress) - \(numberOfCompletedDownloads) of \(totalNumberOfDownloads)")
             
-            resultState = DownloadState(state: .Active, progress: min(100.0, totalProgress))
+            resultState = DownloadState(state: .active, progress: min(100.0, totalProgress))
             
         } else {
-            resultState = DownloadState(state: .Available, progress: 0.0)
+            resultState = DownloadState(state: .available, progress: 0.0)
         }
         
         Logger.logInfo("DOWNLOADS", "Result state: \(resultState.state) - \(resultState.progress)")
@@ -181,7 +181,7 @@ public class DownloadController: NSObject {
         return resultState
     }
     
-    public func downloadMediaForUnitWithID(unitID: CourseBlockID) {
+    open func downloadMediaForUnitWithID(_ unitID: CourseBlockID) {
         
         let courseID = courseQuerier.courseID
         
@@ -190,7 +190,7 @@ public class DownloadController: NSObject {
             // Trigger the video downloads
             self.videoHelpersForUnitWithID(unitID) { (videoHelpers) in
                 
-                OEXInterface.sharedInterface().downloadVideos(videoHelpers)
+                OEXInterface.shared().downloadVideos(videoHelpers)
                 
                 // Analytics tracking
                 self.courseQuerier.parentOfBlockWithID(unit.blockID).listenOnce(self, success: { (parentID) in
@@ -206,7 +206,7 @@ public class DownloadController: NSObject {
             // Trigger the audio downloads
             self.audioHelpersForUnitWithID(unitID) { (audioHelpers) in
                 
-                OEXInterface.sharedInterface().downloadAudios(audioHelpers)
+                OEXInterface.shared().downloadAudios(audioHelpers)
                 
                 // Analytics tracking
                 // TODO: Bulk tracking for audios
@@ -228,13 +228,13 @@ public class DownloadController: NSObject {
         )
     }
     
-    public func cancelDownloadForUnitWithID(unitID: CourseBlockID) {
+    open func cancelDownloadForUnitWithID(_ unitID: CourseBlockID) {
         
         // Cancel video
         videoHelpersForUnitWithID(unitID) { (videoHelpers) in
             
             videoHelpers.forEach({ (helper) in
-                OEXInterface.sharedInterface().cancelDownloadForVideo(helper) { (success) in
+                OEXInterface.shared().cancelDownload(forVideo: helper) { (success) in
                     if (success == false) {
                         Logger.logError("DOWNLOADS", "Unable to cancel video download for block: \(unitID).")
                     }
@@ -246,7 +246,7 @@ public class DownloadController: NSObject {
         audioHelpersForUnitWithID(unitID) { (audioHelpers) in
             
             audioHelpers.forEach({ (helper) in
-                OEXInterface.sharedInterface().cancelDownloadForAudio(helper) { (success) in
+                OEXInterface.shared().cancelDownload(forAudio: helper) { (success) in
                     if (success == false) {
                         Logger.logError("DOWNLOADS", "Unable to cancel audio download for block: \(unitID).")
                     }
@@ -260,12 +260,12 @@ public class DownloadController: NSObject {
         }
         
         //Post download update notification
-        dispatch_async(dispatch_get_main_queue(), {
-            NSNotificationCenter.defaultCenter().postNotificationName(OEXDownloadEndedNotification, object: nil)
+        DispatchQueue.main.async(execute: {
+            NotificationCenter.default.post(name: NSNotification.Name.OEXDownloadEnded, object: nil)
         })
     }
     
-    public func deleteDownloadsForUnitWithID(unitID: CourseBlockID) {
+    open func deleteDownloadsForUnitWithID(_ unitID: CourseBlockID) {
         
         // Delete video
         videoHelpersForUnitWithID(unitID) { (videoHelpers) in
@@ -275,13 +275,13 @@ public class DownloadController: NSObject {
             videoHelpers.forEach { (helper) in
                 
                 if let videoID = helper.summary?.videoID {
-                    OEXInterface.sharedInterface().deleteDownloadedVideoForVideoId(videoID) { (success) in
+                    OEXInterface.shared().deleteDownloadedVideo(forVideoId: videoID) { (success) in
                         if (success == false) {
                             Logger.logError("DOWNLOADS", "Unable to delete video download for block: \(unitID).")
                         }
                         
-                        dispatch_async(dispatch_get_main_queue()) {
-                            NSNotificationCenter.defaultCenter().postNotificationName(OEXDownloadEndedNotification, object: nil)
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: NSNotification.Name.OEXDownloadEnded, object: nil)
                         }
                     }
                 }
@@ -295,14 +295,14 @@ public class DownloadController: NSObject {
                 
                 if let audioID = helper.summary?.studentViewUrl {
                     
-                    OEXInterface.sharedInterface().deleteDownloadedAudioWithURL(audioID) { (success) in
+                    OEXInterface.shared().deleteDownloadedAudio(withURL: audioID) { (success) in
                         
                         if (success == false) {
                             Logger.logError("DOWNLOADS", "Unable to delete audio download for block: \(unitID).")
                         }
                         
-                        dispatch_async(dispatch_get_main_queue()) {
-                            NSNotificationCenter.defaultCenter().postNotificationName(OEXDownloadEndedNotification, object: nil)
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: NSNotification.Name.OEXDownloadEnded, object: nil)
                         }
                     }
                 }
@@ -315,8 +315,8 @@ public class DownloadController: NSObject {
             urls.forEach { (componentURL) in
                 
                 do {
-                    if let filePath = EVURLCache.storagePathForRequest(NSURLRequest(URL: componentURL)) {
-                        try NSFileManager.defaultManager().removeItemAtPath(filePath)
+                    if let filePath = EVURLCache.storagePathForRequest(URLRequest(url: componentURL)) {
+                        try FileManager.default.removeItem(atPath: filePath)
                     }
                 } catch {
                     Logger.logError("DOWNLOADS", "Unable to delete HTML download \(componentURL).\n\(error)")
@@ -325,15 +325,15 @@ public class DownloadController: NSObject {
         }
         
         // Post an update notification
-        dispatch_async(dispatch_get_main_queue(), {
-            NSNotificationCenter.defaultCenter().postNotificationName(OEXDownloadEndedNotification, object: nil)
+        DispatchQueue.main.async(execute: {
+            NotificationCenter.default.post(name: NSNotification.Name.OEXDownloadEnded, object: nil)
         })
     }
     
     
     //MARK - Helper Methods
     
-    private func videoHelpersForUnitWithID(unitID: CourseBlockID, completion: ([OEXHelperVideoDownload]) -> () ) {
+    fileprivate func videoHelpersForUnitWithID(_ unitID: CourseBlockID, completion: @escaping ([OEXHelperVideoDownload]) -> () ) {
         
         let videoStream = courseQuerier.flatMapRootedAtBlockWithID(unitID) { block in
             (block.type.asVideo != nil) ? block.blockID : nil
@@ -341,9 +341,9 @@ public class DownloadController: NSObject {
         
         let courseID = courseQuerier.courseID
         
-        let videosDownloadHelpersStream: Stream<[OEXHelperVideoDownload]> = videoStream.map( { (videoIDs) in
+        let videosDownloadHelpersStream: edXCore.Stream<[OEXHelperVideoDownload]> = videoStream.map( { (videoIDs) in
             
-            return OEXInterface.sharedInterface().statesForVideosWithIDs(videoIDs, courseID: courseID).filter { video in
+            return OEXInterface.shared().statesForVideos(withIDs: videoIDs, courseID: courseID).filter { video in
                 (!video.summary!.onlyOnWeb && !video.summary!.isYoutubeVideo)}
             }
         )
@@ -364,14 +364,14 @@ public class DownloadController: NSObject {
         }
     }
     
-    private func audioHelpersForUnitWithID(unitID: CourseBlockID, completion: ([OEXHelperAudioDownload]) -> () ) {
+    fileprivate func audioHelpersForUnitWithID(_ unitID: CourseBlockID, completion: @escaping ([OEXHelperAudioDownload]) -> () ) {
 
         let audioStream = courseQuerier.flatMapRootedAtBlockWithID(unitID) { block in
             (block.type.asAudio != nil) ? block.blockID : nil
         }
         
-        let audioDownloadHelpersStream: Stream<[OEXHelperAudioDownload]> = audioStream.map({ (audioIDs) in
-            return OEXInterface.sharedInterface().statesForAudiosWithIDs(audioIDs)
+        let audioDownloadHelpersStream: edXCore.Stream<[OEXHelperAudioDownload]> = audioStream.map({ (audioIDs) in
+            return OEXInterface.shared().statesForAudios(withIDs: audioIDs)
         })
         
         let queryStream = BackedStream<[OEXHelperAudioDownload]>()
@@ -390,18 +390,18 @@ public class DownloadController: NSObject {
         }
     }
     
-    private func webContentForUnitWitID(unitID: CourseBlockID, completion: ([NSURL]) -> () ) {
+    fileprivate func webContentForUnitWitID(_ unitID: CourseBlockID, completion: @escaping ([URL]) -> () ) {
         
         courseQuerier.childrenOfBlockWithID(unitID).listenOnce(self) { (result) in
             
             if let components = result.value {
                 
-                let urls:[NSURL] = components.children.flatMap({ (component) in
+                let urls:[URL] = components.children.flatMap({ (component) in
                     
                     switch component.type {
-                    case .HTML:
+                    case .html:
                         return component.blockURL
-                    case let .Unknown(type) where type == "chat":
+                    case let .unknown(type) where type == "chat":
                         return component.blockURL
                     default:
                         return nil

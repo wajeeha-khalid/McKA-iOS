@@ -1493,7 +1493,7 @@ typedef NS_ENUM (NSUInteger, OEXAlertType) {
             break;
             
         case OEXAlertTypeDeleteConfirmationAlert: {
-            NSString* message = [Strings confirmDeleteMessage:_arr_SelectedObjects.count];
+            NSString* message = [Strings confirmDeleteMessageWithCount:_arr_SelectedObjects.count];
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:[Strings confirmDeleteTitle]
                                                             message:message
                                                            delegate:self

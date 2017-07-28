@@ -19,22 +19,22 @@ class CourseWareView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.xConstraint!.constant = 50
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
         clickedIndex = 0
-        UIApplication.sharedApplication().keyWindow?.addSubview(self)
-        okBtn?.layer.borderColor = UIColor.whiteColor().CGColor
+        UIApplication.shared.keyWindow?.addSubview(self)
+        okBtn?.layer.borderColor = UIColor.white.cgColor
     }
 
     
-    @IBAction func okBtnClicked (sender : UIButton) {
+    @IBAction func okBtnClicked (_ sender : UIButton) {
       updateContentandMoveView(clickedIndex!)
       clickedIndex =  clickedIndex!+1
     }
     
-    func updateContentandMoveView(courseIndex : Int){
+    func updateContentandMoveView(_ courseIndex : Int){
         if(courseIndex == 0){
             self.layoutIfNeeded()
-            UIView.animateWithDuration(Double(0.5), animations: {
+            UIView.animate(withDuration: Double(0.5), animations: {
                 self.xConstraint!.constant = 239
                 self.layoutIfNeeded()
             })
@@ -42,12 +42,12 @@ class CourseWareView: UIView {
             self.ftueBG?.image = UIImage(named: "Combined_Shape")
 
         }else if(courseIndex == 1){
-            self.okBtn?.setTitle("GOT IT", forState: UIControlState.Normal)
+            self.okBtn?.setTitle("GOT IT", for: UIControlState())
             self.contentLabel?.text = "Download unit contents for whenever it suits you."
             self.ftueBG?.image = UIImage(named: "CombinedShape")
         }else if (courseIndex == 2) {
              self .removeFromSuperview()
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "showCourseware")
+            UserDefaults.standard.set(false, forKey: "showCourseware")
         }
         else{
             return

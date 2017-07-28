@@ -9,13 +9,13 @@
 import Foundation
 
 
-public class UserProfileManager : NSObject {
+open class UserProfileManager : NSObject {
     
-    private let networkManager : NetworkManager
-    private let session: OEXSession
-    private let currentUserFeed = BackedFeed<UserProfile>()
-    private let currentUserUpdateStream = Sink<UserProfile>()
-    private let cache = LiveObjectCache<Feed<UserProfile>>()
+    fileprivate let networkManager : NetworkManager
+    fileprivate let session: OEXSession
+    fileprivate let currentUserFeed = BackedFeed<UserProfile>()
+    fileprivate let currentUserUpdateStream = Sink<UserProfile>()
+    fileprivate let cache = LiveObjectCache<Feed<UserProfile>>()
     
     public init(networkManager : NetworkManager, session : OEXSession) {
         self.networkManager = networkManager
@@ -25,23 +25,23 @@ public class UserProfileManager : NSObject {
         
         self.currentUserFeed.backingStream.addBackingStream(currentUserUpdateStream)
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXSessionEndedNotification) { (_, owner, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXSessionEnded.rawValue) { (_, owner, _) -> Void in
             owner.sessionChanged()
         }
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXSessionStartedNotification) { (_, owner, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXSessionStarted.rawValue) { (_, owner, _) -> Void in
             owner.sessionChanged()
         }
         self.sessionChanged()
     }
     
-    public func feedForUser(username : String) -> Feed<UserProfile> {
+    open func feedForUser(_ username : String) -> Feed<UserProfile> {
         return self.cache.objectForKey(username) {
             let request = ProfileAPI.profileRequest(username)
             return Feed(request: request, manager: self.networkManager)
         }
     }
     
-    private func sessionChanged() {
+    fileprivate func sessionChanged() {
         if let username = self.session.currentUser?.username {
             self.currentUserFeed.backWithFeed(self.feedForUser(username))
         }
@@ -56,11 +56,11 @@ public class UserProfileManager : NSObject {
     }
     
     // Feed that updates if the current user changes
-    public func feedForCurrentUser() -> Feed<UserProfile> {
+    open func feedForCurrentUser() -> Feed<UserProfile> {
         return currentUserFeed
     }
     
-    public func updateCurrentUserProfile(profile : UserProfile, handler : Result<UserProfile> -> Void) {
+    open func updateCurrentUserProfile(_ profile : UserProfile, handler : @escaping (Result<UserProfile>) -> Void) {
         let request = ProfileAPI.profileUpdateRequest(profile)
         self.networkManager.taskForRequest(request) { result -> Void in
             if let data = result.data {

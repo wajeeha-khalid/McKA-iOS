@@ -8,23 +8,24 @@
 
 import Foundation
 import edXCore
+import SwiftyJSON
 
-public class UserPreferenceAPI: NSObject {
+open class UserPreferenceAPI: NSObject {
     
-    private static func preferenceDeserializer(response : NSHTTPURLResponse, json : JSON) -> Result<UserPreference> {
+    fileprivate static func preferenceDeserializer(_ response : HTTPURLResponse, json : JSON) -> Result<UserPreference> {
         return UserPreference(json: json).toResult()
     }
     
-    private class func path(username:String) -> String {
-        return "/api/user/v1/preferences/{username}".oex_formatWithParameters(["username": username])
+    fileprivate class func path(_ username:String) -> String {
+        return "/api/user/v1/preferences/{username}".oex_format(withParameters: ["username": username])
     }
     
-    class func preferenceRequest(username: String) -> NetworkRequest<UserPreference> {
+    class func preferenceRequest(_ username: String) -> NetworkRequest<UserPreference> {
         return NetworkRequest(
             method: HTTPMethod.GET,
             path : path(username),
             requiresAuth : true,
-            deserializer: .JSONResponse(preferenceDeserializer))
+            deserializer: .jsonResponse(preferenceDeserializer))
     }
     
 }

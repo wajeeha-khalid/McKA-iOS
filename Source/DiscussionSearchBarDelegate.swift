@@ -10,15 +10,15 @@ import UIKit
 
 class DiscussionSearchBarDelegate: NSObject, UISearchBarDelegate {
 
-    private let callback : ((String) -> ())?
+    fileprivate let callback : ((String) -> ())?
     
     init(callback : ((String) -> ())?) {
         self.callback = callback
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let text = searchBar.text ?? ""
-        if text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).isEmpty {
+        if text.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty {
             return
         }
         searchBar.resignFirstResponder()
@@ -26,12 +26,12 @@ class DiscussionSearchBarDelegate: NSObject, UISearchBarDelegate {
         callback?(text)
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
     
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }

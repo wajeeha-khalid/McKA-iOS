@@ -16,29 +16,29 @@ extension Accomplishment {
 }
 
 protocol UserProfilePresenterDelegate : class {
-    func presenter(presenter: UserProfilePresenter, choseShareURL url: NSURL)
+    func presenter(_ presenter: UserProfilePresenter, choseShareURL url: URL)
 }
 
-typealias ProfileTabItem = UIScrollView -> TabItem
+typealias ProfileTabItem = (UIScrollView) -> TabItem
 
 protocol UserProfilePresenter: class {
 
-    var profileStream: Stream<UserProfile> { get }
-    var tabStream: Stream<[ProfileTabItem]> { get }
+    var profileStream: edXCore.Stream<UserProfile> { get }
+    var tabStream: edXCore.Stream<[ProfileTabItem]> { get }
     func refresh() -> Void
 
     weak var delegate: UserProfilePresenterDelegate? { get }
 }
 
 class UserProfileNetworkPresenter : NSObject, UserProfilePresenter {
-    typealias Environment = protocol<OEXConfigProvider, DataManagerProvider, NetworkManagerProvider, OEXSessionProvider>
+    typealias Environment = OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & OEXSessionProvider
 
     static let AccomplishmentsTabIdentifier = "AccomplishmentsTab"
-    private let profileFeed: Feed<UserProfile>
-    private let environment: Environment
-    private let username: String
+    fileprivate let profileFeed: Feed<UserProfile>
+    fileprivate let environment: Environment
+    fileprivate let username: String
 
-    var profileStream: Stream<UserProfile> {
+    var profileStream: edXCore.Stream<UserProfile> {
         return profileFeed.output
     }
 
@@ -58,11 +58,11 @@ class UserProfileNetworkPresenter : NSObject, UserProfilePresenter {
         profileFeed.refresh()
     }
 
-    private var canShareAccomplishments : Bool {
+    fileprivate var canShareAccomplishments : Bool {
         return self.username == self.environment.session.currentUser?.username
     }
 
-    lazy var tabStream: Stream<[ProfileTabItem]> = {
+    lazy var tabStream: edXCore.Stream<[ProfileTabItem]> = {
         if self.environment.config.badgesEnabled {
             // turn badges into accomplishments
             let networkManager = self.environment.networkManager
@@ -89,18 +89,18 @@ class UserProfileNetworkPresenter : NSObject, UserProfilePresenter {
             return joinStreams([accomplishmentsTab]).map { $0.flatMap { $0 }}
         }
         else {
-            return Stream(value: [])
+            return edXCore.Stream(value: [])
         }
     }()
 
 
-    private func tabWithAccomplishments(accomplishments: [Accomplishment], paginator: AnyPaginator<Accomplishment>) -> ProfileTabItem? {
+    fileprivate func tabWithAccomplishments(_ accomplishments: [Accomplishment], paginator: AnyPaginator<Accomplishment>) -> ProfileTabItem? {
         // turn accomplishments into the accomplishments tab
         if accomplishments.count > 0 {
             return {scrollView -> TabItem in
-                let shareAction : Accomplishment -> Void = {[weak self] in
+                let shareAction : (Accomplishment) -> Void = {[weak self] in
                     if let owner = self {
-                        owner.delegate?.presenter(owner, choseShareURL:$0.shareURL)
+                        owner.delegate?.presenter(owner, choseShareURL:$0.shareURL as URL)
                     }
                 }
                 let view = AccomplishmentsView(paginator: paginator, containingScrollView: scrollView, shareAction: self.canShareAccomplishments ? shareAction: nil)

@@ -11,50 +11,50 @@ import UIKit
 
 
 class SpinnerButton: UIButton {
-    private let SpinnerViewTrailingMargin : CGFloat = 10
-    private let VerticalContentMargin : CGFloat = 5
-    private let SpinnerHorizontalMargin : CGFloat = 10
-    private var SpinnerViewWidthWithMargins : CGFloat {
-        return spinnerView.intrinsicContentSize().width + 2 * SpinnerHorizontalMargin
+    fileprivate let SpinnerViewTrailingMargin : CGFloat = 10
+    fileprivate let VerticalContentMargin : CGFloat = 5
+    fileprivate let SpinnerHorizontalMargin : CGFloat = 10
+    fileprivate var SpinnerViewWidthWithMargins : CGFloat {
+        return spinnerView.intrinsicContentSize.width + 2 * SpinnerHorizontalMargin
     }
     
-    private let spinnerView = SpinnerView(size: .Large, color: .White)
+    fileprivate let spinnerView = SpinnerView(size: .large, color: .white)
     
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutSpinnerView()
     }
     
-    private func layoutSpinnerView() {
+    fileprivate func layoutSpinnerView() {
         self.addSubview(spinnerView)
         self.titleLabel?.adjustsFontSizeToFitWidth = true
         
-        spinnerView.snp_updateConstraints { (make) -> Void in
+        spinnerView.snp.updateConstraints { (make) -> Void in
             make.centerY.equalTo(self)
-            make.width.equalTo(spinnerView.intrinsicContentSize().width)
+            make.width.equalTo(spinnerView.intrinsicContentSize.width)
             if let label = titleLabel {
-                make.leading.equalTo(label.snp_trailing).offset(SpinnerHorizontalMargin).priorityLow()
+                make.leading.equalTo(label.snp.trailing).offset(SpinnerHorizontalMargin).priority(.low)
             }
-            make.trailing.equalTo(self.snp_trailing).offset(-SpinnerHorizontalMargin).priorityHigh()
+            make.trailing.equalTo(self.snp.trailing).offset(-SpinnerHorizontalMargin).priority(.high)
         }
         self.setNeedsUpdateConstraints()
-        if !showProgress { spinnerView.hidden = true }
+        if !showProgress { spinnerView.isHidden = true }
     }
     
-    override func intrinsicContentSize() -> CGSize {
-        let width = self.titleLabel?.intrinsicContentSize().width ?? 0 + SpinnerViewTrailingMargin + self.spinnerView.intrinsicContentSize().width
-        let height = max(super.intrinsicContentSize().height, spinnerView.intrinsicContentSize().height + 2 * VerticalContentMargin)
-        return CGSizeMake(width, height)
+    override var intrinsicContentSize : CGSize {
+        let width = self.titleLabel?.intrinsicContentSize.width ?? 0 + SpinnerViewTrailingMargin + self.spinnerView.intrinsicContentSize.width
+        let height = max(super.intrinsicContentSize.height, spinnerView.intrinsicContentSize.height + 2 * VerticalContentMargin)
+        return CGSize(width: width, height: height)
     }
     
     var showProgress : Bool = false {
         didSet {
             if showProgress {
-                spinnerView.hidden = false
+                spinnerView.isHidden = false
                 spinnerView.startAnimating()
             }
             else {
-                spinnerView.hidden = true
+                spinnerView.isHidden = true
                 spinnerView.stopAnimating()
             }
         }

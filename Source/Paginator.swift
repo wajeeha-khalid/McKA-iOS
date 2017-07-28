@@ -9,7 +9,7 @@
 protocol Paginator {
     associatedtype Element
     // Accumulation of all the objects loaded so far
-    var stream : Stream<[Element]> { get }
+    var stream : edXCore.Stream<[Element]> { get }
     var hasNext : Bool { get }
     func loadMore()
 }
@@ -20,11 +20,11 @@ protocol Paginator {
 // TODO: Revisit when Swift supports generic protocols
 class AnyPaginator<A> : Paginator {
     typealias Element = A
-    let stream : Stream<[Element]>
-    private var _hasNext: () -> Bool
+    let stream : edXCore.Stream<[Element]>
+    fileprivate var _hasNext: () -> Bool
     let _loadMore: () -> Void
     
-    init<P: Paginator where P.Element == A>(_ paginator : P) {
+    init<P: Paginator>(_ paginator : P) where P.Element == A {
         self.stream = paginator.stream
         self._loadMore = paginator.loadMore
         self._hasNext = { paginator.hasNext }
@@ -42,22 +42,22 @@ class AnyPaginator<A> : Paginator {
 class WrappedPaginator<A> : NSObject, Paginator {
     typealias Element = A
     
-    private var itemStream = BackedStream<Paginated<[A]>>()
-    private var generator : Int -> Stream<Paginated<[A]>>
-    private var currentPage : Int = PaginationDefaults.startPage
+    fileprivate var itemStream = BackedStream<Paginated<[A]>>()
+    fileprivate var generator : (Int) -> edXCore.Stream<Paginated<[A]>>
+    fileprivate var currentPage : Int = PaginationDefaults.startPage
     
-    init(generator : Int -> Stream<Paginated<[A]>>) {
+    init(generator : @escaping (Int) -> edXCore.Stream<Paginated<[A]>>) {
         self.generator = generator
     }
     
-    convenience init(networkManager : NetworkManager, requestGenerator : Int -> NetworkRequest<Paginated<[A]>>) {
+    convenience init(networkManager : NetworkManager, requestGenerator : @escaping (Int) -> NetworkRequest<Paginated<[A]>>) {
         self.init {page in
             let request = requestGenerator(page)
             return networkManager.streamForRequest(request)
         }
     }
     
-    private(set) lazy var stream : Stream<[A]> = {
+    fileprivate(set) lazy var stream : edXCore.Stream<[A]> = {
         accumulate(self.itemStream.map { $0.value } )
     }()
     

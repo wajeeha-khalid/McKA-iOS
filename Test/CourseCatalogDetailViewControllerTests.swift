@@ -10,7 +10,7 @@
 
 class CourseCatalogDetailViewControllerTests: SnapshotTestCase {
     
-    func setupWithCourse(course: OEXCourse, interface: OEXInterface? = nil) -> (TestRouterEnvironment, CourseCatalogDetailViewController) {
+    func setupWithCourse(_ course: OEXCourse, interface: OEXInterface? = nil) -> (TestRouterEnvironment, CourseCatalogDetailViewController) {
         let environment = TestRouterEnvironment(interface: interface).logInTestUser()
         environment.mockEnrollmentManager.enrollments = []
         environment.mockNetworkManager.interceptWhenMatching({_ in true}) {
@@ -24,13 +24,13 @@ class CourseCatalogDetailViewControllerTests: SnapshotTestCase {
     // MARK: Snapshots
     
     func testSnapshotAboutScreen() {
-        let endDate = NSDate.stableTestDate()
+        let endDate = Date.stableTestDate()
         let mediaInfo = ["course_video": CourseMediaInfo(name: "Video", uri: "http://example.com/image")]
-        let startInfo = OEXCourseStartDisplayInfo(date: nil, displayDate: "Eventually", type: .String)
+        let startInfo = OEXCourseStartDisplayInfo(date: nil, displayDate: "Eventually", type: .string)
         let course = OEXCourse.freshCourse(
             shortDescription: "This is a course that teaches you completely amazing things that you have always wanted to learn!",
+            overview: NSString.oex_longTest(),
             effort : "Four to six weeks",
-            overview: NSString.oex_longTestString(),
             mediaInfo: mediaInfo,
             startInfo: startInfo,
             end: endDate)
@@ -45,24 +45,24 @@ class CourseCatalogDetailViewControllerTests: SnapshotTestCase {
     // MARK: Course Content
     
     func verifyField(
-        effort effort : String? = nil,
+        effort : String? = nil,
         shortDescription: String? = nil,
         overview: String? = nil,
         startInfo: OEXCourseStartDisplayInfo? = nil,
         mediaInfo: [String:CourseMediaInfo] = [:],
-        endDate: NSDate? = nil,
+        endDate: Date? = nil,
         file : StaticString = #file, line : UInt = #line,
-        verifier : CourseCatalogDetailView -> Bool)
+        verifier : (CourseCatalogDetailView) -> Bool)
     {
         let course = OEXCourse.freshCourse(
             shortDescription: shortDescription,
-            effort : effort,
             overview: overview,
+            effort : effort,
             mediaInfo: mediaInfo,
             startInfo: startInfo,
             end: endDate)
         let environment = TestRouterEnvironment()
-        let view = CourseCatalogDetailView(frame: CGRectZero, environment: environment)
+        let view = CourseCatalogDetailView(frame: CGRect.zero, environment: environment)
         view.applyCourse(course)
         XCTAssertTrue(verifier(view), file:file, line:line)
     }
@@ -76,12 +76,12 @@ class CourseCatalogDetailViewControllerTests: SnapshotTestCase {
     }
     
     func testHasEndFieldNotStarted() {
-        verifyField(effort:nil, endDate: NSDate().dateByAddingDays(1)) { $0.t_showingEndDate }
+        verifyField(effort:nil, endDate: Date().dateByAddingDays(1)) { $0.t_showingEndDate }
     }
     
     func testHasEndFieldStarted() {
-        let startInfo = OEXCourseStartDisplayInfo(date: NSDate().dateByAddingDays(-1), displayDate: nil, type: .Timestamp)
-        verifyField(effort:nil, startInfo: startInfo, endDate: NSDate().dateByAddingDays(1)) { !$0.t_showingEndDate }
+        let startInfo = OEXCourseStartDisplayInfo(date: Date().dateByAddingDays(-1), displayDate: nil, type: .Timestamp)
+        verifyField(effort:nil, startInfo: startInfo, endDate: Date().dateByAddingDays(1)) { !$0.t_showingEndDate }
     }
     
     func testHasNoEndFieldCourseNotStarted() {
@@ -121,17 +121,17 @@ class CourseCatalogDetailViewControllerTests: SnapshotTestCase {
             // try to enroll with a bad request
             environment.mockNetworkManager.interceptWhenMatching({(_ : NetworkRequest<UserCourseEnrollment>) in return true}, statusCode: 401, error: NSError.oex_unknownError())
             
-            let expectation = expectationWithDescription("enrollment finishes")
+            let testExpectation = expectation(description: "enrollment finishes")
             controller.t_enrollInCourse({ () -> Void in
                 XCTAssertTrue(controller.t_isShowingOverlayMessage)
-                expectation.fulfill()
+                testExpectation.fulfill()
             })
             waitForExpectations()
             
         }
     }
     
-    func verifyEnrollmentSuccessWithCourse(course: OEXCourse, message: String, setupEnvironment: (TestRouterEnvironment -> Void)? = nil) -> TestRouterEnvironment {
+    func verifyEnrollmentSuccessWithCourse(_ course: OEXCourse, message: String, setupEnvironment: ((TestRouterEnvironment) -> Void)? = nil) -> TestRouterEnvironment {
         let (environment, controller) = setupWithCourse(course)
         environment.mockEnrollmentManager.enrollments = []
         setupEnvironment?(environment)
@@ -145,7 +145,7 @@ class CourseCatalogDetailViewControllerTests: SnapshotTestCase {
                 return (nil, UserCourseEnrollment(course:course, isActive: true))
             }
             
-            expectationForNotification(EnrollmentShared.successNotification, object: nil, handler: { (notification) -> Bool in
+            expectation(forNotification: EnrollmentShared.successNotification, object: nil, handler: { (notification) -> Bool in
                 let enrollmentMessage = notification.object as! String
                 return enrollmentMessage == message
             })

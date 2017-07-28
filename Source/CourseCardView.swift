@@ -26,22 +26,22 @@ final class CourseProgressView: UIView {
                 view.maxValue = 100
                 view.value = CGFloat(value)
                 view.unitString = "%"
-                view.fontColor = UIColor.whiteColor()
+                view.fontColor = UIColor.white
                 view.valueFontSize = 14.0
                 view.unitFontSize = 14.0
-                let fontName = UIFont.systemFontOfSize(12.0).fontName
+                let fontName = UIFont.systemFont(ofSize: 12.0).fontName
                 view.unitFontName = fontName
                 view.valueFontName = fontName
-                view.progressColor = UIColor.whiteColor()
-                view.progressStrokeColor = UIColor.clearColor()
+                view.progressColor = UIColor.white
+                view.progressStrokeColor = UIColor.clear
                 view.progressLineWidth = 2.0
                 view.emptyLineWidth = 3.0
                 view.emptyLineColor = UIColor(colorLiteralRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
-                view.emptyLineStrokeColor = UIColor.clearColor()
+                view.emptyLineStrokeColor = UIColor.clear
                 view.progressRotationAngle = 50
                 view.progressAngle = 100
                 view.progressCapType = 1
-                view.backgroundColor = UIColor.clearColor()
+                view.backgroundColor = UIColor.clear
                 progressView = view
                 addSubview(view)
                 addConstraints(to: view)
@@ -54,8 +54,8 @@ final class CourseProgressView: UIView {
         }
     }
     
-    private func addConstraints(to progressView: UIView) {
-        progressView.snp_makeConstraints { (make) in
+    fileprivate func addConstraints(to progressView: UIView) {
+        progressView.snp.makeConstraints { (make) in
             make.centerY.equalTo(self)
             make.centerX.equalTo(self)
             make.height.equalTo(self)
@@ -67,14 +67,14 @@ final class CourseProgressView: UIView {
 
 //TODO: Remove `CourseCardView` and rename this class to `CourseCardView`
 class NewCourseCardView: UIView {
-    private let courseTitleLabel = UILabel()
-    private let lessonLabel = UILabel()
-    private let progressView = CourseProgressView()
+    fileprivate let courseTitleLabel = UILabel()
+    fileprivate let lessonLabel = UILabel()
+    fileprivate let progressView = CourseProgressView()
     let imageView = UIImageView()
-    private let overlayView = UIView()
-    private let labelsStackView = UIView()
+    fileprivate let overlayView = UIView()
+    fileprivate let labelsStackView = UIView()
     
-    var tapAction : (NewCourseCardView -> ())?
+    var tapAction : ((NewCourseCardView) -> ())?
     
     var coverImage: RemoteImage? {
         get {
@@ -110,7 +110,7 @@ class NewCourseCardView: UIView {
             if case .completed = newValue {
                 overlayView.backgroundColor = UIColor(colorLiteralRed: 39/255.0, green: 144/255.0, blue: 240/255.0, alpha: 0.95)
             } else {
-                overlayView.backgroundColor = UIColor.clearColor()
+                overlayView.backgroundColor = UIColor.clear
             }
         }
     }
@@ -126,61 +126,62 @@ class NewCourseCardView: UIView {
         addSubview(progressView)
         labelsStackView.addSubview(courseTitleLabel)
         labelsStackView.addSubview(lessonLabel)
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.hidesLoadingSpinner = true
-        lessonLabel.textColor = UIColor.whiteColor()
-        courseTitleLabel.textColor = UIColor.whiteColor()
-        courseTitleLabel.font = UIFont.boldSystemFontOfSize(16.0)
-        lessonLabel.font = UIFont.systemFontOfSize(12.0)
-        progressView.backgroundColor = UIColor.clearColor()
+        lessonLabel.textColor = UIColor.white
+        courseTitleLabel.textColor = UIColor.white
+        courseTitleLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        lessonLabel.font = UIFont.systemFont(ofSize: 12.0)
+        progressView.backgroundColor = UIColor.clear
         courseTitleLabel.numberOfLines = 2
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
-        userInteractionEnabled = true
+        isUserInteractionEnabled = true
         addGestureRecognizer(tapGestureRecognizer)
         setUpViews()
     }
     
-    @objc private func tapAction(sender: UITapGestureRecognizer) {
+    @objc fileprivate func tapAction(_ sender: UITapGestureRecognizer) {
         tapAction?(self)
     }
     
-    private func setUpViews() {
+    fileprivate func setUpViews() {
         
-        imageView.snp_makeConstraints { (make) in
+        
+        imageView.snp.makeConstraints { (make) in
             make.top.equalTo(self)
             make.bottom.equalTo(self)
             make.leading.equalTo(self)
             make.trailing.equalTo(self)
         }
         
-        overlayView.snp_makeConstraints { (make) in
+        overlayView.snp.makeConstraints { (make) in
             make.top.equalTo(self)
             make.bottom.equalTo(self)
             make.leading.equalTo(self)
             make.trailing.equalTo(self)
         }
         
-        progressView.snp_makeConstraints { (make) in
+        progressView.snp.makeConstraints { (make) in
             make.width.equalTo(46)
             make.height.equalTo(46)
             make.centerY.equalTo(labelsStackView)
             make.trailing.equalTo(self).offset(-StandardHorizontalMargin)
         }
         
-        labelsStackView.snp_makeConstraints { (make) in
+        labelsStackView.snp.makeConstraints { (make) in
             make.bottom.equalTo(self).offset(-30)
             make.leading.equalTo(self).offset(StandardHorizontalMargin)
-            make.trailing.lessThanOrEqualTo(progressView.snp_leading).offset(-StandardHorizontalMargin)
+            make.trailing.lessThanOrEqualTo(progressView.snp.leading).offset(-StandardHorizontalMargin)
         }
         
-        courseTitleLabel.snp_makeConstraints { (make) in
+        courseTitleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(labelsStackView)
             make.leading.equalTo(labelsStackView)
             make.trailing.equalTo(labelsStackView)
         }
         
-        lessonLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(courseTitleLabel.snp_bottom).offset(7)
+        lessonLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(courseTitleLabel.snp.bottom).offset(7)
             make.leading.equalTo(labelsStackView)
             make.trailing.equalTo(labelsStackView)
             make.bottom.equalTo(labelsStackView)
@@ -195,30 +196,30 @@ class NewCourseCardView: UIView {
 
 @IBDesignable
 class CourseCardView: UIView, UIGestureRecognizerDelegate {
-    private let arrowHeight = 15.0
-    private let verticalMargin = 10
+    fileprivate let arrowHeight = 15.0
+    fileprivate let verticalMargin = 10
     var isMyVideos: Bool
     
     var course: OEXCourse?
     
-    private let coverImageView = UIImageView()
-    private let container = UIView()
-    private let titleLabel = UILabel()
-    private let detailLabel = UILabel()
-    private let bottomLine = UIView()
-    private let bottomTrailingLabel = UILabel()
-    private let overlayContainer = UIView()
+    fileprivate let coverImageView = UIImageView()
+    fileprivate let container = UIView()
+    fileprivate let titleLabel = UILabel()
+    fileprivate let detailLabel = UILabel()
+    fileprivate let bottomLine = UIView()
+    fileprivate let bottomTrailingLabel = UILabel()
+    fileprivate let overlayContainer = UIView()
     
-    var tapAction : (CourseCardView -> ())?
+    var tapAction : ((CourseCardView) -> ())?
     
-    private var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .Normal, size: .Large, color: OEXStyles.sharedStyles().neutralBlack())
+    fileprivate var titleTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared().neutralBlack())
     }
-    private var detailTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .Normal, size: .XXXSmall, color: OEXStyles.sharedStyles().neutralXDark())
+    fileprivate var detailTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight : .normal, size: .xxxSmall, color: OEXStyles.shared().neutralXDark())
     }
     
-    private func setup() {
+    fileprivate func setup() {
         configureViews()
         accessibilityTraits = UIAccessibilityTraitStaticText
         accessibilityHint = Strings.accessibilityShowsCourseContent
@@ -240,21 +241,21 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        coverImageView.image = UIImage(named:"placeholderCourseCardImage", inBundle: bundle, compatibleWithTraitCollection: self.traitCollection)
-        titleLabel.attributedText = titleTextStyle.attributedStringWithText("Demo Course")
-        detailLabel.attributedText = detailTextStyle.attributedStringWithText("edx | DemoX")
-        bottomTrailingLabel.attributedText = detailTextStyle.attributedStringWithText("X Videos, 1.23 MB")
+        let bundle = Bundle(for: type(of: self))
+        coverImageView.image = UIImage(named:"placeholderCourseCardImage", in: bundle, compatibleWith: self.traitCollection)
+        titleLabel.attributedText = titleTextStyle.attributedString(withText: "Demo Course")
+        detailLabel.attributedText = detailTextStyle.attributedString(withText: "edx | DemoX")
+        bottomTrailingLabel.attributedText = detailTextStyle.attributedString(withText: "X Videos, 1.23 MB")
     }
     
     func configureViews() {
-        self.backgroundColor = OEXStyles.sharedStyles().neutralXLight()
+        self.backgroundColor = OEXStyles.shared().neutralXLight()
         self.clipsToBounds = true
-        self.bottomLine.backgroundColor = OEXStyles.sharedStyles().neutralXLight()
+        self.bottomLine.backgroundColor = OEXStyles.shared().neutralXLight()
         
-        self.container.backgroundColor = OEXStyles.sharedStyles().neutralWhite().colorWithAlphaComponent(0.85)
-        self.coverImageView.backgroundColor = OEXStyles.sharedStyles().neutralWhiteT()
-        self.coverImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        self.container.backgroundColor = OEXStyles.shared().neutralWhite().withAlphaComponent(0.85)
+        self.coverImageView.backgroundColor = OEXStyles.shared().neutralWhiteT()
+        self.coverImageView.contentMode = UIViewContentMode.scaleAspectFill
         self.coverImageView.clipsToBounds = true
         self.coverImageView.hidesLoadingSpinner = false
         
@@ -266,49 +267,49 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
         self.addSubview(coverImageView)
         self.addSubview(container)
 
-         self.container.hidden = true
+         self.container.isHidden = true
         self.insertSubview(bottomLine, aboveSubview: coverImageView)
         self.addSubview(overlayContainer)
-        coverImageView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, forAxis: .Horizontal)
-        coverImageView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, forAxis: .Vertical)
-        detailLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, forAxis: UILayoutConstraintAxis.Horizontal)
-        detailLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: UILayoutConstraintAxis.Horizontal)
+        coverImageView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        coverImageView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .vertical)
+        detailLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: UILayoutConstraintAxis.horizontal)
+        detailLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: UILayoutConstraintAxis.horizontal)
         
-        self.container.snp_makeConstraints { make -> Void in
+        self.container.snp.makeConstraints { make -> Void in
             make.leading.equalTo(self)
-            make.trailing.equalTo(self).priorityRequired()
+            make.trailing.equalTo(self).priority(.required)
             make.bottom.equalTo(self).offset(-OEXStyles.dividerSize())
         }
-        self.coverImageView.snp_makeConstraints { (make) -> Void in
+        self.coverImageView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self)
             make.leading.equalTo(self)
             make.trailing.equalTo(self)
-            make.height.equalTo(self.coverImageView.snp_width).multipliedBy(0.533).priorityLow()
+            make.height.equalTo(self.coverImageView.snp.width).multipliedBy(0.533).priority(.low)
             make.bottom.equalTo(self)
         }
-        self.detailLabel.snp_makeConstraints { (make) -> Void in
+        self.detailLabel.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(self.container).offset(StandardHorizontalMargin)
-            make.top.equalTo(self.titleLabel.snp_bottom)
+            make.top.equalTo(self.titleLabel.snp.bottom)
             make.bottom.equalTo(self.container).offset(-verticalMargin)
             make.trailing.equalTo(self.titleLabel)
         }
-        self.bottomLine.snp_makeConstraints { (make) -> Void in
+        self.bottomLine.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(self)
             make.trailing.equalTo(self)
             make.bottom.equalTo(self)
-            make.top.equalTo(self.container.snp_bottom)
+            make.top.equalTo(self.container.snp.bottom)
         }
         
-        self.bottomTrailingLabel.snp_makeConstraints { (make) -> Void in
+        self.bottomTrailingLabel.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(detailLabel)
             make.trailing.equalTo(self.container).offset(-StandardHorizontalMargin)
         }
 
-        self.overlayContainer.snp_makeConstraints {make in
+        self.overlayContainer.snp.makeConstraints {make in
             make.leading.equalTo(self)
             make.trailing.equalTo(self)
             make.top.equalTo(self)
-            make.bottom.equalTo(container.snp_top)
+            make.bottom.equalTo(container.snp.top)
         }
         
         let tapGesture = UITapGestureRecognizer {[weak self] _ in self?.cardTapped() }
@@ -318,13 +319,13 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
 
     override func updateConstraints() {
         if let accessory = titleAccessoryView {
-            accessory.snp_remakeConstraints { make in
+            accessory.snp.remakeConstraints { make in
                 make.trailing.equalTo(container).offset(-StandardHorizontalMargin)
                 make.centerY.equalTo(container)
             }
         }
 
-        self.titleLabel.snp_remakeConstraints { (make) -> Void in
+        self.titleLabel.snp.remakeConstraints { (make) -> Void in
             make.leading.equalTo(container).offset(StandardHorizontalMargin)
             if let accessory = titleAccessoryView {
                 make.trailing.lessThanOrEqualTo(accessory).offset(-StandardHorizontalMargin)
@@ -350,7 +351,7 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return tapAction != nil
     }
     
@@ -359,7 +360,7 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
             return self.titleLabel.text
         }
         set {
-            self.titleLabel.attributedText = titleTextStyle.attributedStringWithText(newValue)
+            self.titleLabel.attributedText = titleTextStyle.attributedString(withText: newValue)
             updateAcessibilityLabel()
         }
     }
@@ -369,7 +370,7 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
             return self.detailLabel.text
         }
         set {
-            self.detailLabel.attributedText = detailTextStyle.attributedStringWithText(newValue)
+            self.detailLabel.attributedText = detailTextStyle.attributedString(withText: newValue)
             updateAcessibilityLabel()
         }
     }
@@ -380,8 +381,8 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
         }
         
         set {
-            self.bottomTrailingLabel.attributedText = detailTextStyle.attributedStringWithText(newValue)
-            self.bottomTrailingLabel.hidden = !(newValue != nil && !newValue!.isEmpty)
+            self.bottomTrailingLabel.attributedText = detailTextStyle.attributedString(withText: newValue)
+            self.bottomTrailingLabel.isHidden = !(newValue != nil && !newValue!.isEmpty)
             updateAcessibilityLabel()
         }
     }
@@ -395,19 +396,19 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    private func cardTapped() {
+    fileprivate func cardTapped() {
         self.tapAction?(self)
     }
     
     func wrapTitleLabel() {
         self.titleLabel.numberOfLines = 3
-        self.titleLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        self.titleLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         self.titleLabel.minimumScaleFactor = 0.5
         self.titleLabel.adjustsFontSizeToFitWidth = true
         self.layoutIfNeeded()
     }
     
-    func updateAcessibilityLabel()-> String {
+    @discardableResult func updateAcessibilityLabel()-> String {
         var accessibilityString = ""
         
         if let title = titleText {
@@ -415,7 +416,7 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
         }
         
         if let text = detailText {
-         let formatedDetailText = text.stringByReplacingOccurrencesOfString("|", withString: "")
+         let formatedDetailText = text.replacingOccurrences(of: "|", with: "")
             accessibilityString = "\(accessibilityString),\(Strings.accessibilityBy) \(formatedDetailText)"
         }
         
@@ -427,9 +428,9 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
         return accessibilityString
     }
     
-    func addCenteredOverlay(view : UIView) {
+    func addCenteredOverlay(_ view : UIView) {
         addSubview(view)
-        view.snp_makeConstraints {make in
+        view.snp.makeConstraints {make in
             make.center.equalTo(overlayContainer)
         }
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol ContentInsetsSourceDelegate : class {
-    func contentInsetsSourceChanged(source : ContentInsetsSource)
+    func contentInsetsSourceChanged(_ source : ContentInsetsSource)
 }
 
 public protocol ContentInsetsSource : class {
@@ -19,15 +19,15 @@ public protocol ContentInsetsSource : class {
 }
 
 
-public class ConstantInsetsSource : ContentInsetsSource {
-    public var currentInsets : UIEdgeInsets {
+open class ConstantInsetsSource : ContentInsetsSource {
+    open var currentInsets : UIEdgeInsets {
         didSet {
             self.insetsDelegate?.contentInsetsSourceChanged(self)
         }
     }
     
-    public let affectsScrollIndicators : Bool
-    public weak var insetsDelegate : ContentInsetsSourceDelegate?
+    open let affectsScrollIndicators : Bool
+    open weak var insetsDelegate : ContentInsetsSourceDelegate?
 
     public init(insets : UIEdgeInsets, affectsScrollIndicators : Bool) {
         self.currentInsets = insets
@@ -45,48 +45,48 @@ public class ConstantInsetsSource : ContentInsetsSource {
 /// To use:
 ///  #. Call `setupInController:scrollView:` in the `viewDidLoad` method of your controller
 ///  #. Call `updateInsets` in the `viewDidLayoutSubviews` method of your controller
-public class ContentInsetsController: NSObject, ContentInsetsSourceDelegate {
+open class ContentInsetsController: NSObject, ContentInsetsSourceDelegate {
     
-    private var scrollView : UIScrollView?
-    private weak var owner : UIViewController?
+    fileprivate var scrollView : UIScrollView?
+    fileprivate weak var owner : UIViewController?
     
-    private var insetSources : [ContentInsetsSource] = []
+    fileprivate var insetSources : [ContentInsetsSource] = []
 
     // Keyboard is separated out since it isn't a simple sum, but instead overrides other
     // insets when present
-    private var keyboardSource : ContentInsetsSource?
+    fileprivate var keyboardSource : ContentInsetsSource?
     
-    public func setupInController(owner : UIViewController, scrollView : UIScrollView) {
+    open func setupInController(_ owner : UIViewController, scrollView : UIScrollView) {
         self.owner = owner
         self.scrollView = scrollView
         keyboardSource = KeyboardInsetsSource(scrollView: scrollView)
         keyboardSource?.insetsDelegate = self
     }
     
-    private var controllerInsets : UIEdgeInsets {
+    fileprivate var controllerInsets : UIEdgeInsets {
         let topGuideHeight = self.owner?.topLayoutGuide.length ?? 0
         let bottomGuideHeight = self.owner?.bottomLayoutGuide.length ?? 0
         return UIEdgeInsets(top : topGuideHeight, left : 0, bottom : bottomGuideHeight, right : 0)
     }
     
-    public func contentInsetsSourceChanged(source: ContentInsetsSource) {
+    open func contentInsetsSourceChanged(_ source: ContentInsetsSource) {
         updateInsets()
     }
     
-    public func addSource(source : ContentInsetsSource) {
+    open func addSource(_ source : ContentInsetsSource) {
         source.insetsDelegate = self
         insetSources.append(source)
         updateInsets()
     }
     
-    public func updateInsets() {
+    open func updateInsets() {
         var regularInsets = insetSources
             .map { $0.currentInsets }
-            .reduce(controllerInsets, combine: +)
+            .reduce(controllerInsets, +)
         let indicatorSources = insetSources
             .filter { $0.affectsScrollIndicators }
             .map { $0.currentInsets }
-        var indicatorInsets = indicatorSources.reduce(controllerInsets, combine: +)
+        var indicatorInsets = indicatorSources.reduce(controllerInsets, +)
         
         if let keyboardHeight = keyboardSource?.currentInsets.bottom {
             regularInsets.bottom = max(keyboardHeight, regularInsets.bottom)

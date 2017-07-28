@@ -9,20 +9,20 @@
 import Foundation
 
 enum AnaylticsPhotoSource {
-    case Camera
-    case PhotoLibrary
+    case camera
+    case photoLibrary
     
     var value : String {
         switch self {
-            case .Camera: return OEXAnalyticsValuePhotoSourceCamera
-            case .PhotoLibrary: return OEXAnalyticsValuePhotoSourceLibrary
+            case .camera: return OEXAnalyticsValuePhotoSourceCamera
+            case .photoLibrary: return OEXAnalyticsValuePhotoSourceLibrary
         }
     }
 }
 
 extension OEXAnalytics {
     
-    func trackProfileViewed(username : String) {
+    func trackProfileViewed(_ username : String) {
         let event = OEXAnalyticsEvent()
         event.name = OEXAnalyticsEventProfileViewed
         event.displayName = "Viewed a profile"
@@ -32,7 +32,7 @@ extension OEXAnalytics {
         self.trackEvent(event, forComponent: nil, withInfo: nil)
     }
     
-    func trackSetProfilePhoto(photoSource: AnaylticsPhotoSource) {
+    func trackSetProfilePhoto(_ photoSource: AnaylticsPhotoSource) {
         let event = OEXAnalyticsEvent()
         event.name = OEXAnalyticsEventPictureSet
         event.displayName = "Set a profile picture"

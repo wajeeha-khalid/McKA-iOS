@@ -10,41 +10,41 @@ import Foundation
 
 extension OEXConfig {
     var pushNotificationsEnabled : Bool {
-        return boolForKey("PUSH_NOTIFICATIONS")
+        return bool(forKey: "PUSH_NOTIFICATIONS")
     }
 
     var discussionsEnabled : Bool {
-        return boolForKey("DISCUSSIONS_ENABLED")
+        return bool(forKey: "DISCUSSIONS_ENABLED")
     }
 
     var certificatesEnabled : Bool {
-        return boolForKey("CERTIFICATES_ENABLED")
+        return bool(forKey: "CERTIFICATES_ENABLED")
     }
 
     var profilesEnabled : Bool {
-        return boolForKey("USER_PROFILES_ENABLED")
+        return bool(forKey: "USER_PROFILES_ENABLED")
     }
 
     var courseSharingEnabled : Bool {
-        return boolForKey("COURSE_SHARING_ENABLED")
+        return bool(forKey: "COURSE_SHARING_ENABLED")
     }
 
     var badgesEnabled : Bool {
-        return boolForKey("BADGES_ENABLED")
+        return bool(forKey: "BADGES_ENABLED")
     }
     
     var newLogistrationFlowEnabled: Bool {
-        return boolForKey("NEW_LOGISTRATION_ENABLED")
+        return bool(forKey: "NEW_LOGISTRATION_ENABLED")
     }
     
     var discussionsEnabledProfilePictureParam: Bool {
-        return boolForKey("DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM")
+        return bool(forKey: "DISCUSSIONS_ENABLE_PROFILE_PICTURE_PARAM")
     }
     
     var isRegistrationEnabled: Bool {
         // By default registration is enabled
         if let _ = properties["REGISTRATION_ENABLED"] {
-            return boolForKey("REGISTRATION_ENABLED")
+            return bool(forKey: "REGISTRATION_ENABLED")
         }
         return true
     }

@@ -19,11 +19,11 @@ class OfflineSupportViewControllerTests: XCTestCase {
         
         let reachability = MockReachability()
         reachability.networkStatus = (wifi : false, wwan : false)
-        reachability.startNotifier()
+        _ = reachability.startNotifier()
         
-        let expectation = expectationWithDescription("reachability changed")
+        let expectation = self.expectation(description: "reachability changed")
         
-        let removable = addNotificationObserver(self, name: kReachabilityChangedNotification) { (_, _, removable) -> Void in
+        let removable = addNotificationObserver(self, name: NSNotification.Name.reachabilityChanged.rawValue) { (_, _, removable) -> Void in
             controller.showOfflineSnackBar(Strings.offline, selector: nil)
             expectation.fulfill()
         }

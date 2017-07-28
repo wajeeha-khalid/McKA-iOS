@@ -8,11 +8,12 @@
 
 import UIKit
 import edXCore
+import SwiftyJSON
 
 public struct UserAPI {
     public struct UserStatusParameters {
         let courseVisitedModuleId : String
-        let modificationDate = OEXDateFormatting.serverStringWithDate(NSDate())
+        let modificationDate = OEXDateFormatting.serverString(with: Date())
         var query : [String:String] {
             return [
                 "last_visited_module_id" : courseVisitedModuleId,
@@ -25,28 +26,28 @@ public struct UserAPI {
         }
 }
 
-    static func lastAccessedDeserializer(response : NSHTTPURLResponse, json : JSON) -> Result<CourseLastAccessed> {
+    static func lastAccessedDeserializer(_ response : HTTPURLResponse, json : JSON) -> Result<CourseLastAccessed> {
         return CourseLastAccessed(json: json).toResult()
     }
     
-    public static func requestLastVisitedModuleForCourseID(courseID: String) -> NetworkRequest<CourseLastAccessed> {
+    public static func requestLastVisitedModuleForCourseID(_ courseID: String) -> NetworkRequest<CourseLastAccessed> {
 
         return NetworkRequest(
             method: HTTPMethod.GET,
-            path : "/api/mobile/v0.5/users/{username}/course_status_info/{course_id}".oex_formatWithParameters(["course_id" : courseID, "username":OEXSession.sharedSession()?.currentUser?.username ?? ""]),
+            path : "/api/mobile/v0.5/users/{username}/course_status_info/{course_id}".oex_format(withParameters: ["course_id" : courseID, "username":OEXSession.shared()?.currentUser?.username ?? ""]),
             requiresAuth : true,
-            deserializer: .JSONResponse(lastAccessedDeserializer))
+            deserializer: .jsonResponse(lastAccessedDeserializer))
     }
     
-    public static func setLastVisitedModuleForBlockID(blockID:String, module_id:String) -> NetworkRequest<CourseLastAccessed> {
+    public static func setLastVisitedModuleForBlockID(_ blockID:String, module_id:String) -> NetworkRequest<CourseLastAccessed> {
         let requestParams = UserStatusParameters(courseVisitedModuleId: module_id)
         
         return NetworkRequest(
             method: HTTPMethod.PATCH,
-            path : "/api/mobile/v0.5/users/{username}/course_status_info/{course_id}".oex_formatWithParameters(["course_id" : blockID, "username":OEXSession.sharedSession()?.currentUser?.username ?? ""]),
+            path : "/api/mobile/v0.5/users/{username}/course_status_info/{course_id}".oex_format(withParameters: ["course_id" : blockID, "username":OEXSession.shared()?.currentUser?.username ?? ""]),
             requiresAuth : true,
-            body : RequestBody.JSONBody(requestParams.jsonBody),
-            deserializer: .JSONResponse(lastAccessedDeserializer))
+            body : RequestBody.jsonBody(requestParams.jsonBody),
+            deserializer: .jsonResponse(lastAccessedDeserializer))
     }
     
 

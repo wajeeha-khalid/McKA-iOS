@@ -20,8 +20,8 @@ class CourseUnitsViewCell: MGSwipeTableCell, PKDownloadButtonDelegate {
     @IBOutlet weak var ibStateLabel: UILabel!
     
     var unitID: CourseBlockID?
-    var downloadActionBlock: ((unitID : CourseBlockID, sender: CourseUnitsViewCell) -> ())?
-    var cancelActionBlock: ((unitID : CourseBlockID, sender: CourseUnitsViewCell) -> ())?
+    var downloadActionBlock: ((_ unitID : CourseBlockID, _ sender: CourseUnitsViewCell) -> ())?
+    var cancelActionBlock: ((_ unitID : CourseBlockID, _ sender: CourseUnitsViewCell) -> ())?
 
     
     var downloadState: DownloadState {
@@ -30,34 +30,34 @@ class CourseUnitsViewCell: MGSwipeTableCell, PKDownloadButtonDelegate {
             
             switch downloadState.state {
                 
-            case .Available :
-                downloadButton.hidden = false
-                downloadButton.state = .StartDownload
+            case .available :
+                downloadButton.isHidden = false
+                downloadButton.state = .startDownload
                 downloadLabel.text = "Download"
                 downloadLabel.textColor = UIColor(red: 185/255, green:  185/255, blue:  185/255, alpha: 1.0)
-                downloadLabel.hidden = false
+                downloadLabel.isHidden = false
                 //ibStateLabel.text = "Available"
                 
-            case .Active :
-                downloadButton.hidden = false
-                downloadButton.state = .Downloading
+            case .active :
+                downloadButton.isHidden = false
+                downloadButton.state = .downloading
                 downloadButton.stopDownloadButton.progress = CGFloat(downloadState.progress/100)
-                downloadLabel.hidden = false
+                downloadLabel.isHidden = false
                 downloadLabel.text = "Downloading...."
                 downloadLabel.textColor = UIColor(red: 0/255, green:  221/255, blue:  253/255, alpha: 1.0)
                 //ibStateLabel.text = "Active"
                 
-            case .Complete :
-                downloadButton.hidden = true
-                downloadLabel.hidden = false
+            case .complete :
+                downloadButton.isHidden = true
+                downloadLabel.isHidden = false
                 downloadLabel.text = "Downloaded"
                 downloadLabel.textColor = UIColor(red: 185/255, green:  185/255, blue:  185/255, alpha: 1.0)
                 //ibStateLabel.text = "Complete"
                 
-            case .NotAvailable:
-                downloadButton.hidden = true
+            case .notAvailable:
+                downloadButton.isHidden = true
                 downloadLabel.text = nil
-                downloadLabel.hidden = true
+                downloadLabel.isHidden = true
                 //ibStateLabel.text = "NotAvailable"
             }
         }
@@ -65,7 +65,7 @@ class CourseUnitsViewCell: MGSwipeTableCell, PKDownloadButtonDelegate {
     
     
     required init?(coder aDecoder: NSCoder) {
-        downloadState = DownloadState(state: .Available, progress: 0.0)
+        downloadState = DownloadState(state: .available, progress: 0.0)
         super.init(coder: aDecoder)
     }
     
@@ -73,11 +73,11 @@ class CourseUnitsViewCell: MGSwipeTableCell, PKDownloadButtonDelegate {
         super.awakeFromNib()
         
         downloadButton.startDownloadButton.cleanDefaultAppearance()
-        downloadButton.startDownloadButton.contentEdgeInsets = EdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-        downloadButton.startDownloadButton.setImage(UIImage(named: "ic_blue_download.png"), forState: .Normal)
-        downloadButton.startDownloadButton.imageView?.contentMode = .ScaleAspectFit
+        downloadButton.startDownloadButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        downloadButton.startDownloadButton.setImage(UIImage(named: "ic_blue_download.png"), for: UIControlState())
+        downloadButton.startDownloadButton.imageView?.contentMode = .scaleAspectFit
         
-        downloadButton.stopDownloadButton.stopButton.contentEdgeInsets = EdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        downloadButton.stopDownloadButton.stopButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         downloadButton.stopDownloadButton.tintColor = UIColor(hexString: "#00DDFD", alpha: 1.0)
         downloadButton.stopDownloadButton.filledLineWidth = 3.0
         
@@ -86,35 +86,35 @@ class CourseUnitsViewCell: MGSwipeTableCell, PKDownloadButtonDelegate {
         downloadButton.delegate = self        
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
     }
     
-    func getCellDetails(block : CourseBlock, index : Int) {
+    func getCellDetails(_ block : CourseBlock, index : Int) {
         unitTitle.text =  "\(index + 1). \(block.displayName)"
         self.contentView.layoutIfNeeded()
     }
     
     //MARK: PKDownloadButtonDelegate
-    @objc func downloadButtonTapped(downloadButton: PKDownloadButton!, currentState state: PKDownloadButtonState) {
+    @objc func downloadButtonTapped(_ downloadButton: PKDownloadButton!, currentState state: PKDownloadButtonState) {
         
         switch state {
-        case .StartDownload:
+        case .startDownload:
             
             if let unitID = unitID {
-                downloadActionBlock?(unitID: unitID, sender: self)
+                downloadActionBlock?(unitID, self)
             }
             
-        case .Pending :
+        case .pending :
             break
             
-        case .Downloading :
+        case .downloading :
             if let unitID = unitID {
-                cancelActionBlock?(unitID: unitID, sender: self)
+                cancelActionBlock?(unitID, self)
             }
             
-        case .Downloaded :
+        case .downloaded :
             break
         }
     }

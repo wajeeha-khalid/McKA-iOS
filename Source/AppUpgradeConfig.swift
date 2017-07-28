@@ -16,8 +16,8 @@ class AppUpgradeConfig : NSObject {
         self.URIS = uris
     }
     
-    func iOSAppStoreURL() -> NSURL? {
-        if URIS.count > 0 , let URLString = URIS[0] as? String, let appStoreURL = NSURL(string: URLString) {
+    func iOSAppStoreURL() -> URL? {
+        if URIS.count > 0 , let URLString = URIS[0] as? String, let appStoreURL = URL(string: URLString) {
             return appStoreURL
         }
         return nil

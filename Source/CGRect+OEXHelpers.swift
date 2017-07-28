@@ -9,7 +9,7 @@
 import Foundation
 
 extension CGRect {
-    func rectOfSizeInCenter(size: CGSize) -> CGRect {
+    func rectOfSizeInCenter(_ size: CGSize) -> CGRect {
         return CGRect(x: (width - size.width) / 2.0, y: (height - size.height) / 2.0, width: size.width, height: size.height)
     }
 }

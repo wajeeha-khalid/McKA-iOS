@@ -7,9 +7,9 @@
 //
 
 import UIKit
-public class CourseHandoutsViewController: OfflineSupportViewController, UIWebViewDelegate {
+open class CourseHandoutsViewController: OfflineSupportViewController, UIWebViewDelegate {
     
-    public typealias Environment = protocol<DataManagerProvider, NetworkManagerProvider, ReachabilityProvider, OEXAnalyticsProvider, OEXSessionProvider>
+    public typealias Environment = DataManagerProvider & NetworkManagerProvider & ReachabilityProvider & OEXAnalyticsProvider & OEXSessionProvider
 
     let courseID : String
     let environment : Environment
@@ -32,7 +32,7 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         loadController.setupInController(self, contentView: webView)
@@ -43,33 +43,33 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
         loadHandouts()
     }
     
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        environment.analytics.trackScreenWithName(OEXAnalyticsScreenHandouts, courseID: courseID, value: nil)
+        environment.analytics.trackScreen(withName: OEXAnalyticsScreenHandouts, courseID: courseID, value: nil)
     }
     
     override func reloadViewData() {
         loadHandouts()
     }
     
-    private func addSubviews() {
+    fileprivate func addSubviews() {
         view.addSubview(webView)
     }
     
-    private func setConstraints() {
-        webView.snp_makeConstraints { (make) -> Void in
+    fileprivate func setConstraints() {
+        webView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(self.view)
         }
     }
     
-    private func setStyles() {
-        self.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+    fileprivate func setStyles() {
+        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
         self.navigationItem.title = Strings.courseHandouts
     }
     
-    private func streamForCourse(course : OEXCourse) -> Stream<String>? {
-        if let access = course.courseware_access where !access.has_access {
-            return Stream<String>(error: OEXCoursewareAccessError(coursewareAccess: access, displayInfo: course.start_display_info))
+    fileprivate func streamForCourse(_ course : OEXCourse) -> edXCore.Stream<String>? {
+        if let access = course.courseware_access, !access.has_access {
+            return edXCore.Stream<String>(error: OEXCoursewareAccessError(coursewareAccess: access, displayInfo: course.start_display_info))
         }
         else {
             let request = CourseInfoAPI.getHandoutsForCourseWithID(courseID, overrideURL: course.course_handouts)
@@ -78,25 +78,25 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
         }
     }
 
-    private func loadHandouts() {
+    fileprivate func loadHandouts() {
         if !handouts.active {
-            loadController.state = .Initial
+            loadController.state = .initial
             let courseStream = self.environment.dataManager.enrollmentManager.streamForCourseWithID(courseID)
             let handoutStream = courseStream.transform {[weak self] enrollment in
-                return self?.streamForCourse(enrollment.course) ?? Stream<String>(error : NSError.oex_courseContentLoadError())
+                return self?.streamForCourse(enrollment.course) ?? edXCore.Stream<String>(error : NSError.oex_courseContentLoadError())
             }
             self.handouts.backWithStream(handoutStream)
         }
     }
     
-    private func addListener() {
+    fileprivate func addListener() {
         handouts.listen(self, success: { [weak self] courseHandouts in
             if let
-                displayHTML = OEXStyles.sharedStyles().styleHTMLContent(courseHandouts, stylesheet: "handouts-announcements"),
-                apiHostUrl = OEXConfig.sharedConfig().apiHostURL()
+                displayHTML = OEXStyles.shared().styleHTMLContent(courseHandouts, stylesheet: "handouts-announcements"),
+                let apiHostUrl = OEXConfig.shared().apiHostURL()
             {
                 self?.webView.loadHTMLString(displayHTML, baseURL: apiHostUrl)
-                self?.loadController.state = .Loaded
+                self?.loadController.state = .loaded
             }
             else {
                 self?.loadController.state = LoadState.failed()
@@ -107,17 +107,17 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
         } )
     }
     
-    override public func updateViewConstraints() {
+    override open func updateViewConstraints() {
         loadController.insets = UIEdgeInsets(top: self.topLayoutGuide.length, left: 0, bottom: self.bottomLayoutGuide.length, right: 0)
         super.updateViewConstraints()
     }
     
     //MARK: UIWebView delegate
 
-    public func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if (navigationType != UIWebViewNavigationType.Other) {
-            if let URL = request.URL {
-                 UIApplication.sharedApplication().openURL(URL)
+    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if (navigationType != UIWebViewNavigationType.other) {
+            if let URL = request.url {
+                 UIApplication.shared.openURL(URL)
                 return false
             }
         }

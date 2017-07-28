@@ -1337,7 +1337,7 @@ typedef  enum OEXAlertType
 
     switch(OEXAlertType) {
         case OEXAlertTypeDeleteConfirmationAlert: {
-            NSString* message = [Strings confirmDeleteMessage:_arr_SelectedObjects.count];
+            NSString* message = [Strings confirmDeleteMessageWithCount:_arr_SelectedObjects.count];
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:[Strings confirmDeleteTitle]
                                                             message:[NSString stringWithFormat:message, _arr_SelectedObjects.count]
                                                            delegate:self

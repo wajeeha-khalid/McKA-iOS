@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class ButtonStyle : NSObject {
+open class ButtonStyle : NSObject {
     var textStyle : OEXTextStyle
     var backgroundColor : UIColor?
     var borderStyle : BorderStyle?
@@ -20,28 +20,28 @@ public class ButtonStyle : NSObject {
         self.textStyle = textStyle
         self.backgroundColor = backgroundColor
         self.borderStyle = borderStyle
-        self.contentInsets = contentInsets ?? UIEdgeInsetsZero
+        self.contentInsets = contentInsets ?? UIEdgeInsets.zero
         self.shadow = shadow
     }
     
-    private func applyToButton(button : UIButton, withTitle text : String? = nil) {
-        button.setAttributedTitle(textStyle.attributedStringWithText(text), forState: .Normal)
+    fileprivate func applyToButton(_ button : UIButton, withTitle text : String? = nil) {
+        button.setAttributedTitle(textStyle.attributedString(withText: text), for: .normal)
         button.applyBorderStyle(borderStyle ?? BorderStyle.clearStyle())
         // Use a background image instead of a backgroundColor so that it picks up a pressed state automatically
-        button.setBackgroundImage(backgroundColor.map { UIImage.oex_imageWithColor($0) }, forState: .Normal)
+        button.setBackgroundImage(backgroundColor.map { UIImage.oex_image(with: $0) }, for: UIControlState())
         button.contentEdgeInsets = contentInsets
 
         if let shadowStyle = shadow {
-            button.layer.shadowColor = shadowStyle.color.CGColor
+            button.layer.shadowColor = shadowStyle.color.cgColor
             button.layer.shadowRadius = shadowStyle.size
             button.layer.shadowOpacity = Float(shadowStyle.opacity)
-            button.layer.shadowOffset = CGSize(width: cos(CGFloat(shadowStyle.angle) / 180.0 * CGFloat(M_PI)), height: sin(CGFloat(shadowStyle.angle) / 180.0 * CGFloat(M_PI)))
+            button.layer.shadowOffset = CGSize(width: cos(CGFloat(shadowStyle.angle) / 180.0 * CGFloat(Float.pi)), height: sin(CGFloat(shadowStyle.angle) / 180.0 * CGFloat(Float.pi)))
         }
     }
 }
 
 extension UIButton {
-    func applyButtonStyle(style : ButtonStyle, withTitle text : String?) {
+    func applyButtonStyle(_ style : ButtonStyle, withTitle text : String?) {
         style.applyToButton(self, withTitle: text)
     }
 }

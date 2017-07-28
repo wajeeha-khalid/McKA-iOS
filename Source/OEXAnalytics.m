@@ -15,7 +15,7 @@
 #import "NSMutableDictionary+OEXSafeAccess.h"
 #import "NSNotificationCenter+OEXSafeAccess.h"
 #import "OEXSession.h"
-#import "edx-Swift.h"
+#import "edX-Swift.h"
 
 @implementation OEXAnalyticsEvent
 

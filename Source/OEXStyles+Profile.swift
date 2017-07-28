@@ -15,8 +15,8 @@ extension OEXStyles {
         return neutralWhite()
     }
     
-    func profileImageViewBorder(width: CGFloat = 1.0) -> BorderStyle {
-        return BorderStyle(cornerRadius: .Circle, width: .Size(width), color: OEXStyles.sharedStyles().profileImageBorderColor())
+    func profileImageViewBorder(_ width: CGFloat = 1.0) -> BorderStyle {
+        return BorderStyle(cornerRadius: .circle, width: .size(width), color: OEXStyles.shared().profileImageBorderColor())
     }
     
 }

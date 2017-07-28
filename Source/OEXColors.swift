@@ -7,126 +7,127 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-public class OEXColors: NSObject {
+open class OEXColors: NSObject {
 
     //MARK: - Shared Instance
-    public static let sharedInstance = OEXColors()
+    open static let sharedInstance = OEXColors()
     @objc public enum ColorsIdentifiers: Int {
-        case PiqueGreen = 1, PrimaryXDarkColor, PrimaryDarkColor, PrimaryBaseColor, PrimaryLightColor, PrimaryXLightColor,
-        SecondaryXDarkColor, SecondaryDarkColor, SecondaryBaseColor, SecondaryLightColor, SecondaryXLightColor,
-        NeutralBlack, NeutralBlackT, NeutralXDark, NeutralDark, NeutralBase,
-        NeutralLight, NeutralXLight, NeutralXXLight, NeutralWhite, NeutralWhiteT,
-        UtilitySuccessDark, UtilitySuccessBase, UtilitySuccessLight,
-        WarningDark, WarningBase, WarningLight,
-        ErrorDark, ErrorBase, ErrorLight,
-        Banner, Random
+        case piqueGreen = 1, primaryXDarkColor, primaryDarkColor, primaryBaseColor, primaryLightColor, primaryXLightColor,
+        secondaryXDarkColor, secondaryDarkColor, secondaryBaseColor, secondaryLightColor, secondaryXLightColor,
+        neutralBlack, neutralBlackT, neutralXDark, neutralDark, neutralBase,
+        neutralLight, neutralXLight, neutralXXLight, neutralWhite, neutralWhiteT,
+        utilitySuccessDark, utilitySuccessBase, utilitySuccessLight,
+        warningDark, warningBase, warningLight,
+        errorDark, errorBase, errorLight,
+        banner, random
     }
     
-    public var colorsDictionary = [String: AnyObject]()
+    open var colorsDictionary = [String: AnyObject]()
     
-    private override init() {
+    fileprivate override init() {
         super.init()
         colorsDictionary = initializeColorsDictionary()
     }
     
-    private func initializeColorsDictionary() -> [String: AnyObject] {
-        guard let filePath = NSBundle.mainBundle().pathForResource("colors", ofType: "json") else {
+    fileprivate func initializeColorsDictionary() -> [String: AnyObject] {
+        guard let filePath = Bundle.main.path(forResource: "colors", ofType: "json") else {
             return fallbackColors()
         }
-        if let data = NSData(contentsOfFile: filePath) {
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
             var error : NSError?
             
             if let json = JSON(data: data, error: &error).dictionaryObject{
-                return json
+                return json as [String : AnyObject]
             }
             return fallbackColors()
         }
         return fallbackColors()
     }
     
-    public func fallbackColors() -> [String: AnyObject] {
-        return OEXColorsDataFactory.colors
+    open func fallbackColors() -> [String: AnyObject] {
+        return OEXColorsDataFactory.colors as [String : AnyObject]
     }
     
-    public func colorForIdentifier(identifier: ColorsIdentifiers) -> UIColor {
+    open func colorForIdentifier(_ identifier: ColorsIdentifiers) -> UIColor {
         return colorForIdentifier(identifier, alpha: 1.0)
     }
     
-    public func colorForIdentifier(identifier: ColorsIdentifiers, alpha: CGFloat) -> UIColor {
+    open func colorForIdentifier(_ identifier: ColorsIdentifiers, alpha: CGFloat) -> UIColor {
         if let hexValue = colorsDictionary[getIdentifier(identifier)] as? String {
             let color = UIColor(hexString: hexValue, alpha: alpha)
             return color
         }
 
-        return UIColor(hexString: getIdentifier(ColorsIdentifiers.Random), alpha: 1.0)
+        return UIColor(hexString: getIdentifier(ColorsIdentifiers.random), alpha: 1.0)
     }
     
-    private func getIdentifier(identifier: ColorsIdentifiers) -> String {
+    fileprivate func getIdentifier(_ identifier: ColorsIdentifiers) -> String {
         switch identifier {
-        case .PiqueGreen:
+        case .piqueGreen:
             return "piqueGreen"
-        case .PrimaryXDarkColor:
+        case .primaryXDarkColor:
             return "primaryXDarkColor"
-        case .PrimaryDarkColor:
+        case .primaryDarkColor:
             return "primaryDarkColor"
-        case .PrimaryBaseColor:
+        case .primaryBaseColor:
             return "primaryBaseColor"
-        case .PrimaryLightColor:
+        case .primaryLightColor:
             return "primaryLightColor"
-        case .PrimaryXLightColor:
+        case .primaryXLightColor:
             return "primaryXLightColor"
-        case .SecondaryXDarkColor:
+        case .secondaryXDarkColor:
             return "secondaryXDarkColor"
-        case .SecondaryDarkColor:
+        case .secondaryDarkColor:
             return "secondaryDarkColor"
-        case .SecondaryBaseColor:
+        case .secondaryBaseColor:
             return "secondaryBaseColor"
-        case .SecondaryLightColor:
+        case .secondaryLightColor:
             return "secondaryLightColor"
-        case .SecondaryXLightColor:
+        case .secondaryXLightColor:
             return "secondaryXLightColor"
-        case .NeutralBlack:
+        case .neutralBlack:
             return "neutralBlack"
-        case .NeutralBlackT:
+        case .neutralBlackT:
             return "neutralBlackT"
-        case .NeutralXDark:
+        case .neutralXDark:
             return "neutralXDark"
-        case .NeutralDark:
+        case .neutralDark:
             return "neutralDark"
-        case .NeutralBase:
+        case .neutralBase:
             return "neutralBase"
-        case .NeutralLight:
+        case .neutralLight:
             return "neutralLight"
-        case .NeutralXLight:
+        case .neutralXLight:
             return "neutralXLight"
-        case .NeutralXXLight:
+        case .neutralXXLight:
             return "neutralXXLight"
-        case .NeutralWhite:
+        case .neutralWhite:
             return "neutralWhite"
-        case .NeutralWhiteT:
+        case .neutralWhiteT:
             return "neutralWhiteT"
-        case .UtilitySuccessDark:
+        case .utilitySuccessDark:
             return "utilitySuccessDark"
-        case .UtilitySuccessBase:
+        case .utilitySuccessBase:
             return "utilitySuccessBase"
-        case .UtilitySuccessLight:
+        case .utilitySuccessLight:
             return "utilitySuccessLight"
-        case .WarningDark:
+        case .warningDark:
             return "warningDark"
-        case .WarningBase:
+        case .warningBase:
             return "warningBase"
-        case .WarningLight:
+        case .warningLight:
             return "warningLight"
-        case .ErrorDark:
+        case .errorDark:
             return "errorDark"
-        case .ErrorBase:
+        case .errorBase:
             return "errorBase"
-        case .ErrorLight:
+        case .errorLight:
             return "errorLight"
-        case .Banner:
+        case .banner:
             return "banner"
-        case .Random:
+        case .random:
             fallthrough
         default:
             //Assert to crash on development, and return a random color for distribution

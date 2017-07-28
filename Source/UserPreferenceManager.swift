@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class UserPreferenceManager : NSObject {
+open class UserPreferenceManager : NSObject {
     
-    private let networkManager : NetworkManager
-    private let preferencesFeed = BackedFeed<UserPreference?>()
+    fileprivate let networkManager : NetworkManager
+    fileprivate let preferencesFeed = BackedFeed<UserPreference?>()
     
     public init(networkManager : NetworkManager) {
         self.networkManager = networkManager
@@ -21,23 +21,24 @@ public class UserPreferenceManager : NSObject {
         addObservers()
     }
     
-    public var feed: BackedFeed<UserPreference?> {
+    open var feed: BackedFeed<UserPreference?> {
         return preferencesFeed
     }
     
-    private func addObservers() {
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXSessionEndedNotification) { (_, observer, _) in
+    fileprivate func addObservers() {
+  
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXSessionEnded.rawValue) { (_, observer, _) in
             observer.clearFeed()
         }
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXSessionStartedNotification) { (notification, observer, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXSessionStarted.rawValue) { (notification, observer, _) -> Void in
             if let userDetails = notification.userInfo?[OEXSessionStartedUserDetailsKey] as? OEXUserDetails {
                 observer.setupFeedWithUserDetails(userDetails)
             }
         }
     }
     
-    private func clearFeed() {
+    fileprivate func clearFeed() {
         let feed = Feed<UserPreference?> { stream in
             stream.removeAllBackings()
             stream.send(Success(nil))
@@ -47,14 +48,14 @@ public class UserPreferenceManager : NSObject {
         preferencesFeed.refresh()
     }
     
-    private func setupFeedWithUserDetails(userDetails: OEXUserDetails) {
+    fileprivate func setupFeedWithUserDetails(_ userDetails: OEXUserDetails) {
         guard let username = userDetails.username else { return }
         let feed = freshFeedWithUsername(username)
         preferencesFeed.backWithFeed(feed.map{x in x})
         preferencesFeed.refresh()
     }
     
-    private func freshFeedWithUsername(username: String) -> Feed<UserPreference> {
+    fileprivate func freshFeedWithUsername(_ username: String) -> Feed<UserPreference> {
         let request = UserPreferenceAPI.preferenceRequest(username)
         return Feed(request: request, manager: networkManager, persistResponse: true)
     }

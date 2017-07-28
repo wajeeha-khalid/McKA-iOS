@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class AccessibilityCLButton: CLButton {
+open class AccessibilityCLButton: CLButton {
 
-    private var selectedAccessibilityLabel : String?
-    private var normalAccessibilityLabel : String?
+    fileprivate var selectedAccessibilityLabel : String?
+    fileprivate var normalAccessibilityLabel : String?
     
-    override public var selected: Bool {
+    override open var isSelected: Bool {
         didSet {
-            if selected {
+            if isSelected {
                 if let selectedLabel = selectedAccessibilityLabel {
                     self.accessibilityLabel = selectedLabel
                 }
@@ -28,15 +28,15 @@ public class AccessibilityCLButton: CLButton {
         }
     }
     
-    public func setAccessibilityLabelsForStateNormal(normalStateLabel normalLabel: String?, selectedStateLabel selectedLabel: String?) {
+    open func setAccessibilityLabelsForStateNormal(normalStateLabel normalLabel: String?, selectedStateLabel selectedLabel: String?) {
         self.selectedAccessibilityLabel = selectedLabel
         self.normalAccessibilityLabel = normalLabel
     }
     
-    public override func drawRect(rect: CGRect) {
-        let r = UIBezierPath(ovalInRect: rect)
-        UIColor.blackColor().colorWithAlphaComponent(0.65).setFill()
+    open override func draw(_ rect: CGRect) {
+        let r = UIBezierPath(ovalIn: rect)
+        UIColor.black.withAlphaComponent(0.65).setFill()
         r.fill()
-        super.drawRect(rect)
+        super.draw(rect)
     }
 }

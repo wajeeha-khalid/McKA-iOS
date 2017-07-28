@@ -8,21 +8,21 @@
 
 import UIKit
 
-public class MockLastAccessedProvider: LastAccessedProvider {
+open class MockLastAccessedProvider: LastAccessedProvider {
    
-    private var mockLastAccessedItem : CourseLastAccessed?
+    fileprivate var mockLastAccessedItem : CourseLastAccessed?
     
     public init() { }
     
-    public func getLastAccessedSectionForCourseID(courseID: String) -> CourseLastAccessed? {
+    open func getLastAccessedSectionForCourseID(_ courseID: String) -> CourseLastAccessed? {
         return self.mockLastAccessedItem
     }
     
-    public func setLastAccessedSubSectionWithID(subsectionID: String, subsectionName: String, courseID: String?, timeStamp: String) {
+    open func setLastAccessedSubSectionWithID(_ subsectionID: String, subsectionName: String, courseID: String?, timeStamp: String) {
         self.mockLastAccessedItem = CourseLastAccessed(moduleId: subsectionID, moduleName: subsectionName)
     }
     
-    public func resetLastAccessedItem() {
+    open func resetLastAccessedItem() {
         self.mockLastAccessedItem = nil
     }
 }

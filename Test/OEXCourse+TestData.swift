@@ -20,17 +20,17 @@ public extension OEXCourse {
         effort: String? = nil,
         mediaInfo: [String:CourseMediaInfo] = [:],
         startInfo : OEXCourseStartDisplayInfo? = nil,
-        end: NSDate? = nil,
-        aboutUrl: String? = nil) -> [String : AnyObject]
+        end: Date? = nil,
+        aboutUrl: String? = nil) -> [String : Any]
     {
-        let courseID = NSUUID().UUIDString
-        let imagePath = NSBundle.mainBundle().URLForResource("placeholderCourseCardImage", withExtension: "png")
+        let courseID = UUID().uuidString
+        let imagePath = Bundle.main.url(forResource: "placeholderCourseCardImage", withExtension: "png")
         
-        var courseDictionary : [String : AnyObject] = [
-            "id" : courseID ?? "someID",
-            "subscription_id" : courseID ?? "someSubscriptionID",
+        var courseDictionary : [String : Any] = [
+            "id" : courseID  ,
+            "subscription_id" : courseID ,
             "name" : "A Great Course",
-            "course_image" : imagePath!.absoluteString ?? imagePath!.URLString,
+            "course_image" : (imagePath?.absoluteString)!,
             "org" : "edX",
             "courseware_access" : ["has_access" : accessible]
         ]
@@ -45,7 +45,7 @@ public extension OEXCourse {
             courseDictionary["course_handouts"] = "http://www.url.com"
         }
         
-        var unparsedMediaInfos : [String:AnyObject] = [:]
+        var unparsedMediaInfos : [String:Any] = [:]
         for (name, info) in mediaInfo {
             unparsedMediaInfos[name] = info.dictionary
         }
@@ -58,7 +58,7 @@ public extension OEXCourse {
             courseDictionary["effort"] = effort
         }
         if let end = end {
-            courseDictionary["end"] = OEXDateFormatting.serverStringWithDate(end)
+            courseDictionary["end"] = OEXDateFormatting.serverString(with: end)
         }
         if let startInfo = startInfo {
             courseDictionary = courseDictionary.concat(startInfo.jsonFields)
@@ -79,15 +79,15 @@ public extension OEXCourse {
         effort: String? = nil,
         mediaInfo: [String:CourseMediaInfo] = [:],
         startInfo: OEXCourseStartDisplayInfo? = nil,
-        end : NSDate? = nil
+        end : Date? = nil
         ) -> OEXCourse
     {
         let courseData = OEXCourse.testData(
             courseHasDiscussions: hasDiscussions,
             hasHandoutsUrl: hasHandoutsUrl,
             accessible: accessible,
-            shortDescription: shortDescription,
             overview: overview,
+            shortDescription: shortDescription,
             effort:effort,
             mediaInfo: mediaInfo,
             startInfo: startInfo,

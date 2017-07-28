@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import edX
+import SwiftyJSON
 
 class OEXRegistrationViewControllerTests: SnapshotTestCase {
 
@@ -15,10 +16,10 @@ class OEXRegistrationViewControllerTests: SnapshotTestCase {
         let environment = TestRouterEnvironment()
         
         let controller = OEXRegistrationViewController(environment: environment)
-        OHHTTPStubs.stubRequestsPassingTest({ _ in true}) {request in
-            OHHTTPStubsResponse(data: NSData(), statusCode: 404, headers: [:])
+        OHHTTPStubs.stubRequests(passingTest: { _ in true}) {request in
+            OHHTTPStubsResponse(data: Data(), statusCode: 404, headers: [:])
         }
-        controller.t_registerWithParameters([:])
+        controller.t_register(withParameters: [:])
 
         let event = environment.eventTracker.events[0].asEvent!
         XCTAssertEqual(event.event.category, AnalyticsCategory.Conversion.rawValue)

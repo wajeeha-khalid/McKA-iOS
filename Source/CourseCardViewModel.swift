@@ -16,13 +16,13 @@ enum CourseProgress {
 
 class CourseCardViewModel : NSObject {
     
-    private let detailText: String
-    private let bottomTrailingText: String?
-    private let persistImage: Bool
-    private let wrapTitle: Bool
-    private let course: OEXCourse
+    fileprivate let detailText: String
+    fileprivate let bottomTrailingText: String?
+    fileprivate let persistImage: Bool
+    fileprivate let wrapTitle: Bool
+    fileprivate let course: OEXCourse
     
-    private init(course: OEXCourse, detailText: String, bottomTrailingText: String?, persistImage: Bool, wrapTitle: Bool = false) {
+    fileprivate init(course: OEXCourse, detailText: String, bottomTrailingText: String?, persistImage: Bool, wrapTitle: Bool = false) {
         self.detailText = detailText
         self.bottomTrailingText = bottomTrailingText
         self.persistImage = persistImage
@@ -38,23 +38,23 @@ class CourseCardViewModel : NSObject {
         return course.courseImageURL
     }
     
-    static func onMyVideos(course: OEXCourse, collectionInfo: String) -> CourseCardViewModel {
+    static func onMyVideos(_ course: OEXCourse, collectionInfo: String) -> CourseCardViewModel {
         return CourseCardViewModel(course: course, detailText: course.courseRun, bottomTrailingText: collectionInfo, persistImage: true)
     }
     
-    static func onHome(course: OEXCourse) -> CourseCardViewModel {
+    static func onHome(_ course: OEXCourse) -> CourseCardViewModel {
         return CourseCardViewModel(course: course, detailText: course.courseRun, bottomTrailingText: course.nextRelevantDateUpperCaseString, persistImage: true)
     }
     
-    static func onDashboard(course: OEXCourse) -> CourseCardViewModel {
+    static func onDashboard(_ course: OEXCourse) -> CourseCardViewModel {
         return CourseCardViewModel(course: course, detailText: course.courseRunIncludingNextDate, bottomTrailingText: nil, persistImage: true, wrapTitle: true)
     }
     
-    static func onCourseCatalog(course: OEXCourse, wrapTitle: Bool = false) -> CourseCardViewModel {
+    static func onCourseCatalog(_ course: OEXCourse, wrapTitle: Bool = false) -> CourseCardViewModel {
         return CourseCardViewModel(course: course, detailText: course.courseRun, bottomTrailingText: course.nextRelevantDateUpperCaseString, persistImage: false, wrapTitle: wrapTitle)
     }
     
-    func apply(card : CourseCardView, networkManager: NetworkManager) {
+    func apply(_ card : CourseCardView, networkManager: NetworkManager) {
         
         
         card.titleText = title
@@ -69,10 +69,10 @@ class CourseCardViewModel : NSObject {
         let remoteImage : RemoteImage
         let placeholder = UIImage(named: "placeholderCourseCardImage")
         if let relativeImageURL = courseImageURL,
-            imageURL = NSURL(string: relativeImageURL, relativeToURL: networkManager.baseURL)
+            let imageURL = URL(string: relativeImageURL, relativeTo: networkManager.baseURL)
         {
             remoteImage = RemoteImageImpl(
-                url: imageURL.absoluteString!,
+                url: imageURL.absoluteString,
                 networkManager: networkManager,
                 placeholder: placeholder,
                 persist: persistImage)
@@ -102,7 +102,7 @@ extension OEXCourse {
                 return nil
             }
             
-            let formattedEndDate = OEXDateFormatting.formatAsMonthDayString(end)
+            let formattedEndDate = OEXDateFormatting.format(asMonthDayString: end)
             
             // If Old date is older than current date
             if self.isEndDateOld {
@@ -113,19 +113,19 @@ extension OEXCourse {
             }
         }
         else {  // Start date is newer than current date
-            switch self.start_display_info.type ?? .None {
-            case .String where self.start_display_info.displayDate != nil:
+            switch self.start_display_info.type {
+            case .string where self.start_display_info.displayDate != nil:
                 return Strings.starting(startDate: self.start_display_info.displayDate!)
-            case .Timestamp where self.start_display_info.date != nil:
-                let formattedStartDate = OEXDateFormatting.formatAsMonthDayString(self.start_display_info.date!)
+            case .timestamp where self.start_display_info.date != nil:
+                let formattedStartDate = OEXDateFormatting.format(asMonthDayString: self.start_display_info.date!)
                 return Strings.starting(startDate: formattedStartDate)
-            case .None, .Timestamp, .String:
+            case .none, .timestamp, .string:
                 return Strings.starting(startDate: Strings.soon)
             }
         }
     }
     
-    private var nextRelevantDateUpperCaseString : String? {
+    fileprivate var nextRelevantDateUpperCaseString : String? {
         return nextRelevantDate?.oex_uppercaseStringInCurrentLocale()
     }
 }

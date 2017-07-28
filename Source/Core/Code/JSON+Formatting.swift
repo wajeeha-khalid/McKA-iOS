@@ -6,8 +6,10 @@
 //  Copyright © 2016 edX. All rights reserved.
 //
 
+import SwiftyJSON
+
 extension JSON {
     var serverDate : NSDate? {
-        return string.map { OEXDateFormatting.dateWithServerString($0) }
+        return string.map { OEXDateFormatting.date(withServerString: $0) as NSDate }
     }
 }

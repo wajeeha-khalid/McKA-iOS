@@ -13,23 +13,23 @@ import MessageUI
 import edXCore
 
 private enum OEXRearViewOptions: Int {
-    case UserProfile, MyCourse, MyMedia, AppSettings, MySettings, LicensingTerms, SubmitFeedback, Logout
+    case userProfile, myCourse, myMedia, appSettings, mySettings, licensingTerms, submitFeedback, logout
 }
 
 private let LogoutCellDefaultHeight: CGFloat = 160.0
-private let versionButtonStyle = OEXTextStyle(weight:.Normal, size:.XXSmall, color: OEXStyles.sharedStyles().neutralWhite())
+private let versionButtonStyle = OEXTextStyle(weight:.normal, size:.xxSmall, color: OEXStyles.shared().neutralWhite())
 
 class OEXRearTableViewController : UITableViewController {
 
     // TODO replace this with a proper injection when we nuke the storyboard
     struct Environment {
-        let analytics = OEXRouter.sharedRouter().environment.analytics
-        let config = OEXRouter.sharedRouter().environment.config
-        let interface = OEXRouter.sharedRouter().environment.interface
-        let networkManager = OEXRouter.sharedRouter().environment.networkManager
-        let session = OEXRouter.sharedRouter().environment.session
-        let userProfileManager = OEXRouter.sharedRouter().environment.dataManager.userProfileManager
-        weak var router = OEXRouter.sharedRouter()
+        let analytics = OEXRouter.shared().environment.analytics
+        let config = OEXRouter.shared().environment.config
+        let interface = OEXRouter.shared().environment.interface
+        let networkManager = OEXRouter.shared().environment.networkManager
+        let session = OEXRouter.shared().environment.session
+        let userProfileManager = OEXRouter.shared().environment.dataManager.userProfileManager
+        weak var router = OEXRouter.shared()
     }
     
     @IBOutlet var coursesLabel: UILabel!
@@ -56,15 +56,15 @@ class OEXRearTableViewController : UITableViewController {
         updateUIWithUserInfo()
        
         let environmentName = self.environment.config.environmentName()
-        let appVersion = NSBundle.mainBundle().oex_buildVersionString()
-        appVersionButton.setAttributedTitle(versionButtonStyle.attributedStringWithText(Strings.versionDisplay(number: appVersion, environment: environmentName)), forState:.Normal)
+        let appVersion = Bundle.main.oex_buildVersionString()
+        appVersionButton.setAttributedTitle(versionButtonStyle.attributedString(withText: Strings.versionDisplay(number: appVersion, environment: environmentName)), for:.normal)
         appVersionButton.accessibilityTraits = UIAccessibilityTraitStaticText
         
         //UI
-        logoutButton.setBackgroundImage(UIImage(named: "bt_logout_active"), forState: .Highlighted)
+        logoutButton.setBackgroundImage(UIImage(named: "bt_logout_active"), for: .highlighted)
         
         //Listen to notification
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OEXRearTableViewController.dataAvailable(_:)), name: NOTIFICATION_URL_RESPONSE, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OEXRearTableViewController.dataAvailable(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_URL_RESPONSE), object: nil)
         
         coursesLabel.text = Strings.myCourses
         videosLabel.text = Strings.myMedia
@@ -73,7 +73,7 @@ class OEXRearTableViewController : UITableViewController {
         settingsLabel.text = Strings.mySettings
         submitFeedbackLabel.text = Strings.SubmitFeedback.optionTitle
         licensingTermsLabel.text = Strings.licensingTerms
-        logoutButton.setTitle(Strings.logout.oex_uppercaseStringInCurrentLocale(), forState: .Normal)
+        logoutButton.setTitle(Strings.logout.oex_uppercaseStringInCurrentLocale(), for: .normal)
         setFonts()
         setNaturalTextAlignment()
         setAccessibilityLabels()
@@ -90,7 +90,7 @@ class OEXRearTableViewController : UITableViewController {
 
     }
     
-    private func setupProfileLoader() {
+    fileprivate func setupProfileLoader() {
         guard environment.config.profilesEnabled else { return }
         profileFeed = self.environment.userProfileManager.feedForCurrentUser()
         profileFeed?.output.listen(self,  success: { profile in
@@ -100,7 +100,7 @@ class OEXRearTableViewController : UITableViewController {
         })
     }
     
-    private func updateUIWithUserInfo() {
+    fileprivate func updateUIWithUserInfo() {
         if let currentUser = environment.session.currentUser {
             userNameLabel.text = currentUser.name
             userEmailLabel.text = currentUser.email
@@ -108,20 +108,20 @@ class OEXRearTableViewController : UITableViewController {
         }
     }
     
-    private func setNaturalTextAlignment() {
-        coursesLabel.textAlignment = .Natural
-        videosLabel.textAlignment = .Natural
+    fileprivate func setNaturalTextAlignment() {
+        coursesLabel.textAlignment = .natural
+        videosLabel.textAlignment = .natural
         //recentMediaLabel.textAlignment = .Natural
-        appSettingsLabel.textAlignment = .Natural
-        settingsLabel.textAlignment = .Natural
-        submitFeedbackLabel.textAlignment = .Natural
-        userNameLabel.textAlignment = .Natural
-        licensingTermsLabel.textAlignment = .Natural
+        appSettingsLabel.textAlignment = .natural
+        settingsLabel.textAlignment = .natural
+        submitFeedbackLabel.textAlignment = .natural
+        userNameLabel.textAlignment = .natural
+        licensingTermsLabel.textAlignment = .natural
         userNameLabel.adjustsFontSizeToFitWidth = true
-        userEmailLabel.textAlignment = .Natural
+        userEmailLabel.textAlignment = .natural
     }
     
-    private func setAccessibilityLabels() {
+    fileprivate func setAccessibilityLabels() {
         userNameLabel.accessibilityLabel = userNameLabel.text
         userEmailLabel.accessibilityLabel = userEmailLabel.text
         coursesLabel.accessibilityLabel = coursesLabel.text
@@ -135,7 +135,7 @@ class OEXRearTableViewController : UITableViewController {
         userProfilePicture.accessibilityLabel = Strings.accessibilityUserAvatar
     }
     
-    private func setFonts(){
+    fileprivate func setFonts(){
         let RearTableFont = UIFont.init(name: "Raleway-Medium", size: 16)
         
         coursesLabel.font = RearTableFont
@@ -150,84 +150,84 @@ class OEXRearTableViewController : UITableViewController {
         logoutButton.titleLabel?.font = UIFont.init(name: "Raleway-Bold", size: 18)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return OEXStyles.sharedStyles().standardStatusBarStyle()
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return OEXStyles.shared().standardStatusBarStyle()
     }
     
-    override func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = self.tableView(tableView, cellForRowAtIndexPath: indexPath)
-        cell.selectionStyle = UITableViewCellSelectionStyle.Gray
+    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = self.tableView(tableView, cellForRowAt: indexPath)
+        cell.selectionStyle = UITableViewCellSelectionStyle.gray
         if let separatorImage = cell.contentView.viewWithTag(10) {
-            separatorImage.hidden = true
+            separatorImage.isHidden = true
         }
     }
     
-    override func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = self.tableView(tableView, cellForRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = self.tableView(tableView, cellForRowAt: indexPath)
         if let separatorImage = cell.contentView.viewWithTag(10) {
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                separatorImage.hidden = false
+            let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                separatorImage.isHidden = false
             }
         }
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let option = OEXRearViewOptions(rawValue: indexPath.row) {
             switch option {
-            case .UserProfile:
+            case .userProfile:
                 guard environment.config.profilesEnabled else { break }
                 guard let currentUserName = environment.session.currentUser?.username else { return }
                 environment.router?.showProfileForUsername(username: currentUserName)
-            case .MyCourse:
+            case .myCourse:
                 environment.router?.showMyCourses()
-            case .MyMedia:
+            case .myMedia:
                 environment.router?.showMyVideos()
             //case .RecentMedia:
               //  environment.router?.showMyVideos()
-            case .AppSettings:
+            case .appSettings:
                 environment.router?.showMySettings()
-            case .MySettings:
+            case .mySettings:
                 environment.router?.showAccountSettings()
-            case .LicensingTerms:
+            case .licensingTerms:
                 environment.router?.showLicensingTerms()
-            case .SubmitFeedback:
+            case .submitFeedback:
                 launchEmailComposer()
-            case .Logout:
+            case .logout:
                 break
             }
         }
-       tableView.deselectRowAtIndexPath(indexPath, animated: true)
+       tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        if indexPath.row == OEXRearViewOptions.Debug.rawValue && !environment.config.shouldShowDebug() {
 //            return 0
 //        }
 //        else if indexPath.row == OEXRearViewOptions.FindCourses.rawValue && !environment.config.courseEnrollmentConfig.isCourseDiscoveryEnabled() {
 //            return 0
 //        }
-       if indexPath.row == OEXRearViewOptions.Logout.rawValue {
-            let screenHeight = UIScreen.mainScreen().bounds.height
+       if indexPath.row == OEXRearViewOptions.logout.rawValue {
+            let screenHeight = UIScreen.main.bounds.height
             let tableviewHeight = tableView.contentSize.height
             return max((screenHeight - tableviewHeight) + LogoutCellDefaultHeight, LogoutCellDefaultHeight)
         }
         
         
-        return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        return super.tableView(tableView, heightForRowAt: indexPath)
     }
     
-    @IBAction func logoutClicked(sender: UIButton) {
+    @IBAction func logoutClicked(_ sender: UIButton) {
         OEXFileUtility.nukeUserPIIData()
         self.environment.router?.logout()
     }
     
-    func dataAvailable(notification: NSNotification) {
+    func dataAvailable(_ notification: Notification) {
         let successString = notification.userInfo![NOTIFICATION_KEY_STATUS] as? String;
         let URLString = notification.userInfo![NOTIFICATION_KEY_URL] as? String;
         
-        if successString == NOTIFICATION_VALUE_URL_STATUS_SUCCESS && URLString == environment.interface?.URLStringForType(URL_USER_DETAILS) {
+        if successString == NOTIFICATION_VALUE_URL_STATUS_SUCCESS && URLString == environment.interface?.urlString(forType: URL_USER_DETAILS) {
             updateUIWithUserInfo()
         }
     }
@@ -236,10 +236,10 @@ class OEXRearTableViewController : UITableViewController {
 extension OEXRearTableViewController : MFMailComposeViewControllerDelegate {
 
     static func supportEmailMessageTemplate() -> String {
-        let osVersionText = Strings.SubmitFeedback.osVersion(version: UIDevice.currentDevice().systemVersion)
-        let appVersionText = Strings.SubmitFeedback.appVersion(version: NSBundle.mainBundle().oex_shortVersionString(), build: NSBundle.mainBundle().oex_buildVersionString())
-        let deviceModelText = Strings.SubmitFeedback.deviceModel(model: UIDevice.currentDevice().model)
-        let body = ["\n", Strings.SubmitFeedback.marker, osVersionText, appVersionText, deviceModelText].joinWithSeparator("\n")
+        let osVersionText = Strings.SubmitFeedback.osVersion(version: UIDevice.current.systemVersion)
+        let appVersionText = Strings.SubmitFeedback.appVersion(version: Bundle.main.oex_shortVersionString(), build: Bundle.main.oex_buildVersionString())
+        let deviceModelText = Strings.SubmitFeedback.deviceModel(model: UIDevice.current.model)
+        let body = ["\n", Strings.SubmitFeedback.marker, osVersionText, appVersionText, deviceModelText].joined(separator: "\n")
         return body
     }
 
@@ -259,11 +259,11 @@ extension OEXRearTableViewController : MFMailComposeViewControllerDelegate {
             if let fbAddress = environment.config.feedbackEmailAddress() {
                 mail.setToRecipients([fbAddress])
             }
-            presentViewController(mail, animated: true, completion: nil)
+            present(mail, animated: true, completion: nil)
         }
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
 }
