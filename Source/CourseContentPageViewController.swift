@@ -17,7 +17,7 @@ extension CourseBlockDisplayType {
         switch self {
         case .Video: return false
         case .Audio: return false //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-        case .Unknown, .HTML(_), .Outline, .Unit, .Discussion: return true
+        case .Unknown, .HTML(_), .Outline, .Lesson, .Unit, .Discussion: return true
         }
     }
 }
@@ -204,7 +204,7 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
             let item = cursor.current
             
             self.componentID = item.block.blockID
-//            storeViewedStatus()
+            //            storeViewedStatus()
             if environment.reachability.isReachable(){
                 let username = environment.session.currentUser?.username ?? ""
                 environment.networkManager.updateCourseProgress(username, componentIDs: self.componentID!, onCompletion: { [weak self] (success) in
@@ -214,7 +214,7 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
                     }
                     })
             }
-           // setProgress(self.componentID!)
+            // setProgress(self.componentID!)
             
             // only animate change if we haven't set a title yet, so the initial set happens without
             // animation to make the push transition work right
@@ -224,15 +224,15 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
             if let navigationBar = navigationController?.navigationBar where navigationItem.title != nil {
                 let animated = navigationItem.title != nil
                 UIView.transitionWithView(navigationBar,
-                    duration: 0.3 * (animated ? 1.0 : 0.0), options: UIViewAnimationOptions.TransitionCrossDissolve,
-                    animations: actions, completion: nil)
+                                          duration: 0.3 * (animated ? 1.0 : 0.0), options: UIViewAnimationOptions.TransitionCrossDissolve,
+                                          animations: actions, completion: nil)
             }
             else {
                 actions()
             }
-
+            
             var shouldEnableNextButton = false
-
+            
             if let controller = controller {
                 
                 if let unitCompleted = unitCompletionPolicy(for: controller, itemId: item.block.blockID, chatCompleted: isChatCompleted), interface = self.environment.interface {
@@ -249,14 +249,14 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
                     }
                 }
             }
-
+            
             let prevItem = toolbarItemWithGroupItem(item, adjacentGroup: item.prevGroup, direction: .Prev, enabled: cursor.hasPrev)
             var nextItem = toolbarItemWithGroupItem(item, adjacentGroup: item.nextGroup, direction: .Next, enabled: shouldEnableNextButton)
             
             if item.nextGroup != nil || cursor.hasNext == false {
                 nextItem = toolbarItemWithGroupItem(item, adjacentGroup: item.nextGroup, direction: .Next, enabled:shouldEnableNextButton)
             }
-
+            
             if item.prevGroup == nil && cursor.hasPrev == true {
                 self.setToolbarItems(
                     [
@@ -267,18 +267,17 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
             } else {
                 self.setToolbarItems(
                     [
-
+                        
                         UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil),
                         nextItem
                     ], animated : true)
             }
-
+            
         }
         else {
             self.toolbarItems = []
         }
     }
-    
     // MARK: Paging
     
     private func siblingWithDirection(direction : UIPageViewControllerNavigationDirection, fromController viewController: UIViewController) -> UIViewController? {

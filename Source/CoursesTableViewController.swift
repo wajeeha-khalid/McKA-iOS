@@ -220,7 +220,7 @@ class CoursesTableViewController: UITableViewController {
         
         cell.courseView.tapAction = {[weak self] card in
             //self?.delegate?.coursesTableChoseCourse(course)
-           self!.environment.router?.showCoursewareForCourseWithID(course.courseID!, fromController: self!)
+            self!.environment.router?.showLessonForCourseWithID(course.courseID!, fromController: self!)
         }
         
         course.apply(newCard: cell.courseView, networkManager: environment.networkManager)

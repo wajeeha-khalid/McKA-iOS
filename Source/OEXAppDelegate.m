@@ -260,18 +260,28 @@
             }
         }
         if (([request.URL.host isEqualToString:config.apiHostURL.host])
-            && ([request.URL.path containsString:@"type@html"] || [request.URL.path containsString:@"type@chat"] || [[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@html"] || [[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@chat"])) {
-            return YES;
-        } else if ([request.URL.path containsString:@"type@chat"]
-                   || [[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@chat"]) {
-            return YES;
-        } else if ([[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@html"]
-                   && ([request.URL.pathExtension isEqualToString:@"jpg"] || [request.URL.pathExtension isEqualToString:@"png"])) {
-            // Aloow images from other servers
-            return YES;
-        } else {
-            return NO;
-        }
+            && ([request.URL.path containsString:@"type@html"] ||
+                [request.URL.path containsString:@"type@chat"] ||
+                [request.URL.path rangeOfString:@"i4x://.*/chat/" options:NSRegularExpressionSearch].location != NSNotFound ||
+                [request.URL.path rangeOfString:@"i4x://.*/html/" options:NSRegularExpressionSearch].location != NSNotFound ||
+                [[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@html"] ||
+                [[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@chat"] ||
+                [[request.allHTTPHeaderFields objectForKey:@"Referer"] rangeOfString:@"i4x://.*/chat/" options:NSRegularExpressionSearch].location != NSNotFound ||
+                [[request.allHTTPHeaderFields objectForKey:@"Referer"] rangeOfString:@"i4x://.*/html/" options:NSRegularExpressionSearch].location != NSNotFound )) {
+                return YES;
+            } else if ([request.URL.path containsString:@"type@chat"] ||
+                       [request.URL.path rangeOfString:@"i4x://.*/chat/" options:NSRegularExpressionSearch].location != NSNotFound ||
+                       [[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@chat"] ||
+                       [[request.allHTTPHeaderFields objectForKey:@"Referer"] rangeOfString:@"i4x://.*/chat/" options:NSRegularExpressionSearch].location != NSNotFound ) {
+                return YES;
+            } else if (([[request.allHTTPHeaderFields objectForKey:@"Referer"] containsString:@"type@html"] ||
+                        [[request.allHTTPHeaderFields objectForKey:@"Referer"] rangeOfString:@"i4x://.*/html/" options:NSRegularExpressionSearch].location != NSNotFound)
+                       && ([request.URL.pathExtension isEqualToString:@"jpg"] || [request.URL.pathExtension isEqualToString:@"png"])) {
+                // Aloow images from other servers
+                return YES;
+            } else {
+                return NO;
+            }
     }];
     
     [EVURLCache activate];

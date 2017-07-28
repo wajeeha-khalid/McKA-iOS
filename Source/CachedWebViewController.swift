@@ -216,7 +216,7 @@ public class CachedWebViewController: UIViewController, UIWebViewDelegate {
         case .LoadingContent:
             loadController.state = .Loaded
 
-            if let url = contentRequest?.URL?.absoluteString, let source = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML") where url.containsString("type@chat") {
+            if let url = contentRequest?.URL?.absoluteString, let source = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML") where (url.containsString("type@chat") || url.rangeOfString("i4x://.*/chat/", options: .RegularExpressionSearch) != nil) {
 
                 if source.containsString(">COMPLETE<") || source.containsString(">Complete<") {
                     print("Is completed!")

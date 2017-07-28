@@ -22,6 +22,7 @@ enum CourseHTMLBlockSubkind {
 enum CourseBlockDisplayType {
     case Unknown
     case Outline
+    case Lesson
     case Unit
     case Video
     case HTML(CourseHTMLBlockSubkind)
@@ -44,7 +45,7 @@ extension CourseBlock {
         case .Unknown(_), .HTML: return multiDevice ? .HTML(.Base) : .Unknown
         case .Problem: return multiDevice ? .HTML(.Problem) : .Unknown
         case .Course: return .Outline
-        case .Chapter: return .Outline
+        case .Chapter: return .Lesson
         case .Section: return .Outline
         case .Unit: return .Unit
         case let .Video(summary): return (summary.isSupportedVideo) ? .Video : .Unknown
@@ -56,6 +57,10 @@ extension CourseBlock {
 }
 
 extension OEXRouter {
+    func showLessonForCourseWithID(courseID : String, fromController controller : UIViewController) {
+        showContainerForBlockWithID(nil, type: CourseBlockDisplayType.Lesson, parentID: nil, courseID : courseID, fromController: controller)
+    }
+    
     func showCoursewareForCourseWithID(courseID : String, fromController controller : UIViewController) {
         showContainerForBlockWithID(nil, type: CourseBlockDisplayType.Outline, parentID: nil, courseID : courseID, fromController: controller)
     }
@@ -68,6 +73,8 @@ extension OEXRouter {
     func showContainerForBlockWithID(blockID : CourseBlockID?, type : CourseBlockDisplayType, parentID : CourseBlockID?, courseID : CourseBlockID, fromController controller: UIViewController) {
         switch type {
         case .Outline:
+            fallthrough
+        case .Lesson:
             fallthrough
         case .Unit:
             let outlineController = controllerForBlockWithID(blockID, type: type, courseID: courseID)
@@ -98,6 +105,9 @@ extension OEXRouter {
         case .Outline:
             let outlineController = OEXCoursewareViewController(environment: self.environment, courseID: courseID, rootID: blockID)
             return outlineController
+        case .Lesson:
+            let courseLessonController = CourseLessonsViewController(environment: self.environment, courseID: courseID, rootID: blockID)
+            return courseLessonController
         case .Unit:
             return unitControllerForCourseID(courseID, sequentialID: nil, blockID: blockID, initialChildID: nil)
         case .HTML:

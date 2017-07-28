@@ -142,7 +142,7 @@ class CourseOutlineTableController : UITableViewController, CourseVideoTableView
             let cell = tableView.dequeueReusableCellWithIdentifier(CourseUnknownTableViewCell.identifier, forIndexPath: indexPath) as! CourseUnknownTableViewCell
             cell.block = block
             return cell
-        case .Outline, .Unit:
+        case .Outline, .Unit, .Lesson:
             let cell = tableView.dequeueReusableCellWithIdentifier(CourseSectionTableViewCell.identifier, forIndexPath: indexPath) as! CourseSectionTableViewCell
             cell.block = nodes[indexPath.row]
             let videoStream = courseQuerier.flatMapRootedAtBlockWithID(block.blockID) { block in
