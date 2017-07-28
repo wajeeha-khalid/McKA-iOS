@@ -234,47 +234,16 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
             var shouldEnableNextButton = false
 
             if let controller = controller {
-                if controller is VideoBlockViewController {
-                    let video = self.environment.interface?.watchedStateForVideoWithID(item.block.blockID)
-
-                    if video == OEXPlayedState.Watched {
-                        shouldEnableNextButton = true
-
-                        if item.nextGroup != nil || cursor.hasNext == false {
-                            setCompletedStatusForUnits()
-                        }
-                    }
-                } else if controller is AudioBlockViewController {
-                    let video = self.environment.interface?.watchedStateForAudioWithID(item.block.blockID)
-
-                    if video == OEXPlayedState.Watched {
-                        shouldEnableNextButton = true
-
-                        if item.nextGroup != nil || cursor.hasNext == false {
-                            setCompletedStatusForUnits()
-                        }
-                    }
-                } else if controller is HTMLBlockViewController, let componentId = self.componentID where componentId.containsString("type@chat") {
-
-
-                    if let data = self.environment.interface?.storage?.getComponentDataForComponentID(componentId) where data.isViewed.boolValue {
-                        shouldEnableNextButton = true
-
-                        if item.nextGroup != nil || cursor.hasNext == false {
-                            setCompletedStatusForUnits()
-                        }
-                    }
-                    else if isChatCompleted {
-                        shouldEnableNextButton = isChatCompleted
-
-                        if isChatCompleted && (item.nextGroup != nil || cursor.hasNext == false) {
-                            setCompletedStatusForUnits()
-                        }
+                
+                if let unitCompleted = unitCompletionPolicy(for: controller, itemId: item.block.blockID, chatCompleted: isChatCompleted), interface = self.environment.interface {
+                    shouldEnableNextButton = unitCompleted(item.block.blockID, interface)
+                    if item.nextGroup != nil || cursor.hasNext == false {
+                        setCompletedStatusForUnits()
                     }
                 } else {
                     storeViewedStatus()
                     shouldEnableNextButton = true
-
+                    
                     if item.nextGroup != nil || cursor.hasNext == false {
                         setCompletedStatusForUnits()
                     }
@@ -371,7 +340,15 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
             return nil
         }
         else {
-            return siblingWithDirection(.Forward, fromController: viewController)
+            if let shouldNavigateForward = unitCompletionPolicy(for: viewController, itemId: item.block.blockID, chatCompleted: false), interface = self.environment.interface {
+                if shouldNavigateForward(item.block.blockID, interface) {
+                    return siblingWithDirection(.Forward, fromController: viewController)
+                } else {
+                    return nil
+                }
+            } else {
+                return siblingWithDirection(.Forward, fromController: viewController)
+            }
         }
     }
     
