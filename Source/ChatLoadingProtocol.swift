@@ -16,7 +16,14 @@ func isWebViewRequest(request: NSURLRequest) -> Bool {
     
     let referer = request.allHTTPHeaderFields?["Referer"]
     
-    if  (path.containsString("type@html") || path.containsString("type@chat") || referer?.containsString("type@html") == true || referer?.containsString("type@chat") == true ) {
+    if  (path.containsString("type@html") ||
+        path.containsString("type@chat") ||
+        path.rangeOfString("i4x://.*/chat/", options: .RegularExpressionSearch) != nil ||
+        path.rangeOfString("i4x://.*/html/", options: .RegularExpressionSearch) != nil ||
+        referer?.containsString("type@html") == true ||
+        referer?.containsString("type@chat") == true ||
+        referer?.rangeOfString("i4x://.*/chat/", options: .RegularExpressionSearch) != nil ||
+        referer?.rangeOfString("i4x://.*/html/", options: .RegularExpressionSearch) != nil) {
         return true
     }
     

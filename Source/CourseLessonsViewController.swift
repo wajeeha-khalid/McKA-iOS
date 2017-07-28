@@ -64,7 +64,10 @@ public class CourseLessonsViewController: OfflineSupportViewController, UITableV
         courseStream.listenOnce(self) {[weak self] in
             self?.resultLoaded($0)
         }
-        
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.addListeners()
     }
     

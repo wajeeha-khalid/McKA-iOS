@@ -254,7 +254,7 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
                             setCompletedStatusForUnits()
                         }
                     }
-                } else if controller is HTMLBlockViewController, let componentId = self.componentID where componentId.containsString("type@chat") {
+                } else if controller is HTMLBlockViewController, let componentId = self.componentID where (componentId.containsString("type@chat") || componentId.rangeOfString("i4x://.*/chat/", options: .RegularExpressionSearch) != nil) {
 
 
                     if let data = self.environment.interface?.storage?.getComponentDataForComponentID(componentId) where data.isViewed.boolValue {
