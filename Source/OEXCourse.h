@@ -39,6 +39,7 @@ OEXStartType OEXStartTypeForString(NSString* type);
 @interface OEXCourse : NSObject
 
 - (id)initWithDictionary:(NSDictionary*)info;
+- (id)initWithJSON:(NSDictionary *)json progress:(nullable NSNumber*)progress;
 // TODO: Rename these to CamelCase (MK - eh just make this swift)
 @property (readonly, nonatomic, strong, nullable) OEXLatestUpdates* latest_updates;
 @property (readonly, nonatomic, strong, nullable) NSDate* end;
@@ -61,7 +62,7 @@ OEXStartType OEXStartTypeForString(NSString* type);
 @property (readonly, nonatomic, copy, nullable) NSDictionary<NSString*, CourseMediaInfo*>* mediaInfo;
 @property (readonly, nonatomic, strong, nullable) CourseMediaInfo* courseImageMediaInfo;
 @property (readonly, nonatomic, strong, nullable) CourseMediaInfo* courseVideoMediaInfo;
-
+@property (readonly, nonatomic, strong, nullable) NSNumber* progress;
 @property (readonly, nonatomic, assign) BOOL isStartDateOld;
 @property (readonly, nonatomic, assign) BOOL isEndDateOld;
 

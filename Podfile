@@ -20,6 +20,7 @@ pod 'Smartling.i18n', '~> 1.0'
 pod 'GVRSDK', '~>1.20.0'
 pod 'DownloadButton'
 pod 'UrbanAirship-iOS-SDK'
+pod 'MBCircularProgressBar'
 pod "SMFloatingLabelTextField"
 end
 

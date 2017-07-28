@@ -377,7 +377,7 @@
 /* Option to sort discussion post list by most votes */
 "MOST_VOTES"="Most Votes";
 /* Screen title showing a user's courses */
-"MY_COURSES"="My PiQUE Modules";
+"MY_COURSES"="My Courses";
 /* Screen title showing a user's settings */
 "MY_SETTINGS"="My Account Settings";
 /* Screen title showing a user's downloaded videos */

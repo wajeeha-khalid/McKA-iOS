@@ -85,4 +85,6 @@
 #import "GVRTransitionCounterView.h"
 #import "MGSwipeTableCell.h"
 
+#import <MBCircularProgressBar/MBCircularProgressBarView.h>
+
 #import <CommonCrypto/CommonCrypto.h>
