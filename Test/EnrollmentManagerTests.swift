@@ -9,6 +9,7 @@
 import Foundation
 @testable import edX
 
+//TODO: fails due to new course list implementation....
 class EnrollmentManagerTests : XCTestCase {
 
     func testEnrollmentsLoginLogout() {

@@ -101,15 +101,15 @@ extension OEXCourse {
             guard let end = self.end else {
                 return nil
             }
-            
             let formattedEndDate = OEXDateFormatting.format(asMonthDayString: end)
             
             // If Old date is older than current date
             if self.isEndDateOld {
-                return Strings.courseEnded(endDate: formattedEndDate)
+                
+                return formattedEndDate.map {Strings.courseEnded(endDate: $0)}
             }
             else{
-                return Strings.courseEnding(endDate: formattedEndDate)
+                return formattedEndDate.map { Strings.courseEnding(endDate: $0) }
             }
         }
         else {  // Start date is newer than current date
@@ -118,7 +118,7 @@ extension OEXCourse {
                 return Strings.starting(startDate: self.start_display_info.displayDate!)
             case .timestamp where self.start_display_info.date != nil:
                 let formattedStartDate = OEXDateFormatting.format(asMonthDayString: self.start_display_info.date!)
-                return Strings.starting(startDate: formattedStartDate)
+                return formattedStartDate.map { Strings.starting(startDate: $0) }
             case .none, .timestamp, .string:
                 return Strings.starting(startDate: Strings.soon)
             }

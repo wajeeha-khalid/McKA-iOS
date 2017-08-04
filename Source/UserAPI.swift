@@ -17,7 +17,7 @@ public struct UserAPI {
         var query : [String:String] {
             return [
                 "last_visited_module_id" : courseVisitedModuleId,
-                "modification_date" : modificationDate
+                "modification_date" : modificationDate ?? ""
             ]
         }
         

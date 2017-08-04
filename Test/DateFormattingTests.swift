@@ -16,10 +16,10 @@ class DateFormattingTests: XCTestCase {
         
         let testDate = Date()
         let convertedDate = OEXDateFormatting.serverString(with: testDate)
-        let revertedDate = OEXDateFormatting.date(withServerString: convertedDate)
+        let revertedDate =  convertedDate.flatMap {OEXDateFormatting.date(withServerString: $0)}
         
         //Using description explicitly as a hack for invalid NSDate comparison
-        let isRevertedSuccesfully = revertedDate.description == testDate.description
+        let isRevertedSuccesfully = revertedDate?.description == testDate.description
         
         XCTAssertTrue(isRevertedSuccesfully, "The reverted date doesn't match the original date")
     }

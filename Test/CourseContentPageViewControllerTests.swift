@@ -10,6 +10,8 @@ import UIKit
 import XCTest
 @testable import edX
 
+//TODO: These tests are failing and after investigating it seems the implementation of subject
+// class has changed and the tests seems outdated....
 class CourseContentPageViewControllerTests: SnapshotTestCase {
     
     let outline = CourseOutlineTestDataFactory.freshCourseOutline(OEXCourse.freshCourse().course_id!)

@@ -69,7 +69,6 @@ extension UIViewController {
         container.addSubview(messageView)
         
         container.snp.makeConstraints {make in
-            //TODO: snp verify
             make.top.equalTo(topLayoutGuide.snp.top)
             make.leading.equalTo(view)
             make.trailing.equalTo(view)

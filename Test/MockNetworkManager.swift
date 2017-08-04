@@ -26,8 +26,8 @@ class MockNetworkManager: NetworkManager {
         let delay : TimeInterval
         
         init<Out>(matcher : @escaping (NetworkRequest<Out>) -> Bool, delay : TimeInterval, response : @escaping (NetworkRequest<Out>) -> NetworkResult<Out>) {
-            self.matcher = matcher as Any
-            self.response = response as Any
+            self.matcher = matcher
+            self.response = response
             self.delay = delay
         }
     }

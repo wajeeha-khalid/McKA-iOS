@@ -76,7 +76,7 @@ class CachedRequestLoader: NSObject, RequestLoader {
     }
     
     func loadRequest(_ request: URLRequest, completionHandler:@escaping (Data?, URLResponse?, Error?) -> Void) {
-        let cachableRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
+        var cachableRequest = request
         cachableRequest.cachePolicy = .returnCacheDataElseLoad
         if let cachedResponse = cache.cachedResponseForRequest(cachableRequest as URLRequest) {
             completionHandler(cachedResponse.data, cachedResponse.response, nil)
@@ -130,7 +130,7 @@ open class WebViewLoadingProtocol: URLProtocol {
     }
     
     override open class func canonicalRequest(for request: URLRequest) -> URLRequest {
-        let mutableRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
+        var mutableRequest = request
         /*we need to set the policy to ignore cache here because everytime we send the response to 
          protocol's client the URLSystem tries to cache the response which isn't needed when we return 
          already cached response. URLCache won't cache data when the policy is set to ignore cache.*/

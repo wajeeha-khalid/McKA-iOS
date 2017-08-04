@@ -83,7 +83,7 @@ class CertificateViewController: UIViewController, UIWebViewDelegate, InterfaceO
 
     func loadRequest(_ request : URLRequest) {
 
-        let mutableRequest: NSMutableURLRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
+        var mutableRequest = request
         mutableRequest.httpShouldHandleCookies = false
         self.request = mutableRequest as URLRequest
     }

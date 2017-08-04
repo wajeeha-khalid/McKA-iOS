@@ -99,9 +99,9 @@ open class CourseOutlineHeaderView: UIView {
         subtitleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: UILayoutConstraintAxis.horizontal)
     }
     
-    open func setViewButtonAction(_ action: @escaping (AnyObject) -> Void) {
+    open func setViewButtonAction(_ action: @escaping (Any) -> Void) {
         self.viewButton.oex_removeAllActions()
-        self.viewButton.oex_addAction(action as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+        self.viewButton.oex_addAction(action, for: UIControlEvents.touchUpInside)
     }
 
     required public init?(coder aDecoder: NSCoder) {

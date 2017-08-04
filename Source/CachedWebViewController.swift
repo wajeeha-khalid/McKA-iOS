@@ -155,13 +155,6 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
             if let headerView = newValue {
                 webController.view.addSubview(headerView)
                 headerView.snp.makeConstraints {make in
-                    //TODO: Verify this replacement
-                   /* if #available(iOS 9.0, *) {
-                        make.top.equalTo(self.topLayoutGuide.bottomAnchor)
-                    }
-                    else {
-                        make.top.equalTo(self.snp_topLayoutGuideBottom)
-                    } */
                     make.top.equalTo(topLayoutGuide.snp.bottom)
                     make.leading.equalTo(webController.view)
                     make.trailing.equalTo(webController.view)

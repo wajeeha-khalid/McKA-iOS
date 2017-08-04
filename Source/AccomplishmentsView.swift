@@ -86,7 +86,7 @@ class AccomplishmentView : UIView {
         for (field, text, style) in [
             (title, accomplishment.title, titleStyle),
             (detail, accomplishment.detail, detailStyle),
-            (date, formattedDate, dateStyle)
+            (date, formattedDate ?? "", dateStyle)
             ]
         {
             field.attributedText = style.attributedString(withText: text)

@@ -177,13 +177,6 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
             audioController.view.snp.remakeConstraints {make in
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
-                //TODO: snp verify
-               /* if #available(iOS 9, *) {
-                    make.top.equalTo(topLayoutGuide.snp.bottom)
-                }
-                else {
-                    make.top.equalTo(self.snp_topLayoutGuideBottom)
-                }*/
                 make.top.equalTo(topLayoutGuide.snp.bottom)
                 make.height.equalTo(view.bounds.size.width * StandardVideoAspectRatio)
             }
@@ -192,16 +185,6 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
                 make.top.equalTo(audioController.view.snp.bottom)
                 make.leading.equalTo(contentView!)
                 make.trailing.equalTo(contentView!)
-                // There's a weird OS bug where the bottom layout guide doesn't get set properly until
-                // the layout cycle after viewDidAppear, so use the parent in the mean time
-                //TODO: snp verify
-                /*
-                if #available(iOS 9, *) {
-                    make.bottom.equalTo(self.bottomLayoutGuide.topAnchor)
-                }
-                else {
-                    make.bottom.equalTo(self.snp.bottomLayoutGuideTop)
-                }*/
                 make.bottom.equalTo(bottomLayoutGuide.snp.top)
             }
         

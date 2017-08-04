@@ -99,7 +99,7 @@ class NetworkManagerTests: XCTestCase {
         AssertSuccess(manager.URLRequestWithRequest(apiRequest)) { r in
             XCTAssertEqual(r.url!.absoluteString, "http://example.com/something?a=b&c=d")
             XCTAssertEqual(r.httpMethod!, "POST")
-            XCTAssertEqual(r.allHTTPHeaderFields!["Content-Type"], "application/x-www-form-urlencoded")
+            XCTAssertEqual(r.allHTTPHeaderFields!["Content-Type"], "application/x-www-form-urlencoded; charset=utf-8")
             XCTAssertEqual(r.allHTTPHeaderFields!["FakeHeader"], "TestValue")
             
             // Hackily extract form encoded fields
@@ -118,12 +118,12 @@ class NetworkManagerTests: XCTestCase {
         }
     }
     
-    func requestEnvironment() -> (MockNetworkManager, NetworkRequest<NSData>, URLRequest) {
+    func requestEnvironment() -> (MockNetworkManager, NetworkRequest<Data>, URLRequest) {
         let manager = MockNetworkManager(authorizationHeaderProvider: authProvider, baseURL: URL(string:"http://example.com")!)
-        let request = NetworkRequest<NSData> (
+        let request = NetworkRequest<Data> (
             method: HTTPMethod.GET,
             path: "path",
-            deserializer: .dataResponse({(_, data) in Result.success(data as NSData)}))
+            deserializer: .dataResponse({(_, data) in Result.success(data)}))
         let URLRequest = manager.URLRequestWithRequest(request).value!
         return (manager, request, URLRequest)
     }
@@ -212,8 +212,8 @@ class NetworkManagerTests: XCTestCase {
         let testData = "testData".data(using: String.Encoding.utf8)!
         let headers = ["a" : "b"]
         let response = HTTPURLResponse(url: URLRequest.url!, statusCode: 404, httpVersion: nil, headerFields: headers)!
-        manager.interceptWhenMatching({_ -> Bool in return true },
-                                      withResponse: {_ in
+        manager.interceptWhenMatching({(_ : NetworkRequest<Data>) -> Bool in return true },
+                                      withResponse: {(_ : NetworkRequest<Data>) in
                                         return NetworkResult<Data>(request: URLRequest, response: response, data: testData, baseData: testData, error: nil)
             }
         )

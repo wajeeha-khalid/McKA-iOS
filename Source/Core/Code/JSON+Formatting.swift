@@ -10,6 +10,6 @@ import SwiftyJSON
 
 extension JSON {
     var serverDate : NSDate? {
-        return string.map { OEXDateFormatting.date(withServerString: $0) as NSDate }
+        return string.flatMap { OEXDateFormatting.date(withServerString: $0) as NSDate? }
     }
 }

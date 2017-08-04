@@ -287,14 +287,13 @@ class DiscussionCommentsViewController: UIViewController, UITableViewDataSource,
             addCommentButton.isEnabled = !commentsClosed
             
             if (!commentsClosed) {
-                addCommentButton.oex_addAction({[weak self] (action : AnyObject!) -> Void in
+                addCommentButton.oex_addAction({[weak self] (_ : Any) in
                     if let owner = self {
-                        
                         guard let thread = owner.thread else { return }
                         
                         owner.environment.router?.showDiscussionNewCommentFromController(owner, courseID: owner.courseID, thread: thread, context: .comment(owner.responseItem))
                     }
-                    } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+                }, for: .touchUpInside)
             }
         }
     }

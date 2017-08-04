@@ -253,11 +253,11 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
         
         addResponseButton.oex_removeAllActions()
         if !thread.closed {
-            addResponseButton.oex_addAction({ [weak self] (action : AnyObject!) -> Void in
+            addResponseButton.oex_addAction({ [weak self] (action : Any) -> Void in
                 if let owner = self, let thread = owner.thread {
                     owner.environment.router?.showDiscussionNewCommentFromController(owner, courseID: owner.courseID, thread: thread, context: .thread(thread))
                 }
-                } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+                } , for: UIControlEvents.touchUpInside)
         }
         
         self.navigationItem.title = navigationItemTitleForThread(thread)
@@ -519,7 +519,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
         
         // vote a post (thread) - User can only vote on post and response not on comment.
         cell.voteButton.oex_removeAllActions()
-        cell.voteButton.oex_addAction({[weak self] (action : AnyObject!) -> Void in
+        cell.voteButton.oex_addAction({[weak self] (action : Any) -> Void in
             if let owner = self, let button = action as? DiscussionCellButton, let thread = owner.thread {
                 button.isEnabled = false
                 
@@ -537,11 +537,11 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
                     }
                 }
             }
-            } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+            } , for: UIControlEvents.touchUpInside)
         
         // follow a post (thread) - User can only follow original post, not response or comment.
         cell.followButton.oex_removeAllActions()
-        cell.followButton.oex_addAction({[weak self] (sender : AnyObject!) -> Void in
+        cell.followButton.oex_addAction({[weak self] (sender : Any) -> Void in
             if let owner = self, let thread = owner.thread {
                 let apiRequest = DiscussionAPI.followThread(owner.postFollowing, threadID: thread.threadID)
                 
@@ -555,7 +555,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
                     }
                 }
             }
-            } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+            } , for: UIControlEvents.touchUpInside)
         
         if let item = self.thread {
             updateVoteText(cell.voteButton, voteCount: item.voteCount, voted: item.voted)
@@ -565,7 +565,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
         
         // report (flag) a post (thread) - User can report on post, response, or comment.
         cell.reportButton.oex_removeAllActions()
-        cell.reportButton.oex_addAction({[weak self] (action : AnyObject!) -> Void in
+        cell.reportButton.oex_addAction({[weak self] (action : Any) -> Void in
             if let owner = self, let item = owner.thread {
                 let apiRequest = DiscussionAPI.flagThread(!item.abuseFlagged, threadID: item.threadID)
                 
@@ -579,7 +579,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
                     }
                 }
             }
-            } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+            } , for: UIControlEvents.touchUpInside)
         
         if let thread = self.thread {
             cell.setAccessibility(thread)
@@ -651,7 +651,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
         cell.voteButton.indexPath = indexPath
         // vote/unvote a response - User can vote on post and response not on comment.
         cell.voteButton.oex_removeAllActions()
-        cell.voteButton.oex_addAction({[weak self] (action : AnyObject!) -> Void in
+        cell.voteButton.oex_addAction({[weak self] (action : Any) -> Void in
             
             let apiRequest = DiscussionAPI.voteResponse(response.voted, responseID: response.commentID)
             
@@ -665,12 +665,12 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
                     self?.showOverlayMessage(DiscussionHelper.messageForError(result.error))
                 }
             }
-            } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+            } , for: UIControlEvents.touchUpInside)
         
         cell.reportButton.indexPath = indexPath
         // report (flag)/unflag a response - User can report on post, response, or comment.
         cell.reportButton.oex_removeAllActions()
-        cell.reportButton.oex_addAction({[weak self] (action : AnyObject!) -> Void in
+        cell.reportButton.oex_addAction({[weak self] (action : Any) -> Void in
             let apiRequest = DiscussionAPI.flagComment(!response.abuseFlagged, commentID: response.commentID)
             
             self?.environment.networkManager.taskForRequest(apiRequest) { result in
@@ -684,7 +684,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
                     self?.showOverlayMessage(DiscussionHelper.messageForError(result.error))
                 }
             }
-            } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+            } , for: UIControlEvents.touchUpInside)
         
         cell.endorsed = response.endorsed
         

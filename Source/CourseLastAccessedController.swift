@@ -85,7 +85,7 @@ open class CourseLastAccessedController: NSObject {
                         owner.lastAccessedProvider?.setLastAccessedSubSectionWithID(lastAccessedItem.moduleId,
                             subsectionName: block.displayName,
                             courseID: courseID,
-                            timeStamp: OEXDateFormatting.serverString(with: Date()))
+                            timeStamp: (OEXDateFormatting.serverString(with: Date())) ?? "")
                     }
                 }
             }
@@ -99,7 +99,7 @@ open class CourseLastAccessedController: NSObject {
                 var item = $0.1
                 item.moduleName = block.displayName
                 
-                self?.lastAccessedProvider?.setLastAccessedSubSectionWithID(item.moduleId, subsectionName: block.displayName, courseID: self?.courseID, timeStamp: OEXDateFormatting.serverString(with: Date()))
+                self?.lastAccessedProvider?.setLastAccessedSubSectionWithID(item.moduleId, subsectionName: block.displayName, courseID: self?.courseID, timeStamp: (OEXDateFormatting.serverString(with: Date())) ?? "")
                 self?.delegate?.courseLastAccessedControllerDidFetchLastAccessedItem(item)
             }
             

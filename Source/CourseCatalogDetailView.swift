@@ -214,7 +214,7 @@ extension CourseCatalogDetailView {
         }
         if let endDate = course.end, !course.isStartDateOld {
             let date = OEXDateFormatting.format(asMonthDayYearString: endDate)
-            result.append(Field(name: Strings.CourseDetail.endDate, value: date, icon: .courseEnd))
+            result.append(Field(name: Strings.CourseDetail.endDate, value: date ?? "", icon: .courseEnd))
         }
         return result
     }

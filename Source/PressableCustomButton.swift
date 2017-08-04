@@ -15,7 +15,7 @@ class PressableCustomButton: UIButton {
 
     static let DEFAULT_ANIMATION_DURATION : TimeInterval = 0.1
     
-    fileprivate let pressedAction = { (button : AnyObject) -> Void in
+    fileprivate let pressedAction = { (button : Any) -> Void in
         UIView.animate( withDuration: DEFAULT_ANIMATION_DURATION, animations: { () -> Void in
             if let pressableButton = button as? UIButton {
                 pressableButton.alpha = 0.3
@@ -23,7 +23,7 @@ class PressableCustomButton: UIButton {
         })
     }
     
-    fileprivate let unpressedAction = { (button : AnyObject) -> Void in
+    fileprivate let unpressedAction = { (button : Any) -> Void in
         UIView.animate( withDuration: DEFAULT_ANIMATION_DURATION, animations: { () -> Void in
             if let pressableButton = button as? UIButton {
                 pressableButton.alpha = 1.0
@@ -32,8 +32,9 @@ class PressableCustomButton: UIButton {
     }
     
     fileprivate func addFadingActions() {
-        self.oex_addAction(pressedAction as! (Any) -> Void, for: [.touchDown, .touchDragEnter])
-        self.oex_addAction(unpressedAction as! (Any) -> Void, for: [.touchUpInside, .touchUpOutside, .touchDragOutside])
+        self.oex_addAction(pressedAction , for: [.touchDown, .touchDragEnter])
+        self.oex_addAction(unpressedAction , for: [.touchUpInside, .touchUpOutside, .touchDragOutside])
+        
     }
     
     convenience init() {

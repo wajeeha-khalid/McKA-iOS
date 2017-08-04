@@ -163,9 +163,9 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
             make.top.equalTo(topicButton).offset(topicButton.frame.size.height / 2.0 - 5.0)
         }
         
-        topicButton.oex_addAction({ [weak self] (action : AnyObject!) -> Void in
+        topicButton.oex_addAction({ [weak self] (_ : Any) in
             self?.showTopicPicker()
-        } as! (Any) -> Void, for: UIControlEvents.touchUpInside)
+        } , for: UIControlEvents.touchUpInside)
         
         postButton.isEnabled = false
         
@@ -218,7 +218,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
             discussionQuestionSegmentedControl.subviews[i].accessibilityLabel = segmentOptions[i].title.string
         }
         
-        discussionQuestionSegmentedControl.oex_addAction({ [weak self] (control:AnyObject) -> Void in
+        discussionQuestionSegmentedControl.oex_addAction({ [weak self] (control:Any) -> Void in
             if let segmentedControl = control as? UISegmentedControl {
                 let index = segmentedControl.selectedSegmentIndex
                 let threadType = segmentOptions[index].value
@@ -228,7 +228,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
             else {
                 assert(true, "Invalid Segment ID, Remove this segment index OR handle it in the ThreadType enum")
             }
-            } as! (Any) -> Void, for: UIControlEvents.valueChanged)
+            } , for: UIControlEvents.valueChanged)
         discussionQuestionSegmentedControl.tintColor = OEXStyles.shared().neutralDark()
         discussionQuestionSegmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName: OEXStyles.shared().neutralWhite()], for: UIControlState.selected)
         discussionQuestionSegmentedControl.selectedSegmentIndex = 0
