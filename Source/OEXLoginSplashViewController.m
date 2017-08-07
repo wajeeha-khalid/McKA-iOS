@@ -11,7 +11,6 @@
 #import "edX-Swift.h"
 
 #import "OEXRouter.h"
-#import "OEXLoginViewController.h"
 #import "OEXSession.h"
 
 @interface OEXLoginSplashViewController ()
