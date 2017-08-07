@@ -56,10 +56,26 @@ extension CourseBlock {
     }
 }
 
+
 extension OEXRouter {
     func showLessonForCourseWithID(_ courseID : String, fromController controller : UIViewController) {
         showContainerForBlockWithID(nil, type: CourseBlockDisplayType.lesson, parentID: nil, courseID : courseID, fromController: controller)
     }
+    
+    var loginViewController: UIViewController {
+        let viewController = LoginViewController(nibName: nil, bundle: nil)
+        // We have to downcast here because we can't import swift headers in objective c 
+        // header (.h) file which means there is no way for the router to declare its 
+        // conformace of `LoginViewControllerDelegate` protocol unless we are in the (.m)
+        // file of router. so we have to downcast it but this is guaranteed to succeed at
+        // runtime. If someone has any better idea around it please let me know...
+        viewController.delegate = self as? LoginViewControllerDelegate
+        let appDelegate = UIApplication.shared.delegate as! OEXAppDelegate
+        let presenter = LoginPresenter(authenticator: RemoteAuthenticator.shared, view: viewController, reachability: appDelegate.reachability)
+        viewController.presenter = presenter
+        return viewController
+    }
+    
     
     func showCoursewareForCourseWithID(_ courseID : String, fromController controller : UIViewController) {
         showContainerForBlockWithID(nil, type: CourseBlockDisplayType.outline, parentID: nil, courseID : courseID, fromController: controller)
@@ -287,21 +303,12 @@ extension OEXRouter {
         revealController = nil
         removeCurrentContentController()
 
-        let splashController: UIViewController
-        if UserDefaults.standard.bool(forKey: FIRST_TIME_USER_KEY) == true{
-            splashController = OEXAfterLogOutViewController(environment: environment)
+        let splashController: UIViewController = self.loginViewController
+       /* if UserDefaults.standard.bool(forKey: FIRST_TIME_USER_KEY) == true{
+            splashController = self.loginViewController()
         } else {
             splashController = OEXFTUEViewController(environment: environment)
-        }
-        
-//        if !environment.config.isRegistrationEnabled {
-//            splashController = loginViewController()
-//        }
-//        else if environment.config.newLogistrationFlowEnabled {
-//            splashController = StartupViewController(environment: environment)
-//        } else {
-//            splashController = OEXFTUEViewController(environment: environment)
-//        }
+        } */
         
         makeContentControllerCurrent(splashController)
     }
