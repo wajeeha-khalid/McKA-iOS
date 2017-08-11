@@ -120,6 +120,11 @@ typedef NS_ENUM(NSUInteger, OEXVideoSpeed) {
 //Post method for API calls
 #define OEXHTTPMethodPOST @"POST"
 
+//Theming Keys
+#define APPLIED_THEMING_FILE_KEY @"AppliedThemingFile"
+#define MCKINSEY_THEME_FILE @"mckinsey_theming"
+#define CHEMOURS_THEME_FILE @"chemours_theming"
+
 //Animation
 #define ANI_DURATION 1.0
 #define ANI_ERROR_TIMEOUT 5.0

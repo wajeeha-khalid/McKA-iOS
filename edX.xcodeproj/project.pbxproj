@@ -150,6 +150,17 @@
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
 		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
 		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
+		63EC02001F3C3B6900B702C4 /* OEXBrandingThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC01FF1F3C3B6900B702C4 /* OEXBrandingThemes.swift */; };
+		63EC02091F3C7BF100B702C4 /* mckinsey_theming.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */; };
+		63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */; };
+		63EC02111F3C84C700B702C4 /* img_logo_chemours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020B1F3C84C700B702C4 /* img_logo_chemours@2x.png */; };
+		63EC02121F3C84C700B702C4 /* img_logo_chemours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020C1F3C84C700B702C4 /* img_logo_chemours@3x.png */; };
+		63EC02131F3C84C700B702C4 /* img_logo_mckinsey@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020D1F3C84C700B702C4 /* img_logo_mckinsey@1x.png */; };
+		63EC02141F3C84C700B702C4 /* img_logo_mckinsey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020E1F3C84C700B702C4 /* img_logo_mckinsey@2x.png */; };
+		63EC02151F3C84C700B702C4 /* img_logo_mckinsey@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020F1F3C84C700B702C4 /* img_logo_mckinsey@3x.png */; };
+		63EC02171F3C9F8500B702C4 /* BrandingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC02161F3C9F8500B702C4 /* BrandingHeaderView.swift */; };
+		63EC02191F3DC89C00B702C4 /* chemours_theming.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EC02181F3DC89C00B702C4 /* chemours_theming.json */; };
+		63EC021B1F3DF5C400B702C4 /* BrandingThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC021A1F3DF5C400B702C4 /* BrandingThemeTests.swift */; };
 		63F40F951EF8388D00DE9A9C /* DownloadProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */; };
 		6919F5FF1D65CD27006935C8 /* OEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6919F5FE1D65CD27006935C8 /* OEXColors.swift */; };
 		6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA41D59BE3600A16E22 /* ic_next_press.png */; };
@@ -1068,6 +1079,17 @@
 		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
 		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
 		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
+		63EC01FF1F3C3B6900B702C4 /* OEXBrandingThemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXBrandingThemes.swift; sourceTree = "<group>"; };
+		63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mckinsey_theming.json; sourceTree = "<group>"; };
+		63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@1x.png"; sourceTree = "<group>"; };
+		63EC020B1F3C84C700B702C4 /* img_logo_chemours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@2x.png"; sourceTree = "<group>"; };
+		63EC020C1F3C84C700B702C4 /* img_logo_chemours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@3x.png"; sourceTree = "<group>"; };
+		63EC020D1F3C84C700B702C4 /* img_logo_mckinsey@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_mckinsey@1x.png"; sourceTree = "<group>"; };
+		63EC020E1F3C84C700B702C4 /* img_logo_mckinsey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_mckinsey@2x.png"; sourceTree = "<group>"; };
+		63EC020F1F3C84C700B702C4 /* img_logo_mckinsey@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_mckinsey@3x.png"; sourceTree = "<group>"; };
+		63EC02161F3C9F8500B702C4 /* BrandingHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandingHeaderView.swift; sourceTree = "<group>"; };
+		63EC02181F3DC89C00B702C4 /* chemours_theming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chemours_theming.json; sourceTree = "<group>"; };
+		63EC021A1F3DF5C400B702C4 /* BrandingThemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandingThemeTests.swift; sourceTree = "<group>"; };
 		63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressTests.swift; sourceTree = "<group>"; };
 		6919F5FE1D65CD27006935C8 /* OEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXColors.swift; sourceTree = "<group>"; };
 		6926CDA41D59BE3600A16E22 /* ic_next_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next_press.png; sourceTree = "<group>"; };
@@ -2049,6 +2071,7 @@
 		193B504219459BE60038E11C /* Custom Styles */ = {
 			isa = PBXGroup;
 			children = (
+				63EC01FF1F3C3B6900B702C4 /* OEXBrandingThemes.swift */,
 				6919F5FE1D65CD27006935C8 /* OEXColors.swift */,
 				BD7C6C3D1DCA32360004D135 /* OEXFonts.swift */,
 				77C901A61BBDDD630016E468 /* TableCellStyle.swift */,
@@ -2269,6 +2292,15 @@
 			path = QLearnSDK;
 			sourceTree = SOURCE_ROOT;
 		};
+		63EC02031F3C4CBC00B702C4 /* BrandingTheme */ = {
+			isa = PBXGroup;
+			children = (
+				63EC02181F3DC89C00B702C4 /* chemours_theming.json */,
+				63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */,
+			);
+			path = BrandingTheme;
+			sourceTree = "<group>";
+		};
 		6919F5FB1D65CD14006935C8 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
@@ -2282,6 +2314,7 @@
 			children = (
 				D04951D51E76AEFD006301FA /* registration_form.json */,
 				77BFD8691BB9E15B001D7BE5 /* Strings.swift */,
+				63EC02031F3C4CBC00B702C4 /* BrandingTheme */,
 				6919F5FB1D65CD14006935C8 /* Colors */,
 				69ECC5A21D50D1170030CF87 /* Fonts */,
 				69ECC5AE1D50D1170030CF87 /* Icons */,
@@ -2352,6 +2385,12 @@
 		69ECC5B61D50D1170030CF87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */,
+				63EC020B1F3C84C700B702C4 /* img_logo_chemours@2x.png */,
+				63EC020C1F3C84C700B702C4 /* img_logo_chemours@3x.png */,
+				63EC020D1F3C84C700B702C4 /* img_logo_mckinsey@1x.png */,
+				63EC020E1F3C84C700B702C4 /* img_logo_mckinsey@2x.png */,
+				63EC020F1F3C84C700B702C4 /* img_logo_mckinsey@3x.png */,
 				D0249F7C1E68592000A55613 /* ic_leftTriangle.png */,
 				D0249F7D1E68592000A55613 /* ic_leftTriangle@2x.png */,
 				D0249F7E1E68592000A55613 /* ic_leftTriangle@3x.png */,
@@ -3672,6 +3711,7 @@
 				694D34A11D76B75F0047F3F4 /* UIAlertController+OEXBlockActionsTests.swift */,
 				63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */,
 				63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */,
+				63EC021A1F3DF5C400B702C4 /* BrandingThemeTests.swift */,
 				77FDF4171B0269FA00E8C639 /* Test Data */,
 				77FFA2C41AC30D6300B4D69B /* Data Factories */,
 				7772BE901AF90C8A0081CA7A /* Helpers */,
@@ -3772,6 +3812,7 @@
 				1905BFF01A31B037001917FA /* COURSE_NOT_LISTED.htm */,
 				190AF7941A4061950029E23E /* Main.storyboard */,
 				1A3671F41BB03C7A00704032 /* OEXRearTableViewController.swift */,
+				63EC02161F3C9F8500B702C4 /* BrandingHeaderView.swift */,
 			);
 			name = "Front Rear views";
 			sourceTree = "<group>";
@@ -4055,6 +4096,7 @@
 				631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */,
 				D0871E641E4050B800B2C41F /* ic_downloading.png in Resources */,
 				D0249F841E68592000A55613 /* ic_leftTriangle@3x.png in Resources */,
+				63EC02191F3DC89C00B702C4 /* chemours_theming.json in Resources */,
 				19A1339719CAE108003ADD24 /* EULA.htm in Resources */,
 				69ECC6371D50D1170030CF87 /* ic_partiallywatched@3x.png in Resources */,
 				D085DDAD1E483F48009AA666 /* ic_discussion.png in Resources */,
@@ -4077,6 +4119,7 @@
 				D05B25D31E13CED400D1E77F /* FTUE3@3x.png in Resources */,
 				69ECC61D1D50D1170030CF87 /* bt_logout_default.png in Resources */,
 				D0249F861E68592000A55613 /* ic_rightTriangle@2x.png in Resources */,
+				63EC02091F3C7BF100B702C4 /* mckinsey_theming.json in Resources */,
 				D05B25D91E13CED400D1E77F /* FTUE5@3x.png in Resources */,
 				D0871E6E1E40C00800B2C41F /* Mountain.png in Resources */,
 				D07DD5EC1E586B6D00A8BC01 /* ic_tickmark@2x.png in Resources */,
@@ -4113,6 +4156,7 @@
 				D085DDAE1E483F48009AA666 /* ic_discussion@2x.png in Resources */,
 				19BB62311A9C656B007DBF47 /* OEXMySettingsViewController.xib in Resources */,
 				D0871E761E41A27100B2C41F /* next.png in Resources */,
+				63EC02121F3C84C700B702C4 /* img_logo_chemours@3x.png in Resources */,
 				9ED269D21AF114B900328A34 /* OEXLoginViewController.storyboard in Resources */,
 				0A543E261EB2388500465FC0 /* VRCoachmarkViewController.xib in Resources */,
 				69ECC62C1D50D1170030CF87 /* ic_back.png in Resources */,
@@ -4148,6 +4192,7 @@
 				69ECC62F1D50D1170030CF87 /* ic_cancel@3x.png in Resources */,
 				D0D5AB771E52C972005D6D8F /* ic_attachment@2x.png in Resources */,
 				198826E91952FE39005D4D8A /* OEXOpenInBrowserViewController.xib in Resources */,
+				63EC02151F3C84C700B702C4 /* img_logo_mckinsey@3x.png in Resources */,
 				D05B25CD1E13CED400D1E77F /* FTUE1@3x.png in Resources */,
 				114A30C11E56CD9F00EBCF6B /* Icon-76.png in Resources */,
 				D0842C6B1E5ECFBD002FC330 /* ic_backchevron@3x.png in Resources */,
@@ -4179,6 +4224,7 @@
 				D0871E7A1E41A27F00B2C41F /* previous.png in Resources */,
 				D05B25D01E13CED400D1E77F /* FTUE2@3x.png in Resources */,
 				D085DDA91E483989009AA666 /* ic_blue_download@3x.png in Resources */,
+				63EC02111F3C84C700B702C4 /* img_logo_chemours@2x.png in Resources */,
 				1905BFF11A31B037001917FA /* COURSE_NOT_LISTED.htm in Resources */,
 				D043E5501E27767600623079 /* pique_launch@3x.png in Resources */,
 				69ECC6291D50D1170030CF87 /* check@2x.png in Resources */,
@@ -4215,6 +4261,7 @@
 				D0871E6B1E40747200B2C41F /* ic_lock@2x.png in Resources */,
 				69ECC6101D50D1170030CF87 /* profilePhotoPlaceholder.png in Resources */,
 				D0FA801E1E1E191600FB1226 /* SIL Open Font License.txt in Resources */,
+				63EC02141F3C84C700B702C4 /* img_logo_mckinsey@2x.png in Resources */,
 				D0712CD51E376C8D0080E9D4 /* OEXCoursewareViewController.xib in Resources */,
 				69ECC6051D50D1170030CF87 /* OpenSans-Regular.ttf in Resources */,
 				1A03DEA31BBC72BA006783FB /* countries.json in Resources */,
@@ -4227,11 +4274,13 @@
 				D09C25451E308A0000E39CA8 /* pique_logo@3x.png in Resources */,
 				69ECC61F1D50D1170030CF87 /* bt_signin_active.png in Resources */,
 				6960892B1D53935500EE66DD /* courseCertificate.png in Resources */,
+				63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */,
 				69ECC6071D50D1170030CF87 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				114A30BC1E56CD9F00EBCF6B /* Icon-40.png in Resources */,
 				6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */,
 				BEEEBF80196AAACF00EF2C35 /* Localizable.strings in Resources */,
 				D0249F661E66996400A55613 /* ic_completed@2x.png in Resources */,
+				63EC02131F3C84C700B702C4 /* img_logo_mckinsey@1x.png in Resources */,
 				D0249F831E68592000A55613 /* ic_leftTriangle@2x.png in Resources */,
 				199B9B7B1935EA8000081A09 /* OEXFlowErrorViewController.xib in Resources */,
 				D05B25D21E13CED400D1E77F /* FTUE3@2x.png in Resources */,
@@ -4850,6 +4899,7 @@
 				714239931E64473D0013FD1E /* CourseWareView.swift in Sources */,
 				B4B285E51A9A49FF00DD603A /* OEXFabricConfig.m in Sources */,
 				63049D1A1EE544DB00B9D18D /* MediaPlaybackDecision.swift in Sources */,
+				63EC02001F3C3B6900B702C4 /* OEXBrandingThemes.swift in Sources */,
 				1A81971B1C060FA50030254D /* ShareHelper.swift in Sources */,
 				77F76A6E1B0BD32A00ED3E39 /* OEXSession+Authorization.swift in Sources */,
 				7E053D2E1E9E1EDD006A3DEE /* NSData+Additions.m in Sources */,
@@ -4894,6 +4944,7 @@
 				8F562F881A1F2D2C00320DB3 /* OEXGoogleSocial.m in Sources */,
 				E03E6A151D38C91F00944AAA /* OfflineSupportViewController.swift in Sources */,
 				B4B6D6291A949F1B000F44E8 /* OEXRegistrationFieldEmailController.m in Sources */,
+				63EC02171F3C9F8500B702C4 /* BrandingHeaderView.swift in Sources */,
 				E0ED96E71D6EED1C00B48B64 /* OEXCourseInfoViewController+Swift.swift in Sources */,
 				773B1D421B1F48F100B861DF /* CourseOutlineHeaderView.swift in Sources */,
 				778B61061B06BD2100489532 /* NSNotificationCenter+SafeSwift.swift in Sources */,
@@ -4969,6 +5020,7 @@
 				77503E981B2F53C300C47229 /* StreamTests.swift in Sources */,
 				41AE8FF01EF005CE00CC6DCC /* ChatLoadingProtocolTests.swift in Sources */,
 				778F17711C0CFD310099BF93 /* OEXRouterTests.swift in Sources */,
+				63EC021B1F3DF5C400B702C4 /* BrandingThemeTests.swift in Sources */,
 				773B1D491B1F818300B861DF /* XCTestCase+Async.swift in Sources */,
 				E008D9061CCE150F007F3643 /* DiscussionResponsesViewControllerTests.swift in Sources */,
 				775434971AD8635200635A40 /* OEXUserDetails+OEXTestDataFactory.m in Sources */,

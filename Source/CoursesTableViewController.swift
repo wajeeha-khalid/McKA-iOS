@@ -31,7 +31,7 @@ class CourseCardCell : UITableViewCell {
         
         courseView.applyBorderStyle(courseCardBorderStyle)
         
-        self.contentView.backgroundColor = OEXStyles.shared().neutralXLight()
+        self.contentView.backgroundColor = OEXStyles.shared().neutralWhiteT()
         
         self.selectionStyle = .none
     }

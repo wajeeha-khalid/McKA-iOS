@@ -310,6 +310,8 @@ extension OEXRouter {
         environment.session.closeAndClear()
         UAirship.push().userPushNotificationsEnabled = false
         UAirship.push().allowUnregisteringUserNotificationTypes = false
+        OEXBrandingThemes.sharedInstance.applyThemeWith(fileName: MCKINSEY_THEME_FILE)
+        OEXStyles.shared().applyGlobalAppearance()
         showLoggedOutScreen()
         
     }

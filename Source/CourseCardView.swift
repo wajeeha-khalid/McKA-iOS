@@ -108,7 +108,8 @@ class NewCourseCardView: UIView {
         set {
            progressView.progress = newValue
             if case .completed = newValue {
-                overlayView.backgroundColor = UIColor(colorLiteralRed: 39/255.0, green: 144/255.0, blue: 240/255.0, alpha: 0.95)
+                let hexColorValue:String = OEXBrandingThemes.sharedInstance.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.courseCardOverlayColor)
+                overlayView.backgroundColor = UIColor(hexString: hexColorValue, alpha: 0.90)
             } else {
                 overlayView.backgroundColor = UIColor.clear
             }

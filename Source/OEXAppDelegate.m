@@ -187,6 +187,13 @@
 - (void)setupGlobalEnvironment {
     [UserAgentOverrideOperation overrideUserAgent:nil];
     
+    //To persist applied theme even app relaunched
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if([[[userDefaults dictionaryRepresentation] allKeys] containsObject:APPLIED_THEMING_FILE_KEY]){
+        NSString *themingFileName = [userDefaults objectForKey:APPLIED_THEMING_FILE_KEY];
+        [OEXBrandingThemes.sharedInstance applyThemeWithFileName:themingFileName];
+    }
+    
     self.environment = [[OEXEnvironment alloc] init];
     [self.environment setupEnvironment];
 
