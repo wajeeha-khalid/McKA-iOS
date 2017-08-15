@@ -78,11 +78,8 @@ struct CourseViewModel {
     }
     
     func apply(newCard card: NewCourseCardView, networkManager: NetworkManager) {
-        if let lessonCount = lessonCount {
-            card.lessonText = "\(lessonCount) lessons"
-        } else {
-            card.lessonText = "fetching lesson count..."
-        }
+        
+        card.lessonText = formattedLessonCount
         card.couseTitle = title
         card.progress = progress
         
@@ -94,6 +91,19 @@ struct CourseViewModel {
         // especially with cell reuse in tableView...
         card.imageView.kf.setImage(with:url, placeholder: placeholder)
     }
+    
+    var formattedLessonCount: String {
+        if let lessonCount = lessonCount {
+            if lessonCount > 1 {
+                return "\( lessonCount) Lessons"
+            } else {
+                return "\(lessonCount) Lesson"
+            }
+        } else {
+            return "fetching lesson count..."
+        }
+    }
+    
 }
 
 class CoursesTableViewController: UITableViewController {
