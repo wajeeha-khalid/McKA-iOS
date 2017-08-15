@@ -13,7 +13,7 @@ import MessageUI
 import edXCore
 
 private enum OEXRearViewOptions: Int {
-    case userProfile, myCourse, myMedia, appSettings, mySettings, licensingTerms, submitFeedback, logout
+    case userProfile, myCourse, appSettings, mySettings, licensingTerms, submitFeedback, logout
 }
 
 private let LogoutCellDefaultHeight: CGFloat = 160.0
@@ -33,8 +33,6 @@ class OEXRearTableViewController : UITableViewController {
     }
     
     @IBOutlet var coursesLabel: UILabel!
-    @IBOutlet var videosLabel: UILabel!
-    //@IBOutlet var recentMediaLabel: UILabel!
     @IBOutlet var appSettingsLabel: UILabel!
     @IBOutlet var settingsLabel: UILabel!
     @IBOutlet var submitFeedbackLabel: UILabel!
@@ -67,8 +65,6 @@ class OEXRearTableViewController : UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(OEXRearTableViewController.dataAvailable(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_URL_RESPONSE), object: nil)
         
         coursesLabel.text = Strings.myCourses
-        videosLabel.text = Strings.myMedia
-        //recentMediaLabel.text = Strings.recentMedia
         appSettingsLabel.text = Strings.appSettings
         settingsLabel.text = Strings.mySettings
         submitFeedbackLabel.text = Strings.SubmitFeedback.optionTitle
@@ -110,8 +106,6 @@ class OEXRearTableViewController : UITableViewController {
     
     fileprivate func setNaturalTextAlignment() {
         coursesLabel.textAlignment = .natural
-        videosLabel.textAlignment = .natural
-        //recentMediaLabel.textAlignment = .Natural
         appSettingsLabel.textAlignment = .natural
         settingsLabel.textAlignment = .natural
         submitFeedbackLabel.textAlignment = .natural
@@ -125,8 +119,6 @@ class OEXRearTableViewController : UITableViewController {
         userNameLabel.accessibilityLabel = userNameLabel.text
         userEmailLabel.accessibilityLabel = userEmailLabel.text
         coursesLabel.accessibilityLabel = coursesLabel.text
-        videosLabel.accessibilityLabel = videosLabel.text
-        //recentMediaLabel.accessibilityLabel = recentMediaLabel.text
         appSettingsLabel.accessibilityLabel = appSettingsLabel.text
         settingsLabel.accessibilityLabel = settingsLabel.text
         submitFeedbackLabel.accessibilityLabel = submitFeedbackLabel.text
@@ -139,8 +131,6 @@ class OEXRearTableViewController : UITableViewController {
         let RearTableFont = UIFont.init(name: "Raleway-Medium", size: 16)
         
         coursesLabel.font = RearTableFont
-        videosLabel.font = RearTableFont
-        //recentMediaLabel.font = UIFont.init(name: "Raleway-Medium", size: 16)
         appSettingsLabel.font = RearTableFont
         settingsLabel.font = RearTableFont
         submitFeedbackLabel.font = RearTableFont
@@ -182,10 +172,6 @@ class OEXRearTableViewController : UITableViewController {
                 environment.router?.showProfileForUsername(username: currentUserName)
             case .myCourse:
                 environment.router?.showMyCourses()
-            case .myMedia:
-                environment.router?.showMyVideos()
-            //case .RecentMedia:
-              //  environment.router?.showMyVideos()
             case .appSettings:
                 environment.router?.showMySettings()
             case .mySettings:
@@ -195,6 +181,8 @@ class OEXRearTableViewController : UITableViewController {
             case .submitFeedback:
                 launchEmailComposer()
             case .logout:
+                break
+            default:
                 break
             }
         }

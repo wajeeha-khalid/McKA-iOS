@@ -28,7 +28,7 @@
 		114A30C01E56CD9F00EBCF6B /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B61E56CD9F00EBCF6B /* Icon-60@3x.png */; };
 		114A30C11E56CD9F00EBCF6B /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B71E56CD9F00EBCF6B /* Icon-76.png */; };
 		114A30C21E56CD9F00EBCF6B /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B81E56CD9F00EBCF6B /* Icon-76@2x.png */; };
-		118421FE1E4B310C00E3AD82 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		118421FE1E4B310C00E3AD82 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		181A99831E22888900ECDA75 /* round-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 181A99821E22888900ECDA75 /* round-pause-button.png */; };
 		1894051A1E33A22000AD6776 /* OEXAudioSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 189405191E33A22000AD6776 /* OEXAudioSummary.m */; };
 		1894051C1E34AB4500AD6776 /* CourseAudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1894051B1E34AB4500AD6776 /* CourseAudioTableViewCell.swift */; };
@@ -4294,7 +4294,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		079C63796EA191B1B4A275B3 /* [CP] Copy Pods Resources */ = {
@@ -4446,7 +4446,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		849A7D1B624AE43BFD49BB8D /* [CP] Embed Pods Frameworks */ = {
@@ -4654,7 +4654,7 @@
 				77E647CE1C90CAB800B6740D /* NSAttributedString+OEXFormatting.m in Sources */,
 				E09B9D6B1D06C9700080BAE0 /* VersionUpgradeInfoController.swift in Sources */,
 				9E882B6A1BBA9825007347A2 /* DiscussionTopicCell.swift in Sources */,
-				118421FE1E4B310C00E3AD82 /* (null) in Sources */,
+				118421FE1E4B310C00E3AD82 /* BuildFile in Sources */,
 				B4B285ED1A9B429200DD603A /* OEXNetworkUtility.m in Sources */,
 				BE0D454A192DD4F800D720D6 /* OEXNetworkInterface.m in Sources */,
 				B419295E1A8A3F1900448AD5 /* OEXNetworkManager.m in Sources */,
