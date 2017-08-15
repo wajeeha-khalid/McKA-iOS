@@ -18,7 +18,7 @@ open class CourseOutlineTestDataFactory {
         return CourseOutline(
             root : courseID,
             blocks : [
-                courseID: CourseBlock(type: CourseBlockType.course, children : ["chapter1", "chapter2", "chapter3", "chapter4"], blockID : courseID, name : "A Course", blockCounts : ["video" : 1], multiDevice : true),
+                courseID: CourseBlock(type: CourseBlockType.course, children : ["chapter1", "chapter2", "chapter3", "chapter4", "discussion_course"], blockID : courseID, name : "A Course", blockCounts : ["video" : 1], multiDevice : true),
                 "chapter1": CourseBlock(type: CourseBlockType.chapter, children : ["section1.1", "section1.2"], blockID : "chapter1", name : "Chapter 1", blockCounts : ["video" : 1], multiDevice : true),
                 "chapter2": CourseBlock(type: CourseBlockType.chapter, children : ["section2.1", "section2.2"], blockID : "chapter2", name : "Chapter 2", multiDevice : true),
                 "chapter3": CourseBlock(type: CourseBlockType.chapter, children : ["section3.1"], blockID : "chapter3", name : "Chapter 3", multiDevice : true),
@@ -39,6 +39,7 @@ open class CourseOutlineTestDataFactory {
                 "block5": CourseBlock(type: CourseBlockType.unknown("something"), children : [], blockID : "block5", name : "Block 5", multiDevice : false)
             ])
     }
+    
     
     open static func knownLastAccessedItem() -> CourseLastAccessed {
         return CourseLastAccessed(moduleId: "unit2", moduleName: "unit2")

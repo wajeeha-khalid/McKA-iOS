@@ -131,7 +131,11 @@ class CoursesTableViewController: UITableViewController {
             courses.forEach { (course) in
                 let querier = self.environment.dataManager.courseDataManager.querierForCourseWithID(course.courseID!)
                 let stream = querier.childrenOfBlockWithID(nil).transform({ group in
-                    return edXCore.Stream(value: group.children.count)
+                    return Stream(
+                        value: group.children.filter({ (lesson) -> Bool in
+                            return lesson.displayName.lowercased().contains("discussion_course") == false
+                        }).count
+                    )
                 })
                 stream.listen(self) { [weak self] result in
                     guard let owner = self else {
