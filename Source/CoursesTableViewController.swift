@@ -78,11 +78,8 @@ struct CourseViewModel {
     }
     
     func apply(newCard card: NewCourseCardView, networkManager: NetworkManager) {
-        if let lessonCount = lessonCount {
-            card.lessonText = "\(lessonCount) lessons"
-        } else {
-            card.lessonText = "fetching lesson count..."
-        }
+        
+        card.lessonText = formattedLessonCount
         card.couseTitle = title
         card.progress = progress
         
@@ -94,6 +91,19 @@ struct CourseViewModel {
         // especially with cell reuse in tableView...
         card.imageView.kf.setImage(with:url, placeholder: placeholder)
     }
+    
+    var formattedLessonCount: String {
+        if let lessonCount = lessonCount {
+            if lessonCount > 1 {
+                return "\( lessonCount) Lessons"
+            } else {
+                return "\(lessonCount) Lesson"
+            }
+        } else {
+            return "fetching lesson count..."
+        }
+    }
+    
 }
 
 class CoursesTableViewController: UITableViewController {
@@ -121,7 +131,11 @@ class CoursesTableViewController: UITableViewController {
             courses.forEach { (course) in
                 let querier = self.environment.dataManager.courseDataManager.querierForCourseWithID(course.courseID!)
                 let stream = querier.childrenOfBlockWithID(nil).transform({ group in
-                    return edXCore.Stream(value: group.children.count)
+                    return Stream(
+                        value: group.children.filter({ (lesson) -> Bool in
+                            return lesson.displayName.lowercased().contains("discussion_course") == false
+                        }).count
+                    )
                 })
                 stream.listen(self) { [weak self] result in
                     guard let owner = self else {
