@@ -559,10 +559,10 @@
 		80056C9A1B0CDE1A0004D85C /* DiscussionResponsesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80056C991B0CDE1A0004D85C /* DiscussionResponsesViewController.swift */; };
 		805329101B0E80E50093B177 /* DiscussionResponses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8053290F1B0E80E50093B177 /* DiscussionResponses.storyboard */; };
 		805329121B0EA2DC0093B177 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805329111B0EA2DC0093B177 /* QuartzCore.framework */; };
-		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
 		882140451F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */; };
 		888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */; };
 		888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */; };
+		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
 		890D027F1967343A002CE7EC /* OEXCourseInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */; };
 		8F562F881A1F2D2C00320DB3 /* OEXGoogleSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F562F871A1F2D2C00320DB3 /* OEXGoogleSocial.m */; };
 		8F562F8C1A1F44FC00320DB3 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F562F8B1A1F44FC00320DB3 /* AddressBook.framework */; };
@@ -1541,10 +1541,10 @@
 		80056C991B0CDE1A0004D85C /* DiscussionResponsesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DiscussionResponsesViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8053290F1B0E80E50093B177 /* DiscussionResponses.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DiscussionResponses.storyboard; sourceTree = "<group>"; };
 		805329111B0EA2DC0093B177 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
 		882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonsViewControllerTests.swift; sourceTree = "<group>"; };
 		888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXResourcesViewController.swift; sourceTree = "<group>"; };
-   		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
+		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
+		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
 		890D027D1967343A002CE7EC /* OEXCourseInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoCell.h; sourceTree = "<group>"; };
 		890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXCourseInfoCell.m; sourceTree = "<group>"; };
 		8F562F861A1F2D2C00320DB3 /* OEXGoogleSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXGoogleSocial.h; sourceTree = "<group>"; };
@@ -3996,7 +3996,7 @@
 						TestTargetID = BECB7B0A1924C0C3009C77F1;
 					};
 					BECB7B0A1924C0C3009C77F1 = {
-						DevelopmentTeam = FN75PC35CY;
+						DevelopmentTeam = 2S4TPWL7HU;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5221,7 +5221,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = FN75PC35CY;
+				DEVELOPMENT_TEAM = 2S4TPWL7HU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5667,7 +5667,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = FN75PC35CY;
+				DEVELOPMENT_TEAM = 2S4TPWL7HU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5705,7 +5705,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = FN75PC35CY;
+				DEVELOPMENT_TEAM = 2S4TPWL7HU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -262,7 +262,7 @@ extension CourseLessonsViewController {
     }
     
     @objc fileprivate func showMenu()  {
-        environment.router?.showMenuAlert(controller: self)
+        environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
     }
 
 }

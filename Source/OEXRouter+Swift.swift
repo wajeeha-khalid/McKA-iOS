@@ -239,10 +239,17 @@ extension OEXRouter {
         fromController.navigationController?.pushViewController(controller, animated: animated)
     }
     
-    func showResourcesController(_ fromController: UIViewController, animated: Bool = true) {
-        //TODO: add navigation resources view controller in this method
-        let controller = OEXResourcesViewController(environment: self.environment)
-        fromController.navigationController?.pushViewController(controller, animated: animated)
+    func showResourcesController(_ fromController: UIViewController, animated: Bool = true, courseID: String) {
+        //TODO: show resources in web view using authenticated webview controller
+        let authenticatedWebViewController = AuthenticatedWebViewController(environment: self.environment)
+        fromController.navigationController?.pushViewController(authenticatedWebViewController, animated: animated)
+//        authenticatedWebViewController.currentUrl = "authenticatedWebViewController"
+        let url = URL(string: "http://courses.qa.mckinsey.edx.org/api/server/course/abc/abc000/2016/static_tabs?detail=true")
+        let request = URLRequest(url: url!)
+        authenticatedWebViewController.loadRequest(request)
+        
+//        let controller = OEXResourcesViewController(environment: self.environment)
+//
     }
     
     func showAnnouncementsController(_ fromControlleer: UIViewController, animated: Bool = true, courseID: String? = nil) {
@@ -344,7 +351,7 @@ extension OEXRouter {
         showContentStack(withRootController: debugMenu, animated: true)
     }
     
-    func showMenuAlert(controller: UIViewController) {
+    func showMenuAlert(controller: UIViewController, courseId: String) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let announcementsButton = UIAlertAction(title: "Announcements", style: .default, handler: { (action) -> Void in
@@ -356,7 +363,7 @@ extension OEXRouter {
         })
         
         let  resources = UIAlertAction(title: "Resources", style: .default, handler: { (action) -> Void in
-            self.showResourcesController(controller)
+            self.showResourcesController(controller, courseID: courseId)
         })
         
         let  askTA = UIAlertAction(title: "Ask a TA", style: .default, handler: { (action) -> Void in
