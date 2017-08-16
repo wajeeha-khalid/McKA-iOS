@@ -108,7 +108,7 @@ class NewCourseCardView: UIView {
         set {
            progressView.progress = newValue
             if case .completed = newValue {
-                overlayView.backgroundColor = UIColor(colorLiteralRed: 39/255.0, green: 144/255.0, blue: 240/255.0, alpha: 0.95)
+                overlayView.backgroundColor = BrandingThemes.shared.getCourseCardOverlayColor()
             } else {
                 overlayView.backgroundColor = UIColor.clear
             }

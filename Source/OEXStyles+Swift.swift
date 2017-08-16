@@ -41,7 +41,7 @@ extension OEXStyles {
     
     public func applyGlobalAppearance() {
         if let image = UIImage(named: "navigationBarBackground") {
-            let color = UIColor(colorLiteralRed: 39/255.0, green: 144/255.0, blue: 240/255.0, alpha: 0.9)
+            let color = BrandingThemes.shared.getNavigationBarColor()
             let colorImage = UIImage.image(from: color, size: image.size)
             let blended = image.blendendImage(with: colorImage, blendMode: .normal, alpha: 1.0)
             UINavigationBar.appearance().setBackgroundImage(blended, for: UIBarMetrics.default)
