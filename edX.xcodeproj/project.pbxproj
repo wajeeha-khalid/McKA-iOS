@@ -561,6 +561,8 @@
 		805329121B0EA2DC0093B177 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805329111B0EA2DC0093B177 /* QuartzCore.framework */; };
 		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
 		882140451F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */; };
+		888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */; };
+		888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */; };
 		890D027F1967343A002CE7EC /* OEXCourseInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */; };
 		8F562F881A1F2D2C00320DB3 /* OEXGoogleSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F562F871A1F2D2C00320DB3 /* OEXGoogleSocial.m */; };
 		8F562F8C1A1F44FC00320DB3 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F562F8B1A1F44FC00320DB3 /* AddressBook.framework */; };
@@ -1541,6 +1543,8 @@
 		805329111B0EA2DC0093B177 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
 		882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonsViewControllerTests.swift; sourceTree = "<group>"; };
+		888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXResourcesViewController.swift; sourceTree = "<group>"; };
+   		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
 		890D027D1967343A002CE7EC /* OEXCourseInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoCell.h; sourceTree = "<group>"; };
 		890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXCourseInfoCell.m; sourceTree = "<group>"; };
 		8F562F861A1F2D2C00320DB3 /* OEXGoogleSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXGoogleSocial.h; sourceTree = "<group>"; };
@@ -3159,6 +3163,22 @@
 			path = ../Libraries/EVURLCache;
 			sourceTree = "<group>";
 		};
+		888A7F831F3C9192000FD7C8 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		888A7F841F3C919D000FD7C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */,
+				888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		8FE04B4A1A1E24C7007F88B8 /* SocialLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -3520,6 +3540,8 @@
 		BECB7B141924C0C3009C77F1 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				888A7F841F3C919D000FD7C8 /* Resources */,
+				888A7F831F3C9192000FD7C8 /* New Group */,
 				41030C761EE69ECA0026D72F /* Chat */,
 				1972E3B619BF474900085F08 /* Analytics */,
 				772619B41ADC5CE8005BD7E4 /* Application */,
@@ -4224,6 +4246,7 @@
 				D0712CD51E376C8D0080E9D4 /* OEXCoursewareViewController.xib in Resources */,
 				69ECC6051D50D1170030CF87 /* OpenSans-Regular.ttf in Resources */,
 				1A03DEA31BBC72BA006783FB /* countries.json in Resources */,
+				888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */,
 				69ECC63F1D50D1170030CF87 /* icon_google_white@2x.png in Resources */,
 				114A30BE1E56CD9F00EBCF6B /* Icon-40@3x.png in Resources */,
 				D09C25431E308A0000E39CA8 /* pique_logo.png in Resources */,
@@ -4761,6 +4784,7 @@
 				1AAD95F81CEB725900BBF70C /* OEXTextStyle+Swift.swift in Sources */,
 				1A67E5411BD7D61800C53401 /* Feed.swift in Sources */,
 				BECB7B521924C9FB009C77F1 /* OEXVideoPlayerInterface.m in Sources */,
+				888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */,
 				B4B285D91A9A48D500DD603A /* OEXGoogleConfig.m in Sources */,
 				9E1D95321B68CEA000ABE764 /* UIButton+Accessibility.swift in Sources */,
 				1A373E911C45807D00E3AAAA /* NSError+JSON.swift in Sources */,

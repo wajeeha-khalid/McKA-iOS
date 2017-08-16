@@ -694,3 +694,15 @@
 "YES"="Yes";
 /* Message for the user to download components before accessing them */
 "NEED_TO_DOWNLOAD"="Please download the content before viewing the course to ensure a smooth experience";
+/*Action sheet menu button showing announcements*/
+"ANNOUNCEMENTS" = "Announcements";
+/*Action sheet menu button showing Course Overview*/
+"COURSE_OVERVIEW" = "Course Over view";
+/*Action sheet menu button showing Resources*/
+"RESOURCES" = "Resources";
+/*Action sheet menu button showing Ask a TA*/
+"ASK_A_TA" = "Ask a Ta";
+/*Action sheet menu button showing Discussions*/
+"DISCUSSIONS" = "Discussions";
+/*Action sheet menu button showing Cancel*/
+"CANCEL" = "Cancel";
