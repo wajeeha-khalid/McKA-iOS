@@ -21,7 +21,7 @@ class BrandingHeaderView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
         self.addSubview(brandingLogoImageView)
-        let companyBrandingLogo = OEXBrandingThemes.sharedInstance.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.logoURL)
+        let companyBrandingLogo = BrandingThemes.shared.getLogoURL()
         brandingLogoImageView.image = UIImage(named: companyBrandingLogo)
         brandingLogoImageView.contentMode = .center
         brandingLogoImageView.snp.makeConstraints { maker in

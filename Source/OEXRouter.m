@@ -266,7 +266,7 @@ OEXRegistrationViewControllerDelegate
     [userDefaults synchronize];
     
     
-    [OEXBrandingThemes.sharedInstance applyThemeWithFileName:CHEMOURS_THEME_FILE];
+    [BrandingThemes.shared applyThemeWithFileName:CHEMOURS_THEME_FILE];
     [OEXStyles.sharedStyles applyGlobalAppearance];
     ////////
 

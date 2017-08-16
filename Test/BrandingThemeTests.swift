@@ -22,7 +22,7 @@ class BrandingThemeTests: XCTestCase {
         "course_card_overlay_color":"#EC913C"
     ]
 
-    let brandingTheme = OEXBrandingThemes.sharedInstance
+    let brandingTheme = BrandingThemes.shared
     
     func applyDefaultTheme() {
         brandingTheme.applyThemeWith(fileName: "mckinsey_theming")
@@ -34,37 +34,37 @@ class BrandingThemeTests: XCTestCase {
     
     func testDefaultCompanyLogoApplied() {
         applyDefaultTheme()
-        let appliedDefaultLogoURL = brandingTheme.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.logoURL)
+        let appliedDefaultLogoURL = brandingTheme.valueForIdentifier(ThemeIdentifiers.logoURL)
         XCTAssertEqual(appliedDefaultLogoURL, defaultThemeDictionary["logo_url"])
     }
     
     func testDefaultNavigationColorApplied() {
         applyDefaultTheme()
-        let appliedDefaultNavigationBarColor = brandingTheme.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.navBarColor)
+        let appliedDefaultNavigationBarColor = brandingTheme.valueForIdentifier(ThemeIdentifiers.navBarColor)
         XCTAssertEqual(appliedDefaultNavigationBarColor, defaultThemeDictionary["navigation_bar_color"])
     }
     
     func testDefaultCompletedCourseCardTintColorApplied() {
         applyDefaultTheme()
-        let appliedDefaultCompletedCourseTintColor = brandingTheme.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.courseCardOverlayColor)
+        let appliedDefaultCompletedCourseTintColor = brandingTheme.valueForIdentifier(ThemeIdentifiers.courseCardOverlayColor)
         XCTAssertEqual(appliedDefaultCompletedCourseTintColor, defaultThemeDictionary["course_card_overlay_color"])
     }
     
     func testCustomCompanyLogoApplied() {
         applyCustomTheme()
-        let appliedCustomLogoURL = brandingTheme.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.logoURL)
+        let appliedCustomLogoURL = brandingTheme.valueForIdentifier(ThemeIdentifiers.logoURL)
         XCTAssertEqual(appliedCustomLogoURL, chemoursThemeDictionary["logo_url"])
     }
     
     func testCustomNavigationColorApplied() {
         applyCustomTheme()
-        let appliedCustomNavigationBarColor = brandingTheme.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.navBarColor)
+        let appliedCustomNavigationBarColor = brandingTheme.valueForIdentifier(ThemeIdentifiers.navBarColor)
         XCTAssertEqual(appliedCustomNavigationBarColor, chemoursThemeDictionary["navigation_bar_color"])
     }
     
     func testCustomCompletedCourseCardTintColorApplied() {
         applyCustomTheme()
-        let appliedCustomCompletedCourseTintColor = brandingTheme.valueForIdentifier(OEXBrandingThemes.ThemeIdentifiers.courseCardOverlayColor)
+        let appliedCustomCompletedCourseTintColor = brandingTheme.valueForIdentifier(ThemeIdentifiers.courseCardOverlayColor)
         XCTAssertEqual(appliedCustomCompletedCourseTintColor, chemoursThemeDictionary["course_card_overlay_color"])
     }
 }
