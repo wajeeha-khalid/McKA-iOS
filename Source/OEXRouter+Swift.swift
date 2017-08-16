@@ -106,7 +106,10 @@ extension OEXRouter {
             let outlineController = OEXCoursewareViewController(environment: self.environment, courseID: courseID, rootID: blockID)
             return outlineController
         case .lesson:
-            let courseLessonController = CourseLessonsViewController(environment: self.environment, courseID: courseID, rootID: blockID)
+            let courseOutlineQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
+            let interface = environment.interface
+            let lessonViewModelDataSource = LessonViewModelDataSourceImplementation(querier: courseOutlineQuerier, interface: interface!)
+            let courseLessonController = CourseLessonsViewController(environment: self.environment, courseID: courseID, rootID: blockID, lessonViewModelDataSource: lessonViewModelDataSource)
             return courseLessonController
         case .unit:
             return unitControllerForCourseID(courseID, sequentialID: nil, blockID: blockID, initialChildID: nil)
