@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import MckinseyXBlocks
 // The router is an indirection point for navigation throw our app.
 
 // New router logic should live here so it can be written in Swift.
@@ -25,6 +25,7 @@ enum CourseBlockDisplayType {
     case lesson
     case unit
     case video
+    case ooyalaVideo(String)
     case html(CourseHTMLBlockSubkind)
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
@@ -48,6 +49,7 @@ extension CourseBlock {
         case .chapter: return .lesson
         case .section: return .outline
         case .unit: return .unit
+        case .ooyalaVideo(let contentID): return .ooyalaVideo(contentID)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
 
@@ -99,6 +101,8 @@ extension OEXRouter {
             fallthrough
         case .video:
             fallthrough
+        case .ooyalaVideo:
+            fallthrough
         case .audio:
             fallthrough
         case .unknown:
@@ -135,6 +139,21 @@ extension OEXRouter {
         case .video:
             let controller = VideoBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
+        case .ooyalaVideo(let contentID):
+            // We are only going to support iOS 9 and above but currently chaging the deployment
+            // target to 9.0 uncovers a some 150 warings that are there due to deprecations
+            // it would take some time to fix those warnigns so for now i have wrapped the framework
+            // usage around iOS 9.0 availability
+            if #available(iOS 9.0, *) {
+                // not storing pcode in config currently since doing that will be insecure...
+                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: "5zdHcxOlM7fQJOMrCdwnnu16WP-d")
+                player.play()
+                let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: player)
+                return adapter
+            } else {
+                fatalError("We need to upgrade build settings to iOS")
+            }
+           
         case .audio:
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
