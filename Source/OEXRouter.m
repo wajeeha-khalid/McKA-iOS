@@ -17,7 +17,6 @@
 #import "OEXFindCoursesViewController.h"
 #import "OEXInterface.h"
 #import "OEXLoginSplashViewController.h"
-#import "OEXLoginViewController.h"
 #import "OEXPushSettingsManager.h"
 #import "OEXRegistrationViewController.h"
 #import "OEXSession.h"
@@ -35,8 +34,7 @@ NSString* OEXSideNavigationChangedStateNotification = @"OEXSideNavigationChanged
 NSString* OEXSideNavigationChangedStateKey = @"OEXSideNavigationChangedStateKey";
 
 @interface OEXRouter () <
-OEXLoginViewControllerDelegate,
-OEXRegistrationViewControllerDelegate
+OEXRegistrationViewControllerDelegate, LoginViewControllerDelegate
 >
 
 @property (strong, nonatomic) UIStoryboard* mainStoryboard;
@@ -126,17 +124,9 @@ OEXRegistrationViewControllerDelegate
 }
 
 - (void)showLoginScreenFromController:(UIViewController*)controller completion:(void(^)(void))completion {
-    [self presentViewController:[self loginViewController] fromController:[controller topMostController] completion:completion];
+    [self presentViewController:self.loginViewController fromController:[controller topMostController] completion:completion];
 }
 
-- (OEXLoginViewController *) loginViewController {
-    OEXLoginViewController* loginController = [[UIStoryboard storyboardWithName:@"OEXLoginViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginView"];
-    loginController.delegate = self;
-    loginController.environment = self.environment;
-//    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginController];
-
-    return loginController;
-}
 
 - (void)showSignUpScreenFromController:(UIViewController*)controller completion:(void(^)(void))completion {
     self.registrationCompletion = completion;
@@ -256,7 +246,7 @@ OEXRegistrationViewControllerDelegate
     }
 }
 
-- (void)loginViewControllerDidLogin:(OEXLoginViewController *)loginController {
+- (void)loginViewControllerDidLogin:(LoginViewController *)loginController {
     if(self.environment.session.currentUser) {
         [BrandingThemes.shared applyThemeWithFileName:self.environment.session.currentUser.companyId];
         [OEXStyles.sharedStyles applyGlobalAppearance];
