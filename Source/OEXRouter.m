@@ -257,18 +257,10 @@ OEXRegistrationViewControllerDelegate
 }
 
 - (void)loginViewControllerDidLogin:(OEXLoginViewController *)loginController {
-    
-    //TODO: This piece of code is placed here temporarily;
-    //Once, we will get company id information from server, then we will
-    //apply these theming changes after getting that info at appropriate place
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setValue:CHEMOURS_THEME_FILE forKey:APPLIED_THEMING_FILE_KEY];
-    [userDefaults synchronize];
-    
-    
-    [BrandingThemes.shared applyThemeWithFileName:CHEMOURS_THEME_FILE];
-    [OEXStyles.sharedStyles applyGlobalAppearance];
-    ////////
+    if(self.environment.session.currentUser) {
+        [BrandingThemes.shared applyThemeWithFileName:self.environment.session.currentUser.companyId];
+        [OEXStyles.sharedStyles applyGlobalAppearance];
+    }
 
     [self showLoggedInContent];
     [loginController dismissViewControllerAnimated:YES completion:nil];

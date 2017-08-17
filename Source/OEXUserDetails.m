@@ -17,16 +17,17 @@ static NSString* const OEXUserDetailsCourseEnrollmentsKey = @"course_enrollments
 static NSString* const OEXUserDetailsNameKey = @"name";
 static NSString* const OEXUserDetailsUserIdKey = @"id";
 static NSString* const OEXUserDetailsUrlKey = @"url";
+static NSString* const OEXUserDetailsCompanyIdKey = @"company_id";
 
 @implementation OEXUserDetails
 
 - (id)copyWithZone:(NSZone*)zone {
-    id copy = [[OEXUserDetails alloc] initWithUserName:self.username email:self.email courseEnrollments:self.course_enrollments name:self.name userId:self.userId andUrl:self.url];
+    id copy = [[OEXUserDetails alloc] initWithUserName:self.username email:self.email courseEnrollments:self.course_enrollments name:self.name userId:self.userId andUrl:self.url companyId:self.companyId];
     ;
     return copy;
 }
 
-- (id)initWithUserName:(NSString*)username email:(NSString*)email courseEnrollments:(NSString*)course_enrollments name:(NSString*)name userId:(NSNumber*)userId andUrl:(NSString*)url {
+- (id)initWithUserName:(NSString*)username email:(NSString*)email courseEnrollments:(NSString*)course_enrollments name:(NSString*)name userId:(NSNumber*)userId andUrl:(NSString*)url companyId:(NSString*)companyId{
     if((self = [super init])) {
         _username = [username copy];
         _email = [email copy];
@@ -34,6 +35,7 @@ static NSString* const OEXUserDetailsUrlKey = @"url";
         _name = [name copy];
         _userId = [userId copy];
         _url = [url copy];
+        _companyId = [companyId copy];
     }
     return self;
 }
@@ -59,6 +61,7 @@ static NSString* const OEXUserDetailsUrlKey = @"url";
         _userId = [userDetailsDictionary objectForKey:OEXUserDetailsUserIdKey];
         _name = [userDetailsDictionary objectForKey:OEXUserDetailsNameKey];
         _url = [userDetailsDictionary objectForKey:OEXUserDetailsUrlKey];
+        _companyId = CHEMOURS_THEME_FILE; //TODO: It will be dynamic once received from API.
     }
 
     return self;
@@ -73,6 +76,7 @@ static NSString* const OEXUserDetailsUrlKey = @"url";
         [dict setObjectOrNil:_userId forKey:OEXUserDetailsUserIdKey];
         [dict setObjectOrNil:_url forKey:OEXUserDetailsUrlKey];
         [dict setObjectOrNil:_name forKey:OEXUserDetailsNameKey];
+        [dict setObjectOrNil:_companyId forKey:OEXUserDetailsCompanyIdKey];
     }
     else {
         return nil;

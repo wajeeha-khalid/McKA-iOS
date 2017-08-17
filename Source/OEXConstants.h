@@ -121,7 +121,6 @@ typedef NS_ENUM(NSUInteger, OEXVideoSpeed) {
 #define OEXHTTPMethodPOST @"POST"
 
 //Theming Keys
-#define APPLIED_THEMING_FILE_KEY @"AppliedThemingFile"
 #define MCKINSEY_THEME_FILE @"mckinsey_theming"
 #define CHEMOURS_THEME_FILE @"chemours_theming"
 
