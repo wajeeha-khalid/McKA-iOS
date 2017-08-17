@@ -70,7 +70,7 @@ class LoadStateViewController : UIViewController {
             // this sets a background color so when the view is pushed in it doesn't have a black or weird background
             switch state {
             case .initial:
-                view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+                view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
             default:
                 view.backgroundColor = UIColor.clear
             }

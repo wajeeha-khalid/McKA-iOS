@@ -31,7 +31,7 @@ class CourseCardCell : UITableViewCell {
         
         courseView.applyBorderStyle(courseCardBorderStyle)
         
-        self.contentView.backgroundColor = OEXStyles.shared().neutralWhiteT()
+        self.contentView.backgroundColor = OEXStyles.shared.neutralWhiteT()
         
         self.selectionStyle = .none
     }
@@ -190,7 +190,7 @@ class CoursesTableViewController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
-        self.tableView.backgroundColor = OEXStyles.shared().neutralXLight()
+        self.tableView.backgroundColor = OEXStyles.shared.neutralXLight()
         self.tableView.accessibilityIdentifier = "courses-table-view"
         
         self.tableView.snp.makeConstraints {make in

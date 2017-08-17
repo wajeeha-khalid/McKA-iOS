@@ -59,7 +59,7 @@ class JSONFormBuilder {
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             
-            typeControl.tintColor = OEXStyles.shared().piqueGreenColor()
+            typeControl.tintColor = OEXStyles.shared.piqueGreenColor()
             typeControl.layer.borderColor = UIColor.gray.cgColor
             contentView.addSubview(titleLabel)
             contentView.addSubview(typeControl)
@@ -92,8 +92,8 @@ class JSONFormBuilder {
         }
         
         func applyData(_ field: JSONFormBuilder.Field, data: FormData) {
-            let titleStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralBlackT())
-            let descriptionStyle = OEXMutableTextStyle(weight: .light, size: .xSmall, color: OEXStyles.shared().neutralDark())
+            let titleStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralBlackT())
+            let descriptionStyle = OEXMutableTextStyle(weight: .light, size: .xSmall, color: OEXStyles.shared.neutralDark())
             descriptionStyle.lineBreakMode = .byTruncatingTail
             
             titleLabel.attributedText = titleStyle.attributedString(withText: field.title)
@@ -271,13 +271,13 @@ class JSONFormBuilder {
         }
         
         fileprivate func attributedChooserRow(_ icon: Icon, title: String, value: String?) -> NSAttributedString {
-            let iconStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralBase())
+            let iconStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralBase())
             let icon = icon.attributedTextWithStyle(iconStyle)
             
-            let titleStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralBlackT())
+            let titleStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralBlackT())
             let titleAttrStr = titleStyle.attributedString(withText: " " + title)
             
-            let valueStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+            let valueStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
             let valAttrString = valueStyle.attributedString(withText: value)
             
             return  NSAttributedString.joinInNaturalLayout([icon, titleAttrStr, valAttrString])

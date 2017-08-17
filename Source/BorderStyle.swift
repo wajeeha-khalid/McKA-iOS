@@ -33,7 +33,7 @@ open class BorderStyle {
         }
     }
     
-    static let defaultCornerRadius = OEXStyles.shared().boxCornerRadius()
+    static let defaultCornerRadius = OEXStyles.shared.boxCornerRadius()
     
     let cornerRadius : Radius
     let width : Width

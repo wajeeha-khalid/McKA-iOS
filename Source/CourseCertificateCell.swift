@@ -28,7 +28,7 @@ class CourseCertificateCell: UITableViewCell {
     }
 
     fileprivate func configureViews() {
-        self.backgroundColor =  OEXStyles.shared().neutralXLight()
+        self.backgroundColor =  OEXStyles.shared.neutralXLight()
 
         applyStandardSeparatorInsets()
 
@@ -73,12 +73,12 @@ class CourseCertificateCell: UITableViewCell {
     func useItem(_ item: CertificateDashboardItem) {
         certificateImageView.image = item.certificateImage
 
-        let titleStyle = OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared().primaryXDarkColor())
-        let subtitleStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+        let titleStyle = OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.primaryXDarkColor())
+        let subtitleStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
 
         titleLabel.attributedText = titleStyle.attributedString(withText: Strings.Certificates.courseCompletionTitle)
         subtitleLabel.attributedText = subtitleStyle.attributedString(withText: Strings.Certificates.courseCompletionSubtitle)
-        getButton.applyButtonStyle(OEXStyles.shared().filledPrimaryButtonStyle, withTitle: Strings.Certificates.getCertificate)
+        getButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.Certificates.getCertificate)
 
         getButton.oex_addAction({ _ in
             item.action()

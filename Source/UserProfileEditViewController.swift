@@ -115,7 +115,7 @@ class UserProfileEditViewController: UITableViewController {
             self?.imagePicker?.start(self!.profile.hasProfileImage)
         }
         banner.style = .darkContent
-        banner.shortProfView.borderColor = OEXStyles.shared().neutralLight()
+        banner.shortProfView.borderColor = OEXStyles.shared.neutralLight()
         banner.backgroundColor = tableView.backgroundColor
         
         let networkManager = environment.networkManager
@@ -141,7 +141,7 @@ class UserProfileEditViewController: UITableViewController {
         }
         
         let bottomLine = UIView()
-        bottomLine.backgroundColor = OEXStyles.shared().neutralLight()
+        bottomLine.backgroundColor = OEXStyles.shared.neutralLight()
         bannerWrapper.addSubview(bottomLine)
         bottomLine.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(bannerWrapper)
@@ -266,7 +266,7 @@ class UserProfileEditViewController: UITableViewController {
         ]
         segmentCell.typeControl.setTitleTextAttributes(segAttributesUnselected, for: UIControlState())
         if let under13 = profile.parentalConsent, under13 == true {
-            let descriptionStyle = OEXMutableTextStyle(weight: .semiBold, size: .xSmall, color: OEXStyles.shared().neutralDark())
+            let descriptionStyle = OEXMutableTextStyle(weight: .semiBold, size: .xSmall, color: OEXStyles.shared.neutralDark())
             segmentCell.descriptionLabel.attributedText = descriptionStyle.attributedString(withText: Strings.Profile.ageLimit)
         }
         
@@ -282,7 +282,7 @@ class UserProfileEditViewController: UITableViewController {
         let field = fields[indexPath.row]
         let enabled = !disabledFields.contains(field.name)
         cell.isUserInteractionEnabled = enabled
-        cell.backgroundColor = enabled ? UIColor.clear : OEXStyles.shared().neutralXLight()
+        cell.backgroundColor = enabled ? UIColor.clear : OEXStyles.shared.neutralXLight()
     }
     
     fileprivate func disableLimitedProfileCells(_ disabled: Bool) {
@@ -296,7 +296,7 @@ class UserProfileEditViewController: UITableViewController {
                 disabledFields.append(UserProfile.ProfileFields.AccountPrivacy.rawValue)
                 banner.changeButton.isEnabled = false 
             }
-            footer.backgroundColor = OEXStyles.shared().neutralXLight()
+            footer.backgroundColor = OEXStyles.shared.neutralXLight()
         } else {
             footer.backgroundColor = UIColor.clear
             disabledFields.removeAll()
@@ -335,13 +335,13 @@ private class ErrorToastView : UIView {
     init() {
         super.init(frame: CGRect.zero)
         
-        backgroundColor = OEXStyles.shared().neutralXLight()
+        backgroundColor = OEXStyles.shared.neutralXLight()
         
         addSubview(errorLabel)
         addSubview(messageLabel)
         
-        errorLabel.backgroundColor = OEXStyles.shared().errorBase()
-        let errorStyle = OEXMutableTextStyle(weight: .light, size: .xxLarge, color: OEXStyles.shared().neutralWhiteT())
+        errorLabel.backgroundColor = OEXStyles.shared.errorBase()
+        let errorStyle = OEXMutableTextStyle(weight: .light, size: .xxLarge, color: OEXStyles.shared.neutralWhiteT())
         errorStyle.alignment = .center
         errorLabel.attributedText = Icon.warning.attributedTextWithStyle(errorStyle)
         errorLabel.textAlignment = .center
@@ -366,7 +366,7 @@ private class ErrorToastView : UIView {
     }
     
     func setMessage(_ message: String) {
-        let messageStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralBlackT())
+        let messageStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralBlackT())
         messageLabel.attributedText = messageStyle.attributedString(withText: message)
     }
 

@@ -14,34 +14,38 @@ class OEXCourseTests: XCTestCase {
 
     func testStartOld() {
         let date = Date().addingTimeInterval(-1000)
-        let course = OEXCourse(dictionary: [
-            "start" : OEXDateFormatting.serverString(with: date)
-            ])
-        XCTAssertTrue(course.isStartDateOld)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["start" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertTrue(course!.isStartDateOld)
     }
     
     func testStartNotOld() {
         let date = Date().addingTimeInterval(1000)
-        let course = OEXCourse(dictionary: [
-            "start" : OEXDateFormatting.serverString(with: date)
-            ])
-        XCTAssertFalse(course.isStartDateOld)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["start" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertFalse(course!.isStartDateOld)
     }
     
     func testEndOld() {
         let date = Date().addingTimeInterval(-1000)
-        let course = OEXCourse(dictionary: [
-            "end" : OEXDateFormatting.serverString(with: date)
-            ])
-        XCTAssertTrue(course.isEndDateOld)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["end" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertTrue(course!.isEndDateOld)
     }
     
     func testEndNotOld() {
         let date = Date().addingTimeInterval(1000)
-        let course = OEXCourse(dictionary: [
-            "end" : OEXDateFormatting.serverString(with: date)
-            ])
-        XCTAssertFalse(course.isEndDateOld)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["end" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertFalse(course!.isEndDateOld)
     }
     
 }

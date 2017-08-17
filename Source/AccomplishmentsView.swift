@@ -43,7 +43,7 @@ class AccomplishmentView : UIView {
         textStack.addArrangedSubview(date)
 
         shareButton.setImage(UIImage(named: "share"), for: UIControlState())
-        shareButton.tintColor = OEXStyles.shared().neutralLight()
+        shareButton.tintColor = OEXStyles.shared.neutralLight()
         shareButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         shareButton.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         shareButton.oex_addAction({ _ in
@@ -99,15 +99,15 @@ class AccomplishmentView : UIView {
     }
 
     fileprivate var titleStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .semiBold, size: .small, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .semiBold, size: .small, color: OEXStyles.shared.neutralDark())
     }
 
     fileprivate var detailStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared().neutralBase())
+        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared.neutralBase())
     }
 
     fileprivate var dateStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .light, size: .xSmall, color: OEXStyles.shared().neutralLight())
+        return OEXTextStyle(weight: .light, size: .xSmall, color: OEXStyles.shared.neutralLight())
     }
 }
 

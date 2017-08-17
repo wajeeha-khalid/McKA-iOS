@@ -64,7 +64,7 @@ class CourseUnknownTableViewCell: CourseGenericBlockTableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        content.leadingIconColor = OEXStyles.shared().neutralBase()
+        content.leadingIconColor = OEXStyles.shared.neutralBase()
         content.setContentIcon(Icon.courseUnknownContent)
     }
     

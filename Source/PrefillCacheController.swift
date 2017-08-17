@@ -42,14 +42,14 @@ class PrefillCacheController: NSObject, UIWebViewDelegate {
         if let hostURL = OEXConfig.shared().apiHostURL(), let authorizationHeaders = OEXSession.shared()?.authorizationHeaders {
             
             let URL = hostURL.appendingPathComponent(OAuthExchangePath) 
-            let exchangeRequest = NSMutableURLRequest(url: URL)
+            var exchangeRequest = URLRequest(url: URL)
             exchangeRequest.httpMethod = HTTPMethod.POST.rawValue
             
             for (key, value) in authorizationHeaders {
                 exchangeRequest.addValue(value, forHTTPHeaderField: key)
             }
             
-            loadRequest(exchangeRequest as URLRequest)
+            loadRequest(exchangeRequest)
         }
     }
     

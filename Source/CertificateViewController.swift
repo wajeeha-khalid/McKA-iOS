@@ -41,7 +41,7 @@ class CertificateViewController: UIViewController, UIWebViewDelegate, InterfaceO
         webView.delegate = self
 
         loadController.setupInController(self, contentView: webView)
-        webView.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        webView.backgroundColor = OEXStyles.shared.standardBackgroundColor()
 
         title = Strings.Certificates.viewCertTitle
         loadController.state = .initial
@@ -85,7 +85,7 @@ class CertificateViewController: UIViewController, UIWebViewDelegate, InterfaceO
 
         var mutableRequest = request
         mutableRequest.httpShouldHandleCookies = false
-        self.request = mutableRequest as URLRequest
+        self.request = mutableRequest
     }
 
 

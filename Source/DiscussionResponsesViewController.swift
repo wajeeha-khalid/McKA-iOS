@@ -10,9 +10,9 @@ import Foundation
 
 private let GeneralPadding: CGFloat = 8.0
 
-private let cellButtonStyle = OEXTextStyle(weight:.normal, size:.base, color: OEXStyles.shared().neutralDark())
-private let cellIconSelectedStyle = cellButtonStyle.withColor(OEXStyles.shared().primaryBaseColor())
-private let responseMessageStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+private let cellButtonStyle = OEXTextStyle(weight:.normal, size:.base, color: OEXStyles.shared.neutralDark())
+private let cellIconSelectedStyle = cellButtonStyle.withColor(OEXStyles.shared.primaryBaseColor())
+private let responseMessageStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
 
 class DiscussionCellButton: UIButton {
     var indexPath: IndexPath?
@@ -50,7 +50,7 @@ class DiscussionPostCell: UITableViewCell {
             elem.0.setAttributedTitle(buttonText, for:[])
         }
         
-        separatorLine.backgroundColor = OEXStyles.shared().standardDividerColor
+        separatorLine.backgroundColor = OEXStyles.shared.standardDividerColor
         separatorLineHeightConstraint.constant = OEXStyles.dividerSize()
 
         voteButton.localizedHorizontalContentAlignment = .leading
@@ -132,9 +132,9 @@ class DiscussionResponseCell: UITableViewCell {
             button.setAttributedTitle(buttonText, for:[])
         }
         
-        commentBox.backgroundColor = OEXStyles.shared().neutralXXLight()
+        commentBox.backgroundColor = OEXStyles.shared.neutralXXLight()
         
-        separatorLine.backgroundColor = OEXStyles.shared().standardDividerColor
+        separatorLine.backgroundColor = OEXStyles.shared.standardDividerColor
         separatorLineHeightConstraint.constant = OEXStyles.dividerSize()
 
         voteButton.localizedHorizontalContentAlignment = .leading
@@ -157,7 +157,7 @@ class DiscussionResponseCell: UITableViewCell {
     }
     
     var endorsedTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared().utilitySuccessBase())
+        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.utilitySuccessBase())
     }
     
     override func updateConstraints() {
@@ -238,8 +238,8 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
             loadResponses()
             logScreenEvent()
         }
-        let styles = OEXStyles.shared()
-        let footerStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralWhite())
+        let styles = OEXStyles.shared
+        let footerStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralWhite())
         
         let icon = postClosed ? Icon.closed : Icon.create
         let text = postClosed ? Strings.responsesClosed : Strings.addAResponse
@@ -266,15 +266,15 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
     }
     
     var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralXDark())
     }
     
     var detailTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralXDark())
     }
     
     var infoTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
 
     }
     
@@ -284,8 +284,8 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
         
         super.viewDidLoad()
         
-        self.view.backgroundColor = OEXStyles.shared().discussionsBackgroundColor
-        self.contentView.backgroundColor = OEXStyles.shared().neutralXLight()
+        self.view.backgroundColor = OEXStyles.shared.discussionsBackgroundColor
+        self.contentView.backgroundColor = OEXStyles.shared.neutralXLight()
         tableView.backgroundColor = UIColor.clear
         tableView.delegate = self
         tableView.dataSource = self
@@ -297,7 +297,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
         addResponseButton.snp.makeConstraints{ (make) -> Void in
             make.leading.equalTo(view)
             make.trailing.equalTo(view)
-            make.height.equalTo(OEXStyles.shared().standardFooterHeight)
+            make.height.equalTo(OEXStyles.shared.standardFooterHeight)
             make.bottom.equalTo(view.snp.bottom)
             make.top.equalTo(tableView.snp.bottom)
         }
@@ -836,11 +836,11 @@ extension AuthorLabelProtocol {
         let highlightStyle = OEXMutableTextStyle(textStyle: textStyle)
         
         if let _ = name, OEXConfig.shared().profilesEnabled {
-            highlightStyle.color = OEXStyles.shared().primaryBaseColor()
+            highlightStyle.color = OEXStyles.shared.primaryBaseColor()
             highlightStyle.weight = .semiBold
         }
         else {
-            highlightStyle.color = OEXStyles.shared().neutralBase()
+            highlightStyle.color = OEXStyles.shared.neutralBase()
             highlightStyle.weight = textStyle.weight
         }
             

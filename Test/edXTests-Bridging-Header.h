@@ -7,7 +7,7 @@
 #import <OHHTTPStubs/OHHTTPStubs.h>
 
 #import "NSString+TestExamples.h"
-
+#import "edX-Bridging-Header.h"
 #import "OEXFileUtility+TestAdditions.h"
 #import "OEXMockCredentialStorage.h"
 #import "OEXMockUserDefaults.h"

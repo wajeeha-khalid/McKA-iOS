@@ -136,7 +136,7 @@ class NetworkManagerTests: XCTestCase {
         let originalData = "original".data(using: String.Encoding.utf8)!
         // first warm the cache
         let cacheExpectation = expectation(description: "Cache Store Completed")
-        manager.responseCache.setCacheResponse(response, withData: originalData, forRequest: URLRequest as URLRequest, completion: {
+        manager.responseCache.setCacheResponse(response, withData: originalData, forRequest: URLRequest, completion: {
             cacheExpectation.fulfill()
         })
         waitForExpectations()
@@ -226,7 +226,7 @@ class NetworkManagerTests: XCTestCase {
         waitForExpectations()
         
         let cacheExpectation = expectation(description: "Cache Load finished")
-        manager.responseCache.fetchCacheEntryWithRequest(URLRequest as URLRequest) {
+        manager.responseCache.fetchCacheEntryWithRequest(URLRequest) {
             XCTAssertEqual($0!.data!, testData)
             XCTAssertEqual($0!.statusCode, response.statusCode)
             XCTAssertEqual($0!.headers, headers)

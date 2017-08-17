@@ -139,7 +139,7 @@ open class NetworkTask : Removable {
 }
 
 @objc public protocol URLCredentialProvider {
-    func URLCredentialForHost(_ host : NSString) -> URLCredential?
+    func URLCredentialForHost(_ host : String) -> URLCredential?
 }
 
 
@@ -327,7 +327,6 @@ open class NetworkManager : NSObject {
         }
     }
     
-    //TODO: Double Check this method after the app compiles...
     @discardableResult open func taskForRequest<Out>(_ networkRequest : NetworkRequest<Out>, handler: @escaping (NetworkResult<Out>) -> Void) -> Removable {
         let URLRequest = URLRequestWithRequest(networkRequest)
         let authenticator = self.authenticator
@@ -372,7 +371,7 @@ open class NetworkManager : NSObject {
             
             if let
                 host = URLRequest.url?.host,
-                let credential = self.credentialProvider?.URLCredentialForHost(host as NSString)
+                let credential = self.credentialProvider?.URLCredentialForHost(host)
             {
                 task.authenticate(usingCredential: credential)
             }
@@ -458,7 +457,7 @@ open class NetworkManager : NSObject {
     
     //MARK : API call to update progress
     open func updateCourseProgress(_ userName:String, componentIDs:String, onCompletion: @escaping ServiceResponse) -> Void {
-        let request = NSMutableURLRequest(url: URL(string:"\(self.baseURL)/"+"api/progress_tracker/recordView/")!)
+        var request = URLRequest(url: URL(string:"\(self.baseURL)/"+"api/progress_tracker/recordView/")!)
         let requestBody = ["userName": userName, "componentIds": componentIDs]
         request.httpMethod = HTTPMethod.POST.rawValue
         do{
@@ -466,7 +465,7 @@ open class NetworkManager : NSObject {
         request.httpBody = requestData
         }
         catch {}
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             guard error == nil && data != nil else {                                                          // check for networking errors
                 Logger.logError("Courses", error!.localizedDescription)
                 return

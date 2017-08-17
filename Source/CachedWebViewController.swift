@@ -108,8 +108,8 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
             make.edges.equalTo(self.view)
         }
         self.loadController.setupInController(self, contentView: webController.view)
-        webController.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
-        webController.scrollView.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        webController.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
+        webController.scrollView.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         self.insetsController.setupInController(self, scrollView: webController.scrollView)
         
@@ -169,13 +169,13 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
         if let hostURL = environment.config.apiHostURL() {
             
             let URL = hostURL.appendingPathComponent(OAuthExchangePath)
-            let exchangeRequest = NSMutableURLRequest(url: URL)
+            var exchangeRequest = URLRequest(url: URL)
             exchangeRequest.httpMethod = HTTPMethod.POST.rawValue
             
             for (key, value) in self.environment.session.authorizationHeaders {
                 exchangeRequest.addValue(value, forHTTPHeaderField: key)
             }
-            self.webController.loadURLRequest(exchangeRequest as URLRequest)
+            self.webController.loadURLRequest(exchangeRequest)
         }
     }
     

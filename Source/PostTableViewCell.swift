@@ -19,29 +19,29 @@ class PostTableViewCell: UITableViewCell {
     fileprivate let countLabel = UILabel()
     
     fileprivate var postReadStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralXDark())
     }
     
     fileprivate var postUnreadStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .bold, size: .base, color: OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .bold, size: .base, color: OEXStyles.shared.neutralXDark())
     }
     
     fileprivate var questionStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().secondaryDarkColor())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.secondaryDarkColor())
     }
     
     fileprivate var answerStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().utilitySuccessDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.utilitySuccessDark())
     }
     
     fileprivate var infoTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared.neutralDark())
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = OEXStyles.shared().neutralWhite()
+        contentView.backgroundColor = OEXStyles.shared.neutralWhite()
         
         contentView.addSubview(typeLabel)
         contentView.addSubview(titleLabel)
@@ -82,15 +82,15 @@ class PostTableViewCell: UITableViewCell {
     }
     
     fileprivate var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralXDark())
     }
     
     fileprivate var activeCountStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .bold, size: .base, color : OEXStyles.shared().primaryBaseColor())
+        return OEXTextStyle(weight: .bold, size: .base, color : OEXStyles.shared.primaryBaseColor())
     }
     
     fileprivate var inactiveCountStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralDark())
     }
     
     fileprivate var typeText : NSAttributedString? {

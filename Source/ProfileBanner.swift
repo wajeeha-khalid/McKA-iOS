@@ -18,9 +18,9 @@ class ProfileBanner: UIView {
         var textColor: UIColor {
             switch(self) {
             case .lightContent:
-                return OEXStyles.shared().neutralWhiteT()
+                return OEXStyles.shared.neutralWhiteT()
             case .darkContent:
-                return OEXStyles.shared().neutralBlackT()
+                return OEXStyles.shared.neutralBlackT()
             }
         }
     }

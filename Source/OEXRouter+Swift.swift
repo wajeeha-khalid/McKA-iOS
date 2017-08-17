@@ -314,7 +314,7 @@ extension OEXRouter {
         UAirship.push().userPushNotificationsEnabled = false
         UAirship.push().allowUnregisteringUserNotificationTypes = false
         BrandingThemes.shared.applyThemeWith(fileName: MCKINSEY_THEME_FILE)
-        OEXStyles.shared().applyGlobalAppearance()
+        OEXStyles.shared.applyGlobalAppearance()
         showLoggedOutScreen()
         
     }

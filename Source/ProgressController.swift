@@ -32,12 +32,12 @@ public class ProgressController: NSObject {
     
     init(owner : UIViewController, router : OEXRouter?, dataInterface : OEXInterface?) {
         circularProgressView = DACircularProgressView(frame: ProgressViewFrame)
-        circularProgressView.progressTintColor = OEXStyles.shared().progressBarTintColor
-        circularProgressView.trackTintColor = OEXStyles.shared().progressBarTrackTintColor
+        circularProgressView.progressTintColor = OEXStyles.shared.progressBarTintColor
+        circularProgressView.trackTintColor = OEXStyles.shared.progressBarTrackTintColor
         
         downloadButton = UIButton(type: .system)
         downloadButton.setImage(UIImage(named: "ic_download_arrow"), for: .normal)
-        downloadButton.tintColor = OEXStyles.shared().navigationItemTintColor()
+        downloadButton.tintColor = OEXStyles.shared.navigationItemTintColor()
         downloadButton.accessibilityLabel = Strings.accessibilityDownloadProgressButton(percentComplete: 0, formatted: nil)
         downloadButton.accessibilityHint = Strings.accessibilityDownloadProgressButtonHint
         downloadButton.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitUpdatesFrequently

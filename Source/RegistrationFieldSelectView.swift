@@ -24,7 +24,7 @@ class RegistrationFieldSelectView: OEXRegistrationFormTextField, UIPickerViewDel
         textInputView.isEnabled = false
         
         dropdownTab.image = Icon.dropdown.imageWithFontSize(12)
-        dropdownTab.tintColor = OEXStyles.shared().neutralDark()
+        dropdownTab.tintColor = OEXStyles.shared.neutralDark()
         dropdownTab.sizeToFit()
         
         if isRightToLeft && !UIDevice.isOSVersionAtLeast9() {

@@ -16,8 +16,8 @@ class ChoiceLabel : UIView {
     fileprivate let iconView = UIImageView()
     fileprivate let titleLabel = UILabel()
     fileprivate let valueLabel = UILabel()
-    fileprivate let titleTextStyle = OEXMutableTextStyle(weight: .normal, size: .large, color: OEXStyles.shared().neutralBlackT())
-    fileprivate let valueTextStyle = OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared().neutralDark())
+    fileprivate let titleTextStyle = OEXMutableTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralBlackT())
+    fileprivate let valueTextStyle = OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralDark())
     
     override init(frame : CGRect) {
         super.init(frame : frame)

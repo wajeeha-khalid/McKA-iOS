@@ -63,7 +63,7 @@ open class CourseHandoutsViewController: OfflineSupportViewController, UIWebView
     }
     
     fileprivate func setStyles() {
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         self.navigationItem.title = Strings.courseHandouts
     }
     
@@ -92,7 +92,7 @@ open class CourseHandoutsViewController: OfflineSupportViewController, UIWebView
     fileprivate func addListener() {
         handouts.listen(self, success: { [weak self] courseHandouts in
             if let
-                displayHTML = OEXStyles.shared().styleHTMLContent(courseHandouts, stylesheet: "handouts-announcements"),
+                displayHTML = OEXStyles.shared.styleHTMLContent(courseHandouts, stylesheet: "handouts-announcements"),
                 let apiHostUrl = OEXConfig.shared().apiHostURL()
             {
                 self?.webView.loadHTMLString(displayHTML, baseURL: apiHostUrl)

@@ -137,8 +137,8 @@ open class AuthenticatedWebViewController: UIViewController, WKNavigationDelegat
             make.edges.equalTo(self.view)
         }
         self.loadController.setupInController(self, contentView: webController.view)
-        webController.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
-        webController.scrollView.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        webController.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
+        webController.scrollView.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         self.insetsController.setupInController(self, scrollView: webController.scrollView)
         
@@ -197,13 +197,13 @@ open class AuthenticatedWebViewController: UIViewController, WKNavigationDelegat
     fileprivate func loadOAuthRefreshRequest() {
         if let hostURL = environment.config.apiHostURL() {
             let URL = hostURL.appendingPathComponent(OAuthExchangePath)
-            let exchangeRequest = NSMutableURLRequest(url: URL)
+            var exchangeRequest = URLRequest(url: URL)
             exchangeRequest.httpMethod = HTTPMethod.POST.rawValue
             
             for (key, value) in self.environment.session.authorizationHeaders {
                 exchangeRequest.addValue(value, forHTTPHeaderField: key)
             }
-            self.webController.loadURLRequest(exchangeRequest as URLRequest)
+            self.webController.loadURLRequest(exchangeRequest)
         }
     }
     
@@ -288,7 +288,7 @@ open class AuthenticatedWebViewController: UIViewController, WKNavigationDelegat
         if let URL = webView.url, URL.absoluteString.hasSuffix(OAuthExchangePath) {
             completionHandler(.performDefaultHandling, nil)
         }
-        else if let credential = environment.config.URLCredentialForHost(challenge.protectionSpace.host as NSString)  {
+        else if let credential = environment.config.URLCredentialForHost(challenge.protectionSpace.host)  {
             completionHandler(.useCredential, credential)
         }
         else {

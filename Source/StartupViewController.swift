@@ -79,7 +79,7 @@ class StartupViewController: UIViewController, InterfaceOrientationOverriding {
     fileprivate func setupDiscoverButtons() {
 
         let discoverButton = UIButton()
-        discoverButton.applyButtonStyle(OEXStyles.shared().filledPrimaryButtonStyle, withTitle: Strings.Startup.discovercourses)
+        discoverButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.Startup.discovercourses)
         let discoverEvent = OEXAnalytics.discoverCoursesEvent()
         discoverButton.oex_addAction({ [weak self] _ in
             self?.showCourses()
@@ -89,7 +89,7 @@ class StartupViewController: UIViewController, InterfaceOrientationOverriding {
 
 
         let exploreButton = UIButton()
-        exploreButton.applyButtonStyle(OEXStyles.shared().filledPrimaryButtonStyle, withTitle: Strings.Startup.exploreSubjects)
+        exploreButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.Startup.exploreSubjects)
         let exploreEvent = OEXAnalytics.exploreSubjectsEvent()
         exploreButton.oex_addAction({ [weak self] _ in
             self?.exploreSubjects()
@@ -201,7 +201,7 @@ private class BottomBarView: UIView, NSCopying {
             make.leading.equalTo(bottomBar)
             make.trailing.equalTo(line.snp.leading)        }
         
-        line.backgroundColor = OEXStyles.shared().neutralBase()
+        line.backgroundColor = OEXStyles.shared.neutralBase()
         
         line.snp.makeConstraints { (make) in
             make.top.equalTo(bottomBar)

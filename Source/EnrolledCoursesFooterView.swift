@@ -19,7 +19,7 @@ class EnrolledCoursesFooterView : UIView {
     var missingCoursesAction : (() -> Void)?
     
     fileprivate var findCoursesTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     init() {
@@ -33,11 +33,11 @@ class EnrolledCoursesFooterView : UIView {
         self.promptLabel.attributedText = findCoursesTextStyle.attributedString(withText: Strings.EnrollmentList.findCoursesPrompt)
         self.promptLabel.textAlignment = .center
         
-        self.findCoursesButton.applyButtonStyle(OEXStyles.shared().filledPrimaryButtonStyle, withTitle: Strings.EnrollmentList.findCourses.oex_uppercaseStringInCurrentLocale())
+        self.findCoursesButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.EnrollmentList.findCourses.oex_uppercaseStringInCurrentLocale())
         
-        self.missingCourseButton.applyButtonStyle(OEXStyles.shared().linkButtonStyle, withTitle: Strings.EnrollmentList.lookingForCourse)
+        self.missingCourseButton.applyButtonStyle(OEXStyles.shared.linkButtonStyle, withTitle: Strings.EnrollmentList.lookingForCourse)
         
-        container.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        container.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         container.applyBorderStyle(BorderStyle())
         
         container.snp.makeConstraints {make in

@@ -26,7 +26,11 @@ class UserPreferenceManagerTests : XCTestCase {
         let manager = UserPreferenceManager(networkManager: environment.networkManager)
         let feed = manager.feed
         // starts empty
-        XCTAssertNil(feed.output.value)
+        // flatten the value since the type of `feed.output.value` is `UserPreference??`
+        // and the compiler gives a warning when we pass an Optional<Optional<UserPreference>>
+        // to XCAssetNil
+        let flattenedValue = feed.output.value?.flatMap {$0}
+        XCTAssertNil(flattenedValue)
         
         // Log in. Preferences should load
         environment.logInTestUser()

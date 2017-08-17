@@ -78,7 +78,7 @@ open class CourseOutlineViewController :
     open override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         view.addSubview(tableController.view)
         
         loadController.setupInController(self, contentView:tableController.view)
