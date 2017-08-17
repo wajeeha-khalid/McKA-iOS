@@ -694,3 +694,5 @@
 "YES"="Yes";
 /* Message for the user to download components before accessing them */
 "NEED_TO_DOWNLOAD"="Please download the content before viewing the course to ensure a smooth experience";
+/* Placeholder shown on email text fields */
+"EMAIL_ID_PLACEHOLDER" = "Enter your email id";
