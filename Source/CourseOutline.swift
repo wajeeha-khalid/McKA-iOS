@@ -29,6 +29,7 @@ public struct CourseOutline {
         case StudentViewData = "student_view_data"
         case Summary = "summary"
         case Viewed = "is_viewed"
+        case contentId = "content_id"
     }
     
     public let root : CourseBlockID
@@ -80,6 +81,12 @@ public struct CourseOutline {
                         type = .html
                     case CourseBlock.Category.Problem:
                         type = .problem
+                    case .OOYALA:
+                        guard let contentId = body[Fields.StudentViewData][Fields.contentId].string else {
+                            fatalError("unable to find content id of ooyala player")
+                        }
+                        
+                        type = .ooyalaVideo(contentId)
                     case CourseBlock.Category.Video :
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXVideoSummary(dictionary: bodyData ?? [:], videoID: blockID, name : name ?? Strings.untitled)
@@ -137,6 +144,7 @@ public enum CourseBlockType {
     case section // child of chapter
     case unit // child of section
     case video(OEXVideoSummary)
+    case ooyalaVideo(String)
     case problem
     case html
     case discussion(DiscussionModel)
@@ -180,6 +188,7 @@ open class CourseBlock {
         case Chapter = "chapter"
         case Course = "course"
         case HTML = "html"
+        case OOYALA = "ooyala-player"
         case Problem = "problem"
         case Section = "sequential"
         case Unit = "vertical"
