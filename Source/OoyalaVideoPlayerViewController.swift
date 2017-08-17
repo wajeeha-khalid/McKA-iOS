@@ -11,15 +11,17 @@ import MckinseyXBlocks
 
 /// This class adapts an OyalaPlayerViewController into `CourseBlockViewController` since the
 /// `CourseContentPageViewController` expects its child blocks to conform to this type...
+@available(iOS 9.0, *)
 class OoylaPlayerCourseBlockAdapter: UIViewController, CourseBlockViewController {
     
     let blockID: CourseBlockID?
     let courseID: CourseBlockID
+    let adaptedViewController: OyalaPlayerViewController
     
-    @available(iOS 9.0, *)
     init(blockID: CourseBlockID?, courseID: CourseBlockID, adaptedViewController: OyalaPlayerViewController) {
         self.blockID = blockID
         self.courseID = courseID
+        self.adaptedViewController = adaptedViewController
         super.init(nibName: nil, bundle: nil)
         loadViewIfNeeded()
         addChildViewController(adaptedViewController)
@@ -37,5 +39,9 @@ class OoylaPlayerCourseBlockAdapter: UIViewController, CourseBlockViewController
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        adaptedViewController.puase()
+    }
 }
 
