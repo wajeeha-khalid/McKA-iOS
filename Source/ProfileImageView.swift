@@ -15,12 +15,12 @@ class ProfileImageView: UIImageView {
     var borderColor: UIColor?
 
     fileprivate func setup() {
-        var borderStyle = OEXStyles.shared().profileImageViewBorder(borderWidth)
+        var borderStyle = OEXStyles.shared.profileImageViewBorder(borderWidth)
         if borderColor != nil {
             borderStyle = BorderStyle(cornerRadius: borderStyle.cornerRadius, width: borderStyle.width, color: borderColor)
         }
         applyBorderStyle(borderStyle)
-        backgroundColor = OEXStyles.shared().profileImageBorderColor()
+        backgroundColor = OEXStyles.shared.profileImageBorderColor()
     }
     
     convenience init() {

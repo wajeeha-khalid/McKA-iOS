@@ -17,7 +17,7 @@ private enum OEXRearViewOptions: Int {
 }
 
 private let LogoutCellDefaultHeight: CGFloat = 160.0
-private let versionButtonStyle = OEXTextStyle(weight:.normal, size:.xxSmall, color: OEXStyles.shared().neutralWhite())
+private let versionButtonStyle = OEXTextStyle(weight:.normal, size:.xxSmall, color: OEXStyles.shared.neutralWhite())
 
 class OEXRearTableViewController : UITableViewController {
 
@@ -151,7 +151,7 @@ class OEXRearTableViewController : UITableViewController {
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        return OEXStyles.shared().standardStatusBarStyle()
+        return OEXStyles.shared.standardStatusBarStyle()
     }
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

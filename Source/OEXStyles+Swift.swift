@@ -36,7 +36,7 @@ extension OEXStyles {
     }
     
     fileprivate var searchBarTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared().neutralBlack())
+        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared.neutralBlack())
     }
     
     public func applyGlobalAppearance() {
@@ -92,13 +92,13 @@ extension OEXStyles {
     }
     
     var discussionsBackgroundColor : UIColor {
-        return OEXStyles.shared().neutralXLight()
+        return OEXStyles.shared.neutralXLight()
     }
 
 // Standard text Styles
     
     var textAreaBodyStyle : OEXTextStyle {
-        let style = OEXMutableTextStyle(weight: OEXTextWeight.normal, size: .small, color: OEXStyles.shared().neutralDark())
+        let style = OEXMutableTextStyle(weight: OEXTextWeight.normal, size: .small, color: OEXStyles.shared.neutralDark())
         style.lineBreakMode = .byWordWrapping
         return style
     }
@@ -106,7 +106,7 @@ extension OEXStyles {
 // Standard button styles
 
     var filledPrimaryButtonStyle : ButtonStyle {
-        return filledButtonStyle(OEXStyles.shared().primaryBaseColor())
+        return filledButtonStyle(OEXStyles.shared.primaryBaseColor())
     }
 
     func filledButtonStyle(_ color: UIColor) -> ButtonStyle {
@@ -125,7 +125,7 @@ extension OEXStyles {
     var filledEmphasisButtonStyle : ButtonStyle {
         let buttonMargins : CGFloat = 12
         let result = filledPrimaryButtonStyle
-        result.backgroundColor = OEXStyles.shared().utilitySuccessBase()
+        result.backgroundColor = OEXStyles.shared.utilitySuccessBase()
         result.textStyle = result.textStyle.withSize(.xLarge)
         result.contentInsets = UIEdgeInsetsMake(buttonMargins, buttonMargins, buttonMargins, buttonMargins)
         return result
@@ -133,7 +133,7 @@ extension OEXStyles {
     
 // Standard border styles
     var entryFieldBorderStyle : BorderStyle {
-        return BorderStyle(width: .size(1), color: OEXStyles.shared().neutralLight())
+        return BorderStyle(width: .size(1), color: OEXStyles.shared.neutralLight())
     }
     
 //Standard Divider styles
@@ -149,16 +149,16 @@ extension UISearchBar {
         self.placeholder = placeholder
         self.showsCancelButton = false
         self.searchBarStyle = .default
-        self.backgroundColor = OEXStyles.shared().neutralWhiteT()
+        self.backgroundColor = OEXStyles.shared.neutralWhiteT()
         
     }
 }
 
 //Convenience computed properties for margins
 var StandardHorizontalMargin : CGFloat {
-    return OEXStyles.shared().standardHorizontalMargin()
+    return OEXStyles.shared.standardHorizontalMargin()
 }
 
 var StandardVerticalMargin : CGFloat {
-    return OEXStyles.shared().standardVerticalMargin
+    return OEXStyles.shared.standardVerticalMargin
 }

@@ -43,7 +43,7 @@ class DetailToolbarButton: UIView {
         button.setAttributedTitle(title, for: .normal)
         
         let disabledTitle = NSMutableAttributedString(attributedString: title)
-        disabledTitle.setAttributes([NSForegroundColorAttributeName: OEXStyles.shared().disabledButtonColor()], range: NSMakeRange(0, title.length))
+        disabledTitle.setAttributes([NSForegroundColorAttributeName: OEXStyles.shared.disabledButtonColor()], range: NSMakeRange(0, title.length))
         button.setAttributedTitle(disabledTitle, for: .disabled)
         
         button.contentHorizontalAlignment = buttonAlignment
@@ -80,13 +80,13 @@ class DetailToolbarButton: UIView {
     }
     
     fileprivate var titleStyle : OEXTextStyle {
-        let style = OEXMutableTextStyle(weight: .semiBold, size: .small, color: OEXStyles.shared().piqueGreenColor())
+        let style = OEXMutableTextStyle(weight: .semiBold, size: .small, color: OEXStyles.shared.piqueGreenColor())
         style.alignment = self.textAlignment
         return style
     }
     
     fileprivate var destinationStyle : OEXTextStyle {
-        let style = OEXMutableTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared().neutralBase())
+        let style = OEXMutableTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared.neutralBase())
         style.alignment = self.textAlignment
         return style
     }

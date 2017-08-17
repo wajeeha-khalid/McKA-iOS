@@ -15,7 +15,7 @@ struct ProgressAPI {
         return (json.array?.flatMap { UserCourseEnrollment(json: $0) }).toResult()
     }
     
-    static func setProgressForCourse(_ username: String, componentIDs: String) -> NetworkRequest<[UserCourseEnrollment]> {
+    static func setProgressForCourse(username: String, componentIDs: String) -> NetworkRequest<[UserCourseEnrollment]> {
        //let componetIDs = "block-v1:edX+DemoX+Demo_Course+type@problem+block@ex_practice_limited_checks,block-v1:edX+DemoX+Demo_Course+type@problem+block@logic_gate_problem"
         return NetworkRequest(
             method: .POST,

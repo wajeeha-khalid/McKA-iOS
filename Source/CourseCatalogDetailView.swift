@@ -92,10 +92,10 @@ class CourseCatalogDetailView : UIView, UIWebViewDelegate {
         
         descriptionView.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal
         descriptionView.delegate = self
-        descriptionView.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        descriptionView.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         playButton.setImage(Icon.courseVideoPlay.imageWithFontSize(60), for: UIControlState())
-        playButton.tintColor = OEXStyles.shared().neutralWhite()
+        playButton.tintColor = OEXStyles.shared.neutralWhite()
         playButton.layer.shadowOpacity = 0.5
         playButton.layer.shadowRadius = 3
         playButton.layer.shadowOffset = CGSize.zero
@@ -115,16 +115,16 @@ class CourseCatalogDetailView : UIView, UIWebViewDelegate {
     }
     
     fileprivate var blurbStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralXDark())
     }
     
     fileprivate var descriptionHeaderStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .bold, size: .large, color: OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .bold, size: .large, color: OEXStyles.shared.neutralXDark())
     }
     
     fileprivate func fieldSeparator() -> UIView {
         let view = UIView()
-        view.backgroundColor = OEXStyles.shared().neutralLight()
+        view.backgroundColor = OEXStyles.shared.neutralLight()
         view.snp.makeConstraints {make in
             make.height.equalTo(OEXStyles.dividerSize())
         }
@@ -145,7 +145,7 @@ class CourseCatalogDetailView : UIView, UIWebViewDelegate {
     
     var descriptionHTML : String? {
         didSet {
-            guard let html = OEXStyles.shared().styleHTMLContent(descriptionHTML, stylesheet: "inline-content") else {
+            guard let html = OEXStyles.shared.styleHTMLContent(descriptionHTML, stylesheet: "inline-content") else {
                 self.descriptionView.loadHTMLString("", baseURL: environment.networkManager.baseURL)
                 return
             }
@@ -200,7 +200,7 @@ class CourseCatalogDetailView : UIView, UIWebViewDelegate {
             return self.actionButton.attributedTitle(for: UIControlState())?.string
         }
         set {
-            actionButton.applyButtonStyle(OEXStyles.shared().filledEmphasisButtonStyle, withTitle: newValue)
+            actionButton.applyButtonStyle(OEXStyles.shared.filledEmphasisButtonStyle, withTitle: newValue)
         }
     }
 }

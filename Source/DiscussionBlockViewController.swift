@@ -35,7 +35,7 @@ class DiscussionBlockViewController: UIViewController,CourseBlockViewController 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         addChildViewController(postsController)
         postsController.didMove(toParentViewController: self)

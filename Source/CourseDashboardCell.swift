@@ -28,10 +28,10 @@ class CourseDashboardCell: UITableViewCell {
     fileprivate let bottomLine = UIView()
     
     fileprivate var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .base, color : OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight : .normal, size: .base, color : OEXStyles.shared.neutralXDark())
     }
     fileprivate var detailTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .xxSmall, color : OEXStyles.shared().neutralBase())
+        return OEXTextStyle(weight : .normal, size: .xxSmall, color : OEXStyles.shared.neutralBase())
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -51,7 +51,7 @@ class CourseDashboardCell: UITableViewCell {
     }
     
     fileprivate func configureViews() {
-        self.bottomLine.backgroundColor = OEXStyles.shared().neutralXLight()
+        self.bottomLine.backgroundColor = OEXStyles.shared.neutralXLight()
         
         applyStandardSeparatorInsets()
         
@@ -63,7 +63,7 @@ class CourseDashboardCell: UITableViewCell {
         
         self.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
-        iconView.tintColor = OEXStyles.shared().neutralLight()
+        iconView.tintColor = OEXStyles.shared.neutralLight()
         
         container.snp.makeConstraints { make -> Void in
             make.edges.equalTo(contentView)

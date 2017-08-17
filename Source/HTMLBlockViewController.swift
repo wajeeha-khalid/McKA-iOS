@@ -64,8 +64,8 @@ open class HTMLBlockViewController: UIViewController, CourseBlockViewController,
             loader.backWithStream(courseQuerier.blockWithID(self.blockID).firstSuccess())
             loader.listen (self, success : {[weak self] block in
                 if let url = block.blockURL {
-                    let request = NSURLRequest(url: url as URL)
-                    self?.webController.loadRequest(request as URLRequest)
+                    let request = URLRequest(url: url as URL)
+                    self?.webController.loadRequest(request)
                 }
                 else {
                     self?.webController.showError(nil)

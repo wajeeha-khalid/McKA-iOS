@@ -26,8 +26,8 @@ open class SpinnerView : UIView {
         
         fileprivate var value : UIColor {
             switch self {
-            case .primary: return OEXStyles.shared().piqueGreenColor()
-            case .white: return OEXStyles.shared().neutralWhite()
+            case .primary: return OEXStyles.shared.piqueGreenColor()
+            case .white: return OEXStyles.shared.neutralWhite()
             }
         }
     }

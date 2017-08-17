@@ -19,7 +19,7 @@ class IconButton : UIControl {
     override var isEnabled: Bool {
         didSet {
             titleLabel.attributedText = isEnabled ? enabledAttributedString : disabledAttributedString
-            tintColor = isEnabled ? UIColor.piqueGreen() : OEXStyles.shared().disabledButtonColor()
+            tintColor = isEnabled ? UIColor.piqueGreen() : OEXStyles.shared.disabledButtonColor()
         }
     }
 
@@ -61,7 +61,7 @@ class IconButton : UIControl {
     func setIconAndTitle(_ icon: Icon, title: String) {
         let titleStyle = OEXTextStyle(weight: .normal, size: .xSmall, color: UIColor.piqueGreen())
         let disabledTitleStyle = OEXMutableTextStyle(textStyle: titleStyle)
-        disabledTitleStyle.color = OEXStyles.shared().disabledButtonColor()
+        disabledTitleStyle.color = OEXStyles.shared.disabledButtonColor()
 
         let imageSize = OEXTextStyle.pointSize(for: titleStyle.size)
         let image = icon.imageWithFontSize(imageSize)

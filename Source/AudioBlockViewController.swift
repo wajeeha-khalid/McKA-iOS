@@ -93,7 +93,7 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
         rotateDeviceMessageView = IconMessageView(icon: .headPhones, message: Strings.audioPodcast)
         contentView!.addSubview(rotateDeviceMessageView!)
         
-        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         view.setNeedsUpdateConstraints()
         
 

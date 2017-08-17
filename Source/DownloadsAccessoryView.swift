@@ -28,7 +28,7 @@ class DownloadsAccessoryView : UIView {
         
         super.init(frame: frame)
         
-        downloadButton.tintColor = OEXStyles.shared().neutralBase()
+        downloadButton.tintColor = OEXStyles.shared.neutralBase()
         downloadButton.contentEdgeInsets = UIEdgeInsetsMake(15, 10, 15, 10)
         downloadButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         countLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)

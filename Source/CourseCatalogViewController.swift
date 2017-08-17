@@ -51,7 +51,7 @@ class CourseCatalogViewController: UIViewController, CoursesTableViewControllerD
             make.edges.equalTo(self.view)
         }
         
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         tableController.delegate = self
 

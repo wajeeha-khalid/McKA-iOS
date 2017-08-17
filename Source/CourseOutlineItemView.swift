@@ -26,9 +26,9 @@ private let SmallIconSize : CGFloat = 15
 private let IconFontSize : CGFloat = 15
 
 open class CourseOutlineItemView: UIView {
-    static let detailFontStyle = OEXTextStyle(weight: .normal, size: .small, color : OEXStyles.shared().neutralBase())
+    static let detailFontStyle = OEXTextStyle(weight: .normal, size: .small, color : OEXStyles.shared.neutralBase())
     
-    fileprivate let fontStyle = OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralBlack())
+    fileprivate let fontStyle = OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralBlack())
     fileprivate let titleLabel = UILabel()
     fileprivate let subtitleLabel = UILabel()
     fileprivate let leadingImageButton = UIButton(type: UIButtonType.system)
@@ -65,7 +65,7 @@ open class CourseOutlineItemView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         
-        leadingImageButton.tintColor = OEXStyles.shared().primaryBaseColor()
+        leadingImageButton.tintColor = OEXStyles.shared.primaryBaseColor()
         leadingImageButton.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         trailingContainer.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         
@@ -73,7 +73,7 @@ open class CourseOutlineItemView: UIView {
         titleLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
         
         checkmark.image = Icon.graded.imageWithFontSize(15)
-        checkmark.tintColor = OEXStyles.shared().neutralBase()
+        checkmark.tintColor = OEXStyles.shared.neutralBase()
         
         isGraded = false
         addSubviews()

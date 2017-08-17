@@ -54,7 +54,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
         
         tableController.delegate = self
         
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         refreshController.setupInScrollView(self.tableController.tableView)
         refreshController.delegate = self

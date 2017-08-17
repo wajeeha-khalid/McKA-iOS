@@ -213,10 +213,10 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
     var tapAction : ((CourseCardView) -> ())?
     
     fileprivate var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared().neutralBlack())
+        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared.neutralBlack())
     }
     fileprivate var detailTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .xxxSmall, color: OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight : .normal, size: .xxxSmall, color: OEXStyles.shared.neutralXDark())
     }
     
     fileprivate func setup() {
@@ -249,12 +249,12 @@ class CourseCardView: UIView, UIGestureRecognizerDelegate {
     }
     
     func configureViews() {
-        self.backgroundColor = OEXStyles.shared().neutralXLight()
+        self.backgroundColor = OEXStyles.shared.neutralXLight()
         self.clipsToBounds = true
-        self.bottomLine.backgroundColor = OEXStyles.shared().neutralXLight()
+        self.bottomLine.backgroundColor = OEXStyles.shared.neutralXLight()
         
-        self.container.backgroundColor = OEXStyles.shared().neutralWhite().withAlphaComponent(0.85)
-        self.coverImageView.backgroundColor = OEXStyles.shared().neutralWhiteT()
+        self.container.backgroundColor = OEXStyles.shared.neutralWhite().withAlphaComponent(0.85)
+        self.coverImageView.backgroundColor = OEXStyles.shared.neutralWhiteT()
         self.coverImageView.contentMode = UIViewContentMode.scaleAspectFill
         self.coverImageView.clipsToBounds = true
         self.coverImageView.hidesLoadingSpinner = false

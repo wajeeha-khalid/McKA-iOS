@@ -38,7 +38,7 @@ class DiscussionHelper: NSObject {
         DispatchQueue.main.async(execute: {
             imageView.layer.cornerRadius = imageView.bounds.size.width / 2
             imageView.layer.borderWidth = 1
-            imageView.layer.borderColor = OEXStyles.shared().primaryBaseColor().cgColor
+            imageView.layer.borderColor = OEXStyles.shared.primaryBaseColor().cgColor
             imageView.clipsToBounds = true
             imageView.layer.masksToBounds = true
         })
@@ -55,15 +55,15 @@ class DiscussionHelper: NSObject {
     }
     
     class func styleAuthorDetails(_ author: String?, authorLabel: String?, createdAt: Date?, hasProfileImage: Bool, imageURL: String?, authoNameLabel: UILabel, dateLabel: UILabel, authorButton: UIButton, imageView: UIImageView, viewController: UIViewController, router: OEXRouter?) {
-        let textStyle = OEXTextStyle(weight:.normal, size:.base, color: OEXStyles.shared().neutralXDark())
+        let textStyle = OEXTextStyle(weight:.normal, size:.base, color: OEXStyles.shared.neutralXDark())
         // formate author name
         let highlightStyle = OEXMutableTextStyle(textStyle: textStyle)
         if let _ = author, OEXConfig.shared().profilesEnabled {
-            highlightStyle.color = OEXStyles.shared().primaryBaseColor()
+            highlightStyle.color = OEXStyles.shared.primaryBaseColor()
             highlightStyle.weight = .bold
         }
         else {
-            highlightStyle.color = OEXStyles.shared().neutralXDark()
+            highlightStyle.color = OEXStyles.shared.neutralXDark()
             highlightStyle.weight = textStyle.weight
         }
         let authorName = highlightStyle.attributedString(withText: author ?? Strings.anonymous.oex_lowercaseStringInCurrentLocale())
