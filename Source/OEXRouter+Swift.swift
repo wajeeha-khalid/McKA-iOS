@@ -147,9 +147,9 @@ extension OEXRouter {
             if #available(iOS 9.0, *) {
                 
                 let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: playerCode)
-                
                 player.play()
                 let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: player)
+
                 return adapter
             } else {
                 fatalError("We need to upgrade build settings to iOS")
