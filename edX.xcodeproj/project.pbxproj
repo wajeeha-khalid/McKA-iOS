@@ -560,9 +560,13 @@
 		805329101B0E80E50093B177 /* DiscussionResponses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8053290F1B0E80E50093B177 /* DiscussionResponses.storyboard */; };
 		805329121B0EA2DC0093B177 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805329111B0EA2DC0093B177 /* QuartzCore.framework */; };
 		882140451F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */; };
+		8847A9451F45886500127FE3 /* ResourseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847A9441F45886500127FE3 /* ResourseAPI.swift */; };
 		888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */; };
 		888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */; };
 		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
+		88F7A6B81F46F411000F3AB7 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */; };
+		88F7A6B91F46F411000F3AB7 /* AnnouncementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */; };
+		88F7A6BB1F46F460000F3AB7 /* AnnouncementsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */; };
 		890D027F1967343A002CE7EC /* OEXCourseInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */; };
 		8F562F881A1F2D2C00320DB3 /* OEXGoogleSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F562F871A1F2D2C00320DB3 /* OEXGoogleSocial.m */; };
 		8F562F8C1A1F44FC00320DB3 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F562F8B1A1F44FC00320DB3 /* AddressBook.framework */; };
@@ -1542,9 +1546,13 @@
 		8053290F1B0E80E50093B177 /* DiscussionResponses.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DiscussionResponses.storyboard; sourceTree = "<group>"; };
 		805329111B0EA2DC0093B177 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonsViewControllerTests.swift; sourceTree = "<group>"; };
+		8847A9441F45886500127FE3 /* ResourseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourseAPI.swift; sourceTree = "<group>"; };
 		888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXResourcesViewController.swift; sourceTree = "<group>"; };
 		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
 		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
+		88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
+		88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnouncementsViewController.xib; sourceTree = "<group>"; };
+		88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsAPI.swift; sourceTree = "<group>"; };
 		890D027D1967343A002CE7EC /* OEXCourseInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoCell.h; sourceTree = "<group>"; };
 		890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXCourseInfoCell.m; sourceTree = "<group>"; };
 		8F562F861A1F2D2C00320DB3 /* OEXGoogleSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXGoogleSocial.h; sourceTree = "<group>"; };
@@ -3163,20 +3171,24 @@
 			path = ../Libraries/EVURLCache;
 			sourceTree = "<group>";
 		};
-		888A7F831F3C9192000FD7C8 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 		888A7F841F3C919D000FD7C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */,
 				888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */,
+				8847A9441F45886500127FE3 /* ResourseAPI.swift */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		88F7A6B51F45F632000F3AB7 /* Announcements */ = {
+			isa = PBXGroup;
+			children = (
+				88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */,
+				88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */,
+				88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */,
+			);
+			name = Announcements;
 			sourceTree = "<group>";
 		};
 		8FE04B4A1A1E24C7007F88B8 /* SocialLogin */ = {
@@ -3540,8 +3552,8 @@
 		BECB7B141924C0C3009C77F1 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				88F7A6B51F45F632000F3AB7 /* Announcements */,
 				888A7F841F3C919D000FD7C8 /* Resources */,
-				888A7F831F3C9192000FD7C8 /* New Group */,
 				41030C761EE69ECA0026D72F /* Chat */,
 				1972E3B619BF474900085F08 /* Analytics */,
 				772619B41ADC5CE8005BD7E4 /* Application */,
@@ -4143,6 +4155,7 @@
 				D0871E761E41A27100B2C41F /* next.png in Resources */,
 				9ED269D21AF114B900328A34 /* OEXLoginViewController.storyboard in Resources */,
 				0A543E261EB2388500465FC0 /* VRCoachmarkViewController.xib in Resources */,
+				88F7A6B91F46F411000F3AB7 /* AnnouncementsViewController.xib in Resources */,
 				69ECC62C1D50D1170030CF87 /* ic_back.png in Resources */,
 				D0249F651E66996400A55613 /* ic_completed.png in Resources */,
 				71F1F6101E27A1D8008FFAE4 /* Image.xcassets in Resources */,
@@ -4662,6 +4675,7 @@
 				778F177A1C0D125A0099BF93 /* CoursesTableViewController.swift in Sources */,
 				7E96F8E91E6EBE6100AE7322 /* PrefillCacheController.swift in Sources */,
 				77ADF4AF1AC1F80E00AC8955 /* OEXGoogleAuthProvider.m in Sources */,
+				88F7A6BB1F46F460000F3AB7 /* AnnouncementsAPI.swift in Sources */,
 				1A7CEA331BABA8C70043A58C /* ProfileImageView.swift in Sources */,
 				77236EED1C21C376006AC1A4 /* Paginator.swift in Sources */,
 				7727EC351BBC73F300C9987F /* RevealViewController.swift in Sources */,
@@ -4777,6 +4791,7 @@
 				199627831945AB5B0022C489 /* OEXCustomTextField.m in Sources */,
 				193B50481945A0520038E11C /* OEXCustomLabel.m in Sources */,
 				77000A371A76EF8C007D306C /* NSString+OEXValidation.m in Sources */,
+				88F7A6B81F46F411000F3AB7 /* AnnouncementsViewController.swift in Sources */,
 				9EC0AC7F1BCE371D00291B64 /* UIButton+Animations.swift in Sources */,
 				E08A008B1CF7546200F92DE7 /* DiscussionModel.swift in Sources */,
 				9ED168B01B29A9EF00AA7B5B /* CouseLastAccessed.swift in Sources */,
@@ -4917,6 +4932,7 @@
 				D0871E591E3F590D00B2C41F /* CourseUnitsViewCell.swift in Sources */,
 				7772BE7A1AF41E660081CA7A /* CourseBlockViewController.swift in Sources */,
 				7748F5781AEAB5C200767700 /* OEXSwitchStyle.m in Sources */,
+				8847A9451F45886500127FE3 /* ResourseAPI.swift in Sources */,
 				713A5A101E28BA60009B7B30 /* ImageMessageView.swift in Sources */,
 				B42DA1891A1539F000E3AD4E /* OEXFileUtility.m in Sources */,
 				777EFEFD1A7AFF0E00F8BF06 /* OEXRouter.m in Sources */,

@@ -1,84 +1,85 @@
 //
-//  OEXResourcesViewController.swift
+//  AnnouncementsViewController.swift
 //  edX
 //
-//  Created by Abdul Haseeb on 8/10/17.
+//  Created by Abdul Haseeb on 8/18/17.
 //  Copyright © 2017 edX. All rights reserved.
 //
 
 import UIKit
 
-class OEXResourcesViewController: UIViewController {
+class AnnouncementsViewController: UIViewController {
 
     public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & OEXRouterProvider & OEXInterfaceProvider & OEXRouterProvider
     
     @IBOutlet weak var webView: UIWebView!
     fileprivate let environment: Environment
     fileprivate let courseId: String?
-    var stream: edXCore.Stream<[CourseContent]>?
-    var courseContents: [CourseContent]?
-    var resourseContent: CourseContent?
+    
+    var stream: edXCore.Stream<CourseAnnouncementContent>?
+    var courseAnnouncementContent: CourseAnnouncementContent?
+    
     let loadController : LoadStateViewController
-
-    public init(environment: Environment, courseId: String) {
+    
+    public init(environment: Environment, courseId: String?) {
         self.environment = environment
         self.courseId = courseId
         loadController = LoadStateViewController()
         
         super.init(nibName: nil, bundle: nil)
-        stream = environment.dataManager.courseDataManager.streamForCourseContent(courseId)
-    }
 
-    public required init?(coder aDecoder: NSCoder) {
-        // required by the compiler because UIViewController implements NSCoding,
-        // but we don't actually want to serialize these things
-        fatalError("init(coder:) has not been implemented")
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         addListeners()
+        setupUI()
+//        loadController.setupInController(self, contentView : self.view)
+        
+        // Do any additional setup after loading the view.
     }
 
     private func setupUI () {
-        //webView.delegate = self
-        self.navigationItem.title = Strings.resources
+        webView.delegate = self
+        self.navigationItem.title = Strings.courseAnnouncements
         loadController.setupInController(self, contentView: self.webView)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
-    private func showCourseContent() {
-        print("courseContent: \(String(describing: courseContents))")
-        courseContents?.forEach{ (courseContent: CourseContent) -> Void in
-            if courseContent.name == "Resources" {
-                resourseContent = courseContent
-            }
-        }
-        if (resourseContent != nil) {
-            self.webView.loadHTMLString((resourseContent?.content)!, baseURL: nil)
+    private func showStreamData() {
+        print("courseContent: \(String(describing: courseAnnouncementContent?.content))")
+        if (courseAnnouncementContent != nil) {
+            self.webView.loadHTMLString((courseAnnouncementContent?.content)!, baseURL: nil)
         }
     }
 
     private func addListeners() {
+        stream = environment.dataManager.courseDataManager.streamForCourseAnnouncements(courseId ?? "")
         stream?.listen(self, action: { (result) in
-            result.ifSuccess({ (courseContents:[CourseContent]) -> Void in
-                self.courseContents = courseContents
-                self.showCourseContent()
+            result.ifSuccess({ (courseAnnouncementContent: CourseAnnouncementContent) -> Void in
+                self.courseAnnouncementContent = courseAnnouncementContent
+                self.showStreamData()
             })
         })
     }
+
 }
 
-extension OEXResourcesViewController: UIWebViewDelegate {
+extension AnnouncementsViewController: UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView){
         self.webView.isUserInteractionEnabled = false
     }
-    
+
     func webViewDidFinishLoad(_ webView :UIWebView){
         self.loadController.state = .loaded
         self.webView.isUserInteractionEnabled = true
@@ -87,5 +88,5 @@ extension OEXResourcesViewController: UIWebViewDelegate {
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         self.loadController.state = LoadState.failed(error as NSError)
     }
-    
+
 }

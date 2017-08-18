@@ -240,20 +240,15 @@ extension OEXRouter {
     }
     
     func showResourcesController(_ fromController: UIViewController, animated: Bool = true, courseID: String) {
-        //TODO: show resources in web view using authenticated webview controller
-        let authenticatedWebViewController = AuthenticatedWebViewController(environment: self.environment)
-        fromController.navigationController?.pushViewController(authenticatedWebViewController, animated: animated)
-//        authenticatedWebViewController.currentUrl = "authenticatedWebViewController"
-        let url = URL(string: "http://courses.qa.mckinsey.edx.org/api/server/course/abc/abc000/2016/static_tabs?detail=true")
-        let request = URLRequest(url: url!)
-        authenticatedWebViewController.loadRequest(request)
-        
-//        let controller = OEXResourcesViewController(environment: self.environment)
-//
+        let resourcesViewController = OEXResourcesViewController(environment: self.environment,
+                                                                 courseId: courseID)
+        fromController.navigationController?.pushViewController(resourcesViewController, animated: true)
     }
     
-    func showAnnouncementsController(_ fromControlleer: UIViewController, animated: Bool = true, courseID: String? = nil) {
-        // TODO: add the navigation to show announcements view Controller
+    func showAnnouncementsController(_ fromController: UIViewController, animated: Bool = true, courseID: String? = nil) {
+        let announcementsViewController = AnnouncementsViewController(environment: self.environment,
+                                                                      courseId: courseID)
+        fromController.navigationController?.pushViewController(announcementsViewController, animated: true)
     }
     
     func showCoursesOverviewController(_ fromController: UIViewController, animated: Bool = true, courseID: String? = nil) {
@@ -355,7 +350,8 @@ extension OEXRouter {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let announcementsButton = UIAlertAction(title: "Announcements", style: .default, handler: { (action) -> Void in
-        // TODO: Participent goto Announcements section
+            self.showAnnouncementsController(controller, animated: true, courseID: courseId)
+//            self.showAnnouncementsForCourse(withID: courseId)
         })
         
         let  coursesOverviewButton = UIAlertAction(title: "Courses Overview", style: .default, handler: { (action) -> Void in
