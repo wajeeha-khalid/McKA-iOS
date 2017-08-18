@@ -18,6 +18,7 @@
 #import "NSString+OEXCrypto.h"
 #import "UIColor+OEXHex.h"
 #import "OEXNetworkConstants.h"
+#import "NSString+OEXValidation.h"
 
 #import "OEXAccessToken.h"
 #import "OEXAnalytics.h"
@@ -38,7 +39,6 @@
 #import "OEXHTTPStatusCodes.h"
 #import "OEXInterface.h"
 #import "OEXLocalizedString.h"
-#import "OEXLoginViewController.h"
 #import "OEXMySettingsViewController.h"
 #import "OEXPlaceholderTextView.h"
 #import "OEXPushSettingsManager.h"

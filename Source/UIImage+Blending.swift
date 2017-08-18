@@ -10,6 +10,7 @@ import UIKit
 import QuartzCore
 
 extension UIImage {
+    
     static func image(from color: UIColor, size: CGSize) -> UIImage {
         let bounds = CGRect(origin: CGPoint.zero, size: size)
         UIGraphicsBeginImageContext(size)
