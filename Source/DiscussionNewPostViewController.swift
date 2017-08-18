@@ -238,17 +238,14 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     
     fileprivate func updateSelectedTabColor() {
         // //UIsegmentControl don't Multiple tint color so updating tint color of subviews to match desired behaviour
-        let subViews:NSArray = discussionQuestionSegmentedControl.subviews as NSArray
-        for i in 0..<subViews.count {
-            if (subViews.object(at: i) as AnyObject).isSelected ?? false {
-                let view = subViews.object(at: i) as! UIView
-                view.tintColor = OEXStyles.shared.primaryBaseColor()
-            }
-            else {
-                let view = subViews.object(at: i) as! UIView
-                view.tintColor = OEXStyles.shared.neutralDark()
+        discussionQuestionSegmentedControl.subviews.forEach { subView in
+            if (subView as? UIControl)?.isSelected == true {
+                subView.tintColor = OEXStyles.shared.primaryBaseColor()
+            } else {
+                subView.tintColor = OEXStyles.shared.neutralDark()
             }
         }
+        
     }
     
     override open func viewWillAppear(_ animated: Bool) {

@@ -36,7 +36,7 @@ open class CourseOutlineItemView: UIView {
     fileprivate let trailingContainer = UIView()
     
     var hasLeadingImageIcon :Bool {
-        return leadingImageButton.image(for: UIControlState()) != nil
+        return leadingImageButton.image(for: .normal) != nil
     }
     
     open var isGraded : Bool? {
