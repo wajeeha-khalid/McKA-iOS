@@ -8,7 +8,7 @@
 
 import UIKit
 
-let π:CGFloat = CGFloat(M_PI)
+let π:CGFloat = CGFloat(Double.pi)
 
 class UserLevelView: UIView {
     
@@ -19,7 +19,7 @@ class UserLevelView: UIView {
         }
     }
     var arcWidth: CGFloat = 5
-    var separatorColor: UIColor = .whiteColor()
+    var separatorColor: UIColor = .white
     var currentUserLevelColor: UIColor = UIColor(hexString: "DFE2E4", alpha: 1.0)
     var MaxUserLevel: Int = 8{
         
@@ -35,7 +35,7 @@ class UserLevelView: UIView {
     /*
      // Only override draw() if you perform custom drawing.
      // An empty implementation adversely affects performance during animation.*/
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         // Step 1 - Draw the Donut shape.
         
         let center = CGPoint(x:bounds.width/2, y: bounds.height/2)
@@ -73,19 +73,19 @@ class UserLevelView: UIView {
                                        clockwise: true)
         
         //draw the inner arc
-        outlinePath.addArcWithCenter( center,
+        outlinePath.addArc( withCenter: center,
                                       radius: bounds.width/2 - arcWidth ,
                                       startAngle: outlineEndAngle,
                                       endAngle: startAngle,
                                       clockwise: false)
         
         // close the path
-        outlinePath.closePath()
+        outlinePath.close()
         
         /*=======================================================================*/
         // Step 3 - Fill the Gradient into the previusly marked path
         
-        let colors = [userLevelGradientStartColor.CGColor, userLevelGradientEndColor.CGColor]
+        let colors = [userLevelGradientStartColor.cgColor, userLevelGradientEndColor.cgColor]
         
         // set up the color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
@@ -94,21 +94,21 @@ class UserLevelView: UIView {
         let colorLocations:[CGFloat] = [0.0, 1.0]
         
         // create the gradient
-        let gradient = CGGradientCreateWithColors(colorSpace,
-                                                  colors as CFArray,
-                                                  colorLocations)
+        let gradient = CGGradient(colorsSpace: colorSpace,
+                                                  colors: colors as CFArray,
+                                                  locations: colorLocations)
         
         let context = UIGraphicsGetCurrentContext()
         
-        CGContextSaveGState(context!)
+        context!.saveGState()
         
-        CGContextSetLineWidth(context!,arcWidth)
-        CGContextSetLineJoin(context!, .Round)
-        CGContextSetLineCap(context!, .Round)
+        context!.setLineWidth(arcWidth)
+        context!.setLineJoin(.round)
+        context!.setLineCap(.round)
         
-        CGContextAddPath(context!, outlinePath.CGPath)
-        CGContextReplacePathWithStrokedPath(context!)
-        CGContextClip(context!)
+        context!.addPath(outlinePath.cgPath)
+        context!.replacePathWithStrokedPath()
+        context!.clip()
         
         // draw the gradient
         let startPoint = CGPoint(x: 2 * rect.width/3 , y:0)
@@ -120,11 +120,11 @@ class UserLevelView: UIView {
         
         
         
-        CGContextDrawLinearGradient(context!, gradient!, startPoint, endPoint, [ .DrawsAfterEndLocation, .DrawsBeforeStartLocation ] )
-        CGContextRestoreGState(context!)
+        context!.drawLinearGradient(gradient!, start: startPoint, end: endPoint, options: [ .drawsAfterEndLocation, .drawsBeforeStartLocation ] )
+        context!.restoreGState()
         
         
-        CGContextSaveGState(context!)
+        context!.saveGState()
         
         /*=======================================================================*/
         // Step 4 - Draw the separators at equal distances along the path
@@ -140,32 +140,30 @@ class UserLevelView: UIView {
                     height: arcWidth))
             
             //3 - move top left of context to the previous center position
-            CGContextTranslateCTM(context!,
-                                  rect.width/2,
-                                  rect.height/2)
+            context!.translateBy(x: rect.width/2,
+                                  y: rect.height/2)
             
             for i in 1...MaxUserLevel {
                 //4 - save the centred context
-                CGContextSaveGState(context!)
+                context!.saveGState()
                 
                 //5 - calculate the rotation angle
                 let angle = arcLengthPerGlass * CGFloat(i) + startAngle - π/2
                 
                 //rotate and translate
-                CGContextRotateCTM(context!, angle)
-                CGContextTranslateCTM(context!,
-                                      0,
-                                      rect.height/2 - arcWidth)
+                context!.rotate(by: angle)
+                context!.translateBy(x: 0,
+                                      y: rect.height/2 - arcWidth)
                 
                 //6 - fill the marker rectangle
                 markerPath.fill()
                 
                 //7 - restore the centred context for the next rotate
-                CGContextRestoreGState(context!)
+                context!.restoreGState()
             }
             
             //8 - restore the original state in case of more painting
-            CGContextRestoreGState(context!)
+            context!.restoreGState()
             
         }
     }    

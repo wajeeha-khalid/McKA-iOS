@@ -8,18 +8,18 @@
 
 import Foundation
 
-public class ViewTopMessageController : NSObject, ContentInsetsSource {
+open class ViewTopMessageController : NSObject, ContentInsetsSource {
 
-    weak public var insetsDelegate : ContentInsetsSourceDelegate?
+    weak open var insetsDelegate : ContentInsetsSourceDelegate?
     
-    private let containerView = UIView(frame: CGRectZero)
-    private let messageView : UIView
+    fileprivate let containerView = UIView(frame: CGRect.zero)
+    fileprivate let messageView : UIView
     
-    private var wasActive : Bool = false
+    fileprivate var wasActive : Bool = false
     
-    private let active : Void -> Bool
+    fileprivate let active : (Void) -> Bool
     
-    public init(messageView: UIView, active : Void -> Bool) {
+    public init(messageView: UIView, active : @escaping (Void) -> Bool) {
         self.active = active
         self.messageView = messageView
         
@@ -31,7 +31,7 @@ public class ViewTopMessageController : NSObject, ContentInsetsSource {
         update()
     }
     
-    public var affectsScrollIndicators : Bool {
+    open var affectsScrollIndicators : Bool {
         return true
     }
     
@@ -40,40 +40,42 @@ public class ViewTopMessageController : NSObject, ContentInsetsSource {
         return UIEdgeInsets(top: height, left: 0, bottom: 0, right: 0)
     }
     
-    final public func setupInController(controller : UIViewController) {
+    final public func setupInController(_ controller : UIViewController) {
         controller.view.addSubview(containerView)
-        containerView.snp_makeConstraints {make in
+        containerView.snp.makeConstraints {make in
             make.leading.equalTo(controller.view)
             make.trailing.equalTo(controller.view)
-            if #available(iOS 9, *) {
+            // TODO: snp verify
+           /* if #available(iOS 9, *) {
                 make.top.equalTo(controller.topLayoutGuide.bottomAnchor)
             }
             else {
                 make.top.equalTo(controller.snp_topLayoutGuideBottom)
-            }
+            }*/
+            make.top.equalTo(controller.topLayoutGuide.snp.bottom)
             make.height.equalTo(messageView)
         }
     }
     
-    final private func update() {
-        messageView.snp_remakeConstraints { make in
+    final fileprivate func update() {
+        messageView.snp.remakeConstraints { make in
             make.leading.equalTo(containerView)
             make.trailing.equalTo(containerView)
             
             if active() {
-                containerView.userInteractionEnabled = true
-                make.top.equalTo(containerView.snp_top)
+                containerView.isUserInteractionEnabled = true
+                make.top.equalTo(containerView.snp.top)
             }
             else {
-                containerView.userInteractionEnabled = false
-                make.bottom.equalTo(containerView.snp_top)
+                containerView.isUserInteractionEnabled = false
+                make.bottom.equalTo(containerView.snp.top)
             }
         }
         messageView.setNeedsLayout()
         messageView.layoutIfNeeded()
         
         if(!wasActive && active()) {
-            containerView.superview?.bringSubviewToFront(containerView)
+            containerView.superview?.bringSubview(toFront: containerView)
         }
         wasActive = active()
         
@@ -82,7 +84,7 @@ public class ViewTopMessageController : NSObject, ContentInsetsSource {
     
     
     final func updateAnimated() {
-        UIView.animateWithDuration(0.4, delay: 0.0,
+        UIView.animate(withDuration: 0.4, delay: 0.0,
             usingSpringWithDamping: 1, initialSpringVelocity: 0.1,
             options: UIViewAnimationOptions(),
             animations: {
@@ -95,6 +97,6 @@ public class ViewTopMessageController : NSObject, ContentInsetsSource {
 
 extension ViewTopMessageController {
     public var t_messageHidden : Bool {
-        return CGRectGetMaxY(messageView.frame) <= 0
+        return messageView.frame.maxY <= 0
     }
 }

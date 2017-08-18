@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DiscussionModel: NSObject {
+open class DiscussionModel: NSObject {
     let topicID: String?
     public init(dictionary: NSDictionary) {
         topicID = dictionary["topic_id"] as? String

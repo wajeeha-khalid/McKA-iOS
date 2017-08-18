@@ -10,19 +10,19 @@ import Foundation
 
 
 @objc class ServerChangedChecker : NSObject {
-    private let defaultsKey = "OEXLastUsedAPIHostURL"
+    fileprivate let defaultsKey = "OEXLastUsedAPIHostURL"
 
-    private var lastUsedAPIHostURL : NSURL? {
+    fileprivate var lastUsedAPIHostURL : URL? {
         get {
-            return NSUserDefaults.standardUserDefaults().URLForKey(defaultsKey)
+            return UserDefaults.standard.url(forKey: defaultsKey)
         }
         set {
-            NSUserDefaults.standardUserDefaults().setURL(newValue, forKey: defaultsKey)
+            UserDefaults.standard.set(newValue, forKey: defaultsKey)
         }
     }
 
-    func logoutIfServerChanged(config config: OEXConfig, logoutAction : Void -> Void) {
-        if let lastURL = lastUsedAPIHostURL, currentURL = config.apiHostURL() where lastURL != currentURL {
+    func logoutIfServerChanged(config: OEXConfig, logoutAction : (Void) -> Void) {
+        if let lastURL = lastUsedAPIHostURL, let currentURL = config.apiHostURL(), lastURL != currentURL {
             logoutAction()
             OEXFileUtility.nukeUserData()
         }
@@ -31,7 +31,7 @@ import Foundation
 
     func logoutIfServerChanged() {
         logoutIfServerChanged(config: OEXConfig(appBundleData: ())) {
-            OEXSession().closeAndClearSession()
+            OEXSession().closeAndClear()
         }
     }
 }

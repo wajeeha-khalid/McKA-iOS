@@ -26,28 +26,28 @@ public struct MessageButton {
 class ImageMessageView : UIView {
     var cardboardButtonAction: (() -> ())?
 
-    private var hasBottomButton = false
+    fileprivate var hasBottomButton = false
     
-    private var buttonFontStyle : OEXTextStyle {
-        return OEXTextStyle(weight :.Normal, size : .Base, color : OEXStyles.sharedStyles().neutralDark())
+    fileprivate var buttonFontStyle : OEXTextStyle {
+        return OEXTextStyle(weight :.normal, size : .base, color : OEXStyles.shared.neutralDark())
     }
     
-    private let iconView : UIImageView
-    private let messageView : UILabel
-    private var bottomButton : UIButton
+    fileprivate let iconView : UIImageView
+    fileprivate let messageView : UILabel
+    fileprivate var bottomButton : UIButton
     
-    private let container : UIView
+    fileprivate let container : UIView
     
     init(image : UIImage? = nil, message : String? = nil) {
         
-        container = UIView(frame: CGRectZero)
-        iconView = UIImageView(frame: CGRectZero)
-        messageView = UILabel(frame : CGRectZero)
-        bottomButton = UIButton(type: .System)
-        super.init(frame: CGRectZero)
+        container = UIView(frame: CGRect.zero)
+        iconView = UIImageView(frame: CGRect.zero)
+        messageView = UILabel(frame : CGRect.zero)
+        bottomButton = UIButton(type: .system)
+        super.init(frame: CGRect.zero)
         let tap = UITapGestureRecognizer(target: self, action: #selector(ImageMessageView.tappedMe))
         iconView.addGestureRecognizer(tap)
-        iconView.userInteractionEnabled = true
+        iconView.isUserInteractionEnabled = true
         self.translatesAutoresizingMaskIntoConstraints = false
         
         setUpViews(image : image, message : message)
@@ -66,7 +66,7 @@ class ImageMessageView : UIView {
             return messageView.text
         }
         set {
-            messageView.attributedText = newValue.map { messageStyle.attributedStringWithText($0) }
+            messageView.attributedText = newValue.map { messageStyle.attributedString(withText: $0) }
         }
     }
     
@@ -95,35 +95,35 @@ class ImageMessageView : UIView {
     }
     
     
-    private var buttonTitle : String? {
+    fileprivate var buttonTitle : String? {
         get {
             return bottomButton.titleLabel?.text
         }
         set {
             if let title = newValue {
-                let attributedTitle = buttonFontStyle.withWeight(.SemiBold).attributedStringWithText(title)
-                bottomButton.setAttributedTitle(attributedTitle, forState: .Normal)
+                let attributedTitle = buttonFontStyle.withWeight(.semiBold).attributedString(withText: title)
+                bottomButton.setAttributedTitle(attributedTitle, for: [])
                 addButtonBorder()
             }
             else {
-                bottomButton.setAttributedTitle(nil, forState: .Normal)
+                bottomButton.setAttributedTitle(nil, for: [])
             }
             
         }
     }
     
     var messageStyle : OEXTextStyle  {
-        let style = OEXMutableTextStyle(weight: .SemiBold, size: .Base, color : OEXStyles.sharedStyles().neutralDark())
-        style.alignment = .Center
+        let style = OEXMutableTextStyle(weight: .semiBold, size: .base, color : OEXStyles.shared.neutralDark())
+        style.alignment = .center
         
         return style
     }
     
-    private func setUpViews(image image : UIImage?, message : String?) {
+    fileprivate func setUpViews(image : UIImage?, message : String?) {
         self.icon = image
         self.message = message
         
-        iconView.tintColor = OEXStyles.sharedStyles().neutralLight()
+        iconView.tintColor = OEXStyles.shared.neutralLight()
         
         messageView.numberOfLines = 0
         
@@ -139,7 +139,7 @@ class ImageMessageView : UIView {
     
     
     override func updateConstraints() {
-        container.snp_makeConstraints { (make) -> Void in
+        container.snp.makeConstraints { (make) -> Void in
             make.center.equalTo(self)
             make.leading.greaterThanOrEqualTo(self)
             make.trailing.lessThanOrEqualTo(self)
@@ -147,14 +147,14 @@ class ImageMessageView : UIView {
             make.bottom.lessThanOrEqualTo(self)
         }
         
-        iconView.snp_updateConstraints { (make) -> Void in
+        iconView.snp.updateConstraints { (make) -> Void in
             make.leading.equalTo(container)
             make.trailing.equalTo(container)
             make.top.equalTo(container)
         }
         
-        messageView.snp_remakeConstraints { (make) -> Void in
-            make.top.equalTo(self.iconView.snp_bottom).offset(IconMessageMargin)
+        messageView.snp.remakeConstraints { (make) -> Void in
+            make.top.equalTo(self.iconView.snp.bottom).offset(IconMessageMargin)
             make.centerX.equalTo(container)
             make.width.equalTo(IconMessageTextWidth)
             if !hasBottomButton {
@@ -163,8 +163,8 @@ class ImageMessageView : UIView {
         }
         
         if hasBottomButton {
-            bottomButton.snp_remakeConstraints { (make) -> Void in
-                make.top.equalTo(self.messageView.snp_bottom).offset(MessageButtonMargin)
+            bottomButton.snp.remakeConstraints { (make) -> Void in
+                make.top.equalTo(self.messageView.snp.bottom).offset(MessageButtonMargin)
                 make.centerX.equalTo(container)
                 make.bottom.equalTo(container)
             }
@@ -181,8 +181,8 @@ class ImageMessageView : UIView {
         
         buttonInfo = MessageButton(title : Strings.VersionUpgrade.update)
         {
-            if let URL = OEXConfig.sharedConfig().appUpgradeConfig.iOSAppStoreURL() {
-                UIApplication.sharedApplication().openURL(URL)
+            if let URL = OEXConfig.shared().appUpgradeConfig.iOSAppStoreURL() {
+                UIApplication.shared.openURL(URL as URL)
             }
         }
     }
@@ -192,7 +192,7 @@ class ImageMessageView : UIView {
             bottomButton.oex_removeAllActions()
             buttonTitle = buttonInfo?.title
             if let action = buttonInfo?.action {
-                bottomButton.oex_addAction({button in action() }, forEvents: .TouchUpInside)
+                bottomButton.oex_addAction({button in action() }, for: .touchUpInside)
             }
         }
     }
@@ -203,10 +203,10 @@ class ImageMessageView : UIView {
         let bottomButtonLayer = bottomButton.layer
         bottomButtonLayer.cornerRadius = 4.0
         bottomButtonLayer.borderWidth = 1.0
-        bottomButtonLayer.borderColor = OEXStyles.sharedStyles().neutralLight().CGColor
+        bottomButtonLayer.borderColor = OEXStyles.shared.neutralLight().cgColor
     }
     
-    func rotateImageViewClockwise(imageView : UIImageView) {
-        imageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+    func rotateImageViewClockwise(_ imageView : UIImageView) {
+        imageView.transform = CGAffineTransform(rotationAngle: CGFloat(Float.pi/2))
     }
 }

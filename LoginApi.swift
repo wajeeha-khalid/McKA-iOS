@@ -6,25 +6,27 @@
 //  Copyright © 2016 edX. All rights reserved.
 //
 
+import SwiftyJSON
+
 public struct LoginAPI {
     
-    static func refreshTokenDeserializer(response : NSHTTPURLResponse, json: JSON) -> Result<OEXAccessToken> {
+    static func refreshTokenDeserializer(_ response : HTTPURLResponse, json: JSON) -> Result<OEXAccessToken> {
         guard response.httpStatusCode.is2xx,
             let dictionary = json.dictionaryObject else {
-                return .Failure(NetworkManager.unknownError)
+                return .failure(NetworkManager.unknownError)
         }
         let token = OEXAccessToken(tokenDetails: dictionary)
-        return .Success(token)
+        return .success(token)
     }
     
     // Retrieves a new access token by using the refresh token.
-    public static func requestTokenWithRefreshToken(refreshToken: String, clientId: String, grantType: String) -> NetworkRequest<OEXAccessToken> {
+    public static func requestTokenWith(refreshToken: String, clientId: String, grantType: String) -> NetworkRequest<OEXAccessToken> {
         let body = ["refresh_token": refreshToken, "client_id": clientId, "grant_type": grantType]
         return NetworkRequest(
             method: .POST,
             path: "/oauth2/access_token/",
-            body: RequestBody.FormEncoded(body),
-            deserializer: .JSONResponse(refreshTokenDeserializer)
+            body: RequestBody.formEncoded(body),
+            deserializer: .jsonResponse(refreshTokenDeserializer)
         )
     }
 }

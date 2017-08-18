@@ -8,13 +8,14 @@
 
 import Foundation
 import edXCore
+import SwiftyJSON
 
 extension Result {
     
-    init(jsonData : NSData?, error : NSError? = nil, constructor: JSON -> A?) {
+    init(jsonData : NSData?, error : NSError? = nil, constructor: (JSON) -> A?) {
         if let data = jsonData,
-            json : AnyObject = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()),
-            result = constructor(JSON(json)) {
+            let json : AnyObject = try? JSONSerialization.jsonObject(with: data as Data, options: []) as AnyObject,
+            let result = constructor(JSON(json)) {
                 self = Success(result)
         }
         else {

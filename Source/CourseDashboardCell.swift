@@ -13,25 +13,25 @@ class CourseDashboardCell: UITableViewCell {
     static let identifier = "CourseDashboardCellIdentifier"
     
     //TODO: all these should be adjusted once the final UI is ready
-    private let ICON_SIZE : CGFloat = OEXTextStyle.pointSizeForTextSize(OEXTextSize.XXLarge)
-    private let ICON_MARGIN : CGFloat = 30.0
-    private let LABEL_MARGIN : CGFloat = 75.0
-    private let LABEL_SIZE_HEIGHT = 20.0
-    private let CONTAINER_SIZE_HEIGHT = 60.0
-    private let CONTAINER_MARGIN_BOTTOM = 15.0
-    private let INDICATOR_SIZE_WIDTH = 10.0
+    fileprivate let ICON_SIZE : CGFloat = OEXTextStyle.pointSize(for: OEXTextSize.xxLarge)
+    fileprivate let ICON_MARGIN : CGFloat = 30.0
+    fileprivate let LABEL_MARGIN : CGFloat = 75.0
+    fileprivate let LABEL_SIZE_HEIGHT = 20.0
+    fileprivate let CONTAINER_SIZE_HEIGHT = 60.0
+    fileprivate let CONTAINER_MARGIN_BOTTOM = 15.0
+    fileprivate let INDICATOR_SIZE_WIDTH = 10.0
     
-    private let container = UIView()
-    private let iconView = UIImageView()
-    private let titleLabel = UILabel()
-    private let detailLabel = UILabel()
-    private let bottomLine = UIView()
+    fileprivate let container = UIView()
+    fileprivate let iconView = UIImageView()
+    fileprivate let titleLabel = UILabel()
+    fileprivate let detailLabel = UILabel()
+    fileprivate let bottomLine = UIView()
     
-    private var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .Normal, size: .Base, color : OEXStyles.sharedStyles().neutralXDark())
+    fileprivate var titleTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight : .normal, size: .base, color : OEXStyles.shared.neutralXDark())
     }
-    private var detailTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .Normal, size: .XXSmall, color : OEXStyles.sharedStyles().neutralBase())
+    fileprivate var detailTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight : .normal, size: .xxSmall, color : OEXStyles.shared.neutralBase())
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -40,9 +40,9 @@ class CourseDashboardCell: UITableViewCell {
         configureViews()
     }
 
-    func useItem(item : StandardCourseDashboardItem) {
-        self.titleLabel.attributedText = titleTextStyle.attributedStringWithText(item.title)
-        self.detailLabel.attributedText = detailTextStyle.attributedStringWithText(item.detail)
+    func useItem(_ item : StandardCourseDashboardItem) {
+        self.titleLabel.attributedText = titleTextStyle.attributedString(withText: item.title)
+        self.detailLabel.attributedText = detailTextStyle.attributedString(withText: item.detail)
         self.iconView.image = item.icon.imageWithFontSize(ICON_SIZE)
     }
     
@@ -50,8 +50,8 @@ class CourseDashboardCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureViews() {
-        self.bottomLine.backgroundColor = OEXStyles.sharedStyles().neutralXLight()
+    fileprivate func configureViews() {
+        self.bottomLine.backgroundColor = OEXStyles.shared.neutralXLight()
         
         applyStandardSeparatorInsets()
         
@@ -61,29 +61,29 @@ class CourseDashboardCell: UITableViewCell {
         
         self.contentView.addSubview(container)
         
-        self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        self.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
-        iconView.tintColor = OEXStyles.sharedStyles().neutralLight()
+        iconView.tintColor = OEXStyles.shared.neutralLight()
         
-        container.snp_makeConstraints { make -> Void in
+        container.snp.makeConstraints { make -> Void in
             make.edges.equalTo(contentView)
         }
         
-        iconView.snp_makeConstraints { (make) -> Void in
+        iconView.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(container).offset(ICON_MARGIN)
             make.centerY.equalTo(container)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(container).offset(LABEL_MARGIN)
             make.trailing.lessThanOrEqualTo(container)
             make.top.equalTo(container).offset(LABEL_SIZE_HEIGHT)
             make.height.equalTo(LABEL_SIZE_HEIGHT)
         }
-        detailLabel.snp_makeConstraints { (make) -> Void in
+        detailLabel.snp.makeConstraints { (make) -> Void in
             make.leading.equalTo(titleLabel)
             make.trailing.lessThanOrEqualTo(container)
-            make.top.equalTo(titleLabel.snp_bottom)
+            make.top.equalTo(titleLabel.snp.bottom)
             make.height.equalTo(LABEL_SIZE_HEIGHT)
         }
     }

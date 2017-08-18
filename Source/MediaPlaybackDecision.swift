@@ -10,7 +10,7 @@ import UIKit
 
 /// The class to make Media (Video, Audio etc) Playback decision.
 
-@objc public class MediaPlaybackDecision: NSObject {
+@objc open class MediaPlaybackDecision: NSObject {
     
     /**
      Should playing media mark as completed or not.
@@ -20,7 +20,7 @@ import UIKit
      
      - Returns: If yes, mark media as completed otherwise incomplete.
      */
-    class public func shouldMediaPlaybackCompleted(currentPlaybackTime: Double, totalDuration: Double) -> Bool {
+    class open func shouldMediaPlaybackCompleted(_ currentPlaybackTime: Double, totalDuration: Double) -> Bool {
         return (currentPlaybackTime > (totalDuration * MEDIA_COMPLETION_PERCENTAGE) && totalDuration > 0)
     }
 }

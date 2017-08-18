@@ -8,65 +8,65 @@
 
 import Foundation
 
-private var startTime : NSTimeInterval?
+private var startTime : TimeInterval?
 
 private let animationKey = "org.edx.spin"
 
-public class SpinnerView : UIView {
+open class SpinnerView : UIView {
     
     public enum Size {
-        case Small
-        case Medium
-        case Large
+        case small
+        case medium
+        case large
     }
     
     public enum Color {
-        case Primary
-        case White
+        case primary
+        case white
         
-        private var value : UIColor {
+        fileprivate var value : UIColor {
             switch self {
-            case Primary: return OEXStyles.sharedStyles().piqueGreenColor()
-            case White: return OEXStyles.sharedStyles().neutralWhite()
+            case .primary: return OEXStyles.shared.piqueGreenColor()
+            case .white: return OEXStyles.shared.neutralWhite()
             }
         }
     }
     
-    private let content = UIImageView()
-    private let size : Size
-    private var stopped : Bool = false {
+    fileprivate let content = UIImageView()
+    fileprivate let size : Size
+    fileprivate var stopped : Bool = false {
         didSet {
             if hidesWhenStopped {
-                self.hidden = stopped
+                self.isHidden = stopped
             }
         }
     }
 
-    public var hidesWhenStopped = false
+    open var hidesWhenStopped = false
     
     public init(size : Size, color : Color) {
         self.size = size
-        super.init(frame : CGRectZero)
+        super.init(frame : CGRect.zero)
         addSubview(content)
-        content.image = Icon.Spinner.imageWithFontSize(30)
+        content.image = Icon.spinner.imageWithFontSize(30)
         content.tintColor = color.value
-        content.contentMode = .ScaleAspectFit
+        content.contentMode = .scaleAspectFit
     }
 
     public override init(frame: CGRect) {
-        self.size = Size.Small
+        self.size = Size.small
         super.init(frame : frame)
         addSubview(content)
-        content.image = Icon.Spinner.imageWithFontSize(30)
-        content.tintColor = UIColor.whiteColor()
-        content.contentMode = .ScaleAspectFit
+        content.image = Icon.spinner.imageWithFontSize(30)
+        content.tintColor = UIColor.white
+        content.contentMode = .scaleAspectFit
     }
     
-    public override class func requiresConstraintBasedLayout() -> Bool {
+    open override class var requiresConstraintBasedLayout : Bool {
         return true
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         content.frame = self.bounds
     }
@@ -75,7 +75,7 @@ public class SpinnerView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func didMoveToWindow() {
+    open override func didMoveToWindow() {
         if !stopped {
             addSpinAnimation()
         }
@@ -84,53 +84,53 @@ public class SpinnerView : UIView {
         }
     }
     
-    public override func intrinsicContentSize() -> CGSize {
+    open override var intrinsicContentSize : CGSize {
         switch size {
-        case .Small:
-            return CGSizeMake(12, 12)
-        case .Medium:
-            return CGSizeMake(18, 18)
-        case .Large:
-            return CGSizeMake(24, 24)
+        case .small:
+            return CGSize(width: 12, height: 12)
+        case .medium:
+            return CGSize(width: 18, height: 18)
+        case .large:
+            return CGSize(width: 24, height: 24)
         }
     }
     
-    private func addSpinAnimation() {
+    fileprivate func addSpinAnimation() {
         if let window = self.window {
             let animation = CAKeyframeAnimation(keyPath: "transform.rotation")
             let dots = 8
-            let direction : Double = UIApplication.sharedApplication().userInterfaceLayoutDirection == .LeftToRight ? 1 : -1
+            let direction : Double = UIApplication.shared.userInterfaceLayoutDirection == .leftToRight ? 1 : -1
             animation.keyTimes = Array(count: dots) {
                 return (Double($0) / Double(dots)) as NSNumber
             }
             animation.values = Array(count: dots) {
-                return (direction * Double($0) / Double(dots)) * 2.0 * M_PI as NSNumber
+                return (direction * Double($0) / Double(dots)) * 2.0 * Double.pi as NSNumber
             }
             animation.repeatCount = Float.infinity
             animation.duration = 0.6
-            animation.additive = true
+            animation.isAdditive = true
             animation.calculationMode = kCAAnimationDiscrete
             /// Set time to zero so they all sync up
-            animation.beginTime = window.layer.convertTime(0, toLayer: self.layer)
-            self.content.layer.addAnimation(animation, forKey: animationKey)
+            animation.beginTime = window.layer.convertTime(0, to: self.layer)
+            self.content.layer.add(animation, forKey: animationKey)
         }
         else {
             removeSpinAnimation()
         }
     }
     
-    private func removeSpinAnimation() {
-        self.content.layer.removeAnimationForKey(animationKey)
+    fileprivate func removeSpinAnimation() {
+        self.content.layer.removeAnimation(forKey: animationKey)
     }
     
-    public func startAnimating() {
+    open func startAnimating() {
         if stopped {
             addSpinAnimation()
         }
         stopped = false
     }
     
-    public func stopAnimating() {
+    open func stopAnimating() {
         removeSpinAnimation()
         stopped = true
     }

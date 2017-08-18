@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyJSON
 import edXCore
 @testable import edX
 

@@ -13,15 +13,15 @@ let AppNewVersionAvailableNotification = "AppNewVersionAvailableNotification"
 class VersionUpgradeInfoController: NSObject {
     
     static let sharedController = VersionUpgradeInfoController()
-    private(set) var latestVersion:String?
-    private(set) var lastSupportedDateString:String?
+    fileprivate(set) var latestVersion:String?
+    fileprivate(set) var lastSupportedDateString:String?
     
-    private func returnToDefaultState() {
+    fileprivate func returnToDefaultState() {
         latestVersion = nil
         lastSupportedDateString = nil
     }
     
-    func populateFromHeaders(httpResponseHeaders headers: [NSObject : AnyObject]?) {
+    func populateFromHeaders(httpResponseHeaders headers: [AnyHashable: Any]?) {
         
         guard let responseHeaders = headers else {
             if let _ = latestVersion {
@@ -55,9 +55,9 @@ class VersionUpgradeInfoController: NSObject {
         }
     }
     
-    private func postVersionUpgradeNotification() {
-        dispatch_async(dispatch_get_main_queue()) {
-            NSNotificationCenter.defaultCenter().postNotificationName(AppNewVersionAvailableNotification, object: self)
+    fileprivate func postVersionUpgradeNotification() {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: AppNewVersionAvailableNotification), object: self)
         }
     }
 }

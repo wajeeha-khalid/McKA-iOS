@@ -7,27 +7,27 @@
 //
 
 import Foundation
-private let animationDuration: NSTimeInterval = 1.0
+private let animationDuration: TimeInterval = 1.0
 
-public class VersionUpgradeView: UIView {
-    private let messageLabel = UILabel()
-    private let upgradeButton = UIButton(type: .System)
-    private let dismissButton = UIButton(type: .System)
-    private var messageLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color: OEXStyles.sharedStyles().neutralDark())
+open class VersionUpgradeView: UIView {
+    fileprivate let messageLabel = UILabel()
+    fileprivate let upgradeButton = UIButton(type: .system)
+    fileprivate let dismissButton = UIButton(type: .system)
+    fileprivate var messageLabelStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
-    private var buttonLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .SemiBold, size: .Base, color: OEXStyles.sharedStyles().neutralDark())
+    fileprivate var buttonLabelStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .semiBold, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     init(message: String) {
-        super.init(frame: CGRectZero)
-        self.backgroundColor = OEXStyles.sharedStyles().warningBase()
+        super.init(frame: CGRect.zero)
+        self.backgroundColor = OEXStyles.shared.warningBase()
         messageLabel.numberOfLines = 0
-        messageLabel.attributedText = messageLabelStyle.attributedStringWithText(message)
-        upgradeButton.setAttributedTitle(buttonLabelStyle.attributedStringWithText(Strings.VersionUpgrade.update), forState: .Normal)
-        dismissButton.setAttributedTitle(buttonLabelStyle.attributedStringWithText(Strings.VersionUpgrade.dismiss), forState: .Normal)
+        messageLabel.attributedText = messageLabelStyle.attributedString(withText: message)
+        upgradeButton.setAttributedTitle(buttonLabelStyle.attributedString(withText: Strings.VersionUpgrade.update), for: [])
+        dismissButton.setAttributedTitle(buttonLabelStyle.attributedString(withText: Strings.VersionUpgrade.dismiss), for: [])
         
         addSubview(messageLabel)
         addSubview(dismissButton)
@@ -41,50 +41,50 @@ public class VersionUpgradeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func addConstraints() {
-        messageLabel.snp_makeConstraints { make in
+    fileprivate func addConstraints() {
+        messageLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(StandardVerticalMargin)
             make.leading.equalTo(self).offset(StandardHorizontalMargin)
             make.trailing.equalTo(self).offset(-StandardHorizontalMargin)
         }
         
-        upgradeButton.snp_makeConstraints { (make) in
-            make.top.equalTo(messageLabel.snp_bottom)
+        upgradeButton.snp.makeConstraints { (make) in
+            make.top.equalTo(messageLabel.snp.bottom)
             make.trailing.equalTo(self).offset(-StandardHorizontalMargin)
             make.bottom.equalTo(self).offset(-StandardVerticalMargin)
         }
         
-        dismissButton.snp_makeConstraints { (make) in
-            make.top.equalTo(messageLabel.snp_bottom)
-            make.trailing.equalTo(upgradeButton.snp_leading).offset(-StandardHorizontalMargin)
+        dismissButton.snp.makeConstraints { (make) in
+            make.top.equalTo(messageLabel.snp.bottom)
+            make.trailing.equalTo(upgradeButton.snp.leading).offset(-StandardHorizontalMargin)
             make.bottom.equalTo(self).offset(-StandardVerticalMargin)
         }
     }
     
-    private func addButtonActions() {
+    fileprivate func addButtonActions() {
         dismissButton.oex_addAction({[weak self] _ in
             self?.dismissView()
-            }, forEvents: .TouchUpInside)
+            }, for: .touchUpInside)
         
         upgradeButton.oex_addAction({[weak self]  _ in
-            if let URL = OEXConfig.sharedConfig().appUpgradeConfig.iOSAppStoreURL() {
-                if UIApplication.sharedApplication().canOpenURL(URL) {
+            if let URL = OEXConfig.shared().appUpgradeConfig.iOSAppStoreURL() {
+                if UIApplication.shared.canOpenURL(URL as URL) {
                     self?.dismissView()
-                    UIApplication.sharedApplication().openURL(URL)
+                    UIApplication.shared.openURL(URL as URL)
                     isActionTakenOnUpgradeSnackBar = true
                 }
             }
-            }, forEvents: .TouchUpInside)
+            }, for: .touchUpInside)
     }
     
-    private func dismissView() {
+    fileprivate func dismissView() {
         var container = superview
         if container == nil {
             container = self
         }
         
-        UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.1, options: .CurveEaseOut, animations: {
-            self.transform = CGAffineTransformIdentity
+        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            self.transform = CGAffineTransform.identity
             }, completion: { _ in
                 container?.removeFromSuperview()
                 isActionTakenOnUpgradeSnackBar = true
@@ -92,27 +92,27 @@ public class VersionUpgradeView: UIView {
     }
 }
 
-public class OfflineView: UIView {
-    private let messageLabel = UILabel()
-    private let reloadButton = UIButton(type: .System)
-    private let dismissButton = UIButton(type: .System)
-    private var selector: Selector?
-    private var messageLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color: OEXStyles.sharedStyles().neutralDark())
+open class OfflineView: UIView {
+    fileprivate let messageLabel = UILabel()
+    fileprivate let reloadButton = UIButton(type: .system)
+    fileprivate let dismissButton = UIButton(type: .system)
+    fileprivate var selector: Selector?
+    fileprivate var messageLabelStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
-    private var buttonLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .SemiBold, size: .Base, color: OEXStyles.sharedStyles().neutralDark())
+    fileprivate var buttonLabelStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .semiBold, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     init(message: String, selector: Selector?) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.selector = selector
-        self.backgroundColor = OEXStyles.sharedStyles().warningBase()
+        self.backgroundColor = OEXStyles.shared.warningBase()
         messageLabel.numberOfLines = 0
-        messageLabel.attributedText = messageLabelStyle.attributedStringWithText(message)
-        reloadButton.setAttributedTitle(buttonLabelStyle.attributedStringWithText(Strings.reload), forState: .Normal)
-        dismissButton.setAttributedTitle(buttonLabelStyle.attributedStringWithText(Strings.VersionUpgrade.dismiss), forState: .Normal)
+        messageLabel.attributedText = messageLabelStyle.attributedString(withText: message)
+        reloadButton.setAttributedTitle(buttonLabelStyle.attributedString(withText: Strings.reload), for: [])
+        dismissButton.setAttributedTitle(buttonLabelStyle.attributedString(withText: Strings.VersionUpgrade.dismiss), for: [])
         addSubview(messageLabel)
         addSubview(dismissButton)
         addSubview(reloadButton)
@@ -126,54 +126,54 @@ public class OfflineView: UIView {
     }
     
     
-    private func addConstraints() {
-        messageLabel.snp_makeConstraints { make in
+    fileprivate func addConstraints() {
+        messageLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(StandardVerticalMargin)
             make.leading.equalTo(self).offset(StandardHorizontalMargin)
             make.trailing.lessThanOrEqualTo(dismissButton).offset(-StandardHorizontalMargin)
             make.centerY.equalTo(reloadButton)
         }
         
-        reloadButton.snp_makeConstraints { (make) in
+        reloadButton.snp.makeConstraints { (make) in
             make.top.equalTo(messageLabel)
             make.trailing.equalTo(self).offset(-StandardHorizontalMargin)
             make.bottom.equalTo(self).offset(-StandardVerticalMargin)
         }
         
-        dismissButton.snp_makeConstraints { (make) in
+        dismissButton.snp.makeConstraints { (make) in
             make.top.equalTo(reloadButton)
-            make.trailing.equalTo(reloadButton.snp_leading).offset(-StandardHorizontalMargin)
+            make.trailing.equalTo(reloadButton.snp.leading).offset(-StandardHorizontalMargin)
             make.bottom.equalTo(self).offset(-StandardVerticalMargin)
         }
     }
     
-    private func addButtonActions() {
+    fileprivate func addButtonActions() {
         dismissButton.oex_addAction({[weak self] _ in
             self?.dismissView()
-            }, forEvents: .TouchUpInside)
+            }, for: .touchUpInside)
         
         reloadButton.oex_addAction({[weak self] _ in
             let controller = self?.firstAvailableUIViewController()
-            if let controller = controller, selector = self?.selector {
-                if controller.respondsToSelector(selector) && OEXRouter.sharedRouter().environment.reachability.isReachable() {
-                    controller.performSelector(selector)
+            if let controller = controller, let selector = self?.selector {
+                if controller.responds(to: selector) && OEXRouter.shared().environment.reachability.isReachable() {
+                    controller.perform(selector)
                     self?.dismissView()
                 }
             }
             else {
                 self?.dismissView()
             }
-            }, forEvents: .TouchUpInside)
+            }, for: .touchUpInside)
     }
     
-    private func dismissView() {
+    fileprivate func dismissView() {
         var container = superview
         if container == nil {
             container = self
         }
         
-        UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.1, options: .CurveEaseOut, animations: {
-            self.transform = CGAffineTransformIdentity
+        UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            self.transform = CGAffineTransform.identity
             }, completion: { _ in
                 container!.removeFromSuperview()
         })

@@ -9,26 +9,26 @@
 import UIKit
 
 class CourseCatalogViewController: UIViewController, CoursesTableViewControllerDelegate {
-    typealias Environment = protocol<NetworkManagerProvider, OEXRouterProvider, OEXSessionProvider, OEXConfigProvider,DataManagerProvider>
+    typealias Environment = NetworkManagerProvider & OEXRouterProvider & OEXSessionProvider & OEXConfigProvider & DataManagerProvider
     
-    private let environment : Environment
-    private let tableController : CoursesTableViewController
-    private let loadController = LoadStateViewController()
-    private let insetsController = ContentInsetsController()
+    fileprivate let environment : Environment
+    fileprivate let tableController : CoursesTableViewController
+    fileprivate let loadController = LoadStateViewController()
+    fileprivate let insetsController = ContentInsetsController()
     
     init(environment : Environment) {
         self.environment = environment
-        self.tableController = CoursesTableViewController(environment: environment, context: .CourseCatalog)
+        self.tableController = CoursesTableViewController(environment: environment, context: .courseCatalog)
         super.init(nibName: nil, bundle: nil)
         self.navigationItem.title = Strings.findCourses
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var paginationController : PaginationController<OEXCourse> = {
+    fileprivate lazy var paginationController : PaginationController<OEXCourse> = {
         let username = self.environment.session.currentUser?.username ?? ""
         precondition(username != "", "Shouldn't be showing course catalog without a logged in user")
         let organizationCode =  self.environment.config.organizationCode()
@@ -43,21 +43,21 @@ class CourseCatalogViewController: UIViewController, CoursesTableViewControllerD
         super.viewDidLoad()
         self.view.accessibilityIdentifier = "course-catalog-screen";
         addChildViewController(tableController)
-        tableController.didMoveToParentViewController(self)
+        tableController.didMove(toParentViewController: self)
         self.loadController.setupInController(self, contentView: tableController.view)
         
         self.view.addSubview(tableController.view)
-        tableController.view.snp_makeConstraints {make in
+        tableController.view.snp.makeConstraints {make in
             make.edges.equalTo(self.view)
         }
         
-        self.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         tableController.delegate = self
 
         paginationController.stream.listen(self, success:
             {[weak self] courses in
-                self?.loadController.state = .Loaded
+                self?.loadController.state = .loaded
                 self?.tableController.courses = []//courses
                 self?.tableController.tableView.reloadData()
             }, failure: {[weak self] error in
@@ -74,7 +74,7 @@ class CourseCatalogViewController: UIViewController, CoursesTableViewControllerD
         )
     }
     
-    func coursesTableChoseCourse(course: OEXCourse) {
+    func coursesTableChoseCourse(_ course: OEXCourse) {
         guard let courseID = course.course_id else {
             return
         }
@@ -85,7 +85,7 @@ class CourseCatalogViewController: UIViewController, CoursesTableViewControllerD
 // Testing only
 extension CourseCatalogViewController {
     
-    var t_loaded : Stream<()> {
+    var t_loaded : edXCore.Stream<()> {
         return self.paginationController.stream.map {_ in
             return
         }

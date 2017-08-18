@@ -10,13 +10,13 @@ import Foundation
 
 class DiscussionBlockViewController: UIViewController,CourseBlockViewController {
     
-    typealias Environment = protocol<NetworkManagerProvider, OEXRouterProvider, OEXAnalyticsProvider>
+    typealias Environment = NetworkManagerProvider & OEXRouterProvider & OEXAnalyticsProvider
     
     let courseID: String
     let blockID : CourseBlockID?
-    private let topicID: String?
-    private let environment : Environment
-    private let postsController:PostsViewController
+    fileprivate let topicID: String?
+    fileprivate let environment : Environment
+    fileprivate let postsController:PostsViewController
     
     init(blockID: CourseBlockID?, courseID : String, topicID: String?, environment : Environment) {
         self.blockID = blockID
@@ -35,10 +35,10 @@ class DiscussionBlockViewController: UIViewController,CourseBlockViewController 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         addChildViewController(postsController)
-        postsController.didMoveToParentViewController(self)
+        postsController.didMove(toParentViewController: self)
         
         view.addSubview(postsController.view)
     }
@@ -46,7 +46,7 @@ class DiscussionBlockViewController: UIViewController,CourseBlockViewController 
     override func updateViewConstraints() {
         super.updateViewConstraints()
         
-        postsController.view.snp_remakeConstraints {make in
+        postsController.view.snp.remakeConstraints {make in
             make.top.equalTo(view)
             make.leading.equalTo(view)
             make.trailing.equalTo(view)

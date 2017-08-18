@@ -9,11 +9,11 @@
 import Foundation
 
 class SingleChildContainingViewController : UIViewController {
-    override func childViewControllerForStatusBarStyle() -> UIViewController? {
+    override var childViewControllerForStatusBarStyle : UIViewController? {
         return self.childViewControllers.last
     }
 
-    override func childViewControllerForStatusBarHidden() -> UIViewController? {
+    override var childViewControllerForStatusBarHidden : UIViewController? {
         return self.childViewControllers.last
     }
 

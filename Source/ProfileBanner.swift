@@ -12,15 +12,15 @@ import UIKit
 class ProfileBanner: UIView {
 
     enum Style {
-        case LightContent
-        case DarkContent
+        case lightContent
+        case darkContent
 
         var textColor: UIColor {
             switch(self) {
-            case .LightContent:
-                return OEXStyles.sharedStyles().neutralWhiteT()
-            case .DarkContent:
-                return OEXStyles.sharedStyles().neutralBlackT()
+            case .lightContent:
+                return OEXStyles.shared.neutralWhiteT()
+            case .darkContent:
+                return OEXStyles.shared.neutralBlackT()
             }
         }
     }
@@ -31,55 +31,55 @@ class ProfileBanner: UIView {
     let changeCallback: (()->())?
     let changeButton = IconButton()
 
-    var style = Style.LightContent {
+    var style = Style.lightContent {
         didSet {
-            usernameLabel.attributedText = usernameStyle.attributedStringWithText(usernameLabel.attributedText?.string)
+            usernameLabel.attributedText = usernameStyle.attributedString(withText: usernameLabel.attributedText?.string)
         }
     }
   
-    private func setupViews() {
+    fileprivate func setupViews() {
         addSubview(shortProfView)
         addSubview(usernameLabel)
         
-        usernameLabel.setContentHuggingPriority(1, forAxis: .Horizontal)
+        usernameLabel.setContentHuggingPriority(1, for: .horizontal)
         
-        shortProfView.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(self.snp_leadingMargin)
+        shortProfView.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(self.snp.leadingMargin)
             make.height.equalTo(40)
-            make.width.equalTo(shortProfView.snp_height)
+            make.width.equalTo(shortProfView.snp.height)
             make.centerY.equalTo(self)
         }
         
-        usernameLabel.snp_makeConstraints { (make) -> Void in
-            make.leading.equalTo(shortProfView.snp_trailing).offset(6)
+        usernameLabel.snp.makeConstraints { (make) -> Void in
+            make.leading.equalTo(shortProfView.snp.trailing).offset(6)
             make.centerY.equalTo(shortProfView)
         }
         
         if editable {
-            userInteractionEnabled = true
+            isUserInteractionEnabled = true
             addSubview(changeButton)
 
-            changeButton.setIconAndTitle(Icon.Camera, title: Strings.Profile.changePictureButton)
+            changeButton.setIconAndTitle(Icon.camera, title: Strings.Profile.changePictureButton)
             changeButton.accessibilityHint = Strings.Profile.changePictureAccessibilityHint
             
-            changeButton.snp_makeConstraints(closure: { (make) -> Void in
+            changeButton.snp.makeConstraints({ (make) -> Void in
                 make.centerY.equalTo(shortProfView)
-                make.trailing.equalTo(self.snp_trailingMargin).priorityHigh()
-                make.leading.equalTo(usernameLabel).priorityLow()
+                make.trailing.equalTo(self.snp.trailingMargin).priority(.high)
+                make.leading.equalTo(usernameLabel).priority(.low)
             })
             
             changeButton.oex_addAction({ [weak self] _ in
                 self?.changeCallback?()
-            }, forEvents: .TouchUpInside)
+            }, for: .touchUpInside)
         }
       
 
     }
     
-    init(editable: Bool, didChange: (()->())) {
+    init(editable: Bool, didChange: @escaping (()->())) {
         self.editable = editable
         changeCallback = didChange
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         setupViews()
     }
     
@@ -95,12 +95,12 @@ class ProfileBanner: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func showProfile(profile: UserProfile, networkManager: NetworkManager) {
+    func showProfile(_ profile: UserProfile, networkManager: NetworkManager) {
         shortProfView.remoteImage = profile.image(networkManager)
-        usernameLabel.attributedText = usernameStyle.attributedStringWithText(profile.username)
+        usernameLabel.attributedText = usernameStyle.attributedString(withText: profile.username)
     }
 
     var usernameStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .Normal, size: .Large, color: style.textColor)
+        return OEXTextStyle(weight : .normal, size: .large, color: style.textColor)
     }
 }

@@ -10,14 +10,14 @@ import UIKit
 
 private let StandardRefreshHeight : CGFloat = 80
 
-public class PullRefreshView : UIView {
-    private let spinner = SpinnerView(size: .Large, color: .Primary)
+open class PullRefreshView : UIView {
+    fileprivate let spinner = SpinnerView(size: .large, color: .primary)
     
     public init() {
         spinner.stopAnimating()
-        super.init(frame : CGRectZero)
+        super.init(frame : CGRect.zero)
         addSubview(spinner)
-        spinner.snp_makeConstraints {make in
+        spinner.snp.makeConstraints {make in
             make.centerX.equalTo(self)
             make.centerY.equalTo(self).offset(10)
         }
@@ -27,40 +27,40 @@ public class PullRefreshView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func intrinsicContentSize() -> CGSize {
-        return CGSizeMake(UIViewNoIntrinsicMetric, StandardRefreshHeight)
+    open override var intrinsicContentSize : CGSize {
+        return CGSize(width: UIViewNoIntrinsicMetric, height: StandardRefreshHeight)
     }
     
-    public var percentage : CGFloat = 1 {
+    open var percentage : CGFloat = 1 {
         didSet {
-            let totalAngle = CGFloat(2 * M_PI * 2) // two full rotations
+            let totalAngle = CGFloat(2 * Float.pi * 2) // two full rotations
             let scale = (percentage * 0.9) + 0.1 // don't start from 0 scale because it looks weird
-            spinner.transform = CGAffineTransformConcat(CGAffineTransformMakeRotation(percentage * totalAngle), CGAffineTransformMakeScale(scale, scale))
+            spinner.transform = CGAffineTransform(rotationAngle: percentage * totalAngle).concatenating(CGAffineTransform(scaleX: scale, y: scale))
         }
     }
 }
 
 public protocol PullRefreshControllerDelegate : class {
-    func refreshControllerActivated(controller : PullRefreshController)
+    func refreshControllerActivated(_ controller : PullRefreshController)
 }
 
-public class PullRefreshController: NSObject, ContentInsetsSource {
-    public weak var insetsDelegate : ContentInsetsSourceDelegate?
-    public weak var delegate : PullRefreshControllerDelegate?
-    private let view : PullRefreshView
-    private var shouldStartOnTouchRelease : Bool = false
+open class PullRefreshController: NSObject, ContentInsetsSource {
+    open weak var insetsDelegate : ContentInsetsSourceDelegate?
+    open weak var delegate : PullRefreshControllerDelegate?
+    fileprivate let view : PullRefreshView
+    fileprivate var shouldStartOnTouchRelease : Bool = false
     
-    private(set) var refreshing : Bool = false
+    fileprivate(set) var refreshing : Bool = false
     
     public override init() {
         view = PullRefreshView()
         super.init()
     }
     
-    public func setupInScrollView(scrollView : UIScrollView) {
+    open func setupInScrollView(_ scrollView : UIScrollView) {
         scrollView.addSubview(self.view)
-        self.view.snp_makeConstraints {make in
-            make.bottom.equalTo(scrollView.snp_top)
+        self.view.snp.makeConstraints {make in
+            make.bottom.equalTo(scrollView.snp.top)
             make.leading.equalTo(scrollView)
             make.trailing.equalTo(scrollView)
             make.width.equalTo(scrollView)
@@ -70,7 +70,7 @@ public class PullRefreshController: NSObject, ContentInsetsSource {
         }
     }
     
-    private func triggered() {
+    fileprivate func triggered() {
         if !refreshing {
             refreshing = true
             view.spinner.startAnimating()
@@ -79,34 +79,34 @@ public class PullRefreshController: NSObject, ContentInsetsSource {
         }
     }
     
-    public var affectsScrollIndicators : Bool {
+    open var affectsScrollIndicators : Bool {
         return false
     }
     
-    public func endRefreshing() {
+    open func endRefreshing() {
         refreshing = false
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.insetsDelegate?.contentInsetsSourceChanged(self)
-        }
+        }) 
         view.spinner.stopAnimating()
     }
     
-    public var currentInsets : UIEdgeInsets {
+    open var currentInsets : UIEdgeInsets {
         return UIEdgeInsetsMake(refreshing ? view.frame.height : 0, 0, 0, 0)
     }
     
-    public func scrollViewDidScroll(scrollView : UIScrollView) {
+    open func scrollViewDidScroll(_ scrollView : UIScrollView) {
         let pct = max(0, min(1, -scrollView.bounds.minY / view.frame.height))
-        if !refreshing && scrollView.dragging {
+        if !refreshing && scrollView.isDragging {
             self.view.percentage = pct
         }
         else {
             self.view.percentage = 1
         }
-        if pct >= 1 && scrollView.dragging {
+        if pct >= 1 && scrollView.isDragging {
             shouldStartOnTouchRelease = true
         }
-        if shouldStartOnTouchRelease && !scrollView.dragging {
+        if shouldStartOnTouchRelease && !scrollView.isDragging {
             triggered()
             shouldStartOnTouchRelease = false
         }

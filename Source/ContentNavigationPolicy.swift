@@ -20,7 +20,7 @@ func unitCompletionPolicy(for controller: UIViewController, itemId: CourseBlockI
         return videoUnitCompleted(_: _:)
     case is AudioBlockViewController:
         return audioUnitCompleted(_: _:)
-    case is HTMLBlockViewController where itemId.containsString("type@chat"):
+    case is HTMLBlockViewController where itemId.contains("type@chat"):
         return { itemId, interface in
             return chatUnitCompleted(itemId, interface, chatCompleted: chatCompleted)
         }
@@ -30,21 +30,21 @@ func unitCompletionPolicy(for controller: UIViewController, itemId: CourseBlockI
 }
 
 // given a video id and an interface decides whether the video is completed
-func videoUnitCompleted(itemID: CourseBlockID, _ interface: OEXInterface) -> Bool {
-    let state = interface.watchedStateForVideoWithID(itemID)
-    return state == .Watched
+func videoUnitCompleted(_ itemID: CourseBlockID, _ interface: OEXInterface) -> Bool {
+    let state = interface.watchedStateForVideo(withID: itemID)
+    return state == .watched
 }
 
 // given a audio id and an interface decides whether the audio is completed
-func audioUnitCompleted(itemID: CourseBlockID, _ interface: OEXInterface) -> Bool {
-    let state = interface.watchedStateForAudioWithID(itemID)
-    return state == .Watched
+func audioUnitCompleted(_ itemID: CourseBlockID, _ interface: OEXInterface) -> Bool {
+    let state = interface.watchedStateForAudio(withID: itemID)
+    return state == .watched
 }
 
 // given a chat id decides whether the chat has been completed
-func chatUnitCompleted(itemID: CourseBlockID, _ interface: OEXInterface, chatCompleted: Bool) -> Bool {
+func chatUnitCompleted(_ itemID: CourseBlockID, _ interface: OEXInterface, chatCompleted: Bool) -> Bool {
     
-    if let data = interface.storage?.getComponentDataForComponentID(itemID) where data.isViewed.boolValue {
+    if let data = interface.storage?.getComponentData(forComponentID: itemID), data.isViewed.boolValue {
         return true
     } else if chatCompleted {
         return true

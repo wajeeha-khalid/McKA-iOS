@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyJSON
 import edXCore
 
 enum APIErrorCode : String {
@@ -25,14 +25,14 @@ private enum ErrorFields: String, RawStringExtractable {
 
 extension NSError {
     convenience init?(json: JSON, code: Int) {
-        guard let info = json.object as? [NSObject : AnyObject] else {
+        guard let info = json.object as? [AnyHashable: Any] else {
             self.init(domain: OEXErrorDomain, code: code, userInfo: nil)
             return nil
         }
         self.init(domain: OEXErrorDomain, code: code, userInfo: info)
     }
 
-    func isAPIError(code: APIErrorCode) -> Bool {
+    func isAPIError(_ code: APIErrorCode) -> Bool {
         guard let errorCode = userInfo[ErrorFields.Code.rawValue] as? String else { return false }
         return errorCode == code.rawValue
     }

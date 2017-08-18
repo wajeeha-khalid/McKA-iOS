@@ -9,6 +9,7 @@
 import Foundation
 @testable import edX
 
+//TODO: fails due to new course list implementation....
 class EnrollmentManagerTests : XCTestCase {
 
     func testEnrollmentsLoginLogout() {
@@ -24,7 +25,7 @@ class EnrollmentManagerTests : XCTestCase {
         let manager = EnrollmentManager(interface: nil, networkManager: environment.networkManager, config: environment.config)
         let feed = manager.feed
         // starts empty
-        XCTAssertNil(feed.output.value)
+        XCTAssertNil(feed.output.value as Any)
         
         // Log in. Enrollments should load
         environment.logInTestUser()
@@ -36,7 +37,7 @@ class EnrollmentManagerTests : XCTestCase {
         XCTAssertEqual(feed.output.value!!.count, enrollments.count)
         
         // Log out. Now enrollments should be cleared
-        environment.session.closeAndClearSession()
+        environment.session.closeAndClear()
         XCTAssertNil(feed.output.value!)
     }
     

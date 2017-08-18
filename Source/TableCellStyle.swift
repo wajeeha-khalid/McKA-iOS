@@ -9,15 +9,15 @@
 import UIKit
 
 enum TableCellStyle {
-    case Normal
-    case Highlighted
+    case normal
+    case highlighted
 }
 
 extension UITableViewCell {
-    func applyStyle(style : TableCellStyle) {
+    func applyStyle(_ style : TableCellStyle) {
         switch style {
-        case .Normal: self.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
-        case .Highlighted: self.backgroundColor = OEXStyles.sharedStyles().primaryXLightColor()
+        case .normal: self.backgroundColor = OEXStyles.shared.standardBackgroundColor()
+        case .highlighted: self.backgroundColor = OEXStyles.shared.primaryXLightColor()
         }
     }
 }

@@ -8,10 +8,11 @@
 
 import UIKit
 import WebKit
+import SnapKit
 
 @objc protocol FindCoursesWebViewHelperDelegate : class {
-    func webViewHelper(helper : FindCoursesWebViewHelper, shouldLoadLinkWithRequest request: NSURLRequest) -> Bool
-    func containingControllerForWebViewHelper(helper : FindCoursesWebViewHelper) -> UIViewController
+    func webViewHelper(_ helper : FindCoursesWebViewHelper, shouldLoadLinkWithRequest request: URLRequest) -> Bool
+    func containingControllerForWebViewHelper(_ helper : FindCoursesWebViewHelper) -> UIViewController
 }
 
 class FindCoursesWebViewHelper: NSObject, WKNavigationDelegate {
@@ -20,10 +21,10 @@ class FindCoursesWebViewHelper: NSObject, WKNavigationDelegate {
     
     let webView : WKWebView = WKWebView()
     let searchBar = UISearchBar()
-    private var loadController = LoadStateViewController()
+    fileprivate var loadController = LoadStateViewController()
     
-    private var request : NSURLRequest? = nil
-    var searchBaseURL: NSURL?
+    fileprivate var request : URLRequest? = nil
+    var searchBaseURL: URL?
 
     let bottomBar: UIView?
     
@@ -47,22 +48,22 @@ class FindCoursesWebViewHelper: NSObject, WKNavigationDelegate {
             if searchbarEnabled {
                 searchBar.delegate = self
 
-                container.view.insertSubview(searchBar, atIndex: 0)
+                container.view.insertSubview(searchBar, at: 0)
 
-                searchBar.snp_makeConstraints{ make in
+                searchBar.snp.makeConstraints{ make in
                     make.leading.equalTo(container.view)
                     make.trailing.equalTo(container.view)
                     make.top.equalTo(container.view)
                 }
-                webviewTop = searchBar.snp_bottom
+                webviewTop = searchBar.snp.bottom
             } else {
-                webviewTop = container.view.snp_top
+                webviewTop = container.view.snp.top
             }
 
 
-            container.view.insertSubview(webView, atIndex: 0)
+            container.view.insertSubview(webView, at: 0)
 
-            webView.snp_makeConstraints { make in
+            webView.snp.makeConstraints { make in
                 make.leading.equalTo(container.view)
                 make.trailing.equalTo(container.view)
                 make.bottom.equalTo(container.view)
@@ -70,8 +71,8 @@ class FindCoursesWebViewHelper: NSObject, WKNavigationDelegate {
             }
 
             if let bar = bottomBar {
-                container.view.insertSubview(bar, atIndex: 0)
-                bar.snp_makeConstraints(closure: { (make) in
+                container.view.insertSubview(bar, at: 0)
+                bar.snp.makeConstraints({ (make) in
                     make.height.equalTo(50)
                     make.leading.equalTo(container.view)
                     make.trailing.equalTo(container.view)
@@ -82,7 +83,7 @@ class FindCoursesWebViewHelper: NSObject, WKNavigationDelegate {
     }
 
 
-    private var courseInfoTemplate : String {
+    fileprivate var courseInfoTemplate : String {
         return config?.courseEnrollmentConfig.webviewConfig.courseInfoURLTemplate ?? ""
     }
     
@@ -90,28 +91,28 @@ class FindCoursesWebViewHelper: NSObject, WKNavigationDelegate {
         return self.loadController.state.isLoaded
     }
     
-    func loadRequestWithURL(url : NSURL) {
-        let request = NSURLRequest(URL: url)
-        self.webView.loadRequest(request)
+    func loadRequestWithURL(_ url : URL) {
+        let request = URLRequest(url: url)
+        self.webView.load(request)
         self.request = request
     }
     
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let request = navigationAction.request
-        let capturedLink = navigationAction.navigationType == .LinkActivated && (self.delegate?.webViewHelper(self, shouldLoadLinkWithRequest: request) ?? true)
+        let capturedLink = navigationAction.navigationType == .linkActivated && (self.delegate?.webViewHelper(self, shouldLoadLinkWithRequest: request) ?? true)
 
-        let outsideLink = (request.mainDocumentURL?.host != self.request?.URL?.host)
-        if let URL = request.URL where outsideLink || capturedLink {
-            UIApplication.sharedApplication().openURL(URL)
-            decisionHandler(.Cancel)
+        let outsideLink = (request.mainDocumentURL?.host != self.request?.url?.host)
+        if let URL = request.url, outsideLink || capturedLink {
+            UIApplication.shared.openURL(URL)
+            decisionHandler(.cancel)
             return
         }
         
-        decisionHandler(.Allow)
+        decisionHandler(.allow)
     }
     
-    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-        self.loadController.state = .Loaded
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.loadController.state = .loaded
         
         //Setting webView accessibilityValue for testing
         webView.evaluateJavaScript("document.getElementsByClassName('course-card')[0].innerText",
@@ -120,66 +121,66 @@ class FindCoursesWebViewHelper: NSObject, WKNavigationDelegate {
                                     if (error == nil) {
                                         self.webView.accessibilityValue = "findCoursesLoaded"
                                     }
-        })
+        } as? (Any?, Error?) -> Void)
         if let bar = bottomBar {
-            bar.superview?.bringSubviewToFront(bar)
+            bar.superview?.bringSubview(toFront: bar)
         }
     }
     
-    func showError(error : NSError) {
+    func showError(_ error : NSError) {
         let buttonInfo = MessageButtonInfo(title: Strings.retry) {[weak self] _ in
             if let request = self?.request {
-                self?.webView.loadRequest(request)
-                self?.loadController.state = .Initial
+                self?.webView.load(request)
+                self?.loadController.state = .initial
             }
         }
         self.loadController.state = LoadState.failed(error, buttonInfo: buttonInfo)
     }
     
-    func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
-        showError(error)
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        showError(error as NSError)
     }
     
-    func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
-        showError(error)
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        showError(error as NSError)
     }
     
-    func webView(webView: WKWebView, didReceiveAuthenticationChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if let credential = config?.URLCredentialForHost(challenge.protectionSpace.host) {
-            completionHandler(.UseCredential, credential)
+            completionHandler(.useCredential, credential)
         }
         else {
-            completionHandler(.PerformDefaultHandling, nil)
+            completionHandler(.performDefaultHandling, nil)
         }
     }
 
 }
 
 extension FindCoursesWebViewHelper: UISearchBarDelegate {
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         return true
     }
 
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
 
-        guard let searchTerms = searchBar.text, searchURL = searchBaseURL else { return }
-        if let URL = FindCoursesWebViewHelper.buildQuery(searchURL.URLString, toolbarString: searchTerms) {
+        guard let searchTerms = searchBar.text, let searchURL = searchBaseURL else { return }
+        if let URL = FindCoursesWebViewHelper.buildQuery(searchURL.absoluteString, toolbarString: searchTerms) {
             loadRequestWithURL(URL)
         }
     }
 
-    @objc static func buildQuery(baseURL: String, toolbarString: String) -> NSURL? {
-        let items = toolbarString.componentsSeparatedByString(" ")
-        let escapedItems = items.flatMap { $0.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()) }
-        let searchTerm = "search_query=" + escapedItems.joinWithSeparator("+")
+    @objc static func buildQuery(_ baseURL: String, toolbarString: String) -> URL? {
+        let items = toolbarString.components(separatedBy: " ")
+        let escapedItems = items.flatMap { $0.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) }
+        let searchTerm = "search_query=" + escapedItems.joined(separator: "+")
         let newQuery: String
-        if baseURL.containsString("?") {
+        if baseURL.contains("?") {
             newQuery = baseURL + "&" + searchTerm
         } else {
             newQuery = baseURL + "?" + searchTerm
 
         }
-        return NSURL(string: newQuery)
+        return URL(string: newQuery)
     }
 }

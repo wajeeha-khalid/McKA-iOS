@@ -13,35 +13,39 @@ import edX
 class OEXCourseTests: XCTestCase {
 
     func testStartOld() {
-        let date = NSDate().dateByAddingTimeInterval(-1000)
-        let course = OEXCourse(dictionary: [
-            "start" : OEXDateFormatting.serverStringWithDate(date)
-            ])
-        XCTAssertTrue(course.isStartDateOld)
+        let date = Date().addingTimeInterval(-1000)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["start" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertTrue(course!.isStartDateOld)
     }
     
     func testStartNotOld() {
-        let date = NSDate().dateByAddingTimeInterval(1000)
-        let course = OEXCourse(dictionary: [
-            "start" : OEXDateFormatting.serverStringWithDate(date)
-            ])
-        XCTAssertFalse(course.isStartDateOld)
+        let date = Date().addingTimeInterval(1000)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["start" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertFalse(course!.isStartDateOld)
     }
     
     func testEndOld() {
-        let date = NSDate().dateByAddingTimeInterval(-1000)
-        let course = OEXCourse(dictionary: [
-            "end" : OEXDateFormatting.serverStringWithDate(date)
-            ])
-        XCTAssertTrue(course.isEndDateOld)
+        let date = Date().addingTimeInterval(-1000)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["end" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertTrue(course!.isEndDateOld)
     }
     
     func testEndNotOld() {
-        let date = NSDate().dateByAddingTimeInterval(1000)
-        let course = OEXCourse(dictionary: [
-            "end" : OEXDateFormatting.serverStringWithDate(date)
-            ])
-        XCTAssertFalse(course.isEndDateOld)
+        let date = Date().addingTimeInterval(1000)
+        let course = OEXDateFormatting.serverString(with: date).map {
+            OEXCourse(dictionary: ["end" : $0])
+        }
+        XCTAssertNotNil(course)
+        XCTAssertFalse(course!.isEndDateOld)
     }
     
 }

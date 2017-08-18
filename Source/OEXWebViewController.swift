@@ -13,9 +13,9 @@ class OEXWebViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var errorView: UIView!
     
-    var requestToLoad : NSURLRequest = NSURLRequest()
+    var requestToLoad : URLRequest = URLRequest(url: NSURL() as URL)
     var navigationControllerTitle : String = String()
-    private let loadController : LoadStateViewController = LoadStateViewController()
+    fileprivate let loadController : LoadStateViewController = LoadStateViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,7 @@ class OEXWebViewController: UIViewController, UIWebViewDelegate {
         
         self.webView.scrollView.bounces = false
         
-        self.webView.userInteractionEnabled = false
+        self.webView.isUserInteractionEnabled = false
     }
     
     override func updateViewConstraints() {
@@ -39,20 +39,20 @@ class OEXWebViewController: UIViewController, UIWebViewDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    func webViewDidStartLoad(webView: UIWebView){
+    func webViewDidStartLoad(_ webView: UIWebView){
         
-        self.webView.userInteractionEnabled = false
+        self.webView.isUserInteractionEnabled = false
     }
-    func webViewDidFinishLoad(webView :UIWebView){
+    func webViewDidFinishLoad(_ webView :UIWebView){
         
-        self.loadController.state = .Loaded
-        self.webView.userInteractionEnabled = true
+        self.loadController.state = .loaded
+        self.webView.isUserInteractionEnabled = true
     }
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        self.loadController.state = LoadState.failed(error)
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        self.loadController.state = LoadState.failed(error as NSError)
     }
     
-    @IBAction func reloadPage(sender: UIButton) {
+    @IBAction func reloadPage(_ sender: UIButton) {
             webView.reload()
     }
     

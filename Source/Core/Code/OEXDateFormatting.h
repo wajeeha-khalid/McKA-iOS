@@ -16,16 +16,16 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*)formatSecondsAsVideoLength:(NSTimeInterval)totalSeconds;
 
 /// Format like April 11 or January 23
-+ (NSString*)formatAsMonthDayString:(NSDate*)date;
++ (nullable NSString*)formatAsMonthDayString:(NSDate*)date;
 
 /// Converts a string in standard ISO8601 format to a date
-+ (NSDate*)dateWithServerString:(NSString*)dateString;
++ (nullable NSDate*)dateWithServerString:(NSString*)dateString;
 
 /// Format like April 11, 2013
-+ (NSString*)formatAsMonthDayYearString:(NSDate*)date;
++ (nullable NSString*)formatAsMonthDayYearString:(NSDate*)date;
 
 ///Get current date in the formatted way
-+ (NSString*)serverStringWithDate:(NSDate*)date;
++ (nullable NSString*)serverStringWithDate:(NSDate*)date;
 
 @end
 

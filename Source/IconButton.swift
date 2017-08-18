@@ -16,31 +16,31 @@ class IconButton : UIControl {
     var enabledAttributedString: NSAttributedString?
     var disabledAttributedString: NSAttributedString?
 
-    override var enabled: Bool {
+    override var isEnabled: Bool {
         didSet {
-            titleLabel.attributedText = enabled ? enabledAttributedString : disabledAttributedString
-            tintColor = enabled ? UIColor.piqueGreen() : OEXStyles.sharedStyles().disabledButtonColor()
+            titleLabel.attributedText = isEnabled ? enabledAttributedString : disabledAttributedString
+            tintColor = isEnabled ? UIColor.piqueGreen() : OEXStyles.shared.disabledButtonColor()
         }
     }
 
-    override var highlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
-            alpha = highlighted ? 0.5 : 1
+            alpha = isHighlighted ? 0.5 : 1
         }
     }
 
     init() {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
 
         addSubview(imageView)
         addSubview(titleLabel)
 
-        imageView.snp_makeConstraints { (make) -> Void in
-            make.baseline.equalTo(titleLabel.snp_baseline).offset(2)
+        imageView.snp.makeConstraints { (make) -> Void in
+            make.lastBaseline.equalTo(titleLabel.snp.lastBaseline).offset(2)
         }
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(self)
-            make.leading.equalTo(imageView.snp_trailing).offset(spacing)
+            make.leading.equalTo(imageView.snp.trailing).offset(spacing)
             make.trailing.equalTo(self)
         }
     }
@@ -49,26 +49,26 @@ class IconButton : UIControl {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func intrinsicContentSize() -> CGSize {
-        let imSize = imageView.intrinsicContentSize()
-        let titleSize = titleLabel.intrinsicContentSize()
+    override var intrinsicContentSize : CGSize {
+        let imSize = imageView.intrinsicContentSize
+        let titleSize = titleLabel.intrinsicContentSize
         let height = max(imSize.height, titleSize.height)
         let width = imSize.width + titleSize.width + spacing
         return CGSize(width: width, height: height)
     }
 
 
-    func setIconAndTitle(icon: Icon, title: String) {
-        let titleStyle = OEXTextStyle(weight: .Normal, size: .XSmall, color: UIColor.piqueGreen())
+    func setIconAndTitle(_ icon: Icon, title: String) {
+        let titleStyle = OEXTextStyle(weight: .normal, size: .xSmall, color: UIColor.piqueGreen())
         let disabledTitleStyle = OEXMutableTextStyle(textStyle: titleStyle)
-        disabledTitleStyle.color = OEXStyles.sharedStyles().disabledButtonColor()
+        disabledTitleStyle.color = OEXStyles.shared.disabledButtonColor()
 
-        let imageSize = OEXTextStyle.pointSizeForTextSize(titleStyle.size)
+        let imageSize = OEXTextStyle.pointSize(for: titleStyle.size)
         let image = icon.imageWithFontSize(imageSize)
         imageView.image = image
 
-        enabledAttributedString = titleStyle.attributedStringWithText(title)
-        disabledAttributedString = disabledTitleStyle.attributedStringWithText(title)
-        titleLabel.attributedText = enabled ? enabledAttributedString : disabledAttributedString
+        enabledAttributedString = titleStyle.attributedString(withText: title)
+        disabledAttributedString = disabledTitleStyle.attributedString(withText: title)
+        titleLabel.attributedText = isEnabled ? enabledAttributedString : disabledAttributedString
     }
 }

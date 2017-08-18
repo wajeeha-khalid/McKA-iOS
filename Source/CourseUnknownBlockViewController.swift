@@ -10,7 +10,7 @@ import UIKit
 
 class CourseUnknownBlockViewController: UIViewController, CourseBlockViewController {
     
-    typealias Environment = protocol<DataManagerProvider, OEXInterfaceProvider>
+    typealias Environment = DataManagerProvider & OEXInterfaceProvider
     
     let environment : Environment
 
@@ -18,7 +18,7 @@ class CourseUnknownBlockViewController: UIViewController, CourseBlockViewControl
     let courseID : String
     var messageView : IconMessageView?
     
-    var loader : Stream<NSURL?>?
+    var loader : edXCore.Stream<URL?>?
     init(blockID : CourseBlockID?, courseID : String, environment : Environment) {
         self.blockID = blockID
         self.courseID = courseID
@@ -30,8 +30,8 @@ class CourseUnknownBlockViewController: UIViewController, CourseBlockViewControl
         courseQuerier.blockWithID(blockID).extendLifetimeUntilFirstResult (
             success:
             { [weak self] block in
-                if let video = block.type.asVideo where video.isYoutubeVideo{
-                    self?.showYoutubeMessage(Strings.Video.viewOnYoutube, message: Strings.Video.onlyOnYoutube, icon: Icon.CourseModeVideo, videoUrl: video.videoURL)
+                if let video = block.type.asVideo, video.isYoutubeVideo{
+                    self?.showYoutubeMessage(Strings.Video.viewOnYoutube, message: Strings.Video.onlyOnYoutube, icon: Icon.courseModeVideo, videoUrl: video.videoURL)
                 }
                 else {
                     self?.showError()
@@ -43,26 +43,26 @@ class CourseUnknownBlockViewController: UIViewController, CourseBlockViewControl
         )
     }
     
-    private func showYoutubeMessage(buttonTitle: String, message: String, icon: Icon, videoUrl: String?) {
+    fileprivate func showYoutubeMessage(_ buttonTitle: String, message: String, icon: Icon, videoUrl: String?) {
         messageView = IconMessageView(icon: icon, message: message)
         messageView?.buttonInfo = MessageButtonInfo(title : buttonTitle)
         {
-            if let videoURL = videoUrl, url =  NSURL(string: videoURL) {
-                UIApplication.sharedApplication().openURL(url)
+            if let videoURL = videoUrl, let url =  URL(string: videoURL) {
+                UIApplication.shared.openURL(url)
             }
         }
         
         view.addSubview(messageView!)
     }
     
-    private func showError() {
-        messageView = IconMessageView(icon: Icon.CourseUnknownContent, message: Strings.courseContentUnknown)
+    fileprivate func showError() {
+        messageView = IconMessageView(icon: Icon.courseUnknownContent, message: Strings.courseContentUnknown)
         messageView?.buttonInfo = MessageButtonInfo(title : Strings.openInBrowser)
         {
             [weak self] in
             self?.loader?.listen(self!, success : {url -> Void in
                 if let url = url {
-                    UIApplication.sharedApplication().openURL(url)
+                    UIApplication.shared.openURL(url as URL)
                 }
                 }, failure : {_ in
             })
@@ -78,7 +78,7 @@ class CourseUnknownBlockViewController: UIViewController, CourseBlockViewControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
     }
     
@@ -94,21 +94,21 @@ class CourseUnknownBlockViewController: UIViewController, CourseBlockViewControl
         super.updateViewConstraints()
     }
     
-    private func applyPortraitConstraints() {
-        messageView?.snp_remakeConstraints { (make) -> Void in
+    fileprivate func applyPortraitConstraints() {
+        messageView?.snp.remakeConstraints { (make) -> Void in
             make.edges.equalTo(view)
         }
     }
     
-    private func applyLandscapeConstraints() {
-        messageView?.snp_remakeConstraints { (make) -> Void in
+    fileprivate func applyLandscapeConstraints() {
+        messageView?.snp.remakeConstraints { (make) -> Void in
             make.edges.equalTo(view)
             let barHeight = navigationController?.toolbar.frame.size.height ?? 0.0
-            make.bottom.equalTo(view.snp_bottom).offset(-barHeight)
+            make.bottom.equalTo(view.snp.bottom).offset(-barHeight)
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if loader?.value == nil {

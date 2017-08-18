@@ -17,9 +17,9 @@ class ListenableObject : NSObject {
             return backing
         }
         set {
-            self.willChangeValueForKey("value")
+            self.willChangeValue(forKey: "value")
             self.backing = newValue
-            self.didChangeValueForKey("value")
+            self.didChangeValue(forKey: "value")
         }
     }
 }
@@ -28,7 +28,7 @@ class KVOListenerTests: XCTestCase {
     
     func testListening() {
         let observed = ListenableObject()
-        let expectation = expectationWithDescription("kvo change is observed")
+        let expectation = self.expectation(description: "kvo change is observed")
         let remover = observed.oex_addObserver(self, forKeyPath: "value") { (observer, object, value) -> Void in
             let newValue : String = value as! String
             XCTAssertEqual(newValue, "new")
@@ -54,11 +54,11 @@ class KVOListenerTests: XCTestCase {
         let updated = MutableBox(false)
         
         // ensure our new observer is cleaned up by making a function scope for it
-        func scope(observed : ListenableObject) {
+        func scope(_ observed : ListenableObject) {
             let observer = NSObject()
             
             // ensure the observer is actually deallocated
-            observer.oex_performActionOnDealloc { () -> Void in
+            observer.oex_performAction { () -> Void in
                 updated.value = true
             }
 
@@ -79,7 +79,7 @@ class KVOListenerTests: XCTestCase {
         func scope() {
             let observed = ListenableObject()
             observed.oex_addObserver(self, forKeyPath: "value") { (observer, object, value) -> Void in }
-            observed.oex_performActionOnDealloc { () -> Void in
+            observed.oex_performAction { () -> Void in
                 cleared.value = true
             }
         }

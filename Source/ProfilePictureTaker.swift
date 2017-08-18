@@ -11,10 +11,10 @@ import Foundation
 import MobileCoreServices
 
 protocol ProfilePictureTakerDelegate : class {
-    func showImagePickerController(picker: UIImagePickerController)
-    func showChooserAlert(alert: UIAlertController)
-    func imagePicked(image: UIImage, picker: UIImagePickerController)
-    func cancelPicker(picker: UIImagePickerController)
+    func showImagePickerController(_ picker: UIImagePickerController)
+    func showChooserAlert(_ alert: UIAlertController)
+    func imagePicked(_ image: UIImage, picker: UIImagePickerController)
+    func cancelPicker(_ picker: UIImagePickerController)
     func deleteImage()
 }
 
@@ -27,22 +27,22 @@ class ProfilePictureTaker : NSObject {
         self.delegate = delegate
     }
     
-    func start(alreadyHasImage: Bool) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            let action = UIAlertAction(title: Strings.Profile.takePicture, style: .Default) { _ in
-                self.showImagePicker(.Camera)
+    func start(_ alreadyHasImage: Bool) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let action = UIAlertAction(title: Strings.Profile.takePicture, style: .default) { _ in
+                self.showImagePicker(.camera)
             }
             alert.addAction(action)
         }
-        if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            let action = UIAlertAction(title: Strings.Profile.chooseExisting, style: .Default) { _ in
-                self.showImagePicker(.PhotoLibrary)
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let action = UIAlertAction(title: Strings.Profile.chooseExisting, style: .default) { _ in
+                self.showImagePicker(.photoLibrary)
             }
             alert.addAction(action)
         }
         if alreadyHasImage {
-            let action = UIAlertAction(title: Strings.Profile.removeImage, style: .Destructive) { _ in
+            let action = UIAlertAction(title: Strings.Profile.removeImage, style: .destructive) { _ in
                 self.delegate?.deleteImage()
             }
             alert.addAction(action)
@@ -53,7 +53,7 @@ class ProfilePictureTaker : NSObject {
     }
     
  
-    private func showImagePicker(sourceType : UIImagePickerControllerSourceType) {
+    fileprivate func showImagePicker(_ sourceType : UIImagePickerControllerSourceType) {
         
         let imagePicker = UIImagePickerController()
         let mediaType: String = kUTTypeImage as String
@@ -61,11 +61,11 @@ class ProfilePictureTaker : NSObject {
         imagePicker.sourceType = sourceType
         imagePicker.delegate = self
         
-        if sourceType == .Camera {
+        if sourceType == .camera {
             imagePicker.showsCameraControls = true
-            imagePicker.cameraCaptureMode = .Photo
-            imagePicker.cameraDevice = .Front
-            imagePicker.cameraFlashMode = .Auto
+            imagePicker.cameraCaptureMode = .photo
+            imagePicker.cameraDevice = .front
+            imagePicker.cameraFlashMode = .auto
         }
         self.delegate?.showImagePickerController(imagePicker)
     }
@@ -75,7 +75,7 @@ class ProfilePictureTaker : NSObject {
 
 extension ProfilePictureTaker : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             let rotatedImage = image.rotateUp()
             let cropper = CropViewController(image: rotatedImage) { [weak self] maybeImage in

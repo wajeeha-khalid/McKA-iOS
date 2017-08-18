@@ -12,27 +12,27 @@ import UIKit
 class DownloadsAccessoryView : UIView {
     
     enum State {
-        case Available
-        case Downloading
-        case Done
+        case available
+        case downloading
+        case done
     }
     
-    private let downloadButton = UIButton(type: .System)
-    private let downloadSpinner = SpinnerView(size: .Medium, color: .Primary)
-    private let iconFontSize : CGFloat = 15
-    private let countLabel : UILabel = UILabel()
+    fileprivate let downloadButton = UIButton(type: .system)
+    fileprivate let downloadSpinner = SpinnerView(size: .medium, color: .primary)
+    fileprivate let iconFontSize : CGFloat = 15
+    fileprivate let countLabel : UILabel = UILabel()
     
     override init(frame : CGRect) {
-        state = .Available
+        state = .available
         itemCount = nil
         
         super.init(frame: frame)
         
-        downloadButton.tintColor = OEXStyles.sharedStyles().neutralBase()
+        downloadButton.tintColor = OEXStyles.shared.neutralBase()
         downloadButton.contentEdgeInsets = UIEdgeInsetsMake(15, 10, 15, 10)
-        downloadButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Horizontal)
-        countLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Horizontal)
-        downloadSpinner.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Horizontal)
+        downloadButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        countLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        downloadSpinner.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         
         self.addSubview(downloadButton)
         self.addSubview(downloadSpinner)
@@ -46,20 +46,20 @@ class DownloadsAccessoryView : UIView {
         
         downloadSpinner.stopAnimating()
         
-        downloadSpinner.snp_makeConstraints {make in
+        downloadSpinner.snp.makeConstraints {make in
             make.center.equalTo(self)
         }
         
-        downloadButton.snp_makeConstraints {make in
+        downloadButton.snp.makeConstraints {make in
             make.trailing.equalTo(self)
             make.top.equalTo(self)
             make.bottom.equalTo(self)
         }
         
-        countLabel.snp_makeConstraints {make in
+        countLabel.snp.makeConstraints {make in
             make.leading.equalTo(self)
             make.centerY.equalTo(self)
-            make.trailing.equalTo(downloadButton.imageView!.snp_leading).offset(-6)
+            make.trailing.equalTo(downloadButton.imageView!.snp.leading).offset(-6)
         }
         
     }
@@ -68,14 +68,14 @@ class DownloadsAccessoryView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func useIcon(icon : Icon?) {
-        downloadButton.setImage(icon?.imageWithFontSize(iconFontSize), forState:.Normal)
+    fileprivate func useIcon(_ icon : Icon?) {
+        downloadButton.setImage(icon?.imageWithFontSize(iconFontSize), for:UIControlState())
     }
     
     var downloadAction : (() -> Void)? = nil {
         didSet {
             downloadButton.oex_removeAllActions()
-            downloadButton.oex_addAction({ _ in self.downloadAction?() }, forEvents: .TouchUpInside)
+            downloadButton.oex_addAction({ _ in self.downloadAction?() }, for: .touchUpInside)
         }
     }
     
@@ -83,7 +83,7 @@ class DownloadsAccessoryView : UIView {
         didSet {
             let count = itemCount ?? 0
             let text = (count > 0 ? "\(count)" : "")
-            let styledText = CourseOutlineItemView.detailFontStyle.attributedStringWithText(text)
+            let styledText = CourseOutlineItemView.detailFontStyle.attributedString(withText: text)
             countLabel.attributedText = styledText
         }
     }
@@ -91,13 +91,13 @@ class DownloadsAccessoryView : UIView {
     var state : State {
         didSet {
             switch state {
-            case .Available:
-                useIcon(.ContentCanDownload)
-                downloadSpinner.hidden = true
-                downloadButton.userInteractionEnabled = true
-                downloadButton.hidden = false
-                self.userInteractionEnabled = true
-                countLabel.hidden = false
+            case .available:
+                useIcon(.contentCanDownload)
+                downloadSpinner.isHidden = true
+                downloadButton.isUserInteractionEnabled = true
+                downloadButton.isHidden = false
+                self.isUserInteractionEnabled = true
+                countLabel.isHidden = false
                 
                 if let count = itemCount {
                     let message = Strings.downloadManyVideos(videoCount: count)
@@ -107,22 +107,22 @@ class DownloadsAccessoryView : UIView {
                     self.accessibilityLabel = Strings.download
                 }
                 self.accessibilityTraits = UIAccessibilityTraitButton
-            case .Downloading:
+            case .downloading:
                 downloadSpinner.startAnimating()
-                downloadSpinner.hidden = false
-                downloadButton.userInteractionEnabled = true
-                self.userInteractionEnabled = true
-                downloadButton.hidden = true
-                countLabel.hidden = true
+                downloadSpinner.isHidden = false
+                downloadButton.isUserInteractionEnabled = true
+                self.isUserInteractionEnabled = true
+                downloadButton.isHidden = true
+                countLabel.isHidden = true
                 
                 self.accessibilityLabel = Strings.downloading
                 self.accessibilityTraits = UIAccessibilityTraitButton
-            case .Done:
-                useIcon(.ContentDidDownload)
-                downloadSpinner.hidden = true
-                self.userInteractionEnabled = false
-                downloadButton.hidden = false
-                countLabel.hidden = false
+            case .done:
+                useIcon(.contentDidDownload)
+                downloadSpinner.isHidden = true
+                self.isUserInteractionEnabled = false
+                downloadButton.isHidden = false
+                countLabel.isHidden = false
                 
                 if let count = itemCount {
                     let message = Strings.downloadManyVideos(videoCount: count)

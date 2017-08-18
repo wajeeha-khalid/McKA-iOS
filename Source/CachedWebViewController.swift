@@ -7,14 +7,14 @@
 //
 
 import UIKit
+import SnapKit
 
-
-public typealias Environment = protocol<OEXConfigProvider, OEXSessionProvider>
+public typealias Environment = OEXConfigProvider & OEXSessionProvider
 
 
 class UIWebViewContentController : WebContentController {
     
-    let webView = UIWebView(frame: CGRectZero)
+    let webView = UIWebView(frame: CGRect.zero)
     
     var view : UIView {
         return webView
@@ -28,7 +28,7 @@ class UIWebViewContentController : WebContentController {
         return webView.delegate = nil
     }
     
-    func loadURLRequest(request: NSURLRequest) {
+    func loadURLRequest(_ request: URLRequest) {
         webView.loadRequest(request)
     }
     
@@ -42,7 +42,7 @@ class UIWebViewContentController : WebContentController {
     }
     
     var initialContentState : WebControllerState {
-        return WebControllerState.CreatingSession
+        return WebControllerState.creatingSession
     }
     
     deinit {
@@ -53,26 +53,26 @@ class UIWebViewContentController : WebContentController {
 
 // Allows access to cached course content that requires authentication.
 // Forwarding our oauth token to the server so we can get a web based cookie
-public class CachedWebViewController: UIViewController, UIWebViewDelegate {
+open class CachedWebViewController: UIViewController, UIWebViewDelegate {
 
-    public let blockID: CourseBlockID?
+    open let blockID: CourseBlockID?
 
     internal let environment : Environment
-    private let loadController : LoadStateViewController
-    private let insetsController : ContentInsetsController
-    private let headerInsets : HeaderViewInsets
+    fileprivate let loadController : LoadStateViewController
+    fileprivate let insetsController : ContentInsetsController
+    fileprivate let headerInsets : HeaderViewInsets
     
-    private lazy var webController : WebContentController = {
+    fileprivate lazy var webController : WebContentController = {
         let controller = UIWebViewContentController()
         controller.webView.delegate = self
         return controller
     }()
     
-    private var state = WebControllerState.CreatingSession
+    fileprivate var state = WebControllerState.creatingSession
     
-    private var contentRequest : NSURLRequest? = nil
-    var currentUrl: NSURL? {
-        return contentRequest?.URL
+    fileprivate var contentRequest : URLRequest? = nil
+    var currentUrl: URL? {
+        return contentRequest?.url
     }
     
     public init(environment : Environment, blockID: CourseBlockID?) {
@@ -100,16 +100,16 @@ public class CachedWebViewController: UIViewController, UIWebViewDelegate {
         webController.clearDelegate()
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         
         self.state = webController.initialContentState
         self.view.addSubview(webController.view)
-        webController.view.snp_makeConstraints {make in
+        webController.view.snp.makeConstraints {make in
             make.edges.equalTo(self.view)
         }
         self.loadController.setupInController(self, contentView: webController.view)
-        webController.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
-        webController.scrollView.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        webController.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
+        webController.scrollView.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         self.insetsController.setupInController(self, scrollView: webController.scrollView)
         
@@ -119,12 +119,12 @@ public class CachedWebViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    private func resetState() {
-        loadController.state = .Initial
-        state = .CreatingSession
+    fileprivate func resetState() {
+        loadController.state = .initial
+        state = .creatingSession
     }
     
-    public override func didReceiveMemoryWarning() {
+    open override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
         if view.window == nil {
@@ -134,12 +134,12 @@ public class CachedWebViewController: UIViewController, UIWebViewDelegate {
     }
     
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         insetsController.updateInsets()
     }
     
-    public func showError(error : NSError?, icon : Icon? = nil, message : String? = nil) {
+    open func showError(_ error : NSError?, icon : Icon? = nil, message : String? = nil) {
         loadController.state = LoadState.failed(error, icon : icon, message : message)
     }
     
@@ -154,13 +154,8 @@ public class CachedWebViewController: UIViewController, UIWebViewDelegate {
             headerInsets.view = newValue
             if let headerView = newValue {
                 webController.view.addSubview(headerView)
-                headerView.snp_makeConstraints {make in
-                    if #available(iOS 9.0, *) {
-                        make.top.equalTo(self.topLayoutGuide.bottomAnchor)
-                    }
-                    else {
-                        make.top.equalTo(self.snp_topLayoutGuideBottom)
-                    }
+                headerView.snp.makeConstraints {make in
+                    make.top.equalTo(topLayoutGuide.snp.bottom)
                     make.leading.equalTo(webController.view)
                     make.trailing.equalTo(webController.view)
                 }
@@ -170,11 +165,12 @@ public class CachedWebViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    private func loadOAuthRefreshRequest() {
+    fileprivate func loadOAuthRefreshRequest() {
         if let hostURL = environment.config.apiHostURL() {
-            guard let URL = hostURL.URLByAppendingPathComponent(OAuthExchangePath) else { return }
-            let exchangeRequest = NSMutableURLRequest(URL: URL)
-            exchangeRequest.HTTPMethod = HTTPMethod.POST.rawValue
+            
+            let URL = hostURL.appendingPathComponent(OAuthExchangePath)
+            var exchangeRequest = URLRequest(url: URL)
+            exchangeRequest.httpMethod = HTTPMethod.POST.rawValue
             
             for (key, value) in self.environment.session.authorizationHeaders {
                 exchangeRequest.addValue(value, forHTTPHeaderField: key)
@@ -185,63 +181,61 @@ public class CachedWebViewController: UIViewController, UIWebViewDelegate {
     
     // MARK: Request Loading
     
-    public func loadRequest(request : NSURLRequest) {
+    open func loadRequest(_ request : URLRequest) {
         contentRequest = request
-        loadController.state = .Initial
+        loadController.state = .initial
         state = webController.initialContentState
         
         if webController.alwaysRequiresOAuthUpdate && EVURLCache.storagePathForRequest(request) == nil {
             loadOAuthRefreshRequest()
         }
         else {
-            state = .LoadingContent
-            debugPrint("Loading Request: \(request.URLString)")
+            state = .loadingContent
+            debugPrint("Loading Request: \(request.url!.absoluteString)")
             webController.loadURLRequest(request)
         }
     }
     
     // MARK: UIWebView delegate
     
-    public func webViewDidFinishLoad(webView: UIWebView) {
+    open func webViewDidFinishLoad(_ webView: UIWebView) {
         
         switch state {
-        case .CreatingSession:
+        case .creatingSession:
             if let request = contentRequest {
-                state = .LoadingContent
+                state = .loadingContent
                 webController.loadURLRequest(request)
             }
             else {
                 loadController.state = LoadState.failed()
             }
-        case .LoadingContent:
-            loadController.state = .Loaded
+        case .loadingContent:
+            loadController.state = .loaded
 
-            if let url = contentRequest?.URL?.absoluteString, let source = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML") where (url.containsString("type@chat") || url.rangeOfString("i4x://.*/chat/", options: .RegularExpressionSearch) != nil) {
+            if let url = contentRequest?.url?.absoluteString, let source = webView.stringByEvaluatingJavaScript(from: "document.documentElement.outerHTML"), (url.contains("type@chat") || url.range(of: "i4x://.*/chat/", options: .regularExpression) != nil) {
 
-                if source.containsString(">COMPLETE<") || source.containsString(">Complete<") {
+                if source.contains(">COMPLETE<") || source.contains(">Complete<") {
                     print("Is completed!")
 
-                    NSNotificationCenter.defaultCenter().postNotificationName("ChatCompletedNotification", object: nil, userInfo: ["blockId": self.blockID ?? ""])
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "ChatCompletedNotification"), object: nil, userInfo: ["blockId": self.blockID ?? ""])
                 }
             }
 
             let jsString = "localStorage.getItem('current_step');"
-            let currentStep = webView.stringByEvaluatingJavaScriptFromString(jsString)
+            _ = webView.stringByEvaluatingJavaScript(from: jsString)
 
             if let controller = webController as? UIWebViewContentController {
-                let currentStep = controller.webView.stringByEvaluatingJavaScriptFromString(jsString)
-                print("currentStep: \(currentStep)")
+                _ = controller.webView.stringByEvaluatingJavaScript(from: jsString)
             }
-            print("currentStep: \(currentStep)")
-        case .NeedingSession:
-            state = .CreatingSession
+        case .needingSession:
+            state = .creatingSession
             loadOAuthRefreshRequest()
         }
     }
     
-    public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        if (error.code != -999) {
-            showError(error)
+    open func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        if ((error as NSError).code != -999) {
+            showError(error as NSError)
         }
     }
 }

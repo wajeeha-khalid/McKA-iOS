@@ -13,13 +13,13 @@ extension UIView {
         return traverseResponderChainForUIViewController()
     }
     
-    private func traverseResponderChainForUIViewController() -> UIViewController? {
-        let nextResponder = self.nextResponder()
+    fileprivate func traverseResponderChainForUIViewController() -> UIViewController? {
+        let nextResponder = self.next
         if let nextResponder = nextResponder {
-            if nextResponder.isKindOfClass(UIViewController) {
+            if nextResponder.isKind(of: UIViewController.self) {
                 return nextResponder as? UIViewController
             }
-            else if nextResponder.isKindOfClass(UIView){
+            else if nextResponder.isKind(of: UIView.self){
                 let view = nextResponder as? UIView
                 return view?.traverseResponderChainForUIViewController()
             }

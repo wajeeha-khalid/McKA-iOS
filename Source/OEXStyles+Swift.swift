@@ -18,8 +18,8 @@ struct ShadowStyle {
 
     var shadow: NSShadow {
         let shadow = NSShadow()
-        shadow.shadowColor = color.colorWithAlphaComponent(opacity)
-        shadow.shadowOffset = CGSize(width: cos(CGFloat(angle) / 180.0 * CGFloat(M_PI)), height: sin(CGFloat(angle) / 180.0 * CGFloat(M_PI)))
+        shadow.shadowColor = color.withAlphaComponent(opacity)
+        shadow.shadowOffset = CGSize(width: cos(CGFloat(angle) / 180.0 * CGFloat(Float.pi)), height: sin(CGFloat(angle) / 180.0 * CGFloat(Float.pi)))
         shadow.shadowBlurRadius = size
         return shadow
     }
@@ -28,43 +28,43 @@ struct ShadowStyle {
 extension OEXStyles {
     
     var navigationTitleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .SemiBold, size: .Base, color : navigationItemTintColor())
+        return OEXTextStyle(weight: .semiBold, size: .base, color : navigationItemTintColor())
     }
     
     var navigationButtonTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .SemiBold, size: .Small, color: nil)
+        return OEXTextStyle(weight: .semiBold, size: .small, color: nil)
     }
     
-    private var searchBarTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .XSmall, color: OEXStyles.sharedStyles().neutralBlack())
+    fileprivate var searchBarTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared.neutralBlack())
     }
     
     public func applyGlobalAppearance() {
         if let image = UIImage(named: "navigationBarBackground") {
-            let color = UIColor(colorLiteralRed: 39/255.0, green: 144/255.0, blue: 240/255.0, alpha: 0.9)
+            let color = BrandingThemes.shared.getNavigationBarColor()
             let colorImage = UIImage.image(from: color, size: image.size)
-            let blended = image.blendendImage(with: colorImage, blendMode: .Normal, alpha: 1.0)
-            UINavigationBar.appearance().setBackgroundImage(blended, forBarMetrics: UIBarMetrics.Default)
+            let blended = image.blendendImage(with: colorImage, blendMode: .normal, alpha: 1.0)
+            UINavigationBar.appearance().setBackgroundImage(blended, for: UIBarMetrics.default)
         }
         UINavigationBar.appearance().tintColor = navigationItemTintColor()
         UINavigationBar.appearance().titleTextAttributes = navigationTitleTextStyle.attributes
-        UIBarButtonItem.appearance().setTitleTextAttributes(navigationButtonTextStyle.attributes, forState: .Normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes(navigationButtonTextStyle.attributes, for: UIControlState())
         
         UIToolbar.appearance().tintColor = navigationBarColor()
         
-        let styleAttributes = OEXTextStyle(weight: .Normal, size : .Small, color : self.neutralBlack()).attributes
-        UISegmentedControl.appearance().setTitleTextAttributes(styleAttributes, forState: UIControlState.Selected)
-        UISegmentedControl.appearance().setTitleTextAttributes(styleAttributes, forState: UIControlState.Normal)
+        let styleAttributes = OEXTextStyle(weight: .normal, size : .small, color : self.neutralBlack()).attributes
+        UISegmentedControl.appearance().setTitleTextAttributes(styleAttributes, for: UIControlState.selected)
+        UISegmentedControl.appearance().setTitleTextAttributes(styleAttributes, for: UIControlState())
         UISegmentedControl.appearance().tintColor = self.primaryXLightColor()
         
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().isTranslucent = false
 
         if #available(iOS 9.0, *) {
-            UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.classForCoder()]).defaultTextAttributes = searchBarTextStyle.attributes
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.classForCoder() as! UIAppearanceContainer.Type]).defaultTextAttributes = searchBarTextStyle.attributes
         }
         else {
             //Make sure we remove UIAppearance+Swift.h+m when we drop iOS8 support
-            UITextField.my_appearanceWhenContainedIn(UISearchBar.classForCoder()).defaultTextAttributes = searchBarTextStyle.attributes
+            UITextField.my_appearanceWhenContained(in: UISearchBar.classForCoder() as! UIAppearanceContainer.Type).defaultTextAttributes = searchBarTextStyle.attributes
         }
     }
     
@@ -92,48 +92,48 @@ extension OEXStyles {
     }
     
     var discussionsBackgroundColor : UIColor {
-        return OEXStyles.sharedStyles().neutralXLight()
+        return OEXStyles.shared.neutralXLight()
     }
 
 // Standard text Styles
     
     var textAreaBodyStyle : OEXTextStyle {
-        let style = OEXMutableTextStyle(weight: OEXTextWeight.Normal, size: .Small, color: OEXStyles.sharedStyles().neutralDark())
-        style.lineBreakMode = .ByWordWrapping
+        let style = OEXMutableTextStyle(weight: OEXTextWeight.normal, size: .small, color: OEXStyles.shared.neutralDark())
+        style.lineBreakMode = .byWordWrapping
         return style
     }
 
 // Standard button styles
 
     var filledPrimaryButtonStyle : ButtonStyle {
-        return filledButtonStyle(OEXStyles.sharedStyles().primaryBaseColor())
+        return filledButtonStyle(OEXStyles.shared.primaryBaseColor())
     }
 
-    func filledButtonStyle(color: UIColor) -> ButtonStyle {
+    func filledButtonStyle(_ color: UIColor) -> ButtonStyle {
         let buttonMargins : CGFloat = 8
         let borderStyle = BorderStyle()
-        let textStyle = OEXTextStyle(weight: .SemiBold, size: .Base, color: UIColor(hexString: "#626567", alpha: 1.0))
+        let textStyle = OEXTextStyle(weight: .semiBold, size: .base, color: UIColor(hexString: "#626567", alpha: 1.0))
         return ButtonStyle(textStyle: textStyle, backgroundColor: color, borderStyle: borderStyle,
                            contentInsets : UIEdgeInsetsMake(buttonMargins, buttonMargins, buttonMargins, buttonMargins))
     }
     
     var linkButtonStyle: ButtonStyle {
-        let textStyle = OEXTextStyle(weight: .Normal, size: .Small, color: self.primaryBaseColor())
+        let textStyle = OEXTextStyle(weight: .normal, size: .small, color: self.primaryBaseColor())
         return ButtonStyle(textStyle: textStyle, backgroundColor: nil)
     }
     
     var filledEmphasisButtonStyle : ButtonStyle {
         let buttonMargins : CGFloat = 12
         let result = filledPrimaryButtonStyle
-        result.backgroundColor = OEXStyles.sharedStyles().utilitySuccessBase()
-        result.textStyle = result.textStyle.withSize(.XLarge)
+        result.backgroundColor = OEXStyles.shared.utilitySuccessBase()
+        result.textStyle = result.textStyle.withSize(.xLarge)
         result.contentInsets = UIEdgeInsetsMake(buttonMargins, buttonMargins, buttonMargins, buttonMargins)
         return result
     }
     
 // Standard border styles
     var entryFieldBorderStyle : BorderStyle {
-        return BorderStyle(width: .Size(1), color: OEXStyles.sharedStyles().neutralLight())
+        return BorderStyle(width: .size(1), color: OEXStyles.shared.neutralLight())
     }
     
 //Standard Divider styles
@@ -148,17 +148,17 @@ extension UISearchBar {
     func applyStandardStyles(withPlaceholder placeholder : String? = nil) {
         self.placeholder = placeholder
         self.showsCancelButton = false
-        self.searchBarStyle = .Default
-        self.backgroundColor = OEXStyles.sharedStyles().neutralWhiteT()
+        self.searchBarStyle = .default
+        self.backgroundColor = OEXStyles.shared.neutralWhiteT()
         
     }
 }
 
 //Convenience computed properties for margins
 var StandardHorizontalMargin : CGFloat {
-    return OEXStyles.sharedStyles().standardHorizontalMargin()
+    return OEXStyles.shared.standardHorizontalMargin()
 }
 
 var StandardVerticalMargin : CGFloat {
-    return OEXStyles.sharedStyles().standardVerticalMargin
+    return OEXStyles.shared.standardVerticalMargin
 }

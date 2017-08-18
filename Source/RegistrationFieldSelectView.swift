@@ -10,39 +10,39 @@ import UIKit
 
 class RegistrationFieldSelectView: OEXRegistrationFormTextField, UIPickerViewDelegate, UIPickerViewDataSource {
     var options : [OEXRegistrationOption] = []
-    private(set) var selected : OEXRegistrationOption?
+    fileprivate(set) var selected : OEXRegistrationOption?
     
-    @objc let picker = UIPickerView(frame: CGRectZero)
-    private let dropdownTab = UIImageView()
-    private let tapButton = UIButton()
+    @objc let picker = UIPickerView(frame: CGRect.zero)
+    fileprivate let dropdownTab = UIImageView()
+    fileprivate let tapButton = UIButton()
     
     override init(frame : CGRect) {
-        super.init(frame : CGRectZero)
+        super.init(frame : CGRect.zero)
         picker.dataSource = self
         picker.delegate = self
         picker.showsSelectionIndicator = true;
-        textInputView.enabled = false
+        textInputView.isEnabled = false
         
-        dropdownTab.image = Icon.Dropdown.imageWithFontSize(12)
-        dropdownTab.tintColor = OEXStyles.sharedStyles().neutralDark()
+        dropdownTab.image = Icon.dropdown.imageWithFontSize(12)
+        dropdownTab.tintColor = OEXStyles.shared.neutralDark()
         dropdownTab.sizeToFit()
         
         if isRightToLeft && !UIDevice.isOSVersionAtLeast9() {
             // Starting with iOS9, leftView and rightView are reflected in RTL views.
             // When we drop iOS8 support we can remove this conditional check entirely.
-            textInputView.leftViewMode = .Always
+            textInputView.leftViewMode = .always
             textInputView.leftView = dropdownTab
         }
         else {
-            textInputView.rightViewMode = .Always
+            textInputView.rightViewMode = .always
             textInputView.rightView = dropdownTab
         }
         tapButton.oex_addAction({[weak self] _ in
             self?.makeFirstResponder()
-            }, forEvents: UIControlEvents.TouchUpInside)
+            }, for: UIControlEvents.touchUpInside)
         self.addSubview(tapButton)
         
-        tapButton.snp_makeConstraints { (make) in
+        tapButton.snp.makeConstraints { (make) in
             make.top.equalTo(textInputView)
             make.leading.equalTo(textInputView)
             make.trailing.equalTo(textInputView)
@@ -59,7 +59,7 @@ class RegistrationFieldSelectView: OEXRegistrationFormTextField, UIPickerViewDel
         tapButton.accessibilityHint = Strings.accessibilityShowsDropdownHint
     }
     
-    override func canBecomeFirstResponder() -> Bool {
+    override var canBecomeFirstResponder : Bool {
         return true
     }
     
@@ -71,21 +71,21 @@ class RegistrationFieldSelectView: OEXRegistrationFormTextField, UIPickerViewDel
         fatalError("init(coder:) has not been implemented")
     }
 
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return options.count
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.options[row].name
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selected = self.options[row]
-        if let selected = self.selected where !selected.value.isEmpty {
+        if let selected = self.selected, !selected.value.isEmpty {
             self.textInputView.text = selected.name
         }
         else {

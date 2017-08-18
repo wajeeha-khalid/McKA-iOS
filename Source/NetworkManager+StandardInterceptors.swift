@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyJSON
 import edXCore
 
 extension NetworkManager {
@@ -19,8 +19,8 @@ extension NetworkManager {
         addJSONInterceptor(deprecatedVersionInterceptor)
     }
     
-    static func courseAccessInterceptor(response: NSHTTPURLResponse, json: JSON) -> Result<JSON> {
-        guard let statusCode = OEXHTTPStatusCode(rawValue: response.statusCode) where statusCode.is4xx else {
+    static func courseAccessInterceptor(_ response: HTTPURLResponse, json: JSON) -> Result<JSON> {
+        guard let statusCode = OEXHTTPStatusCode(rawValue: response.statusCode), statusCode.is4xx else {
             return Success(json)
         }
         
@@ -31,9 +31,9 @@ extension NetworkManager {
         return Success(json)
     }
     
-    static func deprecatedVersionInterceptor(response: NSHTTPURLResponse, json: JSON) -> Result<JSON> {
+    static func deprecatedVersionInterceptor(_ response: HTTPURLResponse, json: JSON) -> Result<JSON> {
         let versionController = VersionUpgradeInfoController.sharedController
-        versionController.populateFromHeaders(httpResponseHeaders: response.allHeaderFields)
+        versionController.populateFromHeaders(httpResponseHeaders: response.allHeaderFields as [NSObject : AnyObject])
         return Success(json)
     }
 }

@@ -11,61 +11,61 @@ import XCTest
 
 private final class TestLoader: NSObject, RequestLoader {
     let error: NSError?
-    let data: NSData?
-    let response: NSURLResponse?
+    let data: Data?
+    let response: URLResponse?
     
-    init(response: NSURLResponse?, data: NSData?, error: NSError?) {
+    init(response: URLResponse?, data: Data?, error: NSError?) {
         self.response = response
         self.data = data
         self.error = error
     }
     
-    @objc private func loadRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) {
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
+    func loadRequest(_ request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
             completionHandler(self.data, self.response, self.error)
         }
     }
     
-    @objc private func cancel() {
+    @objc fileprivate func cancel() {
         
     }
 }
 
-private final class TestURLClient: NSObject, NSURLProtocolClient {
+private final class TestURLClient: NSObject, URLProtocolClient {
     var receivedError: NSError?
-    var receivedData: NSData?
-    var receivedResponse: NSURLResponse?
+    var receivedData: Data?
+    var receivedResponse: URLResponse?
     var finishedLoading = false
-     @objc private func URLProtocol(protocol: NSURLProtocol, wasRedirectedToRequest request: NSURLRequest, redirectResponse: NSURLResponse) {
+     @objc fileprivate func urlProtocol(_ protocol: URLProtocol, wasRedirectedTo request: URLRequest, redirectResponse: URLResponse) {
         fatalError()
     }
     
-    @objc private func URLProtocol(protocol: NSURLProtocol, cachedResponseIsValid cachedResponse: NSCachedURLResponse) {
+    @objc fileprivate func urlProtocol(_ protocol: URLProtocol, cachedResponseIsValid cachedResponse: CachedURLResponse) {
         fatalError()
     }
     
-    @objc private func URLProtocol(protocol: NSURLProtocol, didReceiveResponse response: NSURLResponse, cacheStoragePolicy policy: NSURLCacheStoragePolicy) {
+    @objc fileprivate func urlProtocol(_ protocol: URLProtocol, didReceive response: URLResponse, cacheStoragePolicy policy: URLCache.StoragePolicy) {
         receivedResponse = response
     }
     
-    @objc private func URLProtocol(protocol: NSURLProtocol, didLoadData data: NSData) {
+    @objc fileprivate func urlProtocol(_ protocol: URLProtocol, didLoad data: Data) {
         receivedData = data
     }
     
-    @objc private func URLProtocolDidFinishLoading(protocol: NSURLProtocol) {
+    @objc fileprivate func urlProtocolDidFinishLoading(_ protocol: URLProtocol) {
         finishedLoading = true
     }
     
-    @objc private func URLProtocol(protocol: NSURLProtocol, didFailWithError error: NSError) {
-        receivedError = error
+    @objc fileprivate func urlProtocol(_ protocol: URLProtocol, didFailWithError error: Error) {
+        receivedError = error as NSError
     }
     
-    @objc private func URLProtocol(protocol: NSURLProtocol, didReceiveAuthenticationChallenge challenge: NSURLAuthenticationChallenge) {
+    @objc fileprivate func urlProtocol(_ protocol: URLProtocol, didReceive challenge: URLAuthenticationChallenge) {
         
     }
     
-    @objc private func URLProtocol(protocol: NSURLProtocol, didCancelAuthenticationChallenge challenge: NSURLAuthenticationChallenge) {
+    @objc fileprivate func urlProtocol(_ protocol: URLProtocol, didCancel challenge: URLAuthenticationChallenge) {
         
     }
 }
@@ -85,25 +85,25 @@ class ChatLoadingProtocolTests: XCTestCase {
     }
     
     func testThatProtocolInterceptsChatRequests() {
-        let requestURL = NSURL(string: "http://insignificantHost.com/xblock/block-v1:Majid_Al_Futtaim+PMM01+2017_T2+type@chat+block@444ed0f29613445fb1f41bd6c572f496")
-        let request = NSURLRequest(URL: requestURL!)
-        XCTAssertTrue(WebViewLoadingProtocol.canInitWithRequest(request))
+        let requestURL = URL(string: "http://insignificantHost.com/xblock/block-v1:Majid_Al_Futtaim+PMM01+2017_T2+type@chat+block@444ed0f29613445fb1f41bd6c572f496")
+        let request = URLRequest(url: requestURL!)
+        XCTAssertTrue(WebViewLoadingProtocol.canInit(with: request))
     }
     
     func testThatProtocolInterceptChatRequestsUsingRefereField() {
         let refererURL = "http://insignificantHost.com/xblock/block-v1:Majid_Al_Futtaim+PMM01+2017_T2+type@chat+block@444ed0f29613445fb1f41bd6c572f496"
-        let requestURL = NSURL(string: "http://insginificantHost.com/static/assets/test.js")
-        let request = NSMutableURLRequest(URL: requestURL!)
+        let requestURL = URL(string: "http://insginificantHost.com/static/assets/test.js")
+        var request = URLRequest(url: requestURL!)
         request.setValue(refererURL, forHTTPHeaderField: "Referer")
-        XCTAssertTrue(WebViewLoadingProtocol.canInitWithRequest(request))
+        XCTAssertTrue(WebViewLoadingProtocol.canInit(with: request))
     }
     
     func testThatProtocolDoesnotInterceptNonHTMLRequests() {
-        let requestURL = NSURL(string: "https://insignificantHost.com/xblock")!
+        let requestURL = URL(string: "https://insignificantHost.com/xblock")!
         let referer = "https://apple.com/"
-        let request = NSMutableURLRequest(URL: requestURL)
+        var request = URLRequest(url: requestURL)
         request.setValue(referer, forHTTPHeaderField: "Referer")
-        XCTAssertFalse(WebViewLoadingProtocol.canInitWithRequest(request))
+        XCTAssertFalse(WebViewLoadingProtocol.canInit(with: request))
     }
     
     func testThatProtocolForwardsErrorToClient() {
@@ -114,11 +114,11 @@ class ChatLoadingProtocolTests: XCTestCase {
         let testLoader = TestLoader(response: nil, data: nil, error: error)
         WebViewLoadingProtocol.requestLoader = testLoader
         let client = TestURLClient()
-        let request = NSURLRequest(URL: NSURL(string:"https://www.google.com")!)
+        let request = URLRequest(url: URL(string:"https://www.google.com")!)
         let subject = WebViewLoadingProtocol(request: request, cachedResponse: nil, client: client)
         
         //execution
-        let expectation = self.expectationWithDescription("Should forward error to the client")
+        let expectation = self.expectation(description: "Should forward error to the client")
         subject.startLoading()
         delay(1.5) { 
             XCTAssertEqual(errorCode, client.receivedError?.code)
@@ -127,35 +127,35 @@ class ChatLoadingProtocolTests: XCTestCase {
             XCTAssertTrue(client.finishedLoading)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(3.0, handler: nil)
+        self.waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testThatProtocolForwardsDataToClient() {
         //setup
-        let url = NSURL(string: "https://www.google.com")!
-        let response = NSHTTPURLResponse(URL: url, MIMEType: "application/json", expectedContentLength: 320, textEncodingName: nil)
-        let data = "This is test data".dataUsingEncoding(NSUTF8StringEncoding)
+        let url = URL(string: "https://www.google.com")!
+        let response = HTTPURLResponse(url: url, mimeType: "application/json", expectedContentLength: 320, textEncodingName: nil)
+        let data = "This is test data".data(using: String.Encoding.utf8)
         let testLoader = TestLoader(response: response, data: data, error: nil)
         WebViewLoadingProtocol.requestLoader = testLoader
         let client = TestURLClient()
-        let request = NSURLRequest(URL: url)
+        let request = URLRequest(url: url)
         let subject = WebViewLoadingProtocol(request: request, cachedResponse: nil, client: client)
         
         //execution
-        let expectation = self.expectationWithDescription("Should forward error to the client")
+        let expectation = self.expectation(description: "Should forward error to the client")
         subject.startLoading()
         delay(1.5) {
             XCTAssertEqual(data, client.receivedData)
-            XCTAssertEqual(response.statusCode, (client.receivedResponse as! NSHTTPURLResponse).statusCode)
+            XCTAssertEqual(response.statusCode, (client.receivedResponse as! HTTPURLResponse).statusCode)
             XCTAssertNil(client.receivedError)
             XCTAssertTrue(client.finishedLoading)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(3.0, handler: nil)
+        self.waitForExpectations(timeout: 3.0, handler: nil)
     }
 }
 
-func delay(seconds: Double, queue: dispatch_queue_t = dispatch_get_main_queue(), block: () -> ()) {
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, queue, block)
+func delay(_ seconds: Double, queue: DispatchQueue = DispatchQueue.main, block: @escaping () -> ()) {
+    let delayTime = DispatchTime.now() + Double(Int64(seconds * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    queue.asyncAfter(deadline: delayTime, execute: block)
 }

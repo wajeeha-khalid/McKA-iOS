@@ -7,12 +7,12 @@
 //
 
 import Foundation
-
+import SwiftyJSON
 import edXCore
 
 extension NetworkManager {
     
-    public func addRefreshTokenAuthenticator(router:OEXRouter, session:OEXSession, clientId:String) {
+    public func addRefreshTokenAuthenticator(_ router:OEXRouter, session:OEXSession, clientId:String) {
         let invalidAccessAuthenticator = {[weak router] response, data in
             NetworkManager.invalidAccessAuthenticator(router, session: session, clientId:clientId, response: response, data: data)
         }
@@ -23,18 +23,17 @@ extension NetworkManager {
      message for an expired access token. If so, a new network request to
      refresh the access token is made and this new access token is saved.
      */
-    public static func invalidAccessAuthenticator(router: OEXRouter?, session:OEXSession, clientId:String, response: NSHTTPURLResponse?, data: NSData?) -> AuthenticationAction {
+    public static func invalidAccessAuthenticator(_ router: OEXRouter?, session:OEXSession, clientId:String, response: HTTPURLResponse?, data: Data?) -> AuthenticationAction {
         if let data = data,
             let response = response,
-            let raw : AnyObject = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
+            let raw : AnyObject = try? JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions()) as AnyObject
         {
             let json = JSON(raw)
             
             guard let statusCode = OEXHTTPStatusCode(rawValue: response.statusCode),
-                let error = NSError(json: json, code: response.statusCode)
-                 where statusCode == .Code401Unauthorised else
+                let error = NSError(json: json, code: response.statusCode), statusCode == .code401Unauthorised else
             {
-                return AuthenticationAction.Proceed
+                return AuthenticationAction.proceed
             }
             
             guard let refreshToken = session.token?.refreshToken else {
@@ -52,33 +51,33 @@ extension NetworkManager {
             }
         }
         Logger.logError("Network Authenticator", "Request failed: " + response.debugDescription)
-        return AuthenticationAction.Proceed
+        return AuthenticationAction.proceed
     }
 }
 
-private func logout(router:OEXRouter?) -> AuthenticationAction {
-    dispatch_async(dispatch_get_main_queue()) {
+private func logout(_ router:OEXRouter?) -> AuthenticationAction {
+    DispatchQueue.main.async {
         router?.logout()
     }
-    return AuthenticationAction.Proceed
+    return AuthenticationAction.proceed
 }
 
 /** Creates a networkRequest to refresh the access_token. If successful, the
  new access token is saved and a successful AuthenticationAction is returned.
  */
-private func refreshAccessToken(clientId:String, refreshToken:String, session: OEXSession) -> AuthenticationAction {
-    return AuthenticationAction.Authenticate({ (networkManager, completion) in
-        let networkRequest = LoginAPI.requestTokenWithRefreshToken(
-            refreshToken,
+private func refreshAccessToken(_ clientId:String, refreshToken:String, session: OEXSession) -> AuthenticationAction {
+    return AuthenticationAction.authenticate({ (networkManager, completion) in
+        let networkRequest = LoginAPI.requestTokenWith(
+            refreshToken: refreshToken,
             clientId: clientId,
             grantType: "refresh_token"
         )
         networkManager.taskForRequest(networkRequest) {result in
             guard let currentUser = session.currentUser, let newAccessToken = result.data else {
-                return completion(_success: false)
+                return completion(false)
             }
-            session.saveAccessToken(newAccessToken, userDetails: currentUser)
-            return completion(_success: true)
+            session.save(newAccessToken, userDetails: currentUser)
+            return completion(true)
         }
     })
 }

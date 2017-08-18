@@ -8,18 +8,18 @@
 
 import UIKit
 
-public class HTMLBlockViewController: UIViewController, CourseBlockViewController, PreloadableBlockController {
+open class HTMLBlockViewController: UIViewController, CourseBlockViewController, PreloadableBlockController {
     
-    public typealias Environment = protocol<OEXAnalyticsProvider, OEXConfigProvider, DataManagerProvider, OEXSessionProvider>
+    public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & OEXSessionProvider
     
-    public let courseID : String
-    public var appDelegate : OEXAppDelegate
-    public let blockID : CourseBlockID?
+    open let courseID : String
+    open var appDelegate : OEXAppDelegate
+    open let blockID : CourseBlockID?
     
-    private let webController : CachedWebViewController
+    fileprivate let webController : CachedWebViewController
     
-    private let loader = BackedStream<CourseBlock>()
-    private let courseQuerier : CourseOutlineQuerier
+    fileprivate let loader = BackedStream<CourseBlock>()
+    fileprivate let courseQuerier : CourseOutlineQuerier
     
     public init(blockID : CourseBlockID?, courseID : String, environment : Environment) {
         self.courseID = courseID
@@ -27,44 +27,44 @@ public class HTMLBlockViewController: UIViewController, CourseBlockViewControlle
         
         webController = CachedWebViewController(environment: environment, blockID: self.blockID)
         courseQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
-        appDelegate = UIApplication.sharedApplication().delegate as! OEXAppDelegate
+        appDelegate = UIApplication.shared.delegate as! OEXAppDelegate
         super.init(nibName : nil, bundle : nil)
         
         addChildViewController(webController)
-        webController.didMoveToParentViewController(self)
+        webController.didMove(toParentViewController: self)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         appDelegate.shouldRotate = false
         view.addSubview(webController.view)
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
     }
     
-    public override func viewWillDisappear(animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         appDelegate.shouldRotate = false
     }
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadData()
     }
 
-	public override func viewDidAppear(animated: Bool) {
+	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		showFTUEIfNeeded()
 	}
     
-    private func loadData() {
+    fileprivate func loadData() {
         if !loader.hasBacking {
             loader.backWithStream(courseQuerier.blockWithID(self.blockID).firstSuccess())
             loader.listen (self, success : {[weak self] block in
                 if let url = block.blockURL {
-                    let request = NSURLRequest(URL: url)
+                    let request = URLRequest(url: url as URL)
                     self?.webController.loadRequest(request)
                 }
                 else {
@@ -76,14 +76,14 @@ public class HTMLBlockViewController: UIViewController, CourseBlockViewControlle
         }
     }
     
-    public func preloadData() {
+    open func preloadData() {
         let _ = self.view
         loadData()
     }
 
 	func showFTUEIfNeeded() {
-		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-		dispatch_after(delayTime, dispatch_get_main_queue()) { [weak self] in
+		let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
 			guard let stongSelf = self else {
 				return
 			}
@@ -92,20 +92,20 @@ public class HTMLBlockViewController: UIViewController, CourseBlockViewControlle
 	}
 
 	func showUnitFTUE(){
-		let showedFTUE = NSUserDefaults.standardUserDefaults().boolForKey("Unit FTUE")
+		let showedFTUE = UserDefaults.standard.bool(forKey: "Unit FTUE")
 		guard !showedFTUE,
-			let rootController = UIApplication.sharedApplication().delegate?.window??.rootViewController else { return }
+			let rootController = UIApplication.shared.delegate?.window??.rootViewController else { return }
 
 		let coachController = UnitCoachmarkViewController()
 
 		rootController.addChildViewController(coachController)
 		coachController.view.frame = rootController.view.bounds
 		rootController.view.addSubview(coachController.view)
-		coachController.didMoveToParentViewController(rootController)
+		coachController.didMove(toParentViewController: rootController)
 		coachController.view.alpha = 0.01
-		UIView.animateWithDuration(0.2) {
+		UIView.animate(withDuration: 0.2, animations: {
 			coachController.view.alpha = 1.0
-		}
-		NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Unit FTUE")
+		}) 
+		UserDefaults.standard.set(true, forKey: "Unit FTUE")
 	}
 }

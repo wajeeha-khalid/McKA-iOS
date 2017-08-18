@@ -10,9 +10,9 @@ import WebKit
 import UIKit
 
 extension OEXConfig : URLCredentialProvider {
-    @objc public func URLCredentialForHost(host : NSString) -> NSURLCredential? {
+    @objc public func URLCredentialForHost(_ host : String) -> URLCredential? {
         for item in self.basicAuthCredentials {
-            if item.host.host == host {
+            if item.host.host! == host {
                 return item.URLCredential
             }
         }

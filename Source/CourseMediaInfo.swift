@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CourseMediaInfo: NSObject {
+open class CourseMediaInfo: NSObject {
     let name: String?
     let uri: String?
     
@@ -17,13 +17,13 @@ public class CourseMediaInfo: NSObject {
         self.uri = uri
     }
     
-    public init(dict : [NSObject:AnyObject]?) {
+    public init(dict : [AnyHashable: Any]?) {
         self.name = dict?["name"] as? String
         self.uri = dict?["uri"] as? String
         super.init()
     }
     
-    public var dictionary : [String:AnyObject] {
-        return stripNullsFrom(["name" : name, "uri" : uri])
+    open var dictionary : [String:AnyObject] {
+        return stripNullsFrom(["name" : name as AnyObject, "uri" : uri as AnyObject])
     }
 }

@@ -10,11 +10,11 @@ import Foundation
 
 class StartupViewController: UIViewController, InterfaceOrientationOverriding {
 
-    typealias Environment = protocol<OEXRouterProvider, OEXConfigProvider>
+    typealias Environment = OEXRouterProvider & OEXConfigProvider
 
-    private let logoImageView = UIImageView()
+    fileprivate let logoImageView = UIImageView()
 
-    private let environment: Environment
+    fileprivate let environment: Environment
 
     init(environment: Environment) {
         self.environment = environment
@@ -35,91 +35,95 @@ class StartupViewController: UIViewController, InterfaceOrientationOverriding {
         setupBottomBar()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        OEXAnalytics.sharedAnalytics().trackScreenWithName("launch")
+        OEXAnalytics.shared().trackScreen(withName: "launch")
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return false
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Portrait
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return .portrait
     }
     
     // MARK: - View Setup
 
-    private func setupBackground() {
+    fileprivate func setupBackground() {
         let backgroundImage = UIImage(named: "launchBackground")
         let backgroundImageView = UIImageView(image: backgroundImage)
-        backgroundImageView.contentMode = .ScaleAspectFill
+        backgroundImageView.contentMode = .scaleAspectFill
         view.addSubview(backgroundImageView)
 
-        backgroundImageView.snp_makeConstraints { (make) in
+        backgroundImageView.snp.makeConstraints { (make) in
             make.edges.equalTo(view)
         }
     }
 
-    private func setupLogo() {
+    fileprivate func setupLogo() {
         let logo = UIImage(named: "logo")
         logoImageView.image = logo
-        logoImageView.contentMode = .ScaleAspectFit
+        logoImageView.contentMode = .scaleAspectFit
         logoImageView.accessibilityLabel = environment.config.platformName()
         logoImageView.isAccessibilityElement = true
         logoImageView.accessibilityTraits = UIAccessibilityTraitImage
         view.addSubview(logoImageView)
 
-        logoImageView.snp_makeConstraints { (make) in
-            make.centerY.equalTo(view.snp_bottom).dividedBy(5.0)
-            make.centerX.equalTo(view.snp_centerX)
+        logoImageView.snp.makeConstraints { (make) in
+            make.centerY.equalTo(view.snp.bottom).dividedBy(5.0)
+            make.centerX.equalTo(view.snp.centerX)
         }
     }
 
-    private func setupDiscoverButtons() {
+    fileprivate func setupDiscoverButtons() {
 
         let discoverButton = UIButton()
-        discoverButton.applyButtonStyle(OEXStyles.sharedStyles().filledPrimaryButtonStyle, withTitle: Strings.Startup.discovercourses)
+        discoverButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.Startup.discovercourses)
         let discoverEvent = OEXAnalytics.discoverCoursesEvent()
         discoverButton.oex_addAction({ [weak self] _ in
             self?.showCourses()
-            }, forEvents: .TouchUpInside, analyticsEvent: discoverEvent)
+            }, for: .touchUpInside, analyticsEvent: discoverEvent)
 
         view.addSubview(discoverButton)
 
 
         let exploreButton = UIButton()
-        exploreButton.applyButtonStyle(OEXStyles.sharedStyles().filledPrimaryButtonStyle, withTitle: Strings.Startup.exploreSubjects)
+        exploreButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.Startup.exploreSubjects)
         let exploreEvent = OEXAnalytics.exploreSubjectsEvent()
         exploreButton.oex_addAction({ [weak self] _ in
             self?.exploreSubjects()
-            }, forEvents: .TouchUpInside, analyticsEvent: exploreEvent)
+            }, for: .touchUpInside, analyticsEvent: exploreEvent)
 
         view.addSubview(exploreButton)
 
-        discoverButton.snp_makeConstraints { (make) in
-            make.centerY.equalTo(view.snp_centerY)
-            make.leading.equalTo(view.snp_leading).offset(30)
-            make.trailing.equalTo(view.snp_trailing).inset(30)
-            environment.config.courseEnrollmentConfig.isCourseDiscoveryEnabled() ? make.height.equalTo(40) : make.height.equalTo(0)
+        discoverButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(view.snp.centerY)
+            make.leading.equalTo(view.snp.leading).offset(30)
+            make.trailing.equalTo(view.snp.trailing).inset(30)
+            if environment.config.courseEnrollmentConfig.isCourseDiscoveryEnabled() {
+                make.height.equalTo(40)
+            } else {
+                make.height.equalTo(0)
+            }
         }
 
-        exploreButton.snp_makeConstraints { (make) in
-            make.centerY.equalTo(view.snp_centerY).inset(35)
-            make.leading.equalTo(view.snp_leading).offset(30)
-            make.trailing.equalTo(view.snp_trailing).inset(30)
+        exploreButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(view.snp.centerY).inset(35)
+            make.leading.equalTo(view.snp.leading).offset(30)
+            make.trailing.equalTo(view.snp.trailing).inset(30)
             make.height.equalTo(0)
         }
     }
 
-    private func setupBottomBar() {
+    fileprivate func setupBottomBar() {
         let bottomBar = BottomBarView(environment: environment)
         view.addSubview(bottomBar)
-        bottomBar.snp_makeConstraints { (make) in
+        bottomBar.snp.makeConstraints { (make) in
             make.height.equalTo(50)
             make.bottom.equalTo(view)
-            make.leading.equalTo(view.snp_leading)
-            make.trailing.equalTo(view.snp_trailing)
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
         }
 
     }
@@ -137,16 +141,16 @@ class StartupViewController: UIViewController, InterfaceOrientationOverriding {
 }
 
 private class BottomBarView: UIView, NSCopying {
-    typealias Environment = protocol<OEXRouterProvider>
-    private var environment : Environment?
+    typealias Environment = OEXRouterProvider
+    fileprivate var environment : Environment?
     
-    override init(frame: CGRect = CGRectZero) {
+    override init(frame: CGRect = CGRect.zero) {
         super.init(frame:frame)
         makeBottomBar()
     }
     
     convenience init (environment:Environment?) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         self.environment = environment
     }
     
@@ -154,52 +158,52 @@ private class BottomBarView: UIView, NSCopying {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func copyWithZone(zone: NSZone) -> AnyObject {
+    @objc func copy(with zone: NSZone?) -> Any {
         let copy = BottomBarView(environment: environment)
         return copy
     }
     
-    private func makeBottomBar() {
+    fileprivate func makeBottomBar() {
         let bottomBar = UIView()
         let signInButton = UIButton()
         let registerButton = UIButton()
         let line = UIView()
-        bottomBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.90)
+        bottomBar.backgroundColor = UIColor.black.withAlphaComponent(0.90)
         
-        signInButton.setTitle(Strings.signInText, forState: .Normal)
+        signInButton.setTitle(Strings.signInText, for: UIControlState())
         let signInEvent = OEXAnalytics.loginEvent()
         signInButton.oex_addAction({ [weak self] _ in
             self?.showLogin()
-            }, forEvents: .TouchUpInside, analyticsEvent: signInEvent)
+            }, for: .touchUpInside, analyticsEvent: signInEvent)
         
-        registerButton.setTitle(Strings.registerText, forState: .Normal)
+        registerButton.setTitle(Strings.registerText, for: UIControlState())
         let signUpEvent = OEXAnalytics.registerEvent()
         registerButton.oex_addAction({ [weak self] _ in
             self?.showRegistration()
-            }, forEvents: .TouchUpInside, analyticsEvent: signUpEvent)
+            }, for: .touchUpInside, analyticsEvent: signUpEvent)
         
         bottomBar.addSubview(registerButton)
         bottomBar.addSubview(signInButton)
         bottomBar.addSubview(line)
         
-        signInButton.snp_makeConstraints { (make) in
+        signInButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(bottomBar)
             make.top.equalTo(bottomBar)
             make.bottom.equalTo(bottomBar)
             make.trailing.equalTo(bottomBar)
-            make.leading.equalTo(line.snp_trailing)
+            make.leading.equalTo(line.snp.trailing)
         }
         
-        registerButton.snp_makeConstraints { (make) in
+        registerButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(bottomBar)
             make.top.equalTo(bottomBar)
             make.bottom.equalTo(bottomBar)
             make.leading.equalTo(bottomBar)
-            make.trailing.equalTo(line.snp_leading)        }
+            make.trailing.equalTo(line.snp.leading)        }
         
-        line.backgroundColor = OEXStyles.sharedStyles().neutralBase()
+        line.backgroundColor = OEXStyles.shared.neutralBase()
         
-        line.snp_makeConstraints { (make) in
+        line.snp.makeConstraints { (make) in
             make.top.equalTo(bottomBar)
             make.bottom.equalTo(bottomBar)
             make.centerX.equalTo(bottomBar)
@@ -208,7 +212,7 @@ private class BottomBarView: UIView, NSCopying {
         
         addSubview(bottomBar)
         
-        bottomBar.snp_makeConstraints { (make) in
+        bottomBar.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
         
@@ -216,10 +220,10 @@ private class BottomBarView: UIView, NSCopying {
     
     //MARK: - Actions
     func showLogin() {
-        environment?.router?.showLoginScreenFromController(firstAvailableUIViewController(), completion: nil)
+        environment?.router?.showLoginScreen(from: firstAvailableUIViewController(), completion: nil)
     }
     
     func showRegistration() {
-        environment?.router?.showSignUpScreenFromController(firstAvailableUIViewController(), completion: nil)
+        environment?.router?.showSignUpScreen(from: firstAvailableUIViewController(), completion: nil)
     }
 }

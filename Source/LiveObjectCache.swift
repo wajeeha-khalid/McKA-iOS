@@ -29,40 +29,40 @@ private struct Weak<A : AnyObject> {
 
 /// Cache that doesn't clear an object as long as it has live pointers
 /// this way you don't end up with duplicated objects when the memory cache gets flushed.
-public class LiveObjectCache<A : LifetimeTrackable> : NSObject {
-    private let dataCache = NSCache()
-    private var activeObjects : [String : Weak<A>] = [:]
-    private var deallocActionRemovers : [Removable] = []
+open class LiveObjectCache<A : LifetimeTrackable> : NSObject {
+    fileprivate let dataCache = NSCache<AnyObject, AnyObject>()
+    fileprivate var activeObjects : [String : Weak<A>] = [:]
+    fileprivate var deallocActionRemovers : [Removable] = []
     
     override public init() {
         super.init()
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: UIApplicationDidReceiveMemoryWarningNotification) { (_, owner, _) -> Void in
+        NotificationCenter.default.oex_addObserver( self, name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning.rawValue) { (_, owner, _) -> Void in
             owner.dataCache.removeAllObjects()
         }
     }
     
-    public func objectForKey(key : String, @noescape generator : () -> A) -> A {
+    open func objectForKey(_ key : String, generator : () -> A) -> A {
         // first look in the active objects cache
         if let object = activeObjects[key]?.value {
-            dataCache.setObject(Box(object), forKey: key)
+            dataCache.setObject(Box(object), forKey: key as AnyObject)
             return object
         }
-        else if let object = dataCache.objectForKey(key) as? Box<A> {
+        else if let object = dataCache.object(forKey: key as AnyObject) as? Box<A> {
             return object.value
         }
         else {
             let object = generator()
-            dataCache.setObject(Box(object), forKey: key)
+            dataCache.setObject(Box(object), forKey: key as AnyObject)
             activeObjects[key] = Weak(object)
-            let removable = object.lifetimeToken.oex_performActionOnDealloc {[weak self] in
-                self?.activeObjects.removeValueForKey(key)
+            let removable = object.lifetimeToken.oex_performAction {[weak self] in
+                self?.activeObjects.removeValue(forKey: key)
             }
             deallocActionRemovers.append(BlockRemovable{removable.remove()})
             return object
         }
     }
     
-    public func empty() {
+    open func empty() {
         dataCache.removeAllObjects()
         activeObjects = [:]
         for actionRemover in deallocActionRemovers {

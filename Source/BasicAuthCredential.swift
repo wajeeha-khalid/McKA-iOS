@@ -9,11 +9,11 @@
 import Foundation
 
 class BasicAuthCredential: NSObject {
-    let host: NSURL
-    private let username: String
-    private let password: String
+    let host: URL
+    fileprivate let username: String
+    fileprivate let password: String
     
-    init(host : NSURL, username : String, password : String) {
+    init(host : URL, username : String, password : String) {
         self.host = host
         self.username = username
         self.password = password
@@ -22,11 +22,11 @@ class BasicAuthCredential: NSObject {
     init?(dictionary : [String:AnyObject]) {
         guard let
             host = dictionary["HOST"] as? String,
-            hostURL = NSURL(string:host),
-            username = dictionary["USERNAME"] as? String,
-            password = dictionary["PASSWORD"] as? String else
+            let hostURL = URL(string:host),
+            let username = dictionary["USERNAME"] as? String,
+            let password = dictionary["PASSWORD"] as? String else
         {
-            self.host = NSURL()
+            self.host = NSURL() as URL
             self.username = ""
             self.password = ""
             super.init()
@@ -38,9 +38,9 @@ class BasicAuthCredential: NSObject {
         super.init()
     }
     
-    var URLCredential : NSURLCredential {
+    var URLCredential : Foundation.URLCredential {
         // Return .ForSession since credentials may change between runs
-        return NSURLCredential(user: username, password: password, persistence: .ForSession)
+        return Foundation.URLCredential(user: username, password: password, persistence: .forSession)
     }
 }
 

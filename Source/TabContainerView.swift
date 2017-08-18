@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import TZStackView
 
 struct TabItem {
     let name : String
@@ -18,32 +18,32 @@ struct TabItem {
 // Simple tab view with a segmented control at the top
 class TabContainerView : UIView {
 
-    private let control = UISegmentedControl()
+    fileprivate let control = UISegmentedControl()
 
-    private let stackView = TZStackView()
-    private var activeTabBodyView : UIView? = nil
+    fileprivate let stackView = TZStackView()
+    fileprivate var activeTabBodyView : UIView? = nil
 
-    private var currentIdentifier : String?
+    fileprivate var currentIdentifier : String?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         stackView.insertArrangedSubview(control, atIndex: 0)
-        stackView.axis = .Vertical
-        stackView.alignment = .Fill
+        stackView.axis = .vertical
+        stackView.alignment = .fill
         stackView.spacing = StandardVerticalMargin
 
         addSubview(stackView)
-        stackView.snp_makeConstraints {make in
-            make.leading.equalTo(self.snp_leadingMargin)
-            make.trailing.equalTo(self.snp_trailingMargin)
-            make.top.equalTo(self.snp_topMargin)
-            make.bottom.equalTo(self.snp_bottomMargin)
+        stackView.snp.makeConstraints {make in
+            make.leading.equalTo(self.snp.leadingMargin)
+            make.trailing.equalTo(self.snp.trailingMargin)
+            make.top.equalTo(self.snp.topMargin)
+            make.bottom.equalTo(self.snp.bottomMargin)
         }
 
         control.oex_addAction({[weak self] control in
             let index = (control as! UISegmentedControl).selectedSegmentIndex
             self?.showTabAtIndex(index)
-            }, forEvents: .ValueChanged)
+            }, for: .valueChanged)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,8 +54,8 @@ class TabContainerView : UIView {
         didSet {
             control.removeAllSegments()
 
-            for (index, item) in items.enumerate() {
-                control.insertSegmentWithTitle(item.name, atIndex: control.numberOfSegments, animated: false)
+            for (index, item) in items.enumerated() {
+                control.insertSegment(withTitle: item.name, at: control.numberOfSegments, animated: false)
                 if item.identifier == currentIdentifier {
                     showTabAtIndex(index)
                 }
@@ -66,11 +66,11 @@ class TabContainerView : UIView {
             else {
                 currentIdentifier = nil
             }
-            control.hidden = items.count < 2
+            control.isHidden = items.count < 2
         }
     }
 
-    private func showTabAtIndex(index: Int) {
+    fileprivate func showTabAtIndex(_ index: Int) {
         guard index != UISegmentedControlNoSegment else {
             return
         }
@@ -84,11 +84,11 @@ class TabContainerView : UIView {
         activeTabBodyView = item.view
     }
 
-    private func indexOfItemWithIdentifier(identifier : String) -> Int? {
+    fileprivate func indexOfItemWithIdentifier(_ identifier : String) -> Int? {
         return items.firstIndexMatching {$0.identifier == identifier }
     }
 
-    func showTabWithIdentifier(identifier : String) {
+    func showTabWithIdentifier(_ identifier : String) {
         if let index = indexOfItemWithIdentifier(identifier) {
             showTabAtIndex(index)
         }
@@ -97,7 +97,7 @@ class TabContainerView : UIView {
 
 // Only used for testing
 extension TabContainerView {
-    func t_isShowingViewForItem(item : TabItem) -> Bool {
+    func t_isShowingViewForItem(_ item : TabItem) -> Bool {
         let viewsMatch = stackView.arrangedSubviews == [control, item.view]
         let indexMatches = indexOfItemWithIdentifier(item.identifier) == control.selectedSegmentIndex
         let identifierMatches = currentIdentifier == item.identifier

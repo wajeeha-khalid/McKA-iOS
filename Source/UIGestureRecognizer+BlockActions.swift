@@ -10,14 +10,14 @@ import Foundation
 
 private class GestureListener : Removable {
     let token = malloc(1)
-    var action : (UIGestureRecognizer -> Void)?
-    var removeAction : (GestureListener -> Void)?
+    var action : ((UIGestureRecognizer) -> Void)?
+    var removeAction : ((GestureListener) -> Void)?
     
     deinit {
         free(token)
     }
     
-    @objc func gestureFired(gesture : UIGestureRecognizer) {
+    @objc func gestureFired(_ gesture : UIGestureRecognizer) {
         self.action?(gesture)
     }
     
@@ -27,19 +27,20 @@ private class GestureListener : Removable {
 }
 
 protocol GestureActionable {
-    init(target : AnyObject?, action : Selector)
+    init(target : Any?, action : Selector?)
 }
 
 extension UIGestureRecognizer : GestureActionable {}
 
 extension GestureActionable where Self : UIGestureRecognizer {
     
-    init(action : Self -> Void) {
+    init(action : @escaping (Self) -> Void) {
         self.init(target: nil, action: nil)
         addAction(action)
     }
     
-    func addAction(action : Self -> Void) -> Removable {
+
+    @discardableResult func addAction(_ action : @escaping (Self) -> Void) -> Removable {
         let listener = GestureListener()
         listener.action = {(gesture : UIGestureRecognizer) in
             if let gesture = gesture as? Self {

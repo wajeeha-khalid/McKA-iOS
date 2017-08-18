@@ -7,17 +7,18 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public struct RegistrationFormAPI {
     
-    static func registrationFormDeserializer(response : NSHTTPURLResponse, json : JSON) -> Result<OEXRegistrationDescription> {
+    static func registrationFormDeserializer(_ response : HTTPURLResponse, json : JSON) -> Result<OEXRegistrationDescription> {
         return json.dictionaryObject.map { OEXRegistrationDescription(dictionary: $0) }.toResult()
     }
     
     public static func registrationFormRequest() -> NetworkRequest<(OEXRegistrationDescription)> {
         return NetworkRequest(method: .GET,
                               path: SIGN_UP_URL,
-                              deserializer: .JSONResponse(registrationFormDeserializer))
+                              deserializer: .jsonResponse(registrationFormDeserializer))
         
     }
 }

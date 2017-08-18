@@ -8,27 +8,27 @@
 
 import UIKit
 
-public class BlockViewControllerCacheManager: NSObject {
+open class BlockViewControllerCacheManager: NSObject {
    
-    private let viewControllers = NSCache()
+    fileprivate let viewControllers = NSCache<AnyObject, AnyObject>()
     
     override init() {
         super.init()
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: UIApplicationDidReceiveMemoryWarningNotification) {(_,observer, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning.rawValue) {(_,observer, _) -> Void in
             observer.viewControllers.removeAllObjects()
         }
     }
     
-    func addToCache(viewController : UIViewController, blockID : CourseBlockID) {
-        self.viewControllers.setObject(viewController, forKey: blockID)
+    func addToCache(_ viewController : UIViewController, blockID : CourseBlockID) {
+        self.viewControllers.setObject(viewController, forKey: blockID as AnyObject)
     }
     
-    func getCachedViewControllerForBlockID(blockID : CourseBlockID) -> UIViewController? {
-        let viewController = self.viewControllers.objectForKey(blockID) as? UIViewController
+    func getCachedViewControllerForBlockID(_ blockID : CourseBlockID) -> UIViewController? {
+        let viewController = self.viewControllers.object(forKey: blockID as AnyObject) as? UIViewController
         return viewController
     }
     
-    func cacheHitForBlockID(blockID : CourseBlockID) -> Bool {
-        return self.viewControllers.objectForKey(blockID) != nil
+    func cacheHitForBlockID(_ blockID : CourseBlockID) -> Bool {
+        return self.viewControllers.object(forKey: blockID as AnyObject) != nil
     }
 }

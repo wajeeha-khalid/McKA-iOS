@@ -11,7 +11,7 @@ import Foundation
 
 extension OEXAnalytics {
 
-    func trackCertificateShared(url: String, type: String) {
+    func trackCertificateShared(_ url: String, type: String) {
         let event = OEXAnalyticsEvent()
         event.name = OEXAnalyticsEventCertificateShared
         event.displayName = "Shared a certificate"

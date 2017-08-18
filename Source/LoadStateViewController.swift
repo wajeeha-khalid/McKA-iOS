@@ -11,8 +11,8 @@ import Foundation
 import edXCore
 
 public enum LoadState {
-    case Initial
-    case Loaded
+    case initial
+    case loaded
     case Empty(icon : Icon?, message : String?, attributedMessage : NSAttributedString?, accessibilityMessage : String?, buttonInfo : MessageButtonInfo?)
     // if attributed message is set then message is ignored
     // if message is set then the error is ignored
@@ -20,23 +20,23 @@ public enum LoadState {
     
     var accessibilityMessage : String? {
         switch self {
-        case Initial: return nil
-        case Loaded: return nil
-        case let Empty(info): return info.accessibilityMessage
-        case let Failed(info): return info.accessibilityMessage
+        case .initial: return nil
+        case .loaded: return nil
+        case let .Empty(info): return info.accessibilityMessage
+        case let .Failed(info): return info.accessibilityMessage
         }
     }
     
     var isInitial : Bool {
         switch self {
-        case .Initial: return true
+        case .initial: return true
         default: return false
         }
     }
     
     var isLoaded : Bool {
         switch self {
-        case .Loaded: return true
+        case .loaded: return true
         default: return false
         }
     }
@@ -48,37 +48,37 @@ public enum LoadState {
         }
     }
     
-    static func failed(error : NSError? = nil, icon : Icon? = .UnknownError, message : String? = nil, attributedMessage : NSAttributedString? = nil, accessibilityMessage : String? = nil, buttonInfo : MessageButtonInfo? = nil) -> LoadState {
+    static func failed(_ error : NSError? = nil, icon : Icon? = .unknownError, message : String? = nil, attributedMessage : NSAttributedString? = nil, accessibilityMessage : String? = nil, buttonInfo : MessageButtonInfo? = nil) -> LoadState {
         return LoadState.Failed(error : error, icon : icon, message : message, attributedMessage : attributedMessage, accessibilityMessage : accessibilityMessage, buttonInfo : buttonInfo)
     }
     
-    static func empty(icon icon : Icon?, message : String? = nil, attributedMessage : NSAttributedString? = nil, accessibilityMessage : String? = nil, buttonInfo : MessageButtonInfo? = nil) -> LoadState {
+    static func empty(icon : Icon?, message : String? = nil, attributedMessage : NSAttributedString? = nil, accessibilityMessage : String? = nil, buttonInfo : MessageButtonInfo? = nil) -> LoadState {
         return LoadState.Empty(icon: icon, message: message, attributedMessage: attributedMessage, accessibilityMessage : accessibilityMessage, buttonInfo : buttonInfo)
     }
 }
 
 class LoadStateViewController : UIViewController {
     
-    private let loadingView : UIView
-    private var contentView : UIView?
-    private let messageView : IconMessageView
+    fileprivate let loadingView : UIView
+    fileprivate var contentView : UIView?
+    fileprivate let messageView : IconMessageView
     
-    private var madeInitialAppearance : Bool = false
+    fileprivate var madeInitialAppearance : Bool = false
     
-    var state : LoadState = .Initial {
+    var state : LoadState = .initial {
         didSet {
             // this sets a background color so when the view is pushed in it doesn't have a black or weird background
             switch state {
-            case .Initial:
-                view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+            case .initial:
+                view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
             default:
-                view.backgroundColor = UIColor.clearColor()
+                view.backgroundColor = UIColor.clear
             }
             updateAppearanceAnimated(madeInitialAppearance)
         }
     }
     
-    var insets : UIEdgeInsets = UIEdgeInsetsZero {
+    var insets : UIEdgeInsets = UIEdgeInsets.zero {
         didSet {
             self.view.setNeedsUpdateConstraints()
         }
@@ -86,7 +86,7 @@ class LoadStateViewController : UIViewController {
     
     init() {
         messageView = IconMessageView()
-        loadingView = SpinnerView(size: .Large, color: .Primary)
+        loadingView = SpinnerView(size: .large, color: .primary)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -102,9 +102,9 @@ class LoadStateViewController : UIViewController {
         self.view = PassthroughView()
     }
     
-    func setupInController(controller : UIViewController, contentView : UIView) {
+    func setupInController(_ controller : UIViewController, contentView : UIView) {
         controller.addChildViewController(self)
-        didMoveToParentViewController(controller)
+        didMove(toParentViewController: controller)
         
         self.contentView = contentView
         contentView.alpha = 0
@@ -121,27 +121,27 @@ class LoadStateViewController : UIViewController {
         view.addSubview(messageView)
         view.addSubview(loadingView)
         
-        state = .Initial
+        state = .initial
         
         self.view.setNeedsUpdateConstraints()
-        self.view.userInteractionEnabled = false
+        self.view.isUserInteractionEnabled = false
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         madeInitialAppearance = true
     }
     
     override func updateViewConstraints() {
-        loadingView.snp_updateConstraints {make in
+        loadingView.snp.updateConstraints {make in
             make.center.equalTo(view)
         }
         
-        messageView.snp_updateConstraints {make in
+        messageView.snp.updateConstraints {make in
             make.center.equalTo(view)
         }
         
-        view.snp_updateConstraints { make in
+        view.snp.updateConstraints { make in
             if let superview = view.superview {
                 make.edges.equalTo(superview).inset(insets)
             }
@@ -149,14 +149,14 @@ class LoadStateViewController : UIViewController {
         super.updateViewConstraints()
     }
     
-    private func updateAppearanceAnimated(animated : Bool) {
+    fileprivate func updateAppearanceAnimated(_ animated : Bool) {
         var alphas : (loading : CGFloat, message : CGFloat, content : CGFloat, touchable : Bool) = (loading : 0, message : 0, content : 0, touchable : false)
         
-        UIView.animateWithDuration(0.3 * NSTimeInterval(animated)) {
+        UIView.animate(withDuration: 0.3 * TimeInterval()) {
             switch self.state {
-            case .Initial:
+            case .initial:
                 alphas = (loading : 1, message : 0, content : 0, touchable : false)
-            case .Loaded:
+            case .loaded:
                 alphas = (loading : 0, message : 0, content : 1, touchable : false)
             case let .Empty(info):
                 self.messageView.buttonInfo = info.buttonInfo
@@ -173,31 +173,31 @@ class LoadStateViewController : UIViewController {
             case let .Failed(info):
                 self.messageView.buttonInfo = info.buttonInfo
                 UIView.performWithoutAnimation {
-                    if let error = info.error where error.oex_isNoInternetConnectionError {
+                    if let error = info.error, error.oex_isNoInternetConnectionError {
                         self.messageView.showNoConnectionError()
                     }
                     else if let error = info.error as? OEXAttributedErrorMessageCarrying {
-                        self.messageView.attributedMessage = error.attributedDescriptionWithBaseStyle(self.messageStyle)
-                        self.messageView.icon = info.icon ?? .UnknownError
+                        self.messageView.attributedMessage = error.attributedDescription(withBaseStyle: self.messageStyle)
+                        self.messageView.icon = info.icon ?? .unknownError
                     }
                     else if let message = info.attributedMessage {
                         self.messageView.attributedMessage = message
-                        self.messageView.icon = info.icon ?? .UnknownError
+                        self.messageView.icon = info.icon ?? .unknownError
                     }
                     else if let message = info.message {
                         self.messageView.message = message
-                        self.messageView.icon = info.icon ?? .UnknownError
+                        self.messageView.icon = info.icon ?? .unknownError
                     }
-                    else if let error = info.error where error.errorIsThisType(NSError.oex_unknownNetworkError()) {
+                    else if let error = info.error, error.errorIsThisType(NSError.oex_unknownNetworkError()) {
                         self.messageView.message = Strings.unknownError
-                        self.messageView.icon = info.icon ?? .UnknownError
+                        self.messageView.icon = info.icon ?? .unknownError
                     }
-                    else if let error = info.error where error.errorIsThisType(NSError.oex_outdatedVersionError()) {
+                    else if let error = info.error, error.errorIsThisType(NSError.oex_outdatedVersionError()) {
                         self.messageView.setupForOutdatedVersionError()
                     }
                     else {
                         self.messageView.message = info.error?.localizedDescription
-                        self.messageView.icon = info.icon ?? .UnknownError
+                        self.messageView.icon = info.icon ?? .unknownError
                     }
                 }
                 alphas = (loading : 0, message : 1, content : 0, touchable : true)
@@ -207,8 +207,8 @@ class LoadStateViewController : UIViewController {
             self.loadingView.alpha = alphas.loading
             self.messageView.alpha = alphas.message
             self.contentView?.alpha = alphas.content
-            self.view.userInteractionEnabled = alphas.touchable
-        }
+            self.view.isUserInteractionEnabled = alphas.touchable
+        } 
     }
     
 }

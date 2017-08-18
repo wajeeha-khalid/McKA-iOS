@@ -14,23 +14,23 @@ class DownloadProgressTests: XCTestCase {
     /// Test either OEXDownloadProgressChangedNotification observer added or not.
     func testOEXDownloadProgressChangedNotificationKey() {
         let contentDownloadNotificationTypes = OEXCoursewareViewController.getContentDownloadNotificationTypes()
-        XCTAssertTrue(contentDownloadNotificationTypes.contains(OEXDownloadProgressChangedNotification))
+        XCTAssertTrue(contentDownloadNotificationTypes.contains(NSNotification.Name.OEXDownloadProgressChanged.rawValue))
     }
     
     /// Test either OEXDownloadEndedNotification observer added or not.
     func testOEXDownloadEndedNotificationKey() {
         let contentDownloadNotificationTypes = OEXCoursewareViewController.getContentDownloadNotificationTypes()
-        XCTAssertTrue(contentDownloadNotificationTypes.contains(OEXDownloadEndedNotification))
+        XCTAssertTrue(contentDownloadNotificationTypes.contains(NSNotification.Name.OEXDownloadEnded.rawValue))
     }
 
     /// Test either OEXDownloadProgressChangedNotification fired or not.
     func testOEXDownloadProgressChangedNotificationFired() {
         let isNotificationFired = MutableBox<Bool>(false)
-        let removable = NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXDownloadProgressChangedNotification) { (notification, observer, removable) in
+        let removable = NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXDownloadProgressChanged.rawValue) { (notification, observer, removable) in
             isNotificationFired.value = true
         }
         XCTAssertFalse(isNotificationFired.value)
-        NSNotificationCenter.defaultCenter().postNotificationName(OEXDownloadProgressChangedNotification, object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.OEXDownloadProgressChanged, object: nil)
         XCTAssertTrue(isNotificationFired.value)
         removable.remove()
     }
@@ -38,11 +38,11 @@ class DownloadProgressTests: XCTestCase {
     /// Test either OEXDownloadEndedNotification fired or not.
     func testOEXDownloadEndedNotificationFired() {
         let isNotificationFired = MutableBox<Bool>(false)
-        let removable = NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXDownloadEndedNotification) { (notification, observer, removable) in
+        let removable = NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXDownloadEnded.rawValue) { (notification, observer, removable) in
             isNotificationFired.value = true
         }
         XCTAssertFalse(isNotificationFired.value)
-        NSNotificationCenter.defaultCenter().postNotificationName(OEXDownloadEndedNotification, object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.OEXDownloadEnded, object: nil)
         XCTAssertTrue(isNotificationFired.value)
         removable.remove()
     }

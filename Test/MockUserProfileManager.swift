@@ -9,7 +9,7 @@
 import edX
 
 class MockUserProfileManager : UserProfileManager {
-    private let feed : Feed<UserProfile>
+    fileprivate let feed : Feed<UserProfile>
     
     init() {
         self.feed = Feed(refreshTrigger: {_ in })
@@ -18,11 +18,11 @@ class MockUserProfileManager : UserProfileManager {
     
     init(profile : UserProfile) {
         self.feed = Feed(refreshTrigger: { (stream) -> Void in
-            stream.backWithStream(Stream(value: profile))
+            stream.backWithStream(edXCore.Stream(value: profile))
         })
         super.init(networkManager : MockNetworkManager(), session : OEXSession(credentialStore: OEXMockCredentialStorage()))
     }
-    override func feedForUser(username: String) -> Feed<UserProfile> {
+    override func feedForUser(_ username: String) -> Feed<UserProfile> {
         return self.feed
     }
 }

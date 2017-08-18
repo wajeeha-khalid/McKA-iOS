@@ -8,18 +8,18 @@
 
 import UIKit
 
-public class OEXCheckBox: UIButton {
+open class OEXCheckBox: UIButton {
     
-    @IBInspectable public var checked: Bool = false {
+    @IBInspectable open var checked: Bool = false {
         didSet {
             updateState()
         }
     }
     
-    private func _setup() {
-        imageView?.contentMode = .ScaleAspectFit
+    fileprivate func _setup() {
+        imageView?.contentMode = .scaleAspectFit
         
-        addTarget(self, action: #selector(OEXCheckBox.tapped), forControlEvents: .TouchUpInside)
+        addTarget(self, action: #selector(OEXCheckBox.tapped), for: .touchUpInside)
         updateState()
     }
     
@@ -33,22 +33,22 @@ public class OEXCheckBox: UIButton {
         _setup()
     }
     
-    public override func prepareForInterfaceBuilder() {
+    open override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         updateState()
     }
     
-    private func updateState() {
-        let newIcon = checked ? Icon.CheckCircleO : Icon.CircleO
+    fileprivate func updateState() {
+        let newIcon = checked ? Icon.checkCircleO : Icon.circleO
         let size = min(bounds.width, bounds.height)
         let image = newIcon.imageWithFontSize(size)
-        setImage(image, forState: .Normal)
+        setImage(image, for: UIControlState())
         accessibilityLabel = checked ? Strings.accessibilityCheckboxChecked : Strings.accessibilityCheckboxUnchecked
         accessibilityHint = checked ? Strings.accessibilityCheckboxHintChecked : Strings.accessibilityCheckboxHintUnchecked
     }
     
     func tapped() {
         checked = !checked
-        sendActionsForControlEvents(.ValueChanged)
+        sendActions(for: .valueChanged)
     }
 }

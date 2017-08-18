@@ -8,15 +8,15 @@
 
 import UIKit
 
-public class CourseDataManager: NSObject {
+open class CourseDataManager: NSObject {
     
-    private let analytics : OEXAnalytics
-    private let interface : OEXInterface?
-    private let enrollmentManager: EnrollmentManager
-    private let session : OEXSession
-    private let networkManager : NetworkManager
-    private let outlineQueriers = LiveObjectCache<CourseOutlineQuerier>()
-    private let discussionDataManagers = LiveObjectCache<DiscussionDataManager>()
+    fileprivate let analytics : OEXAnalytics
+    fileprivate let interface : OEXInterface?
+    fileprivate let enrollmentManager: EnrollmentManager
+    fileprivate let session : OEXSession
+    fileprivate let networkManager : NetworkManager
+    fileprivate let outlineQueriers = LiveObjectCache<CourseOutlineQuerier>()
+    fileprivate let discussionDataManagers = LiveObjectCache<DiscussionDataManager>()
     
     public init(analytics: OEXAnalytics, enrollmentManager: EnrollmentManager, interface : OEXInterface?, networkManager : NetworkManager, session : OEXSession) {
         self.analytics = analytics
@@ -27,20 +27,20 @@ public class CourseDataManager: NSObject {
         
         super.init()
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: OEXSessionEndedNotification) { (_, observer, _) -> Void in
+        NotificationCenter.default.oex_addObserver(self, name: NSNotification.Name.OEXSessionEnded.rawValue) { (_, observer, _) -> Void in
             observer.outlineQueriers.empty()
             observer.discussionDataManagers.empty()
         }
     }
     
-    public func querierForCourseWithID(courseID : String) -> CourseOutlineQuerier {
+    open func querierForCourseWithID(_ courseID : String) -> CourseOutlineQuerier {
         return outlineQueriers.objectForKey(courseID) {
             let querier = CourseOutlineQuerier(courseID: courseID, interface : interface, enrollmentManager: enrollmentManager, networkManager : networkManager, session : session)
             return querier
         }
     }
     
-    public func discussionManagerForCourseWithID(courseID : String) -> DiscussionDataManager {
+    open func discussionManagerForCourseWithID(_ courseID : String) -> DiscussionDataManager {
         return discussionDataManagers.objectForKey(courseID) {
             let manager = DiscussionDataManager(courseID: courseID, networkManager: self.networkManager)
             return manager

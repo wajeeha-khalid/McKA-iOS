@@ -7,70 +7,71 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-public class OEXFonts: NSObject {
+open class OEXFonts: NSObject {
     
     //MARK: - Shared Instance
-    public static let sharedInstance = OEXFonts()
+    open static let sharedInstance = OEXFonts()
     @objc public enum FontIdentifiers: Int {
-        case Regular = 1, Italic, SemiBold, SemiBoldItalic, Bold, BoldItalic, Light, LightItalic, ExtraBold, ExtraBoldItalic, Irregular
+        case regular = 1, italic, semiBold, semiBoldItalic, bold, boldItalic, light, lightItalic, extraBold, extraBoldItalic, irregular
     }
     
-    public var fontsDictionary = [String: AnyObject]()
+    open var fontsDictionary = [String: AnyObject]()
     
-    private override init() {
+    fileprivate override init() {
         super.init()
         fontsDictionary = initializeFontsDictionary()
     }
     
-    private func initializeFontsDictionary() -> [String: AnyObject] {
-        guard let filePath = NSBundle.mainBundle().pathForResource("fonts", ofType: "json") else {
+    fileprivate func initializeFontsDictionary() -> [String: AnyObject] {
+        guard let filePath = Bundle.main.path(forResource: "fonts", ofType: "json") else {
             return fallbackFonts()
         }
-        if let data = NSData(contentsOfFile: filePath) {
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
             var error : NSError?
             
             if let json = JSON(data: data, error: &error).dictionaryObject{
-                return json
+                return json as [String : AnyObject]
             }
         }
         return fallbackFonts()
     }
     
-    public func fallbackFonts() -> [String: AnyObject] {
-        return OEXFontsDataFactory.fonts
+    open func fallbackFonts() -> [String: AnyObject] {
+        return OEXFontsDataFactory.fonts as [String : AnyObject]
     }
     
-    public func fontForIdentifier(identifier: FontIdentifiers, size: CGFloat) -> UIFont {
+    open func fontForIdentifier(_ identifier: FontIdentifiers, size: CGFloat) -> UIFont {
         if let fontName = fontsDictionary[getIdentifier(identifier)] as? String {
             return UIFont(name: fontName, size: size)!
         }
-        return UIFont(name:getIdentifier(FontIdentifiers.Irregular), size: size)!
+        return UIFont(name:getIdentifier(FontIdentifiers.irregular), size: size)!
     }
     
-    private func getIdentifier(identifier: FontIdentifiers) -> String {
+    fileprivate func getIdentifier(_ identifier: FontIdentifiers) -> String {
         switch identifier {
-        case .Regular:
+        case .regular:
             return "regular"
-        case .Italic:
+        case .italic:
             return "italic"
-        case .SemiBold:
+        case .semiBold:
             return "semiBold"
-        case .SemiBoldItalic:
+        case .semiBoldItalic:
             return "semiBoldItalic"
-        case .Bold:
+        case .bold:
             return "bold"
-        case .BoldItalic:
+        case .boldItalic:
             return "boldItalic"
-        case .Light:
+        case .light:
             return "light"
-        case .LightItalic:
+        case .lightItalic:
             return "lightItalic"
-        case .ExtraBold:
+        case .extraBold:
             return "extraBold"
-        case .ExtraBoldItalic:
+        case .extraBoldItalic:
             return "extraBoldItalic"
-        case .Irregular:
+        case .irregular:
             fallthrough
         default:
             //Assert to crash on development, and return Zapfino font

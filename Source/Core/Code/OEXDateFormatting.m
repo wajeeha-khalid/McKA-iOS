@@ -28,7 +28,7 @@ static NSString* const OEXStandardDateFormatMicroseconds = @"yyyy-MM-dd'T'HH:mm:
     }
 }
 
-+ (NSDate*)dateWithServerString:(NSString*)dateString {
++ (nullable NSDate*)dateWithServerString:(NSString*)dateString {
     if(dateString == nil) {
         return nil;
     }
@@ -45,7 +45,7 @@ static NSString* const OEXStandardDateFormatMicroseconds = @"yyyy-MM-dd'T'HH:mm:
     return result;
 }
 
-+ (NSString*)formatAsMonthDayString:(NSDate*)date {
++ (nullable NSString*)formatAsMonthDayString:(NSDate*)date {
     if(date == nil) {
         return nil;
     }
@@ -54,7 +54,7 @@ static NSString* const OEXStandardDateFormatMicroseconds = @"yyyy-MM-dd'T'HH:mm:
     return [[formatter stringFromDate:date] uppercaseString];
 }
 
-+ (NSString*)formatAsMonthDayYearString:(NSDate*)date {
++ (nullable NSString*)formatAsMonthDayYearString:(NSDate*)date {
     if(date == nil) {
         return nil;
     }
@@ -64,7 +64,7 @@ static NSString* const OEXStandardDateFormatMicroseconds = @"yyyy-MM-dd'T'HH:mm:
 }
 
 // example format : 2014-11-19T04:06:55Z
-+ (NSString*)serverStringWithDate:(NSDate*)date {
++ (nullable NSString*)serverStringWithDate:(NSDate*)date {
     if(date == nil) {
         return nil;
     }

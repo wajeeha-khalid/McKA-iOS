@@ -14,11 +14,11 @@ extension NetworkManager {
     }
 }
 
-public class Code426Interceptor : ResponseInterceptor {
-    public func handleResponse<Out>(result: NetworkResult<Out>) -> Result<Out> {
+open class Code426Interceptor : ResponseInterceptor {
+    open func handleResponse<Out>(_ result: NetworkResult<Out>) -> Result<Out> {
         if let response = result.response {
             let statusCode = OEXHTTPStatusCode(rawValue: response.statusCode)
-            if statusCode == .Code426UpgradeRequired {
+            if statusCode == .code426UpgradeRequired {
                 return result.data.toResult(NSError.oex_outdatedVersionError())
             }
         }

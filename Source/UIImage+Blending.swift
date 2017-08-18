@@ -16,8 +16,8 @@ extension UIImage {
         guard let context = UIGraphicsGetCurrentContext() else {
             fatalError("Could not obtain a context")
         }
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, bounds)
+        context.setFillColor(color.cgColor)
+        context.fill(bounds)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
@@ -26,8 +26,8 @@ extension UIImage {
     func blendendImage(with image: UIImage, blendMode: CGBlendMode, alpha: CGFloat) -> UIImage {
         UIGraphicsBeginImageContext(size)
         let bounds = CGRect(origin: .zero, size: size)
-        drawInRect(bounds)
-        image.drawInRect(bounds, blendMode: blendMode, alpha: alpha)
+        draw(in: bounds)
+        image.draw(in: bounds, blendMode: blendMode, alpha: alpha)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!

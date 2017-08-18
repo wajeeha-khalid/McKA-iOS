@@ -10,12 +10,12 @@ import Foundation
 
 class CertificateViewController: UIViewController, UIWebViewDelegate, InterfaceOrientationOverriding {
 
-    typealias Environment = protocol<OEXAnalyticsProvider, OEXConfigProvider>
-    private let environment: Environment
+    typealias Environment = OEXAnalyticsProvider & OEXConfigProvider
+    fileprivate let environment: Environment
 
-    private let loadController = LoadStateViewController()
+    fileprivate let loadController = LoadStateViewController()
     let webView = UIWebView()
-    var request: NSURLRequest?
+    var request: URLRequest?
 
 
     init(environment : Environment) {
@@ -34,36 +34,36 @@ class CertificateViewController: UIViewController, UIWebViewDelegate, InterfaceO
         super.viewDidLoad()
 
         view.addSubview(webView)
-        webView.snp_makeConstraints { (make) -> Void in
+        webView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(self.view)
         }
 
         webView.delegate = self
 
         loadController.setupInController(self, contentView: webView)
-        webView.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        webView.backgroundColor = OEXStyles.shared.standardBackgroundColor()
 
         title = Strings.Certificates.viewCertTitle
-        loadController.state = .Initial
+        loadController.state = .initial
 
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        environment.analytics.trackScreenWithName(OEXAnalyticsScreenCertificate)
+        environment.analytics.trackScreen(withName: OEXAnalyticsScreenCertificate)
         addShareButton()
         if let request = self.request {
             webView.loadRequest(request)
         }
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         webView.stopLoading()
     }
 
     func addShareButton() {
-        let shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: nil, action: nil)
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: nil, action: nil)
         shareButton.oex_setAction { [weak self] in
             self?.share()
         }
@@ -71,35 +71,35 @@ class CertificateViewController: UIViewController, UIWebViewDelegate, InterfaceO
     }
 
     func share() {
-        guard let url = request?.URL else { return }
+        guard let url = request?.url else { return }
         let text = Strings.Certificates.shareText(platformName: environment.config.platformName())
         let controller = shareTextAndALink(text, url: url) { analyticsType in
-            self.environment.analytics.trackCertificateShared(url.absoluteString!, type: analyticsType)
+            self.environment.analytics.trackCertificateShared(url.absoluteString, type: analyticsType)
         }
-        presentViewController(controller, animated: true, completion: nil)
+        present(controller, animated: true, completion: nil)
     }
 
     // MARK: - Request Loading
 
-    func loadRequest(request : NSURLRequest) {
+    func loadRequest(_ request : URLRequest) {
 
-        let mutableRequest: NSMutableURLRequest = request.mutableCopy() as! NSMutableURLRequest
-        mutableRequest.HTTPShouldHandleCookies = false
+        var mutableRequest = request
+        mutableRequest.httpShouldHandleCookies = false
         self.request = mutableRequest
     }
 
 
     // MARK: - Web view delegate
 
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        loadController.state = LoadState.failed(error)
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        loadController.state = LoadState.failed(error as NSError)
     }
 
-    func webViewDidFinishLoad(webView: UIWebView) {
-        loadController.state = .Loaded
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        loadController.state = .loaded
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.AllButUpsideDown
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.allButUpsideDown
     }
 }

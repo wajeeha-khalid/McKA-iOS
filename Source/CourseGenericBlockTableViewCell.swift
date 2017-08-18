@@ -9,12 +9,12 @@
 import UIKit
 
 class CourseGenericBlockTableViewCell : UITableViewCell, CourseBlockContainerCell {
-    private let content = CourseOutlineItemView()
+    fileprivate let content = CourseOutlineItemView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(content)
-        content.snp_makeConstraints { (make) -> Void in
+        content.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(contentView)
         }
     }
@@ -35,7 +35,7 @@ class CourseHTMLTableViewCell: CourseGenericBlockTableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style : style, reuseIdentifier : reuseIdentifier)
-        content.setContentIcon(Icon.CourseHTMLContent)
+        content.setContentIcon(Icon.courseHTMLContent)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +49,7 @@ class CourseProblemTableViewCell : CourseGenericBlockTableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style : style, reuseIdentifier : reuseIdentifier)
-        content.setContentIcon(Icon.CourseProblemContent)
+        content.setContentIcon(Icon.courseProblemContent)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -64,8 +64,8 @@ class CourseUnknownTableViewCell: CourseGenericBlockTableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        content.leadingIconColor = OEXStyles.sharedStyles().neutralBase()
-        content.setContentIcon(Icon.CourseUnknownContent)
+        content.leadingIconColor = OEXStyles.shared.neutralBase()
+        content.setContentIcon(Icon.courseUnknownContent)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -80,7 +80,7 @@ class DiscussionTableViewCell: CourseGenericBlockTableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        content.setContentIcon(Icon.Discussions)
+        content.setContentIcon(Icon.discussions)
     }
     
     required init?(coder aDecoder: NSCoder) {

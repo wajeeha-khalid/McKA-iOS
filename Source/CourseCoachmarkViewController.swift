@@ -56,7 +56,7 @@ class CourseCoachmarkViewController: UIViewController {
 				continue
 			}
 
-			coachview.hidden = (index != currentCoachmarkIndex)
+			coachview.isHidden = (index != currentCoachmarkIndex)
 		}
 	}
 }

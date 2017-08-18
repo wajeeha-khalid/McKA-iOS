@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class DiscussionDataManager : NSObject {
-    private let topicStream = BackedStream<[DiscussionTopic]>()
-    private let courseID : String
-    private let networkManager : NetworkManager?
+open class DiscussionDataManager : NSObject {
+    fileprivate let topicStream = BackedStream<[DiscussionTopic]>()
+    fileprivate let courseID : String
+    fileprivate let networkManager : NetworkManager?
     
     public init(courseID : String, networkManager : NetworkManager?) {
         self.courseID = courseID
@@ -21,10 +21,10 @@ public class DiscussionDataManager : NSObject {
     public init(courseID : String, topics : [DiscussionTopic]) {
         self.courseID = courseID
         self.networkManager = nil
-        self.topicStream.backWithStream(Stream(value: topics))
+        self.topicStream.backWithStream(edXCore.Stream(value: topics))
     }
     
-    public var topics : Stream<[DiscussionTopic]> {
+    open var topics : edXCore.Stream<[DiscussionTopic]> {
         if topicStream.value == nil && !topicStream.active {
             let request = DiscussionAPI.getCourseTopics(courseID)
             if let stream = networkManager?.streamForRequest(request, persistResponse: true, autoCancel: false) {
@@ -35,9 +35,9 @@ public class DiscussionDataManager : NSObject {
     }
     
     /// This signals changes when a response is added
-    public let commentAddedStream = Sink<(threadID : String, comment : DiscussionComment)>()
+    open let commentAddedStream = Sink<(threadID : String, comment : DiscussionComment)>()
     
     /// This signals changes when a post is read
-    public let postReadStream = Sink<(postID : String, read : Bool)>()
+    open let postReadStream = Sink<(postID : String, read : Bool)>()
     
 }

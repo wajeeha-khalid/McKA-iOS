@@ -7,13 +7,13 @@
 //
 
 class TablePaginationManipulator : ScrollingPaginationViewManipulator {
-    private let tableView : UITableView
+    fileprivate let tableView : UITableView
 
     init(tableView: UITableView) {
         self.tableView = tableView
     }
 
-    func setFooter(footer: UIView, visible: Bool) {
+    func setFooter(_ footer: UIView, visible: Bool) {
         if visible {
             self.tableView.tableFooterView = footer
         }
@@ -33,7 +33,7 @@ class TablePaginationManipulator : ScrollingPaginationViewManipulator {
 
 extension PaginationController {
 
-    convenience init<P: Paginator where P.Element == A>(paginator: P, tableView: UITableView) {
+    convenience init<P: Paginator>(paginator: P, tableView: UITableView) where P.Element == A {
         self.init(paginator: paginator, manipulator: TablePaginationManipulator(tableView: tableView))
     }
     

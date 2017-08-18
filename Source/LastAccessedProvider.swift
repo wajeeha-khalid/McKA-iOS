@@ -9,6 +9,6 @@
 import UIKit
 
 public protocol LastAccessedProvider: class {
-    func getLastAccessedSectionForCourseID(courseID : String) -> CourseLastAccessed?
-    func setLastAccessedSubSectionWithID(subsectionID: String, subsectionName: String, courseID: String?, timeStamp: String)
+    func getLastAccessedSectionForCourseID(_ courseID : String) -> CourseLastAccessed?
+    func setLastAccessedSubSectionWithID(_ subsectionID: String, subsectionName: String, courseID: String?, timeStamp: String)
 }

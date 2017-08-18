@@ -16,22 +16,22 @@ class OEXColorsTests: XCTestCase {
     }
     
     func testColorFileExistence() {
-        let filePath : String? = NSBundle.mainBundle().pathForResource("colors", ofType: "json")
+        let filePath : String? = Bundle.main.path(forResource: "colors", ofType: "json")
         XCTAssertNotNil(filePath)
-        XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(filePath ?? ""))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: filePath ?? ""))
     }
     
     func testColorDataFactory() {
-        oexColors.fallbackColors()
-        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.PrimaryBaseColor))
+        _ = oexColors.fallbackColors()
+        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.primaryBaseColor))
     }
     
     func testColorParsing() {
-        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.PrimaryBaseColor))
-        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.PrimaryLightColor))
-        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.PrimaryBaseColor, alpha: 0.5))
-        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.PrimaryLightColor, alpha: 1.0))
-        XCTAssertEqual(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.PrimaryBaseColor), oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.PrimaryBaseColor, alpha: 1.0))
+        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.primaryBaseColor))
+        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.primaryLightColor))
+        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.primaryBaseColor, alpha: 0.5))
+        XCTAssertNotNil(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.primaryLightColor, alpha: 1.0))
+        XCTAssertEqual(oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.primaryBaseColor), oexColors.colorForIdentifier(OEXColors.ColorsIdentifiers.primaryBaseColor, alpha: 1.0))
     }
 
 }

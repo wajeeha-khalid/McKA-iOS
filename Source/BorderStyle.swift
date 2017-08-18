@@ -8,48 +8,48 @@
 
 import Foundation
 
-public class BorderStyle {
+open class BorderStyle {
     enum Width {
-        case Hairline
-        case Size(CGFloat)
+        case hairline
+        case size(CGFloat)
         
         var value : CGFloat {
             switch self {
-            case Hairline: return OEXStyles.dividerSize()
-            case let Size(s): return s
+            case .hairline: return OEXStyles.dividerSize()
+            case let .size(s): return s
             }
         }
     }
     
     enum Radius {
-        case Circle
-        case Size(CGFloat)
+        case circle
+        case size(CGFloat)
         
-        func value(view: UIView) -> CGFloat {
+        func value(_ view: UIView) -> CGFloat {
             switch self {
-            case Circle: return view.frame.size.height / 2.0
-            case let Size(s): return s
+            case .circle: return view.frame.size.height / 2.0
+            case let .size(s): return s
             }
         }
     }
     
-    static let defaultCornerRadius = OEXStyles.sharedStyles().boxCornerRadius()
+    static let defaultCornerRadius = OEXStyles.shared.boxCornerRadius()
     
     let cornerRadius : Radius
     let width : Width
     let color : UIColor?
     
-    init(cornerRadius : Radius = .Size(BorderStyle.defaultCornerRadius), width : Width = .Size(0), color : UIColor? = nil) {
+    init(cornerRadius : Radius = .size(BorderStyle.defaultCornerRadius), width : Width = .size(0), color : UIColor? = nil) {
         self.cornerRadius = cornerRadius
         self.width = width
         self.color = color
     }
     
-    private func applyToView(view : UIView) {
+    fileprivate func applyToView(_ view : UIView) {
         let radius = cornerRadius.value(view)
         view.layer.cornerRadius = radius
         view.layer.borderWidth = width.value
-        view.layer.borderColor = color?.CGColor
+        view.layer.borderColor = color?.cgColor
         if radius != 0 {
             view.clipsToBounds = true
         }
@@ -61,7 +61,7 @@ public class BorderStyle {
 }
 
 extension UIView {
-    func applyBorderStyle(style : BorderStyle) {
+    func applyBorderStyle(_ style : BorderStyle) {
         style.applyToView(self)
     }
 }

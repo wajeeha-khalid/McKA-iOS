@@ -9,14 +9,14 @@
 @testable import edX
 
 class MockProfilePresenter: UserProfilePresenter {
-    let profileStream: Stream<UserProfile>
-    let tabStream: Stream<[ProfileTabItem]>
+    let profileStream: edXCore.Stream<UserProfile>
+    let tabStream: edXCore.Stream<[ProfileTabItem]>
 
     weak var delegate: UserProfilePresenterDelegate?
 
     init(profile: UserProfile, tabs: [ProfileTabItem]) {
-        profileStream = Stream(value: profile)
-        tabStream = Stream(value: tabs)
+        profileStream = edXCore.Stream(value: profile)
+        tabStream = edXCore.Stream(value: tabs)
     }
 
     func refresh() {
@@ -27,9 +27,9 @@ class MockProfilePresenter: UserProfilePresenter {
 class MockPaginator<A>: Paginator {
     typealias Element = A
 
-    let stream: Stream<[A]>
+    let stream: edXCore.Stream<[A]>
     init(values : [A]) {
-        self.stream = Stream(value: values)
+        self.stream = edXCore.Stream(value: values)
     }
 
     let hasNext: Bool = false
@@ -41,11 +41,11 @@ class MockPaginator<A>: Paginator {
 
 class UserProfileViewTests: SnapshotTestCase {
 
-    func profileWithPrivacy(privacy : UserProfile.ProfilePrivacy) -> UserProfile {
+    func profileWithPrivacy(_ privacy : UserProfile.ProfilePrivacy) -> UserProfile {
         return UserProfile(username: "Test Person", bio: "Hello I am a lorem ipsum dolor sit amet", parentalConsent: false, countryCode: "de", accountPrivacy: privacy)
     }
     
-    func snapshotContentWithPrivacy(privacy : UserProfile.ProfilePrivacy) {
+    func snapshotContentWithPrivacy(_ privacy : UserProfile.ProfilePrivacy) {
         let presenter = MockProfilePresenter(profile: profileWithPrivacy(privacy), tabs: [])
         let controller = UserProfileViewController(environment: TestRouterEnvironment(), presenter: presenter, editable: true)
         inScreenNavigationContext(controller, action: { () -> () in
@@ -66,8 +66,8 @@ class UserProfileViewTests: SnapshotTestCase {
         let image = RemoteImageJustImage(image: UIImage(testImageNamed: "sample-badge"))
 
         let accomplishments = [
-            Accomplishment(image: image, title: "Some Cool Thing I did", detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", date: NSDate.stableTestDate(), shareURL: NSURL(string:"https://whatever")!),
-            Accomplishment(image: image, title: "Some Other Thing I did", detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", date: NSDate.stableTestDate(), shareURL: NSURL(string:"https://whatever")!)
+            Accomplishment(image: image, title: "Some Cool Thing I did", detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", date: Date.stableTestDate(), shareURL: URL(string:"https://whatever")!),
+            Accomplishment(image: image, title: "Some Other Thing I did", detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", date: Date.stableTestDate(), shareURL: URL(string:"https://whatever")!)
         ]
 
         let tabs = [{(scrollView: UIScrollView) -> TabItem in

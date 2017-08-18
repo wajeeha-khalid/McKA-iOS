@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public protocol RawStringExtractable {
     var rawValue : String { get }

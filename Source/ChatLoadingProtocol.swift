@@ -9,21 +9,21 @@
 import UIKit
 
 // checks if a request is coming from a WebView
-func isWebViewRequest(request: NSURLRequest) -> Bool {
-    guard let path = request.URL?.path else {
+func isWebViewRequest(_ request: URLRequest) -> Bool {
+    guard let path = request.url?.path else {
         return false
     }
     
     let referer = request.allHTTPHeaderFields?["Referer"]
     
-    if  (path.containsString("type@html") ||
-        path.containsString("type@chat") ||
-        path.rangeOfString("i4x://.*/chat/", options: .RegularExpressionSearch) != nil ||
-        path.rangeOfString("i4x://.*/html/", options: .RegularExpressionSearch) != nil ||
-        referer?.containsString("type@html") == true ||
-        referer?.containsString("type@chat") == true ||
-        referer?.rangeOfString("i4x://.*/chat/", options: .RegularExpressionSearch) != nil ||
-        referer?.rangeOfString("i4x://.*/html/", options: .RegularExpressionSearch) != nil) {
+    if  (path.contains("type@html") ||
+        path.contains("type@chat") ||
+        path.range(of: "i4x://.*/chat/", options: .regularExpression) != nil ||
+        path.range(of: "i4x://.*/html/", options: .regularExpression) != nil ||
+        referer?.contains("type@html") == true ||
+        referer?.contains("type@chat") == true ||
+        referer?.range(of: "i4x://.*/chat/", options: .regularExpression) != nil ||
+        referer?.range(of: "i4x://.*/html/", options: .regularExpression) != nil) {
         return true
     }
     
@@ -31,12 +31,12 @@ func isWebViewRequest(request: NSURLRequest) -> Bool {
 }
 
 @objc protocol RequestCache {
-    func cachedResponseForRequest(request: NSURLRequest) -> NSCachedURLResponse?
-    func storeCachedResponse(response: NSCachedURLResponse, forRequest: NSURLRequest)
+    func cachedResponseForRequest(_ request: URLRequest) -> CachedURLResponse?
+    func storeCachedResponse(_ response: CachedURLResponse, forRequest: URLRequest)
 }
 
 @objc protocol RequestLoader {
-    func loadRequest(request: NSURLRequest, completionHandler: ( NSData?, NSURLResponse?, NSError?) -> Void)
+    func loadRequest(_ request: URLRequest, completionHandler:@escaping ( Data?, URLResponse?, Error?) -> Void)
     func cancel()
 }
 
@@ -44,14 +44,14 @@ func isWebViewRequest(request: NSURLRequest) -> Bool {
  Loads a request from the network using a URLSession instance...
  */
 class NetworkRequestLoader: NSObject, RequestLoader {
-    let session: NSURLSession
-    var task: NSURLSessionDataTask?
-    init(session: NSURLSession) {
+    let session: URLSession
+    var task: URLSessionDataTask?
+    init(session: URLSession) {
         self.session = session
     }
     
-    func loadRequest(request: NSURLRequest, completionHandler: ( NSData?, NSURLResponse?, NSError?) -> Void) {
-        task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+    func loadRequest(_ request: URLRequest, completionHandler: @escaping ( Data?, URLResponse?, Error?) -> Void) {
+        task = session.dataTask(with: request, completionHandler: completionHandler)
         task?.resume()
     }
     
@@ -60,7 +60,7 @@ class NetworkRequestLoader: NSObject, RequestLoader {
     }
 }
 
-extension NSURLCache : RequestCache {
+extension URLCache : RequestCache {
 }
 
 /**
@@ -75,18 +75,18 @@ class CachedRequestLoader: NSObject, RequestLoader {
         self.loader = loader
     }
     
-    func loadRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) {
-        let cachableRequest = request.mutableCopy() as! NSMutableURLRequest
-        cachableRequest.cachePolicy = .ReturnCacheDataElseLoad
-        if let cachedResponse = cache.cachedResponseForRequest(cachableRequest) {
+    func loadRequest(_ request: URLRequest, completionHandler:@escaping (Data?, URLResponse?, Error?) -> Void) {
+        var cachableRequest = request
+        cachableRequest.cachePolicy = .returnCacheDataElseLoad
+        if let cachedResponse = cache.cachedResponseForRequest(cachableRequest as URLRequest) {
             completionHandler(cachedResponse.data, cachedResponse.response, nil)
         } else {
             loader.loadRequest(request) { (data, response, error) in
-                if let data = data, response = response {
-                    let cachedResponse = NSCachedURLResponse(response: response, data: data)
+                if let data = data, let response = response {
+                    let cachedResponse = CachedURLResponse(response: response, data: data)
                     // don't cache POST, PUT, DELETE etc..
-                    if request.HTTPMethod == "GET" {
-                        self.cache.storeCachedResponse(cachedResponse, forRequest: cachableRequest)
+                    if request.httpMethod == "GET" {
+                        self.cache.storeCachedResponse(cachedResponse, forRequest: cachableRequest as URLRequest)
                     }
                 }
                 completionHandler(data, response, error)
@@ -104,7 +104,7 @@ class CachedRequestLoader: NSObject, RequestLoader {
  1.) UIWebView returns error when device is not connected to internet. so we intercept the requests to return cached response
  2.) Files greater than 500Kb are not cached by WebView so we are downloading the resources ourselves so that we can cache them irrespective of size..
  */
-public class WebViewLoadingProtocol: NSURLProtocol {
+open class WebViewLoadingProtocol: URLProtocol {
     
     static let loadingKey = "com.Pique.requestLoading"
     
@@ -114,11 +114,11 @@ public class WebViewLoadingProtocol: NSURLProtocol {
     //Setting it on class will share the same instance b/w all the instances of this class
     static var requestLoader: RequestLoader?
     
-    override public class func canInitWithRequest(request: NSURLRequest) -> Bool {
+    override open class func canInit(with request: URLRequest) -> Bool {
         
         //If we are already loading this request then return false. otherwise it will go into an 
         // infinite loop
-        if NSURLProtocol.propertyForKey(WebViewLoadingProtocol.loadingKey, inRequest: request) != nil {
+        if URLProtocol.property(forKey: WebViewLoadingProtocol.loadingKey, in: request) != nil {
             return false
         }
         
@@ -129,38 +129,38 @@ public class WebViewLoadingProtocol: NSURLProtocol {
         return false
     }
     
-    override public class func canonicalRequestForRequest(request: NSURLRequest) -> NSURLRequest {
-        let mutableRequest = request.mutableCopy() as! NSMutableURLRequest
+    override open class func canonicalRequest(for request: URLRequest) -> URLRequest {
+        var mutableRequest = request
         /*we need to set the policy to ignore cache here because everytime we send the response to 
          protocol's client the URLSystem tries to cache the response which isn't needed when we return 
          already cached response. URLCache won't cache data when the policy is set to ignore cache.*/
-        mutableRequest.cachePolicy = .ReloadIgnoringLocalCacheData
+        mutableRequest.cachePolicy = .reloadIgnoringLocalCacheData
         return mutableRequest
     }
     
-    override public func startLoading() {
+    override open func startLoading() {
         guard let loader = WebViewLoadingProtocol.requestLoader else {
             fatalError("No loader found for loading request")
         }
         
-        let mutableRequest = request.mutableCopy() as! NSMutableURLRequest
+        let mutableRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
         //Tag the request with this property value so that if we receive this request again
         // we can know that we already in process of loading it
-        NSURLProtocol.setProperty("true", forKey: WebViewLoadingProtocol.loadingKey, inRequest: mutableRequest)
-        loader.loadRequest(mutableRequest) { (data, response, error) in
+        URLProtocol.setProperty("true", forKey: WebViewLoadingProtocol.loadingKey, in: mutableRequest)
+        loader.loadRequest(mutableRequest as URLRequest) { (data, response, error) in
             if let response = response {
-                self.client?.URLProtocol(self, didReceiveResponse: response, cacheStoragePolicy: .NotAllowed)
+                self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             }
             if let error = error {
-                self.client?.URLProtocol(self, didFailWithError: error)
+                self.client?.urlProtocol(self, didFailWithError: error)
             } else if let data = data {
-                self.client?.URLProtocol(self, didLoadData: data)
+                self.client?.urlProtocol(self, didLoad: data)
             }
-            self.client?.URLProtocolDidFinishLoading(self)
+            self.client?.urlProtocolDidFinishLoading(self)
         }
     }
     
-    override public func stopLoading() {
+    override open func stopLoading() {
         guard let loader = WebViewLoadingProtocol.requestLoader else {
             fatalError("No loader found for loading request")
         }

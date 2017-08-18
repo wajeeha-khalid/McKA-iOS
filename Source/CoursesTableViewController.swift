@@ -8,21 +8,21 @@
 
 import UIKit
 import Kingfisher
-
+import SnapKit
 class CourseCardCell : UITableViewCell {
     static let margin = 15.0
     
-    private static let cellIdentifier = "CourseCardCell"
-    private let courseView = NewCourseCardView(frame: CGRectZero)
-    private var course : OEXCourse?
-    private let courseCardBorderStyle = BorderStyle()
+    fileprivate static let cellIdentifier = "CourseCardCell"
+    fileprivate let courseView = NewCourseCardView(frame: CGRect.zero)
+    fileprivate var course : OEXCourse?
+    fileprivate let courseCardBorderStyle = BorderStyle()
     
     override init(style : UITableViewCellStyle, reuseIdentifier : String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.contentView.addSubview(courseView)
         
-        courseView.snp_makeConstraints {make in
+        courseView.snp.makeConstraints {make in
             make.top.equalTo(self.contentView).offset(CourseCardCell.margin)
             make.bottom.equalTo(self.contentView)
             make.leading.equalTo(self.contentView).offset(CourseCardCell.margin)
@@ -31,9 +31,9 @@ class CourseCardCell : UITableViewCell {
         
         courseView.applyBorderStyle(courseCardBorderStyle)
         
-        self.contentView.backgroundColor = OEXStyles.sharedStyles().neutralXLight()
+        self.contentView.backgroundColor = OEXStyles.shared.neutralWhiteT()
         
-        self.selectionStyle = .None
+        self.selectionStyle = .none
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -47,7 +47,7 @@ class CourseCardCell : UITableViewCell {
 }
 
 protocol CoursesTableViewControllerDelegate : class {
-    func coursesTableChoseCourse(course : OEXCourse)
+    func coursesTableChoseCourse(_ course : OEXCourse)
 }
 
 struct CourseViewModel {
@@ -78,38 +78,48 @@ struct CourseViewModel {
     }
     
     func apply(newCard card: NewCourseCardView, networkManager: NetworkManager) {
-        if let lessonCount = lessonCount {
-            card.lessonText = "\(lessonCount) lessons"
-        } else {
-            card.lessonText = "fetching lesson count..."
-        }
+        
+        card.lessonText = formattedLessonCount
         card.couseTitle = title
         card.progress = progress
         
         let placeholder = UIImage(named: "placeholderCourseCardImage")
-        let URL = courseImageURL.flatMap {
-            NSURL(string: $0, relativeToURL: networkManager.baseURL)
+        let url = courseImageURL.flatMap {
+            URL(string: $0, relativeTo: networkManager.baseURL)
         }
         // We are switching to Kingfisher because `RemoteImage` currently has some probelms 
         // especially with cell reuse in tableView...
-        card.imageView.kf_setImageWithURL(URL, placeholderImage: placeholder)
+        card.imageView.kf.setImage(with:url, placeholder: placeholder)
     }
+    
+    var formattedLessonCount: String {
+        if let lessonCount = lessonCount {
+            if lessonCount > 1 {
+                return "\( lessonCount) Lessons"
+            } else {
+                return "\(lessonCount) Lesson"
+            }
+        } else {
+            return "fetching lesson count..."
+        }
+    }
+    
 }
 
 class CoursesTableViewController: UITableViewController {
     
     enum Context {
-        case CourseCatalog
-        case EnrollmentList
+        case courseCatalog
+        case enrollmentList
     }
     
-    typealias Environment = protocol<NetworkManagerProvider, OEXRouterProvider, DataManagerProvider>
+    typealias Environment = NetworkManagerProvider & OEXRouterProvider & DataManagerProvider
     
-    private let environment : Environment
-    private let context: Context
+    fileprivate let environment : Environment
+    fileprivate let context: Context
     weak var delegate : CoursesTableViewControllerDelegate?
-    var streams: [Stream<Int>] = []
-    private var _courses: [CourseViewModel] = []
+    var streams: [edXCore.Stream<Int>] = []
+    fileprivate var _courses: [CourseViewModel] = []
     
     var courses : [CourseViewModel]  {
         get {
@@ -121,22 +131,26 @@ class CoursesTableViewController: UITableViewController {
             courses.forEach { (course) in
                 let querier = self.environment.dataManager.courseDataManager.querierForCourseWithID(course.courseID!)
                 let stream = querier.childrenOfBlockWithID(nil).transform({ group in
-                    return Stream(value: group.children.count)
+                    return Stream(
+                        value: group.children.filter({ (lesson) -> Bool in
+                            return lesson.displayName.lowercased().contains("discussion_course") == false
+                        }).count
+                    )
                 })
                 stream.listen(self) { [weak self] result in
                     guard let owner = self else {
                         return
                     }
                     
-                    let indexOfStream = owner.streams.indexOf {
+                    let indexOfStream = owner.streams.index {
                         $0 === stream
                     }
                     if let indexOfStream = indexOfStream {
-                        owner.streams.removeAtIndex(indexOfStream)
+                        owner.streams.remove(at: indexOfStream)
                     }
                     
                     switch result {
-                    case .Success(let count):
+                    case .success(let count):
                         if let index = owner.index(for: course.courseID!) {
                             var course = owner.courses[index]
                             course.lessonCount = count
@@ -144,7 +158,7 @@ class CoursesTableViewController: UITableViewController {
                             //TODO: Ideally we would like to reload individual rows but currently that is having some problem when a user is un enrolled from course...
                             owner.tableView.reloadData()
                         }
-                    case .Failure:
+                    case .failure:
                         break
                     }
                 }
@@ -154,7 +168,7 @@ class CoursesTableViewController: UITableViewController {
     }
     
     func index(for courseID: String) -> Int? {
-        return courses.indexOf { course in
+        return courses.index { course in
             course.courseID == courseID
         }
     }
@@ -175,26 +189,26 @@ class CoursesTableViewController: UITableViewController {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.separatorStyle = .None
-        self.tableView.backgroundColor = OEXStyles.sharedStyles().neutralXLight()
+        self.tableView.separatorStyle = .none
+        self.tableView.backgroundColor = OEXStyles.shared.neutralXLight()
         self.tableView.accessibilityIdentifier = "courses-table-view"
         
-        self.tableView.snp_makeConstraints {make in
+        self.tableView.snp.makeConstraints {make in
             make.edges.equalTo(self.view)
         }
         
-        tableView.registerClass(CourseCardCell.self, forCellReuseIdentifier: CourseCardCell.cellIdentifier)
+        tableView.register(CourseCardCell.self, forCellReuseIdentifier: CourseCardCell.cellIdentifier)
         
         self.insetsController.addSource(
             ConstantInsetsSource(insets: UIEdgeInsets(top: 0, left: 0, bottom: StandardVerticalMargin, right: 0), affectsScrollIndicators: false)
         )
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.courses.count ?? 0
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.courses.count 
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let availableHeight = tableView.frame.size.height
         let numberOfRows = courses.count
         let rowHeight = availableHeight / CGFloat(numberOfRows)
@@ -210,10 +224,10 @@ class CoursesTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let course = self.courses[indexPath.row]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(CourseCardCell.cellIdentifier, forIndexPath: indexPath) as! CourseCardCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CourseCardCell.cellIdentifier, for: indexPath) as! CourseCardCell
 
         cell.accessibilityLabel = course.title
         cell.accessibilityHint = Strings.accessibilityShowsCourseContent

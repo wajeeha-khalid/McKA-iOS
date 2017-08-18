@@ -10,26 +10,26 @@ import Foundation
 
 extension OEXCourseInfoViewController {
  
-    func enrollInCourse(courseID: String, emailOpt: Bool) {
-        guard let _ = OEXSession.sharedSession()?.currentUser else {
-            OEXRouter.sharedRouter().showSignUpScreenFromController(self, completion: {
+    func enrollInCourse(_ courseID: String, emailOpt: Bool) {
+        guard let _ = OEXSession.shared()?.currentUser else {
+            OEXRouter.shared().showSignUpScreen(from: self, completion: {
                 self.enrollInCourse(courseID, emailOpt: emailOpt)
             })
             return;
         }
         
-        let environment = OEXRouter.sharedRouter().environment;
+        let environment = OEXRouter.shared().environment;
         
         if let _ = environment.dataManager.enrollmentManager.enrolledCourseWithID(courseID) {
-            showMainScreenWithMessage(Strings.findCoursesAlreadyEnrolledMessage, courseID: courseID)
+            showMainScreen(withMessage: Strings.findCoursesAlreadyEnrolledMessage, courseID: courseID)
             return
         }
         
         let request = CourseCatalogAPI.enroll(courseID)
         environment.networkManager.taskForRequest(request) {[weak self] response in
             if response.response?.httpStatusCode.is2xx ?? false {
-                environment.analytics.trackUserEnrolledInCourse(courseID)
-                self?.showMainScreenWithMessage(Strings.findCoursesEnrollmentSuccessfulMessage, courseID: courseID)
+                environment.analytics.trackUserEnrolled(inCourse: courseID)
+                self?.showMainScreen(withMessage: Strings.findCoursesEnrollmentSuccessfulMessage, courseID: courseID)
             }
             else {
                 self?.showOverlayMessage(Strings.findCoursesEnrollmentErrorDescription)

@@ -42,6 +42,7 @@ static NSString* const OEXFindCoursePathPrefix = @"course/";
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.navigationItem.title = [Strings findCourses];
 
@@ -55,7 +56,7 @@ static NSString* const OEXFindCoursePathPrefix = @"course/";
             urlToLoad = [self enrollmentConfig].webviewConfig.searchURL;
             break;
         case OEXFindCoursesBaseTypeExploreSubjects:
-            self.navigationItem.title = [Startup exploreSubjects];
+            //self.navigationItem.title = [Startup exploreSubjects];
             urlToLoad = [self enrollmentConfig].webviewConfig.exploreSubjectsURL;
             break;
     }

@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 struct ProgressAPI {
     
-    static func progressResponseDeserializer(response: NSHTTPURLResponse, json: JSON) -> Result<[UserCourseEnrollment]> {
+    static func progressResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<[UserCourseEnrollment]> {
         return (json.array?.flatMap { UserCourseEnrollment(json: $0) }).toResult()
     }
     
@@ -19,11 +20,11 @@ struct ProgressAPI {
         return NetworkRequest(
             method: .POST,
             path: "/api/progress_tracker/recordView/",
-            body: .JSONBody(JSON([
+            body: .jsonBody(JSON([
                 "userName" : username,
                 "componentIds": componentIDs
                 ])),
-            deserializer: .JSONResponse(progressResponseDeserializer)
+            deserializer: .jsonResponse(progressResponseDeserializer)
         )
     }
 }

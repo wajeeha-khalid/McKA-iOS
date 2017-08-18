@@ -12,10 +12,10 @@ class DiscussionTopicCell: UITableViewCell {
 
     static let identifier = "DiscussionTopicCellIdentifier"
     
-    private let titleLabel = UILabel()
+    fileprivate let titleLabel = UILabel()
     
-    private var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .Normal, size: .Base, color : OEXStyles.sharedStyles().neutralXDark())
+    fileprivate var titleTextStyle : OEXTextStyle {
+        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralXDark())
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -37,7 +37,7 @@ class DiscussionTopicCell: UITableViewCell {
                 titleAttributedStrings.append(topicIcon.attributedTextWithStyle(titleTextStyle, inline: true))
             }
             if let discussionTopic = topic {
-                titleAttributedStrings.append(titleTextStyle.attributedStringWithText(discussionTopic.name?.userFacingString))
+                titleAttributedStrings.append(titleTextStyle.attributedString(withText: discussionTopic.name?.userFacingString))
             }
             
             self.titleLabel.attributedText = NSAttributedString.joinInNaturalLayout(titleAttributedStrings)
@@ -47,10 +47,10 @@ class DiscussionTopicCell: UITableViewCell {
     func configureViews() {
         applyStandardSeparatorInsets()
         
-        self.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        self.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         self.contentView.addSubview(titleLabel)
 
-        self.titleLabel.snp_makeConstraints { (make) -> Void in
+        self.titleLabel.snp.makeConstraints { (make) -> Void in
             make.trailing.equalTo(self.contentView).offset(-StandardHorizontalMargin)
             make.top.equalTo(self.contentView).offset(StandardVerticalMargin)
             make.bottom.equalTo(self.contentView).offset(-StandardVerticalMargin)
@@ -59,9 +59,9 @@ class DiscussionTopicCell: UITableViewCell {
         self.titleLabel.numberOfLines = 0
     }
     
-    private var depth : UInt = 0 {
+    fileprivate var depth : UInt = 0 {
         didSet {
-            self.titleLabel.snp_updateConstraints { make in
+            self.titleLabel.snp.updateConstraints { make in
                 make.leading.equalTo(self.contentView).offset(self.indentationOffsetForDepth(itemDepth: depth))
                 depth == 0 ? self.applyStandardSeparatorInsets() : self.removeStandardSeparatorInsets()
             }
@@ -78,7 +78,7 @@ private extension String {
 
 extension UITableViewCell {
     
-    private func indentationOffsetForDepth(itemDepth depth : UInt) -> CGFloat {
+    fileprivate func indentationOffsetForDepth(itemDepth depth : UInt) -> CGFloat {
         return CGFloat(depth + 1) * StandardHorizontalMargin
     }
 }

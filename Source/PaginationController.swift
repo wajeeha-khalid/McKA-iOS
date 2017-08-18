@@ -16,30 +16,30 @@ extension UIScrollView {
 
 
 protocol ScrollingPaginationViewManipulator {
-    func setFooter(footer: UIView, visible: Bool)
+    func setFooter(_ footer: UIView, visible: Bool)
     var scrollView: UIScrollView? { get }
     var canPaginate: Bool { get }
 }
 
 private let footerHeight = 30
 
-public class PaginationController<A> : NSObject, Paginator {
+open class PaginationController<A> : NSObject, Paginator {
     typealias Element = A
 
-    private let paginator : AnyPaginator<A>
-    private let viewManipulator: ScrollingPaginationViewManipulator
+    fileprivate let paginator : AnyPaginator<A>
+    fileprivate let viewManipulator: ScrollingPaginationViewManipulator
 
-    private let footer : UIView = {
+    fileprivate let footer : UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: footerHeight))
-        let activityIndicator = SpinnerView(size: .Large, color: .Primary)
+        let activityIndicator = SpinnerView(size: .large, color: .primary)
         view.addSubview(activityIndicator)
-        activityIndicator.snp_makeConstraints { make in
+        activityIndicator.snp.makeConstraints { make in
             make.center.equalTo(view)
         }
         return view
     }()
 
-    init<P: Paginator where P.Element == A>(paginator: P, manipulator: ScrollingPaginationViewManipulator) {
+    init<P: Paginator>(paginator: P, manipulator: ScrollingPaginationViewManipulator) where P.Element == A {
         self.paginator = AnyPaginator(paginator)
         self.viewManipulator = manipulator
         super.init()
@@ -50,7 +50,7 @@ public class PaginationController<A> : NSObject, Paginator {
         }
     }
 
-    var stream : Stream<[A]> {
+    var stream : edXCore.Stream<[A]> {
         return paginator.stream
     }
 
@@ -62,11 +62,11 @@ public class PaginationController<A> : NSObject, Paginator {
         return paginator.hasNext
     }
 
-    private func updateVisibility() {
+    fileprivate func updateVisibility() {
         viewManipulator.setFooter(self.footer, visible: self.paginator.stream.active)
     }
 
-    private func viewScrolled() {
+    fileprivate func viewScrolled() {
         if !self.paginator.stream.active && (viewManipulator.scrollView?.scrolledNearBottom ?? false) && viewManipulator.canPaginate && self.paginator.hasNext {
             self.paginator.loadMore()
             self.updateVisibility()

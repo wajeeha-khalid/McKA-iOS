@@ -7,24 +7,48 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 
 public enum CellType {
-    case CompletedUnit
-    case LiveUnit
-    case LockedUnit
+    case completedUnit
+    case liveUnit
+    case lockedUnit
 }
 
 public enum TitleType {
-    case NavTitle
-    case CourseProgress
-    case AssignmentCount
+    case navTitle
+    case courseProgress
+    case assignmentCount
 }
 
 
-public class OEXCoursewareViewController: OfflineSupportViewController, UITableViewDelegate, UITableViewDataSource {
+open class OEXCoursewareViewController: OfflineSupportViewController, UITableViewDelegate, UITableViewDataSource {
     
-    public typealias Environment = protocol<OEXAnalyticsProvider, OEXConfigProvider, DataManagerProvider, NetworkManagerProvider, ReachabilityProvider, OEXRouterProvider, OEXInterfaceProvider, OEXRouterProvider, OEXSessionProvider, OEXConfigProvider>
+    public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & ReachabilityProvider & OEXRouterProvider & OEXInterfaceProvider & OEXRouterProvider & OEXSessionProvider & OEXConfigProvider
     
     @IBOutlet weak var unitsTableView: UITableView!
     @IBOutlet weak var prevButton: UIButton!
@@ -39,28 +63,28 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     @IBOutlet weak var courseDurationTextLabel: UILabel!
     @IBOutlet weak var colonLabel: UILabel!
     
-    private var rootID : CourseBlockID?
-    private let courseID: String
-    private var sectionIndex: Int = 0
-    private let environment: Environment
-    private let courseQuerier : CourseOutlineQuerier
-    private let blockIDStream = BackedStream<CourseBlockID?>()
-    private let headersLoader = BackedStream<CourseOutlineQuerier.BlockGroup>()
-    private let rowsLoader = BackedStream<[CourseOutlineQuerier.BlockGroup]>()
-    private let loadController : LoadStateViewController
-    private var progressSpinner : SpinnerView = SpinnerView(size: .Large, color: .Primary)
-    private var isTitle : Bool = true
-    private var titleType : TitleType
-    private var navigationTitle : String?
+    fileprivate var rootID : CourseBlockID?
+    fileprivate let courseID: String
+    fileprivate var sectionIndex: Int = 0
+    fileprivate let environment: Environment
+    fileprivate let courseQuerier : CourseOutlineQuerier
+    fileprivate let blockIDStream = BackedStream<CourseBlockID?>()
+    fileprivate let headersLoader = BackedStream<CourseOutlineQuerier.BlockGroup>()
+    fileprivate let rowsLoader = BackedStream<[CourseOutlineQuerier.BlockGroup]>()
+    fileprivate let loadController : LoadStateViewController
+    fileprivate var progressSpinner : SpinnerView = SpinnerView(size: .large, color: .primary)
+    fileprivate var isTitle : Bool = true
+    fileprivate var titleType : TitleType
+    fileprivate var navigationTitle : String?
     var downloadController  : DownloadController
     var totalComponentsCount: Int = 0
     var viewedComponentsCount: Int = 0
     
-    private var sections: [CourseOutlineQuerier.BlockGroup]?
-    private var unitsForSelectedSection: [CourseBlock]?
-    private var numberOfUnitsPerSection = [Int]()
-    private var readStatusArray = [Int]()
-    private var liveUnitIndex : Int?
+    fileprivate var sections: [CourseOutlineQuerier.BlockGroup]?
+    fileprivate var unitsForSelectedSection: [CourseBlock]?
+    fileprivate var numberOfUnitsPerSection = [Int]()
+    fileprivate var readStatusArray = [Int]()
+    fileprivate var liveUnitIndex : Int?
     
     
     public init(environment: Environment, courseID: String, rootID : CourseBlockID?) {
@@ -68,7 +92,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         self.courseID = courseID
         courseQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
         loadController = LoadStateViewController()
-        titleType = TitleType.NavTitle
+        titleType = TitleType.navTitle
         downloadController  = DownloadController(courseQuerier: courseQuerier, analytics: environment.analytics)
         super.init(env : environment)
     }
@@ -78,10 +102,10 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     }
     
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
-        self.unitsTableView.registerNib(UINib(nibName: "CourseUnitsViewCell", bundle: nil), forCellReuseIdentifier: "UnitsCell")
-        self.unitsTableView.registerNib(UINib(nibName: "CourseLiveUnitViewCell", bundle:nil), forCellReuseIdentifier:"CourseLiveCell")
+        self.unitsTableView.register(UINib(nibName: "CourseUnitsViewCell", bundle: nil), forCellReuseIdentifier: "UnitsCell")
+        self.unitsTableView.register(UINib(nibName: "CourseLiveUnitViewCell", bundle:nil), forCellReuseIdentifier:"CourseLiveCell")
         loadController.setupInController(self, contentView: self.unitsTableView)
         
         let courseStream = BackedStream<UserCourseEnrollment>()
@@ -92,28 +116,28 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         }
         
         self.navigationTitle = self.navigationItem.title
-        self.courseDurationLabel.hidden = true
-        self.precentageCompletedLabel.hidden = true
-        self.courseDurationTextLabel.hidden = true
-        self.colonLabel.hidden = true
-        self.sectionHidingView.hidden = true
+        self.courseDurationLabel.isHidden = true
+        self.precentageCompletedLabel.isHidden = true
+        self.courseDurationTextLabel.isHidden = true
+        self.colonLabel.isHidden = true
+        self.sectionHidingView.isHidden = true
         
-        let backImage = UIImage (named : "ic_backchevron.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let attachmentImage = UIImage(named: "ic_attachment.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let backImage = UIImage (named : "ic_backchevron.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        let attachmentImage = UIImage(named: "ic_attachment.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: attachmentImage, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(showHandouts))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: backImage, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(popAction))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: attachmentImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(showHandouts))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: backImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(popAction))
         
         self.addListeners()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receivedSavingNotification), name: kLocalSavingNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receivedSavingNotification), name: NSNotification.Name(rawValue: kLocalSavingNotification), object: nil)
         
         // Register for download progress notifications
         for notification in OEXCoursewareViewController.getContentDownloadNotificationTypes() {
-            NSNotificationCenter.defaultCenter().oex_addObserver(self, name: notification) { (notification, observer, _) -> Void in
+            NotificationCenter.default.oex_addObserver( self, name: notification) { (notification, observer, _) -> Void in
                 if let visibleIndexPaths = observer.unitsTableView.indexPathsForVisibleRows {
                     observer.unitsTableView.beginUpdates()
-                    observer.unitsTableView.reloadRowsAtIndexPaths(visibleIndexPaths, withRowAnimation: .None)
+                    observer.unitsTableView.reloadRows(at: visibleIndexPaths, with: .none)
                     observer.unitsTableView.endUpdates()
                 }
             }
@@ -122,17 +146,17 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     }
     
     class func getContentDownloadNotificationTypes() -> [String] {
-        return [OEXDownloadProgressChangedNotification, OEXDownloadEndedNotification]
+        return [NSNotification.Name.OEXDownloadProgressChanged.rawValue, NSNotification.Name.OEXDownloadEnded.rawValue]
     }
     
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController!.navigationBar.backgroundColor = UIColor.clearColor()
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.backgroundColor = UIColor.clear
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.translucent = true
-        self.navigationController?.view.backgroundColor = UIColor.clearColor()
+        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
         
         let titleTapRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(changeNavigationTitle))
         self.navigationController!.navigationBar.addGestureRecognizer(titleTapRecognizer)
@@ -140,20 +164,20 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         unitsTableView.reloadData()
     }
     
-    public override func viewWillDisappear(animated: Bool)  {
+    open override func viewWillDisappear(_ animated: Bool)  {
         super.viewWillDisappear(animated)
-        self.navigationController!.navigationBar.translucent = false
+        self.navigationController!.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.gestureRecognizers!.forEach( (self.navigationController?.navigationBar.removeGestureRecognizer)!)
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "Mountain_header.png"), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "Mountain_header.png"), for: UIBarMetrics.default)
     }
     
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override public func updateViewConstraints() {
+    override open func updateViewConstraints() {
         loadController.insets = UIEdgeInsets(top: self.topLayoutGuide.length + 64, left: 0, bottom: self.bottomLayoutGuide.length, right : 0)
         super.updateViewConstraints()
     }
@@ -163,17 +187,17 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     
     //MARK: Tableview DataSource
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == liveUnitIndex {
             return 140.0
         } else {
@@ -181,7 +205,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         }
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if let unitsForSelectedSection = unitsForSelectedSection {
             return unitsForSelectedSection.count
@@ -190,7 +214,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         }
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let unit = unitsForSelectedSection?[indexPath.row] else {
             return UITableViewCell()
@@ -199,7 +223,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         if indexPath.row == liveUnitIndex {
             // The live cell
             
-            let liveCell = tableView.dequeueReusableCellWithIdentifier("CourseLiveCell") as! CourseLiveUnitViewCell
+            let liveCell = tableView.dequeueReusableCell(withIdentifier: "CourseLiveCell") as! CourseLiveUnitViewCell
                         
             liveCell.getCellDetails(unit, index: indexPath.row)
             
@@ -236,7 +260,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
 
 
             // Poulate data
-            liveCell.maxUserLevel = unit.children.count ?? 0
+            liveCell.maxUserLevel = unit.children.count 
             liveCell.currentUserLevel = readStatusArray[indexPath.row]
             
             // Download handling
@@ -280,7 +304,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                                                         
                                                         if let discussionBlock = unit.discussionBlock, let controller = blockSelf.environment.router?.controllerForBlock(discussionBlock, courseID: blockSelf.courseID) {
                                                             
-                                                            blockSelf.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+                                                            blockSelf.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
                                                             blockSelf.navigationController?.pushViewController(controller, animated: true)
                                                         }
                                                         
@@ -296,10 +320,10 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 liveCell.leftButtons = []
             }
             
-            liveCell.leftSwipeSettings.transition = .Drag
+            liveCell.leftSwipeSettings.transition = .drag
             
             // Configure right buttons
-            if liveCell.downloadState.state == .Complete {
+            if liveCell.downloadState.state == .complete {
                 let deleteButton = MGSwipeButton(title: "Remove\nDownload",
                                                  backgroundColor: UIColor(red: 253.0/255.0, green: 0.0, blue: 121.0/255.0, alpha: 1.0)) { [weak self] (sender: MGSwipeTableCell!) -> Bool in
                                                     
@@ -317,7 +341,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 liveCell.rightButtons = []
             }
             
-            liveCell.rightSwipeSettings.transition = .Drag
+            liveCell.rightSwipeSettings.transition = .drag
             
             
             return liveCell
@@ -325,8 +349,8 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         } else if indexPath.row < liveUnitIndex {
             
             // Completed cells
-            let cell = tableView.dequeueReusableCellWithIdentifier("UnitsCell") as! CourseUnitsViewCell
-            cell.previousUnitLabel.hidden = true
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UnitsCell") as! CourseUnitsViewCell
+            cell.previousUnitLabel.isHidden = true
             cell.unitTitle.textColor = UIColor(red: 98/255, green: 101/255, blue: 103/255, alpha: 1)
             cell.getCellDetails(unit, index: indexPath.row)
             cell.statusImage.image = UIImage(named:"ic_completed")
@@ -403,7 +427,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
 
                                                         if let discussionBlock = unit.discussionBlock, let controller = blockSelf.environment.router?.controllerForBlock(discussionBlock, courseID: blockSelf.courseID) {
                                                             
-                                                            blockSelf.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+                                                            blockSelf.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
                                                             blockSelf.navigationController?.pushViewController(controller, animated: true)
                                                         }
                                                         
@@ -419,10 +443,10 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 cell.leftButtons = []
             }
             
-            cell.leftSwipeSettings.transition = .Drag
+            cell.leftSwipeSettings.transition = .drag
             
             // Configure right buttons
-            if cell.downloadState.state == .Complete {
+            if cell.downloadState.state == .complete {
                 let deleteButton = MGSwipeButton(title: "Remove\nDownload",
                                                  backgroundColor: UIColor(red: 253.0/255.0, green: 0.0, blue: 121.0/255.0, alpha: 1.0)) { [weak self] (sender: MGSwipeTableCell!) -> Bool in
                                                     
@@ -441,7 +465,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 cell.rightButtons = []
             }
             
-            cell.rightSwipeSettings.transition = .Drag
+            cell.rightSwipeSettings.transition = .drag
 
 
             return cell
@@ -449,7 +473,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         } else {
             
             // Locked cells
-            let cell = tableView.dequeueReusableCellWithIdentifier("UnitsCell") as! CourseUnitsViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UnitsCell") as! CourseUnitsViewCell
             
             cell.unitID = unit.blockID
             cell.downloadState = downloadController.stateForUnitWithID(unit.blockID)
@@ -486,7 +510,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
 
             cell.getCellDetails(unit, index: indexPath.row)
             cell.unitTitle.textColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 1)
-            cell.previousUnitLabel.hidden = false
+            cell.previousUnitLabel.isHidden = false
             if indexPath.row == 0 {
                 cell.previousUnitLabel.text = "Please complete previous section to unlock"
             } else {
@@ -498,7 +522,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
             cell.leftButtons = []
             
             // Configure right buttons
-            if cell.downloadState.state == .Complete {
+            if cell.downloadState.state == .complete {
                 let deleteButton = MGSwipeButton(title: "Remove\nDownload",
                                                  backgroundColor: UIColor(red: 253.0/255.0, green: 0.0, blue: 121.0/255.0, alpha: 1.0)) { [weak self] (sender: MGSwipeTableCell!) -> Bool in
                                                     
@@ -517,7 +541,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 cell.rightButtons = []
             }
             
-            cell.rightSwipeSettings.transition = .Drag
+            cell.rightSwipeSettings.transition = .drag
             
             
             // Download handling
@@ -547,7 +571,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     
     //MARK: Table view delegate
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Do not allow the user to browse locked units
         guard indexPath.row <= liveUnitIndex else {
@@ -558,7 +582,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
             
             // Do not allow the user to view not downloaded content
             let downloadState = downloadController.stateForUnitWithID(unit.blockID)
-            if downloadState.state == .Active || downloadState.state == .Available {
+            if downloadState.state == .active || downloadState.state == .available {
                 navigationController?.showOverlayMessage(OEXLocalizedString("NEED_TO_DOWNLOAD", nil))
                 return
             }
@@ -577,30 +601,30 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 
                 controller.chapterID = section.block.blockID
                 
-                self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+                self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }
     }
     
-    private func resultLoaded(result : Result<UserCourseEnrollment>) {
+    fileprivate func resultLoaded(_ result : Result<UserCourseEnrollment>) {
         switch result {
-        case let .Success(enrollment):
+        case let .success(enrollment):
             self.loadedCourseWithEnrollment(enrollment)
-        case let .Failure(error):
+        case let .failure(error):
             debugPrint("Enrollment error: \(error)")
             break
         }
     }
     
-    private func loadedCourseWithEnrollment(enrollment: UserCourseEnrollment) {
+    fileprivate func loadedCourseWithEnrollment(_ enrollment: UserCourseEnrollment) {
         navigationItem.title = enrollment.course.name
     }
     
     
     //MARK: Prev and Next Button
     
-    @IBAction func prevButtonAction(sender: AnyObject) {
+    @IBAction func prevButtonAction(_ sender: AnyObject) {
         
         sectionIndex -= 1
         
@@ -617,7 +641,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
 		setupSectionNavButtons()
     }
     
-    @IBAction func nextButtonAction(sender: AnyObject) {
+    @IBAction func nextButtonAction(_ sender: AnyObject) {
         sectionIndex += 1
         
         reloadUnitsForSelectedSection()
@@ -634,35 +658,35 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
 		setupSectionNavButtons()
     }
 
-	private func setupSectionNavButtons() {
-		nextButton.hidden = true
-		prevButton.hidden = true
+	fileprivate func setupSectionNavButtons() {
+		nextButton.isHidden = true
+		prevButton.isHidden = true
 
 		if let sections = self.sections {
-			nextButton.hidden = (sectionIndex == sections.count - 1)
-			prevButton.hidden = (sectionIndex == 0)
+			nextButton.isHidden = (sectionIndex == sections.count - 1)
+			prevButton.isHidden = (sectionIndex == 0)
 		}
 	}
 
-    @objc private func showHandouts() {
+    @objc fileprivate func showHandouts() {
         self.environment.router?.showHandoutsFromController(self, courseID: courseID)
     }
     
-    @objc private func popAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+    @objc fileprivate func popAction() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     
     //MARK: Listener Method
     
-    private func addListeners() {
+    fileprivate func addListeners() {
         
         headersLoader.backWithStream(blockIDStream.transform {[weak self] blockID in
             if let owner = self {
                 return owner.courseQuerier.childrenOfBlockWithID(self!.rootID)
             }
             else {
-                return Stream<CourseOutlineQuerier.BlockGroup>(error: NSError.oex_courseContentLoadError())
+                return edXCore.Stream<CourseOutlineQuerier.BlockGroup>(error: NSError.oex_courseContentLoadError())
             }}
         )
         
@@ -674,11 +698,11 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 return joinStreams(children)
             }
             else {
-                return Stream(error: NSError.oex_courseContentLoadError())
+                return edXCore.Stream(error: NSError.oex_courseContentLoadError())
             }}
         )
         
-        blockIDStream.backWithStream(Stream(value: rootID))
+        blockIDStream.backWithStream(edXCore.Stream(value: rootID))
         
         headersLoader.listen(self, success: { headers in
             //self?.setupNavigationItem(headers.block)
@@ -690,7 +714,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         rowsLoader.listen(self, success : {[weak self] (groups) in
             
             guard let blockSelf = self else { return }
-            blockSelf.sectionHidingView.hidden = true
+            blockSelf.sectionHidingView.isHidden = true
             
             if (blockSelf.rootID == nil) {
                 
@@ -702,7 +726,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 blockSelf.setupSectionNavButtons()
                 
                 // Update the state
-                blockSelf.loadController.state = groups.count == 0 ? blockSelf.emptyState() : .Loaded
+                blockSelf.loadController.state = groups.count == 0 ? blockSelf.emptyState() : .loaded
                 
                 //
                 if groups.count > blockSelf.sectionIndex {
@@ -715,12 +739,10 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                     // Set the title
                     blockSelf.sectionTitleLabel.text = currentSection.block.displayName
                     blockSelf.sectionCountLabel.text = "Section \(blockSelf.sectionIndex + 1) of \(groups.count)"
-                    
                     blockSelf.reloadComponents()
-					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-					dispatch_after(delayTime, dispatch_get_main_queue()) {
-						blockSelf.showFTUE()
-					}
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                        blockSelf.showFTUE()
+                    })
                 }
             }
             }, failure : {[weak self] error in
@@ -733,20 +755,20 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     
     //MARK: Error handling methods
     
-    private func emptyState() -> LoadState {
-        sectionHidingView.hidden = false
-        return LoadState.empty(icon: .UnknownError, message : Strings.coursewareUnavailable)
+    fileprivate func emptyState() -> LoadState {
+        sectionHidingView.isHidden = false
+        return LoadState.empty(icon: .unknownError, message : Strings.coursewareUnavailable)
     }
     
-    private func showErrorIfNecessary(error : NSError) {
+    fileprivate func showErrorIfNecessary(_ error : NSError) {
         if loadController.state.isInitial {
-            sectionHidingView.hidden = false
+            sectionHidingView.isHidden = false
             loadController.state = LoadState.failed(error)
         }
     }
     
-    private func canDownloadVideo() -> Bool {
-        let hasWifi = environment.reachability.isReachableViaWiFi() ?? false
+    fileprivate func canDownloadVideo() -> Bool {
+        let hasWifi = environment.reachability.isReachableViaWiFi() 
         let onlyOnWifi = environment.dataManager.interface?.shouldDownloadOnlyOnWifi ?? false
         return !onlyOnWifi || hasWifi
     }
@@ -754,11 +776,11 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     
     //MARK : selector methods
     //TODO : Replace static text with the dynamic one once API is integrated
-    @objc private func changeNavigationTitle(){
-        if self.titleType == TitleType.NavTitle{
+    @objc fileprivate func changeNavigationTitle(){
+        if self.titleType == TitleType.navTitle{
             //self.courseDurationLabel.hidden = false
-            self.courseDurationTextLabel.hidden = false
-            self.precentageCompletedLabel.hidden = false
+            self.courseDurationTextLabel.isHidden = false
+            self.precentageCompletedLabel.isHidden = false
             //self.courseDurationLabel.text = ""
             self.courseDurationTextLabel.text = ""
             
@@ -774,37 +796,37 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
                 let percentage = (Float(viewedComponentsCount)/Float(totalComponentsCount)) * 100
                 self.precentageCompletedLabel.text = "(\(Int(min(percentage, 100)))% Complete)"
             }
-            self.titleType = TitleType.CourseProgress
+            self.titleType = TitleType.courseProgress
             self.navigationItem.title = ""
             //self.colonLabel.hidden = false
                     }
-        else if self.titleType == TitleType.CourseProgress{
+        else if self.titleType == TitleType.courseProgress{
 
             //*** Uncomment when assignments needs to be shown ***///
             //self.courseDurationLabel.text = "Name"
             //self.courseDurationTextLabel.text = "Assignment 3"
             //self.precentageCompletedLabel.text = "(2 of 3 Complete)"
             //self.titleType = TitleType.AssignmentCount
-            self.courseDurationTextLabel.hidden = true
-            self.precentageCompletedLabel.hidden = true
+            self.courseDurationTextLabel.isHidden = true
+            self.precentageCompletedLabel.isHidden = true
             //self.colonLabel.hidden = true
             self.navigationItem.title = self.navigationTitle
-            self.titleType = TitleType.NavTitle
+            self.titleType = TitleType.navTitle
         }
-        else if self.titleType == TitleType.AssignmentCount{
+        else if self.titleType == TitleType.assignmentCount{
             // self.courseDurationLabel.hidden = true
-            self.courseDurationTextLabel.hidden = true
-            self.precentageCompletedLabel.hidden = true
+            self.courseDurationTextLabel.isHidden = true
+            self.precentageCompletedLabel.isHidden = true
             //self.colonLabel.hidden = true
             self.navigationItem.title = self.navigationTitle
-            self.titleType = TitleType.NavTitle
+            self.titleType = TitleType.navTitle
         }
 
     }
     
-    @objc private func receivedSavingNotification() {
+    @objc fileprivate func receivedSavingNotification() {
         
-        if let recalculatedLiveUnitID = getLiveUnitBlockID() where rootID != recalculatedLiveUnitID {
+        if let recalculatedLiveUnitID = getLiveUnitBlockID(), rootID != recalculatedLiveUnitID {
             // The live unit changes, reload componet for the new rootID
             rootID = recalculatedLiveUnitID
         } else {
@@ -812,7 +834,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         }
     }
     
-    private func restoreViewedState() {
+    fileprivate func restoreViewedState() {
         
         //Viewed Key consuming logic added by Naveen
         if let sections = sections {
@@ -871,7 +893,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         }
     }
     
-    private func reloadUnitsForSelectedSection() {
+    fileprivate func reloadUnitsForSelectedSection() {
         
         if let currentSection = sections?[sectionIndex] {
             
@@ -880,7 +902,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
             currentSection.children.forEach({ (subsection) in
               
                 unitsForSubsectionWithID(subsection.blockID, success: { (units) in
-                    totalUnits.appendContentsOf(units)
+                    totalUnits.append(contentsOf: units)
                     }, failure: { _ in })
             })
             
@@ -888,7 +910,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         }
     }
     
-    private func reloadComponents() {
+    fileprivate func reloadComponents() {
         
         // Go through all the sections and get the number of completed components
         if let unitsForSelectedSection = unitsForSelectedSection {
@@ -897,7 +919,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
             
             for unit in unitsForSelectedSection {
                 
-                if let viewedComponents = environment.dataManager.interface?.getViewedComponentsForVertical(unit.blockID) {
+                if let viewedComponents = environment.dataManager.interface?.getViewedComponents(forVertical: unit.blockID) {
                     readStatusArray.append(viewedComponents.count)
                 } else {
                     readStatusArray.append(0)
@@ -905,7 +927,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
             }
         }
         
-        if let components = self.environment.dataManager.interface?.getViewedComponentsForCourseID(courseID){
+        if let components = self.environment.dataManager.interface?.getViewedComponents(forCourseID: courseID){
             viewedComponentsCount = components.count
         }
         
@@ -913,14 +935,14 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         unitsTableView.reloadData()
     }
     
-    private func getLiveUnitBlockID() -> CourseBlockID? {
+    fileprivate func getLiveUnitBlockID() -> CourseBlockID? {
         
         if sectionIndex > 0 {
             
             // We need to calculate if the previous section is completed
             if let previousSection = sections?[sectionIndex-1] {
                 
-                if let completedUnits = environment.dataManager.interface?.getCompletedUnitsForChapterID(previousSection.block.blockID) {
+                if let completedUnits = environment.dataManager.interface?.getCompletedUnits(forChapterID: previousSection.block.blockID) {
                     
                     if numberOfUnitsPerSection[sectionIndex-1] > completedUnits.count {
                         // The previous section is not complete, lock it
@@ -933,7 +955,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         
         if let unitsForSelectedSection = unitsForSelectedSection, let currentSection = sections?[sectionIndex] {
             
-            if let completedUnits = environment.dataManager.interface?.getCompletedUnitsForChapterID(currentSection.block.blockID) {
+            if let completedUnits = environment.dataManager.interface?.getCompletedUnits(forChapterID: currentSection.block.blockID) {
                 
                 // Find the ids of all completed units
                 var completedUnitBlockIDs = [String]()
@@ -970,10 +992,10 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     
     //MARK: Downloading components
     
-    private func unitsForSubsectionWithID(subsectionID: CourseBlockID, success: ([CourseBlock]) -> Void, failure: (NSError) -> Void) {
+    fileprivate func unitsForSubsectionWithID(_ subsectionID: CourseBlockID, success: @escaping ([CourseBlock]) -> Void, failure: @escaping (NSError) -> Void) {
         
         let subsectionStream = BackedStream<CourseBlockID>()
-        subsectionStream.backWithStream(Stream(value: subsectionID))
+        subsectionStream.backWithStream(edXCore.Stream(value: subsectionID))
         
         let componentsLoader = BackedStream<CourseOutlineQuerier.BlockGroup>()
         
@@ -981,7 +1003,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
             if let owner = self {
                 return owner.courseQuerier.childrenOfBlockWithID(subsectionID)
             } else {
-                return Stream<CourseOutlineQuerier.BlockGroup>(error: NSError.oex_courseContentLoadError())
+                return edXCore.Stream<CourseOutlineQuerier.BlockGroup>(error: NSError.oex_courseContentLoadError())
             }})
         
         componentsLoader.listenOnce(self, success: { (components) in
@@ -991,10 +1013,10 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         })
     }
 
-    private func componentsForUnitWithID(unitID: CourseBlockID, success: ([CourseBlock]) -> Void, failure: (NSError) -> Void) {
+    fileprivate func componentsForUnitWithID(_ unitID: CourseBlockID, success: @escaping ([CourseBlock]) -> Void, failure: @escaping (NSError) -> Void) {
         
         let unitStream = BackedStream<CourseBlockID>()
-        unitStream.backWithStream(Stream(value: unitID))
+        unitStream.backWithStream(edXCore.Stream(value: unitID))
         
         let componentsLoader = BackedStream<CourseOutlineQuerier.BlockGroup>()
         
@@ -1002,7 +1024,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
             if let owner = self {
                 return owner.courseQuerier.childrenOfBlockWithID(unitID)
             } else {
-                return Stream<CourseOutlineQuerier.BlockGroup>(error: NSError.oex_courseContentLoadError())
+                return edXCore.Stream<CourseOutlineQuerier.BlockGroup>(error: NSError.oex_courseContentLoadError())
             }})
         
         componentsLoader.listenOnce(self, success: { (components) in
@@ -1014,7 +1036,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     
     
     //MARK : Viewed Status
-    func storeViewedStatus(component_id : String, viewed : Bool, sequential_id : String){
+    func storeViewedStatus(_ component_id : String, viewed : Bool, sequential_id : String){
         let offlineTracker = OEXHelperOfflineTracker()
         offlineTracker.componentID = component_id
         offlineTracker.isViewed = viewed
@@ -1023,7 +1045,7 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
         self.environment.dataManager.interface?.setViewedStatus(offlineTracker)
     }
     
-    func setCompletedStatusForUnits(sequential_id : String, completed : Bool, chapter_id : String){
+    func setCompletedStatusForUnits(_ sequential_id : String, completed : Bool, chapter_id : String){
         let completionTracker = OEXHelperUnitCompletionTracker()
         completionTracker.isCompleted = completed
         completionTracker.unitID = sequential_id
@@ -1035,30 +1057,30 @@ public class OEXCoursewareViewController: OfflineSupportViewController, UITableV
     
     //MARK: CourseWare -FTUE
     func showFTUE(){
-		let showedFTUE = NSUserDefaults.standardUserDefaults().boolForKey("Course FTUE")
+		let showedFTUE = UserDefaults.standard.bool(forKey: "Course FTUE")
 		guard !showedFTUE && liveUnitIndex == 0,
-			let rootController = UIApplication.sharedApplication().delegate?.window??.rootViewController,
+			let rootController = UIApplication.shared.delegate?.window??.rootViewController,
 			let index = liveUnitIndex,
-			let liveCell = unitsTableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? CourseLiveUnitViewCell,
+			let liveCell = unitsTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? CourseLiveUnitViewCell,
 			let levelView = liveCell.userLevelView  else { return }
 
 		let coachController = CourseCoachmarkViewController()
-		coachController.snapshotView = levelView.snapshotViewAfterScreenUpdates(true)
+		coachController.snapshotView = levelView.snapshotView(afterScreenUpdates: true)
 		coachController.titleText = navigationTitle
 
 		rootController.addChildViewController(coachController)
 		coachController.view.frame = rootController.view.bounds
 		rootController.view.addSubview(coachController.view)
-		coachController.didMoveToParentViewController(rootController)
+		coachController.didMove(toParentViewController: rootController)
 		coachController.view.alpha = 0.01
-		UIView.animateWithDuration(0.2) { 
+		UIView.animate(withDuration: 0.2, animations: { 
 			coachController.view.alpha = 1.0
-		}
-		NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Course FTUE")
+		}) 
+		UserDefaults.standard.set(true, forKey: "Course FTUE")
     }
     
     //MARK : Refresh View
     func reload() {
-        self.blockIDStream.backWithStream(Stream(value : courseID))
+        self.blockIDStream.backWithStream(edXCore.Stream(value : courseID))
     }
 }

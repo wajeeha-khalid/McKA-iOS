@@ -12,48 +12,48 @@ extension UIView {
     var isRightToLeft : Bool {
         
         if #available(iOS 9.0, *) {
-            let direction = UIView.userInterfaceLayoutDirectionForSemanticContentAttribute(self.semanticContentAttribute)
+            let direction = UIView.userInterfaceLayoutDirection(for: self.semanticContentAttribute)
             switch direction {
-            case .LeftToRight: return false
-            case .RightToLeft: return true
+            case .leftToRight: return false
+            case .rightToLeft: return true
             }
         } else {
-            return UIApplication.sharedApplication().userInterfaceLayoutDirection == .RightToLeft
+            return UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
         }
     }
 }
 
 enum LocalizedHorizontalContentAlignment {
-    case Leading
-    case Center
-    case Trailing
-    case Fill
+    case leading
+    case center
+    case trailing
+    case fill
 }
 
 extension UIControl {
     var localizedHorizontalContentAlignment : LocalizedHorizontalContentAlignment {
         get {
             switch self.contentHorizontalAlignment {
-            case .Left:
-                return self.isRightToLeft ? .Trailing : .Leading
-            case .Right:
-                return self.isRightToLeft ? .Leading : .Trailing
-            case .Center:
-                return .Center
-            case .Fill:
-                return .Fill
+            case .left:
+                return self.isRightToLeft ? .trailing : .leading
+            case .right:
+                return self.isRightToLeft ? .leading : .trailing
+            case .center:
+                return .center
+            case .fill:
+                return .fill
             }
         }
         set {
             switch newValue {
-            case .Leading:
-                self.contentHorizontalAlignment = self.isRightToLeft ? .Right : .Left
-            case .Trailing:
-                self.contentHorizontalAlignment = self.isRightToLeft ? .Left : .Right
-            case .Center:
-                self.contentHorizontalAlignment = .Center
-            case .Fill:
-                self.contentHorizontalAlignment = .Fill
+            case .leading:
+                self.contentHorizontalAlignment = self.isRightToLeft ? .right : .left
+            case .trailing:
+                self.contentHorizontalAlignment = self.isRightToLeft ? .left : .right
+            case .center:
+                self.contentHorizontalAlignment = .center
+            case .fill:
+                self.contentHorizontalAlignment = .fill
             }
         }
     }
