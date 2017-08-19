@@ -692,7 +692,9 @@ open class OEXCoursewareViewController: OfflineSupportViewController, UITableVie
         
         rowsLoader.backWithStream(headersLoader.transform {[weak self] headers in
             if let owner = self {
-                let children = headers.children.map {header in
+                let children = headers.children.filter{
+                    header in header.displayName.lowercased().contains("discussion_course") == false
+                    }.map {header in
                     return owner.courseQuerier.childrenOfBlockWithID(header.blockID)
                 }
                 return joinStreams(children)
