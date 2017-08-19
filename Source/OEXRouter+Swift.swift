@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import MckinseyXBlocks
 // The router is an indirection point for navigation throw our app.
 
 // New router logic should live here so it can be written in Swift.
@@ -25,6 +25,7 @@ enum CourseBlockDisplayType {
     case lesson
     case unit
     case video
+    case ooyalaVideo(String)
     case html(CourseHTMLBlockSubkind)
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
@@ -48,6 +49,7 @@ extension CourseBlock {
         case .chapter: return .lesson
         case .section: return .outline
         case .unit: return .unit
+        case .ooyalaVideo(let contentID): return .ooyalaVideo(contentID)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
 
@@ -99,6 +101,8 @@ extension OEXRouter {
             fallthrough
         case .video:
             fallthrough
+        case .ooyalaVideo:
+            fallthrough
         case .audio:
             fallthrough
         case .unknown:
@@ -135,6 +139,21 @@ extension OEXRouter {
         case .video:
             let controller = VideoBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
+        case .ooyalaVideo(let contentID):
+            // We are only going to support iOS 9 and above but currently chaging the deployment
+            // target to 9.0 uncovers a some 150 warings that are there due to deprecations
+            // it would take some time to fix those warnigns so for now i have wrapped the framework
+            // usage around iOS 9.0 availability
+            if #available(iOS 9.0, *) {
+                // not storing pcode in string currently since doing that will be insecure...
+                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: "5zdHcxOlM7fQJOMrCdwnnu16WP-d")
+                player.play()
+                let adapter = OoylaPlayerCourseBlockAdapter(blockID: blockID, courseID: courseID, adaptedViewController: player)
+                return adapter
+            } else {
+                fatalError("We need to upgrade build settings to iOS")
+            }
+           
         case .audio:
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
@@ -255,6 +274,22 @@ extension OEXRouter {
         fromController.navigationController?.pushViewController(controller, animated: animated)
     }
     
+    func showResourcesController(_ fromController: UIViewController, animated: Bool = true, courseID: String) {
+        let resourcesViewController = OEXResourcesViewController(environment: self.environment,
+                                                                 courseId: courseID)
+        fromController.navigationController?.pushViewController(resourcesViewController, animated: true)
+    }
+    
+    func showAnnouncementsController(_ fromController: UIViewController, animated: Bool = true, courseID: String? = nil) {
+        let announcementsViewController = AnnouncementsViewController(environment: self.environment,
+                                                                      courseId: courseID)
+        fromController.navigationController?.pushViewController(announcementsViewController, animated: true)
+    }
+    
+    func showCoursesOverviewController(_ fromController: UIViewController, animated: Bool = true, courseID: String? = nil) {
+        // TODO: add the navigation to courses overview Controller
+    }
+    
     func showCourseCatalog(_ bottomBar: UIView?) {
         let controller: UIViewController
         switch environment.config.courseEnrollmentConfig.type {
@@ -337,6 +372,41 @@ extension OEXRouter {
     func showDebugPane() {
         let debugMenu = DebugMenuViewController(environment: environment)
         showContentStack(withRootController: debugMenu, animated: true)
+    }
+    
+    func showMenuAlert(controller: UIViewController, courseId: String) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let announcementsButton = UIAlertAction(title: "Announcements", style: .default, handler: { (action) -> Void in
+            self.showAnnouncementsController(controller, animated: true, courseID: courseId)
+        })
+        
+        let  coursesOverviewButton = UIAlertAction(title: "Courses Overview", style: .default, handler: { (action) -> Void in
+        // TODO: Participent goto courses overview
+        })
+        
+        let  resources = UIAlertAction(title: "Resources", style: .default, handler: { (action) -> Void in
+            self.showResourcesController(controller, courseID: courseId)
+        })
+        
+        let  askTA = UIAlertAction(title: "Ask a TA", style: .default, handler: { (action) -> Void in
+        // TODO: Participent goto askTA section
+        })
+        
+        let  discussions = UIAlertAction(title: "Discussions", style: .default, handler: { (action) -> Void in
+        // TODO: Participent goto the discussions section
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+        // only cancel action is performed
+        })
+        
+        alertController.addAction(announcementsButton)
+        alertController.addAction(coursesOverviewButton)
+        alertController.addAction(resources)
+        alertController.addAction(cancelButton)
+        
+        controller.present(alertController, animated: true, completion: nil)
     }
 }
 

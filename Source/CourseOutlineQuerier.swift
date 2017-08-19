@@ -375,3 +375,23 @@ open class CourseOutlineQuerier : NSObject {
         return nil
     }
 }
+
+extension CourseOutlineQuerier {
+    // the block against this id must have `chatper` type
+    func unitsForLesson(withID lessonID: CourseBlockID) -> edXCore.Stream<[CourseBlock]> {
+        
+        return childrenOfBlockWithID(lessonID).transform { (lesson: BlockGroup) -> edXCore.Stream<[CourseBlock]> in
+            let sequentials = lesson.children.map { section in
+                self.childrenOfBlockWithID(section.blockID).map {
+                    $0.children
+                }
+            }
+            
+            let flattened = joinStreams(sequentials).map {
+                $0.flatMap {$0}
+            }
+            
+            return flattened
+        }
+    }
+}

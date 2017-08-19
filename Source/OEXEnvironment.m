@@ -194,6 +194,10 @@
     
     [self.postSetupActions removeAllObjects];
     
+    if(self.session.currentUser) {
+        [BrandingThemes.shared applyThemeWithFileName:self.session.currentUser.companyId];
+    }
+
     [self.styles applyGlobalAppearance];
     
 }

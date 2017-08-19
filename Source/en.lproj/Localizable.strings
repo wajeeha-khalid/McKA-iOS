@@ -399,7 +399,7 @@
 /* Button title for moving to the next unit in the course */
 "NEXT_UNIT" = "Next Unit";
 /* Button title for moving to the next Section in the course */
-"NEXT_SECTION" = "Unit Completed"; // Changed by Ravi on 10Mar'17 from next section to unit completed.
+"NEXT_SECTION" = "Next Section"; // Changed by Ravi on 10Mar'17 from next section to unit completed.
 /* Message shown when tapping on enroll courses when in app course enrollment is disabled */
 "NO_ENROLLMENT_INTERSTITIAL_BOTTOM_LABEL" = "In the meantime, you can enroll in courses through our website - you'll need to log in, enroll, and then return to the app when you're done.";
 /* Message shown when tapping on enroll courses when in app course enrollment is disabled */
@@ -694,5 +694,17 @@
 "YES"="Yes";
 /* Message for the user to download components before accessing them */
 "NEED_TO_DOWNLOAD"="Please download the content before viewing the course to ensure a smooth experience";
+/*Action sheet menu button showing announcements*/
+"ANNOUNCEMENTS" = "Announcements";
+/*Action sheet menu button showing Course Overview*/
+"COURSE_OVERVIEW" = "Course Over view";
+/*Action sheet menu button showing Resources*/
+"RESOURCES" = "Resources";
+/*Action sheet menu button showing Ask a TA*/
+"ASK_A_TA" = "Ask a Ta";
+/*Action sheet menu button showing Discussions*/
+"DISCUSSIONS" = "Discussions";
+/*Action sheet menu button showing Cancel*/
+"CANCEL" = "Cancel";
 /* Placeholder shown on email text fields */
 "EMAIL_ID_PLACEHOLDER" = "Enter your email id";

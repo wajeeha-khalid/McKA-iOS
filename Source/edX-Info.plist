@@ -80,6 +80,8 @@
 	<string>so you can select a profile image</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-Pro-Text-Bold.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
 		<string>FontAwesome.otf</string>
 		<string>OpenSans-Italic.ttf</string>
 		<string>OpenSans-Regular.ttf</string>

@@ -17,6 +17,8 @@ open class OfflineSupportViewController: UIViewController {
     init(env: Env) {
         self.environment = env
         super.init(nibName: nil, bundle: nil)
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
