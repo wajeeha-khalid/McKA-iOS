@@ -161,8 +161,21 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
     
     fileprivate func loadIfNecessary() {
         if !contentLoader.hasBacking {
-            let stream = courseQuerier.spanningCursorForBlockWithID(self.sequentialID, initialChildID: componentID)
-            contentLoader.backWithStream(stream.firstSuccess())
+            if let seqID = self.sequentialID {
+                let stream = courseQuerier.spanningCursorForBlockWithID(seqID, initialChildID: componentID)
+                contentLoader.backWithStream(stream.firstSuccess())
+            } else if let blockID = self.blockID {
+                courseQuerier.unitsForLesson(withID: blockID).extendLifetimeUntilFirstResult { result in
+                    switch result {
+                    case .success(let units):
+                        self.sequentialID = units.first?.blockID
+                        let stream = self.courseQuerier.spanningCursorForBlockWithID(self.sequentialID, initialChildID: nil)
+                        self.contentLoader.backWithStream(stream.firstSuccess())
+                    case .failure:
+                        break
+                    }
+                }
+            }
         }
     }
     
