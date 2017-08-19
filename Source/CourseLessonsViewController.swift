@@ -18,6 +18,8 @@ public protocol LessonViewModelDataSource {
     var lessons: edXCore.Stream<[LessonViewModel]> { get }
 }
 
+
+
 final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  {
     
     let querier: CourseOutlineQuerier
@@ -41,7 +43,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
             return joinStreams(streams)
             }.map { progressStates in
                 progressStates.enumerated().map{ (index, blockState)  in
-                    return LessonViewModel(state: blockState.1, title: blockState.0.displayName, number:index )
+                    return LessonViewModel(lessonID: blockState.0.blockID, state: blockState.1, title: blockState.0.displayName, number:index )
                 }
         }
     }
@@ -116,6 +118,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
 }
 
 public struct LessonViewModel {
+    let lessonID: CourseBlockID
     let state: LessonProgressState
     let title: String
     let number: Int
@@ -233,7 +236,19 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     
     //MARK: Table view delegate
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.environment.router?.showCoursewareForCourseWithID(self.courseID, fromController: self)
+        let blockID = lessonViewModel[indexPath.row].lessonID
+        if let controller = self.environment.router?.unitControllerForCourseID(courseID, sequentialID:nil, blockID: blockID, initialChildID: nil) {
+            
+            /*if let delegate = controller as? CourseContentPageViewControllerDelegate {
+                controller.navigationDelegate = delegate
+            }*/
+            
+            controller.chapterID = blockID
+            
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+        
     }
     
     override open func didReceiveMemoryWarning() {

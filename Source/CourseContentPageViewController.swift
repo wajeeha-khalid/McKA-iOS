@@ -77,6 +77,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
     open override func viewWillAppear(_ animated : Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setToolbarHidden(false, animated: animated)
+        self.navigationController?.toolbar.tintColor = UIColor.blue
         //getViewedComponentsList()
         courseQuerier.blockWithID(blockID).extendLifetimeUntilFirstResult (success:
             { block in
@@ -161,29 +162,55 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
     
     fileprivate func loadIfNecessary() {
         if !contentLoader.hasBacking {
-            let stream = courseQuerier.spanningCursorForBlockWithID(self.sequentialID, initialChildID: componentID)
-            contentLoader.backWithStream(stream.firstSuccess())
+            if let seqID = self.sequentialID {
+                let stream = courseQuerier.spanningCursorForBlockWithID(seqID, initialChildID: componentID)
+                contentLoader.backWithStream(stream.firstSuccess())
+            } else if let blockID = self.blockID {
+                courseQuerier.unitsForLesson(withID: blockID).extendLifetimeUntilFirstResult { result in
+                    switch result {
+                    case .success(let units):
+                        self.sequentialID = units.first?.blockID
+                        let stream = self.courseQuerier.spanningCursorForBlockWithID(self.sequentialID, initialChildID: nil)
+                        self.contentLoader.backWithStream(stream.firstSuccess())
+                    case .failure:
+                        break
+                    }
+                }
+            }
         }
+    }
+    
+    func showNext() {
+        moveInDirection(.forward)
+    }
+    
+    func showPrev() {
+        moveInDirection(.reverse)
     }
     
     fileprivate func toolbarItemWithGroupItem(_ item : CourseOutlineQuerier.GroupItem, adjacentGroup : CourseBlock?, direction : DetailToolbarButton.Direction, enabled : Bool) -> UIBarButtonItem {
         let titleText : String
         let moveDirection : UIPageViewControllerNavigationDirection
-        let isGroup = adjacentGroup != nil
         
         switch direction {
         case .next:
-            //titleText = isGroup ? Strings.nextUnit : Strings.next // Commented by Ravi as the Unit is changed to Section
+            
             if contentLoader.value?.current.nextGroup != nil || contentLoader.value?.hasNext == false{
-                titleText = Strings.nextSection
+                let image = #imageLiteral(resourceName: "Icon_NextModule").withRenderingMode(.alwaysOriginal)
+                return UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.showNext))
             }
             else{
-                titleText = Strings.next
+                return UIBarButtonItem(image: #imageLiteral(resourceName: "Icon_NextComponent").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.showNext))
             }
-            moveDirection = .forward
         case .prev:
             //titleText = isGroup ? Strings.previousUnit : Strings.previous // Commented by Ravi as the Unit is changed to Section
-            titleText = isGroup ? Strings.previousSection : Strings.previous
+            if let _ = contentLoader.value?.current.prevGroup {
+                return UIBarButtonItem(image: #imageLiteral(resourceName: "Icon_PreviousModule").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.showPrev))
+            } else if contentLoader.value?.hasPrev == true {
+               return UIBarButtonItem(image: #imageLiteral(resourceName: "Icon_PrevComponent").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.showPrev))
+            } else {
+                titleText = ""
+            }
             moveDirection = .reverse
         }
         
@@ -258,22 +285,35 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
                 nextItem = toolbarItemWithGroupItem(item, adjacentGroup: item.nextGroup, direction: .next, enabled:shouldEnableNextButton)
             }
             
-            if item.prevGroup == nil && cursor.hasPrev == true {
+            let shouldShowPrevious = item.prevGroup != nil || cursor.hasPrev
+            let shouldShowNext = item.nextGroup != nil || cursor.hasNext
+            
+            switch (shouldShowPrevious, shouldShowNext) {
+            case (true, true):
                 self.setToolbarItems(
                     [
                         prevItem,
                         UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
                         nextItem
                     ], animated : true)
-            } else {
+            case (true, false):
                 self.setToolbarItems(
                     [
-                        
+                        prevItem,
+                        UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                    ], animated : true)
+            case (false, true):
+                self.setToolbarItems(
+                    [
                         UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
                         nextItem
                     ], animated : true)
+            case (false, false):
+                self.setToolbarItems(
+                    [
+                        UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                    ], animated : true)
             }
-            
         }
         else {
             self.toolbarItems = []
@@ -285,9 +325,6 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
         let item : CourseOutlineQuerier.GroupItem?
         switch direction {
         case .forward:
-            if contentLoader.value?.current.nextGroup != nil || contentLoader.value?.hasNext == false{
-                self.navigationController?.popViewController(animated: true)
-            }
             item = contentLoader.value?.peekNext()
         case .reverse:
             item = contentLoader.value?.peekPrev()
