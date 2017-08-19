@@ -111,28 +111,78 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="McKinsey Academy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMN-Kh-gS4">
-                                    <rect key="frame" x="47.5" y="140" width="280" height="39"/>
+                                    <rect key="frame" x="47.5" y="140" width="280" height="38.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Unlocking Leadership Potential" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUl-Kj-MoX">
-                                    <rect key="frame" x="75.5" y="189" width="225" height="20"/>
+                                    <rect key="frame" x="76" y="188.5" width="224.5" height="19.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By logging in you agree to the" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9b-KK-Ccx">
+                                    <rect key="frame" x="103.5" y="548.5" width="169" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.75" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RWq-Je-X4t">
+                                    <rect key="frame" x="78" y="561" width="220" height="27"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jc-QK-eGj">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                            <state key="normal" title="Terms of Service">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="termsOfServiceTapped:" destination="-1" eventType="touchUpInside" id="BgB-xM-3sV"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="and" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJB-Nl-wbp">
+                                            <rect key="frame" x="105" y="6" width="21" height="14.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.75" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75l-F2-3w5">
+                                            <rect key="frame" x="130" y="0.0" width="86" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                            <state key="normal" title="Privacy Policy.">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="privacyPolicyTapped:" destination="-1" eventType="touchUpInside" id="UKh-E1-JCb"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="4jc-QK-eGj" firstAttribute="top" secondItem="RWq-Je-X4t" secondAttribute="top" id="6Si-7t-d5W"/>
+                                        <constraint firstItem="4jc-QK-eGj" firstAttribute="leading" secondItem="RWq-Je-X4t" secondAttribute="leading" id="G4Y-ED-Lf8"/>
+                                        <constraint firstItem="CJB-Nl-wbp" firstAttribute="centerY" secondItem="4jc-QK-eGj" secondAttribute="centerY" id="TPu-pz-10F"/>
+                                        <constraint firstItem="75l-F2-3w5" firstAttribute="leading" secondItem="CJB-Nl-wbp" secondAttribute="trailing" constant="4" id="Z1U-YX-SdF"/>
+                                        <constraint firstItem="75l-F2-3w5" firstAttribute="centerY" secondItem="CJB-Nl-wbp" secondAttribute="centerY" id="aGL-yX-XsF"/>
+                                        <constraint firstAttribute="trailing" secondItem="75l-F2-3w5" secondAttribute="trailing" constant="4" id="dA7-uz-ulS"/>
+                                        <constraint firstItem="CJB-Nl-wbp" firstAttribute="leading" secondItem="4jc-QK-eGj" secondAttribute="trailing" constant="5" id="qyl-Mt-LdZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="4jc-QK-eGj" secondAttribute="bottom" id="wDY-cD-i8g"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="XBS-Wd-ntE" firstAttribute="width" secondItem="eVE-Mp-9Cb" secondAttribute="width" id="3fL-zy-JdI"/>
                                 <constraint firstItem="XBS-Wd-ntE" firstAttribute="height" secondItem="eVE-Mp-9Cb" secondAttribute="height" id="AQz-At-pxA"/>
                                 <constraint firstItem="hUl-Kj-MoX" firstAttribute="centerX" secondItem="sMN-Kh-gS4" secondAttribute="centerX" id="Gg9-Rz-cob"/>
+                                <constraint firstItem="RWq-Je-X4t" firstAttribute="top" secondItem="e9b-KK-Ccx" secondAttribute="bottom" constant="-2" id="Hn5-BS-Qjp"/>
                                 <constraint firstItem="hUl-Kj-MoX" firstAttribute="top" secondItem="sMN-Kh-gS4" secondAttribute="bottom" constant="10" id="IlB-No-8oE"/>
                                 <constraint firstItem="XBS-Wd-ntE" firstAttribute="centerY" secondItem="eVE-Mp-9Cb" secondAttribute="centerY" id="Nf8-8l-KfA"/>
                                 <constraint firstItem="XBS-Wd-ntE" firstAttribute="centerX" secondItem="eVE-Mp-9Cb" secondAttribute="centerX" id="PIG-e0-mTt"/>
                                 <constraint firstItem="hQl-Hx-CUZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hUl-Kj-MoX" secondAttribute="bottom" constant="20" id="QZa-he-43L"/>
                                 <constraint firstItem="hQl-Hx-CUZ" firstAttribute="leading" secondItem="eVE-Mp-9Cb" secondAttribute="leading" constant="30" id="XBe-pM-hS2"/>
+                                <constraint firstItem="e9b-KK-Ccx" firstAttribute="centerX" secondItem="RWq-Je-X4t" secondAttribute="centerX" id="XFC-Yc-7VV"/>
                                 <constraint firstItem="hQl-Hx-CUZ" firstAttribute="centerY" secondItem="eVE-Mp-9Cb" secondAttribute="centerY" id="YGk-BM-izk"/>
                                 <constraint firstItem="sMN-Kh-gS4" firstAttribute="centerX" secondItem="eVE-Mp-9Cb" secondAttribute="centerX" id="nHw-ic-oAT"/>
                                 <constraint firstItem="iFk-5W-pbA" firstAttribute="top" secondItem="hQl-Hx-CUZ" secondAttribute="bottom" constant="18" id="oxu-Oc-jZ7"/>
@@ -161,9 +211,11 @@
                         <constraint firstItem="eVE-Mp-9Cb" firstAttribute="centerY" secondItem="WXR-nr-tBZ" secondAttribute="centerY" id="31j-G0-IDZ"/>
                         <constraint firstAttribute="bottom" secondItem="eVE-Mp-9Cb" secondAttribute="bottom" id="7Ko-Y2-hFM"/>
                         <constraint firstItem="E07-gA-eIZ" firstAttribute="centerX" secondItem="eVE-Mp-9Cb" secondAttribute="centerX" id="J1j-rO-Veh"/>
+                        <constraint firstItem="RWq-Je-X4t" firstAttribute="centerX" secondItem="E07-gA-eIZ" secondAttribute="centerX" id="NJV-nQ-3XB"/>
                         <constraint firstAttribute="trailing" secondItem="eVE-Mp-9Cb" secondAttribute="trailing" id="Oh6-0k-PWA"/>
                         <constraint firstItem="eVE-Mp-9Cb" firstAttribute="top" secondItem="WXR-nr-tBZ" secondAttribute="top" id="Qbe-YJ-yEN"/>
                         <constraint firstItem="eVE-Mp-9Cb" firstAttribute="centerX" secondItem="WXR-nr-tBZ" secondAttribute="centerX" id="R4v-ca-WXt"/>
+                        <constraint firstItem="E07-gA-eIZ" firstAttribute="top" secondItem="RWq-Je-X4t" secondAttribute="bottom" constant="5" id="UGC-Mk-GHW"/>
                         <constraint firstItem="E07-gA-eIZ" firstAttribute="width" secondItem="hQl-Hx-CUZ" secondAttribute="width" id="VHk-TF-A4Z"/>
                         <constraint firstItem="eVE-Mp-9Cb" firstAttribute="width" secondItem="WXR-nr-tBZ" secondAttribute="width" id="ceD-Qu-eOd"/>
                         <constraint firstItem="E07-gA-eIZ" firstAttribute="centerX" secondItem="hQl-Hx-CUZ" secondAttribute="centerX" id="fCz-pI-aqi"/>
@@ -177,7 +229,7 @@
                 <constraint firstItem="WXR-nr-tBZ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Gug-h8-dxV"/>
                 <constraint firstItem="WXR-nr-tBZ" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="H0L-zE-YwZ"/>
             </constraints>
-            <point key="canvasLocation" x="22" y="37"/>
+            <point key="canvasLocation" x="21.5" y="36.5"/>
         </view>
     </objects>
     <resources>

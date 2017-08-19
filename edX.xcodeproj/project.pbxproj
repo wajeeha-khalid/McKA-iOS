@@ -4092,7 +4092,7 @@
 						TestTargetID = BECB7B0A1924C0C3009C77F1;
 					};
 					BECB7B0A1924C0C3009C77F1 = {
-						DevelopmentTeam = 2S4TPWL7HU;
+						DevelopmentTeam = FN75PC35CY;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5337,7 +5337,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2S4TPWL7HU;
+				DEVELOPMENT_TEAM = FN75PC35CY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5787,7 +5787,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2S4TPWL7HU;
+				DEVELOPMENT_TEAM = FN75PC35CY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5828,7 +5828,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2S4TPWL7HU;
+				DEVELOPMENT_TEAM = FN75PC35CY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
