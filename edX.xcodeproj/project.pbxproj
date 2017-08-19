@@ -1608,6 +1608,8 @@
 		8F7F6DAC1A795AA60063B9D6 /* OEXSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXSessionTests.m; sourceTree = "<group>"; };
 		8FE04B4B1A1E2637007F88B8 /* OEXFBSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFBSocial.h; sourceTree = "<group>"; };
 		8FE04B4C1A1E2637007F88B8 /* OEXFBSocial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFBSocial.m; sourceTree = "<group>"; };
+		945793CE1F485FA100D26F34 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		945793CF1F48602400D26F34 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		9C9B7F631A8CC68400A857B2 /* OEXFindCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFindCoursesViewController.h; sourceTree = "<group>"; };
 		9C9B7F641A8CC68400A857B2 /* OEXFindCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFindCoursesViewController.m; sourceTree = "<group>"; };
 		9C9B7F651A8CC68400A857B2 /* OEXCourseInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoViewController.h; sourceTree = "<group>"; };
@@ -2407,6 +2409,8 @@
 				69ECC5AB1D50D1170030CF87 /* OpenSans-Regular.ttf */,
 				69ECC5AC1D50D1170030CF87 /* OpenSans-Semibold.ttf */,
 				69ECC5AD1D50D1170030CF87 /* OpenSans-SemiboldItalic.ttf */,
+				945793CE1F485FA100D26F34 /* SF-Pro-Text-Semibold.otf */,
+				945793CF1F48602400D26F34 /* SF-Pro-Text-Bold.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
