@@ -41,7 +41,10 @@ class OoylaPlayerCourseBlockAdapter: UIViewController, CourseBlockViewController
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        adaptedViewController.puase()
+        if isMovingFromParentViewController || isBeingDismissed {
+            adaptedViewController.player.pause()
+            adaptedViewController.player.destroy()
+        }
     }
 }
 

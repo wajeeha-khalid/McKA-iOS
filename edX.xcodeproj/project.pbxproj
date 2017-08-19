@@ -1088,7 +1088,6 @@
 		41B716BA1F25FBA500AE5151 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		41D50F801F3F9176008DAAD7 /* MckinseyXBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MckinseyXBlocks.framework; path = Carthage/Build/iOS/MckinseyXBlocks.framework; sourceTree = "<group>"; };
 		41EE66831F45B42F00930274 /* DynamicOoyalaWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DynamicOoyalaWrapper.framework; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework; sourceTree = "<group>"; };
-		46CECC391B041CDC0073C63A /* CourseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CourseCardView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46CECC391B041CDC0073C63A /* CourseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCardView.swift; sourceTree = "<group>"; };
 		46CECC3B1B041D270073C63A /* CourseDashboardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDashboardCell.swift; sourceTree = "<group>"; };
 		46CECC3D1B041FAF0073C63A /* DiscussionTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionTopicCell.swift; sourceTree = "<group>"; };
@@ -4089,7 +4088,7 @@
 						TestTargetID = BECB7B0A1924C0C3009C77F1;
 					};
 					BECB7B0A1924C0C3009C77F1 = {
-						DevelopmentTeam = 2S4TPWL7HU;
+						DevelopmentTeam = FN75PC35CY;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -5334,7 +5333,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2S4TPWL7HU;
+				DEVELOPMENT_TEAM = FN75PC35CY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5784,7 +5783,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2S4TPWL7HU;
+				DEVELOPMENT_TEAM = FN75PC35CY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5825,7 +5824,7 @@
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Abhimanyu Arya (FN75PC35CY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2S4TPWL7HU;
+				DEVELOPMENT_TEAM = FN75PC35CY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
