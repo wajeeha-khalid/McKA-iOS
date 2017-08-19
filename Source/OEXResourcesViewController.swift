@@ -30,8 +30,6 @@ class OEXResourcesViewController: UIViewController {
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        // required by the compiler because UIViewController implements NSCoding,
-        // but we don't actually want to serialize these things
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -42,7 +40,6 @@ class OEXResourcesViewController: UIViewController {
     }
 
     private func setupUI () {
-        //webView.delegate = self
         self.navigationItem.title = Strings.resources
         loadController.setupInController(self, contentView: self.webView)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
@@ -52,7 +49,6 @@ class OEXResourcesViewController: UIViewController {
     }
     
     private func showCourseContent() {
-        print("courseContent: \(String(describing: courseContents))")
         courseContents?.forEach{ (courseContent: CourseContent) -> Void in
             if courseContent.name == "Resources" {
                 resourseContent = courseContent
@@ -68,6 +64,10 @@ class OEXResourcesViewController: UIViewController {
             result.ifSuccess({ (courseContents:[CourseContent]) -> Void in
                 self.courseContents = courseContents
                 self.showCourseContent()
+            })
+            
+            result.ifFailure({ (error) in
+                self.loadController.state = LoadState.failed(error as NSError)
             })
         })
     }

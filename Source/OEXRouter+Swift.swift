@@ -351,7 +351,6 @@ extension OEXRouter {
         
         let announcementsButton = UIAlertAction(title: "Announcements", style: .default, handler: { (action) -> Void in
             self.showAnnouncementsController(controller, animated: true, courseID: courseId)
-//            self.showAnnouncementsForCourse(withID: courseId)
         })
         
         let  coursesOverviewButton = UIAlertAction(title: "Courses Overview", style: .default, handler: { (action) -> Void in

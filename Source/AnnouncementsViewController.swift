@@ -19,7 +19,7 @@ class AnnouncementsViewController: UIViewController {
     var stream: edXCore.Stream<CourseAnnouncementContent>?
     var courseAnnouncementContent: CourseAnnouncementContent?
     
-    let loadController : LoadStateViewController
+    let loadController: LoadStateViewController
     
     public init(environment: Environment, courseId: String?) {
         self.environment = environment
@@ -27,7 +27,8 @@ class AnnouncementsViewController: UIViewController {
         loadController = LoadStateViewController()
         
         super.init(nibName: nil, bundle: nil)
-
+        stream = environment.dataManager.courseDataManager.streamForCourseAnnouncements(courseId ?? "")
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,9 +39,6 @@ class AnnouncementsViewController: UIViewController {
         super.viewDidLoad()
         addListeners()
         setupUI()
-//        loadController.setupInController(self, contentView : self.view)
-        
-        // Do any additional setup after loading the view.
     }
 
     private func setupUI () {
@@ -56,18 +54,19 @@ class AnnouncementsViewController: UIViewController {
     }
     
     private func showStreamData() {
-        print("courseContent: \(String(describing: courseAnnouncementContent?.content))")
         if (courseAnnouncementContent != nil) {
             self.webView.loadHTMLString((courseAnnouncementContent?.content)!, baseURL: nil)
         }
     }
 
     private func addListeners() {
-        stream = environment.dataManager.courseDataManager.streamForCourseAnnouncements(courseId ?? "")
         stream?.listen(self, action: { (result) in
             result.ifSuccess({ (courseAnnouncementContent: CourseAnnouncementContent) -> Void in
                 self.courseAnnouncementContent = courseAnnouncementContent
                 self.showStreamData()
+            })
+            result.ifFailure({ (error) in
+                self.loadController.state = LoadState.failed(error as NSError)
             })
         })
     }
