@@ -57,7 +57,7 @@ class CourseCardViewModelTests: XCTestCase {
         let argentinaTimeZone = TimeZone(identifier: "America/Argentina/Buenos_Aires")!
         func setUpDate() -> Date {
             let date = Date().dateByAddingDays(2)
-            var utcCalendar = (Calendar.current as NSCalendar).copy() as! Calendar
+            var utcCalendar = Calendar.current
             utcCalendar.timeZone = TimeZone(identifier: "UTC")!
             return utcCalendar.startOfDayForDate(date)
         }

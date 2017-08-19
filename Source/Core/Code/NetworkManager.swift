@@ -139,7 +139,7 @@ open class NetworkTask : Removable {
 }
 
 @objc public protocol URLCredentialProvider {
-    func URLCredentialForHost(_ host : NSString) -> URLCredential?
+    func URLCredentialForHost(_ host : String) -> URLCredential?
 }
 
 
@@ -371,7 +371,7 @@ open class NetworkManager : NSObject {
             
             if let
                 host = URLRequest.url?.host,
-                let credential = self.credentialProvider?.URLCredentialForHost(host as NSString)
+                let credential = self.credentialProvider?.URLCredentialForHost(host)
             {
                 task.authenticate(usingCredential: credential)
             }

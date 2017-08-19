@@ -133,8 +133,7 @@ extension OEXVideoPlayerSettings: UITableViewDataSource, UITableViewDelegate {
             var title = row.title
             if selectedSetting.isSelected(i) {
                 //Can't use font awesome here
-                title = NSString(format: Strings.videoSettingSelected as NSString, row.title) as String
-
+                title = String(format: Strings.videoSettingSelected, row.title)
             }
 
             alert.addAction(UIAlertAction(title: title, style:.default, handler: { _ in

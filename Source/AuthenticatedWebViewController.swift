@@ -288,7 +288,7 @@ open class AuthenticatedWebViewController: UIViewController, WKNavigationDelegat
         if let URL = webView.url, URL.absoluteString.hasSuffix(OAuthExchangePath) {
             completionHandler(.performDefaultHandling, nil)
         }
-        else if let credential = environment.config.URLCredentialForHost(challenge.protectionSpace.host as NSString)  {
+        else if let credential = environment.config.URLCredentialForHost(challenge.protectionSpace.host)  {
             completionHandler(.useCredential, credential)
         }
         else {
