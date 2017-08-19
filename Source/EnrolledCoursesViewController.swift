@@ -9,6 +9,7 @@
 import Foundation
 
 var isActionTakenOnUpgradeSnackBar: Bool = false
+let brandingHeaderViewHeight:CGFloat = 50.0
 
 class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTableViewControllerDelegate, PullRefreshControllerDelegate {
     
@@ -53,7 +54,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
         
         tableController.delegate = self
         
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         refreshController.setupInScrollView(self.tableController.tableView)
         refreshController.delegate = self
@@ -72,6 +73,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
         
         setupListener()
         setupFooter()
+        setupHeaderView()
         setupObservers()
     }
     
@@ -112,6 +114,13 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
                 }
             }
         }
+    }
+    
+    /// Setup branding header view
+    fileprivate func setupHeaderView() {
+        let header = BrandingHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: brandingHeaderViewHeight))
+        header.sizeToFit()
+        self.tableController.tableView.tableHeaderView = header
     }
     
     fileprivate func setupFooter() {

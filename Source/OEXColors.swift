@@ -14,14 +14,38 @@ open class OEXColors: NSObject {
     //MARK: - Shared Instance
     open static let sharedInstance = OEXColors()
     @objc public enum ColorsIdentifiers: Int {
-        case piqueGreen = 1, primaryXDarkColor, primaryDarkColor, primaryBaseColor, primaryLightColor, primaryXLightColor,
-        secondaryXDarkColor, secondaryDarkColor, secondaryBaseColor, secondaryLightColor, secondaryXLightColor,
-        neutralBlack, neutralBlackT, neutralXDark, neutralDark, neutralBase,
-        neutralLight, neutralXLight, neutralXXLight, neutralWhite, neutralWhiteT,
-        utilitySuccessDark, utilitySuccessBase, utilitySuccessLight,
-        warningDark, warningBase, warningLight,
-        errorDark, errorBase, errorLight,
-        banner, random
+        case piqueGreen = 1,
+        primaryXDarkColor,
+        primaryDarkColor,
+        primaryBaseColor,
+        primaryLightColor,
+        primaryXLightColor,
+        secondaryXDarkColor,
+        secondaryDarkColor,
+        secondaryBaseColor,
+        secondaryLightColor,
+        secondaryXLightColor,
+        neutralBlack,
+        neutralBlackT,
+        neutralXDark,
+        neutralDark,
+        neutralBase,
+        neutralLight,
+        neutralXLight,
+        neutralXXLight,
+        neutralWhite,
+        neutralWhiteT,
+        utilitySuccessDark,
+        utilitySuccessBase,
+        utilitySuccessLight,
+        warningDark,
+        warningBase,
+        warningLight,
+        errorDark,
+        errorBase,
+        errorLight,
+        banner,
+        random
     }
     
     open var colorsDictionary = [String: AnyObject]()

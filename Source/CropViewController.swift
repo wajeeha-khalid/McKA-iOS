@@ -11,7 +11,7 @@ import Foundation
 private class CircleView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = OEXStyles.shared().neutralBlack().withAlphaComponent(0.8)
+        self.backgroundColor = OEXStyles.shared.neutralBlack().withAlphaComponent(0.8)
         isUserInteractionEnabled = false
     }
     
@@ -36,7 +36,7 @@ private class CircleView: UIView {
         context.clear(hole);
         context.setFillColor(UIColor.clear.cgColor);
         context.fill(hole);
-        context.setStrokeColor(OEXStyles.shared().neutralLight().cgColor)
+        context.setStrokeColor(OEXStyles.shared.neutralLight().cgColor)
         context.strokeEllipse(in: hole)
         context.restoreGState()
     }
@@ -72,13 +72,13 @@ class CropViewController: UIViewController {
         scrollView.delegate = self
         
         view.addSubview(scrollView)
-        view.backgroundColor = OEXStyles.shared().neutralBlack()
+        view.backgroundColor = OEXStyles.shared.neutralBlack()
         
         let toolbar = buildToolbar()
         view.addSubview(circleView)
         view.addSubview(toolbar)
         
-        let titleStyle = OEXStyles.shared().navigationTitleTextStyle
+        let titleStyle = OEXStyles.shared.navigationTitleTextStyle
         titleLabel.attributedText = titleStyle.attributedString(withText: Strings.Profile.cropAndResizePicture)
         view.addSubview(titleLabel)
         
@@ -115,12 +115,12 @@ class CropViewController: UIViewController {
     fileprivate func buildToolbar() -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.barTintColor = UIColor.clear
-        toolbar.tintColor = OEXStyles.shared().neutralWhiteT()
+        toolbar.tintColor = OEXStyles.shared.neutralWhiteT()
        
         let cancelButton = UIButton(type:.system)
         cancelButton.frame = CGRect(x: 0,y: 0, width: 100, height: 44)
         cancelButton.setTitle(Strings.cancel, for: UIControlState())
-        cancelButton.setTitleColor(OEXStyles.shared().neutralWhiteT(), for: UIControlState())
+        cancelButton.setTitleColor(OEXStyles.shared.neutralWhiteT(), for: UIControlState())
         cancelButton.sizeToFit()
 
         let cancel = UIBarButtonItem(customView: cancelButton)
@@ -131,7 +131,7 @@ class CropViewController: UIViewController {
         let chooseButton = UIButton(type:.system)
         chooseButton.frame = CGRect(x: 0,y: 0, width: 100, height: 44)
         chooseButton.setTitle(Strings.choose, for: UIControlState())
-        chooseButton.setTitleColor(OEXStyles.shared().neutralWhiteT(), for: UIControlState())
+        chooseButton.setTitleColor(OEXStyles.shared.neutralWhiteT(), for: UIControlState())
         chooseButton.sizeToFit()
 
         let choose = UIBarButtonItem(customView: chooseButton)

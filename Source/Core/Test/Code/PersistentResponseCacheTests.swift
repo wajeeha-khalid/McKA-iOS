@@ -107,7 +107,7 @@ class PersistentResponseCacheTests: XCTestCase {
         waitForExpectations()
         
         let postLoadExpectation = expectation(description: "Cache loaded POST")
-        cache.fetchCacheEntryWithRequest(postRequest as URLRequest) {
+        cache.fetchCacheEntryWithRequest(postRequest) {
             XCTAssertEqual($0!.data!, postData)
             postLoadExpectation.fulfill()
         }

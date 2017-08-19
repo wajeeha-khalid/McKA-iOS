@@ -115,7 +115,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             loadVideoView()
         }
 
-        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         view.setNeedsUpdateConstraints()
     }
 

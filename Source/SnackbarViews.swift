@@ -14,16 +14,16 @@ open class VersionUpgradeView: UIView {
     fileprivate let upgradeButton = UIButton(type: .system)
     fileprivate let dismissButton = UIButton(type: .system)
     fileprivate var messageLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     fileprivate var buttonLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .semiBold, size: .base, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .semiBold, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     init(message: String) {
         super.init(frame: CGRect.zero)
-        self.backgroundColor = OEXStyles.shared().warningBase()
+        self.backgroundColor = OEXStyles.shared.warningBase()
         messageLabel.numberOfLines = 0
         messageLabel.attributedText = messageLabelStyle.attributedString(withText: message)
         upgradeButton.setAttributedTitle(buttonLabelStyle.attributedString(withText: Strings.VersionUpgrade.update), for: [])
@@ -98,17 +98,17 @@ open class OfflineView: UIView {
     fileprivate let dismissButton = UIButton(type: .system)
     fileprivate var selector: Selector?
     fileprivate var messageLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     fileprivate var buttonLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .semiBold, size: .base, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .semiBold, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     init(message: String, selector: Selector?) {
         super.init(frame: CGRect.zero)
         self.selector = selector
-        self.backgroundColor = OEXStyles.shared().warningBase()
+        self.backgroundColor = OEXStyles.shared.warningBase()
         messageLabel.numberOfLines = 0
         messageLabel.attributedText = messageLabelStyle.attributedString(withText: message)
         reloadButton.setAttributedTitle(buttonLabelStyle.attributedString(withText: Strings.reload), for: [])

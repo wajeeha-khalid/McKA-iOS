@@ -84,7 +84,7 @@ class UserProfileView : UIView, UIScrollViewDelegate {
 
         bioSystemMessage.isHidden = true
         bioSystemMessage.numberOfLines = 0
-        bioSystemMessage.backgroundColor = OEXStyles.shared().primaryXLightColor()
+        bioSystemMessage.backgroundColor = OEXStyles.shared.primaryXLightColor()
         scrollView.insertSubview(bioSystemMessage, aboveSubview: tabs)
 
         header.style = .lightContent
@@ -92,7 +92,7 @@ class UserProfileView : UIView, UIScrollViewDelegate {
         header.isHidden = true
         self.addSubview(header)
 
-        bottomBackground.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        bottomBackground.backgroundColor = OEXStyles.shared.standardBackgroundColor()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -160,7 +160,7 @@ class UserProfileView : UIView, UIScrollViewDelegate {
 
     fileprivate func setMessage(_ message: String?) {
         if let message = message {
-            let messageStyle = OEXTextStyle(weight: .semiBold, size: .large, color: OEXStyles.shared().primaryXLightColor())
+            let messageStyle = OEXTextStyle(weight: .semiBold, size: .large, color: OEXStyles.shared.primaryXLightColor())
 
             messageLabel.isHidden = false
             messageLabel.snp.remakeConstraints { (make) -> Void in
@@ -197,10 +197,10 @@ class UserProfileView : UIView, UIScrollViewDelegate {
     }
 
     func populateFields(_ profile: UserProfile, editable : Bool, networkManager : NetworkManager) {
-        let usernameStyle = OEXTextStyle(weight : .bold, size: .xxLarge, color: OEXStyles.shared().neutralWhiteT())
-        let infoStyle = OEXTextStyle(weight: .semiBold, size: .large, color: OEXStyles.shared().primaryXLightColor())
-        let bioStyle = OEXStyles.shared().textAreaBodyStyle
-        let messageStyle = OEXMutableTextStyle(weight: .bold, size: .large, color: OEXStyles.shared().neutralDark())
+        let usernameStyle = OEXTextStyle(weight : .bold, size: .xxLarge, color: OEXStyles.shared.neutralWhiteT())
+        let infoStyle = OEXTextStyle(weight: .semiBold, size: .large, color: OEXStyles.shared.primaryXLightColor())
+        let bioStyle = OEXStyles.shared.textAreaBodyStyle
+        let messageStyle = OEXMutableTextStyle(weight: .bold, size: .large, color: OEXStyles.shared.neutralDark())
         messageStyle.alignment = .center
 
 

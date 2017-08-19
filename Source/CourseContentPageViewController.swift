@@ -99,7 +99,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         // This is super hacky. Controls like sliders - that depend on pan gestures were getting intercepted
         // by the page view's scroll view. This seemed like the only solution.
@@ -470,7 +470,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
     //MARK : Set progres API
     func setProgress(_ componentIDs : String){
         let username = environment.session.currentUser?.username ?? ""
-        let request = ProgressAPI.setProgressForCourse(username, componentIDs: componentIDs)
+        let request = ProgressAPI.setProgressForCourse(username: username, componentIDs: componentIDs)
         _ = environment.networkManager.streamForRequest(request)
     }
 }

@@ -23,10 +23,14 @@ class BadgesAPITests : XCTestCase {
     }
 
     fileprivate var sampleBadgeJSON : JSON {
+        guard let created = OEXDateFormatting.serverString(with: Date()) else {
+            fatalError("This shouldn't really happen but just in case...")
+        }
+        
         return [
             "assertion_url": "http://example.com/evidence",
             "image_url": "http://example.com/image.jpg",
-            "created": OEXDateFormatting.serverString(with: Date()),
+            "created": created,
             "badge_class": [
                 "description" : "Some cool badge!",
                 "slug": "someslug",

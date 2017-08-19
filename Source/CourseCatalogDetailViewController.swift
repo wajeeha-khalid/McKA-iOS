@@ -41,7 +41,7 @@ class CourseCatalogDetailViewController: UIViewController {
         aboutView.snp.makeConstraints { make in
             make.edges.equalTo(self.view)
         }
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         self.loadController.setupInController(self, contentView: aboutView)
         

@@ -135,7 +135,7 @@ open class WebViewLoadingProtocol: URLProtocol {
          protocol's client the URLSystem tries to cache the response which isn't needed when we return 
          already cached response. URLCache won't cache data when the policy is set to ignore cache.*/
         mutableRequest.cachePolicy = .reloadIgnoringLocalCacheData
-        return mutableRequest as URLRequest
+        return mutableRequest
     }
     
     override open func startLoading() {

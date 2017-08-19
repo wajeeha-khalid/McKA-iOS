@@ -9,18 +9,18 @@
 import UIKit
 
 private var commentTextStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralDark())
+    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralDark())
 }
 
 private var smallTextStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralDark())
+    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralDark())
 }
 
 private var smallIconStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+    return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
 }
 
-private let smallIconSelectedStyle = smallIconStyle.withColor(OEXStyles.shared().primaryBaseColor())
+private let smallIconSelectedStyle = smallIconStyle.withColor(OEXStyles.shared.primaryBaseColor())
 
 private let UserProfileImageSize = CGSize(width: 40.0,height: 40.0)
 
@@ -37,7 +37,7 @@ class DiscussionCommentCell: UITableViewCell {
     fileprivate let dateLabel = UILabel()
     
     fileprivate var endorsedTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared().utilitySuccessBase())
+        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.utilitySuccessBase())
     }
     
     fileprivate func setEndorsed(_ endorsed : Bool) {
@@ -57,9 +57,9 @@ class DiscussionCommentCell: UITableViewCell {
         bodyTextView.backgroundColor = UIColor.clear
         containerView.isUserInteractionEnabled = true
         commentCountOrReportIconButton.localizedHorizontalContentAlignment = .trailing
-        contentView.backgroundColor = OEXStyles.shared().discussionsBackgroundColor
-        divider.backgroundColor = OEXStyles.shared().discussionsBackgroundColor
-        containerView.backgroundColor = OEXStyles.shared().neutralWhiteT()
+        contentView.backgroundColor = OEXStyles.shared.discussionsBackgroundColor
+        divider.backgroundColor = OEXStyles.shared.discussionsBackgroundColor
+        containerView.backgroundColor = OEXStyles.shared.neutralWhiteT()
         containerView.applyBorderStyle(BorderStyle())
         accessibilityTraits = UIAccessibilityTraitHeader
         bodyTextView.isAccessibilityElement = false
@@ -120,7 +120,7 @@ class DiscussionCommentCell: UITableViewCell {
         }
         
         commentCountOrReportIconButton.snp.makeConstraints { (make) -> Void in
-            make.trailing.equalTo(containerView).offset(-OEXStyles.shared().standardHorizontalMargin())
+            make.trailing.equalTo(containerView).offset(-OEXStyles.shared.standardHorizontalMargin())
             make.top.equalTo(authorNameLabel)
         }
         
@@ -274,11 +274,11 @@ class DiscussionCommentsViewController: UIViewController, UITableViewDataSource,
     //Since didSet doesn't get called from within initialization context, we need to set it with another variable.
     fileprivate var commentsClosed : Bool = false {
         didSet {
-            let styles = OEXStyles.shared()
+            let styles = OEXStyles.shared
             
             addCommentButton.backgroundColor = commentsClosed ? styles.neutralBase() : styles.primaryXDarkColor()
             
-            let textStyle = OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared().neutralWhite())
+            let textStyle = OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralWhite())
             let icon = commentsClosed ? Icon.closed : Icon.create
             let buttonText = commentsClosed ? Strings.commentsClosed : Strings.addAComment
             let buttonTitle = NSAttributedString.joinInNaturalLayout([icon.attributedTextWithStyle(textStyle.withSize(.xSmall)), textStyle.attributedString(withText: buttonText)])
@@ -373,13 +373,13 @@ class DiscussionCommentsViewController: UIViewController, UITableViewDataSource,
         
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         tableView.applyStandardSeparatorInsets()
-        tableView.backgroundColor = OEXStyles.shared().neutralXLight()
+        tableView.backgroundColor = OEXStyles.shared.neutralXLight()
         tableView.contentInset = UIEdgeInsetsMake(10.0, 0, 0, 0)
         tableView.clipsToBounds = true
         
         self.navigationItem.title = Strings.comments
-        view.backgroundColor = OEXStyles.shared().neutralXLight()
-        self.contentView.backgroundColor = OEXStyles.shared().neutralXLight()
+        view.backgroundColor = OEXStyles.shared.neutralXLight()
+        self.contentView.backgroundColor = OEXStyles.shared.neutralXLight()
         
         addCommentButton.contentVerticalAlignment = .center
         
@@ -397,7 +397,7 @@ class DiscussionCommentsViewController: UIViewController, UITableViewDataSource,
         addCommentButton.snp.makeConstraints{ (make) -> Void in
             make.leading.equalTo(view)
             make.trailing.equalTo(view)
-            make.height.equalTo(OEXStyles.shared().standardFooterHeight)
+            make.height.equalTo(OEXStyles.shared.standardFooterHeight)
             make.bottom.equalTo(view.snp.bottom)
         }
         

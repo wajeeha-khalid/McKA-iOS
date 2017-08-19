@@ -14,8 +14,8 @@ class TestEnvironmentBuilder: NSObject {
     override init() {
         super.init()
         
-        OEXStyles.setShared(OEXStyles())
-        OEXStyles.shared().applyGlobalAppearance()
+        OEXStyles.shared = OEXStyles()
+        OEXStyles.shared.applyGlobalAppearance()
 
         OEXFileUtility.routeUserDataToTempPath()
         

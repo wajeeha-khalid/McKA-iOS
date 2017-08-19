@@ -117,12 +117,15 @@
 		1AFEB1B61BBD5B95004C471D /* ProfilePictureTaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEB1B51BBD5B95004C471D /* ProfilePictureTaker.swift */; };
 		1AFEB1B91BBD88F3004C471D /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AFEB1BB1BBD88F3004C471D /* languages.json */; };
 		41030C781EE69EEB0026D72F /* ChatLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */; };
+		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
 		415F84751F32F447004E54EE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; };
 		415F84761F330842004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
 		41A0FC9A1EF7B331004FE882 /* ContentNavigationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */; };
 		41A0FC9C1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */; };
 		41A2AB321F1C8F91006B1727 /* UIImage+Blending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A2AB311F1C8F91006B1727 /* UIImage+Blending.swift */; };
+		41A8C3671F2EFE8100869CAD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A8C3651F2EFE8100869CAD /* LoginViewController.swift */; };
+		41A8C3681F2EFE8100869CAD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A8C3661F2EFE8100869CAD /* LoginViewController.xib */; };
 		41AE8FF01EF005CE00CC6DCC /* ChatLoadingProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AE8FEF1EF005CE00CC6DCC /* ChatLoadingProtocolTests.swift */; };
 		41B43F111F2F1C6200D6A880 /* TZStackView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F101F2F1C6200D6A880 /* TZStackView.framework */; };
 		41B43F131F2F1C6300D6A880 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
@@ -150,6 +153,17 @@
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
 		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
 		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
+		63EC02001F3C3B6900B702C4 /* BrandingThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC01FF1F3C3B6900B702C4 /* BrandingThemes.swift */; };
+		63EC02091F3C7BF100B702C4 /* mckinsey_theming.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */; };
+		63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */; };
+		63EC02111F3C84C700B702C4 /* img_logo_chemours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020B1F3C84C700B702C4 /* img_logo_chemours@2x.png */; };
+		63EC02121F3C84C700B702C4 /* img_logo_chemours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020C1F3C84C700B702C4 /* img_logo_chemours@3x.png */; };
+		63EC02131F3C84C700B702C4 /* img_logo_mckinsey@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020D1F3C84C700B702C4 /* img_logo_mckinsey@1x.png */; };
+		63EC02141F3C84C700B702C4 /* img_logo_mckinsey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020E1F3C84C700B702C4 /* img_logo_mckinsey@2x.png */; };
+		63EC02151F3C84C700B702C4 /* img_logo_mckinsey@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020F1F3C84C700B702C4 /* img_logo_mckinsey@3x.png */; };
+		63EC02171F3C9F8500B702C4 /* BrandingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC02161F3C9F8500B702C4 /* BrandingHeaderView.swift */; };
+		63EC02191F3DC89C00B702C4 /* chemours_theming.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EC02181F3DC89C00B702C4 /* chemours_theming.json */; };
+		63EC021B1F3DF5C400B702C4 /* BrandingThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC021A1F3DF5C400B702C4 /* BrandingThemeTests.swift */; };
 		63F40F951EF8388D00DE9A9C /* DownloadProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */; };
 		6919F5FF1D65CD27006935C8 /* OEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6919F5FE1D65CD27006935C8 /* OEXColors.swift */; };
 		6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 6926CDA41D59BE3600A16E22 /* ic_next_press.png */; };
@@ -690,7 +704,6 @@
 		BECB7B301924C0C3009C77F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BECB7B121924C0C3009C77F1 /* UIKit.framework */; };
 		BECB7B521924C9FB009C77F1 /* OEXVideoPlayerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BECB7B501924C9FB009C77F1 /* OEXVideoPlayerInterface.m */; };
 		BECB7B5A1924D760009C77F1 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BECB7B591924D760009C77F1 /* SWRevealViewController.m */; };
-		BECB7B691924EE11009C77F1 /* OEXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BECB7B681924EE11009C77F1 /* OEXLoginViewController.m */; };
 		BEEEBF80196AAACF00EF2C35 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEEEBF82196AAACF00EF2C35 /* Localizable.strings */; };
 		D0220E451E55C961004EAAFD /* ComponentData.m in Sources */ = {isa = PBXBuildFile; fileRef = D0220E441E55C961004EAAFD /* ComponentData.m */; };
 		D0220E481E56D2CC004EAAFD /* OEXHelperOfflineTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D0220E471E56D2CC004EAAFD /* OEXHelperOfflineTracker.m */; };
@@ -1044,9 +1057,12 @@
 		1AFEB1BA1BBD88F3004C471D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/languages.json; sourceTree = "<group>"; };
 		2627CDB85E06CBBFEAC91585 /* Pods-edXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-edXTests/Pods-edXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLoadingProtocol.swift; sourceTree = "<group>"; };
+		411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenterTests.swift; sourceTree = SOURCE_ROOT; };
 		41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationPolicy.swift; sourceTree = "<group>"; };
 		41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCompletionPolicyTests.swift; sourceTree = "<group>"; };
 		41A2AB311F1C8F91006B1727 /* UIImage+Blending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Blending.swift"; sourceTree = "<group>"; };
+		41A8C3651F2EFE8100869CAD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		41A8C3661F2EFE8100869CAD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		41AE8FEF1EF005CE00CC6DCC /* ChatLoadingProtocolTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLoadingProtocolTests.swift; sourceTree = "<group>"; };
 		41B43F101F2F1C6200D6A880 /* TZStackView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TZStackView.framework; path = Carthage/Build/iOS/TZStackView.framework; sourceTree = "<group>"; };
 		41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
@@ -1054,7 +1070,7 @@
 		41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesome.framework; path = Carthage/Build/iOS/FontAwesome.framework; sourceTree = "<group>"; };
 		41B43F181F2F1C6F00D6A880 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		41B716BA1F25FBA500AE5151 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
-		46CECC391B041CDC0073C63A /* CourseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CourseCardView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46CECC391B041CDC0073C63A /* CourseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCardView.swift; sourceTree = "<group>"; };
 		46CECC3B1B041D270073C63A /* CourseDashboardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDashboardCell.swift; sourceTree = "<group>"; };
 		46CECC3D1B041FAF0073C63A /* DiscussionTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionTopicCell.swift; sourceTree = "<group>"; };
 		46CECC3F1B041FCA0073C63A /* DiscussionTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionTopicsViewController.swift; sourceTree = "<group>"; };
@@ -1071,11 +1087,22 @@
 		5DEA47D61B62F64300831EC9 /* DiscussionObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionObjectModel.swift; sourceTree = "<group>"; };
 		61FAB193553EE11419D767E9 /* libPods-edXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-edXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlaybackDecision.swift; sourceTree = "<group>"; };
-		631B351E1F1D1F3A00914C59 /* CourseLessonsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CourseLessonsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		631B351E1F1D1F3A00914C59 /* CourseLessonsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonsViewController.swift; sourceTree = "<group>"; };
 		631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonsViewController.xib; sourceTree = "<group>"; };
 		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
 		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
 		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
+		63EC01FF1F3C3B6900B702C4 /* BrandingThemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandingThemes.swift; sourceTree = "<group>"; };
+		63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mckinsey_theming.json; sourceTree = "<group>"; };
+		63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@1x.png"; sourceTree = "<group>"; };
+		63EC020B1F3C84C700B702C4 /* img_logo_chemours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@2x.png"; sourceTree = "<group>"; };
+		63EC020C1F3C84C700B702C4 /* img_logo_chemours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@3x.png"; sourceTree = "<group>"; };
+		63EC020D1F3C84C700B702C4 /* img_logo_mckinsey@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_mckinsey@1x.png"; sourceTree = "<group>"; };
+		63EC020E1F3C84C700B702C4 /* img_logo_mckinsey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_mckinsey@2x.png"; sourceTree = "<group>"; };
+		63EC020F1F3C84C700B702C4 /* img_logo_mckinsey@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_mckinsey@3x.png"; sourceTree = "<group>"; };
+		63EC02161F3C9F8500B702C4 /* BrandingHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandingHeaderView.swift; sourceTree = "<group>"; };
+		63EC02181F3DC89C00B702C4 /* chemours_theming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chemours_theming.json; sourceTree = "<group>"; };
+		63EC021A1F3DF5C400B702C4 /* BrandingThemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandingThemeTests.swift; sourceTree = "<group>"; };
 		63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressTests.swift; sourceTree = "<group>"; };
 		6919F5FE1D65CD27006935C8 /* OEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXColors.swift; sourceTree = "<group>"; };
 		6926CDA41D59BE3600A16E22 /* ic_next_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_next_press.png; sourceTree = "<group>"; };
@@ -1745,8 +1772,6 @@
 		BECB7B501924C9FB009C77F1 /* OEXVideoPlayerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXVideoPlayerInterface.m; sourceTree = "<group>"; };
 		BECB7B581924D760009C77F1 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BECB7B591924D760009C77F1 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		BECB7B671924EE11009C77F1 /* OEXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXLoginViewController.h; sourceTree = "<group>"; };
-		BECB7B681924EE11009C77F1 /* OEXLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXLoginViewController.m; sourceTree = "<group>"; };
 		C1AA20153140DFAAA0EAA0FB /* Pods-edX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edX.release.xcconfig"; path = "Pods/Target Support Files/Pods-edX/Pods-edX.release.xcconfig"; sourceTree = "<group>"; };
 		CFC2C04AEE22B9B86CC8B100 /* Pods-edXTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edXTests.profile.xcconfig"; path = "Pods/Target Support Files/Pods-edXTests/Pods-edXTests.profile.xcconfig"; sourceTree = "<group>"; };
 		D0220E431E55C961004EAAFD /* ComponentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentData.h; sourceTree = "<group>"; };
@@ -2065,6 +2090,7 @@
 		193B504219459BE60038E11C /* Custom Styles */ = {
 			isa = PBXGroup;
 			children = (
+				63EC01FF1F3C3B6900B702C4 /* BrandingThemes.swift */,
 				6919F5FE1D65CD27006935C8 /* OEXColors.swift */,
 				BD7C6C3D1DCA32360004D135 /* OEXFonts.swift */,
 				77C901A61BBDDD630016E468 /* TableCellStyle.swift */,
@@ -2285,6 +2311,15 @@
 			path = QLearnSDK;
 			sourceTree = SOURCE_ROOT;
 		};
+		63EC02031F3C4CBC00B702C4 /* BrandingTheme */ = {
+			isa = PBXGroup;
+			children = (
+				63EC02181F3DC89C00B702C4 /* chemours_theming.json */,
+				63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */,
+			);
+			path = BrandingTheme;
+			sourceTree = "<group>";
+		};
 		6919F5FB1D65CD14006935C8 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
@@ -2298,6 +2333,7 @@
 			children = (
 				D04951D51E76AEFD006301FA /* registration_form.json */,
 				77BFD8691BB9E15B001D7BE5 /* Strings.swift */,
+				63EC02031F3C4CBC00B702C4 /* BrandingTheme */,
 				6919F5FB1D65CD14006935C8 /* Colors */,
 				69ECC5A21D50D1170030CF87 /* Fonts */,
 				69ECC5AE1D50D1170030CF87 /* Icons */,
@@ -2368,6 +2404,12 @@
 		69ECC5B61D50D1170030CF87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */,
+				63EC020B1F3C84C700B702C4 /* img_logo_chemours@2x.png */,
+				63EC020C1F3C84C700B702C4 /* img_logo_chemours@3x.png */,
+				63EC020D1F3C84C700B702C4 /* img_logo_mckinsey@1x.png */,
+				63EC020E1F3C84C700B702C4 /* img_logo_mckinsey@2x.png */,
+				63EC020F1F3C84C700B702C4 /* img_logo_mckinsey@3x.png */,
 				D0249F7C1E68592000A55613 /* ic_leftTriangle.png */,
 				D0249F7D1E68592000A55613 /* ic_leftTriangle@2x.png */,
 				D0249F7E1E68592000A55613 /* ic_leftTriangle@3x.png */,
@@ -2789,13 +2831,13 @@
 				B4B6D5E31A9490E9000F44E8 /* OEXLoginSplashViewController.h */,
 				B4B6D5E41A9490E9000F44E8 /* OEXLoginSplashViewController.m */,
 				1AAD95F51CEA222500BBF70C /* StartupViewController.swift */,
-				BECB7B671924EE11009C77F1 /* OEXLoginViewController.h */,
-				BECB7B681924EE11009C77F1 /* OEXLoginViewController.m */,
 				B4B6D5E61A9490FC000F44E8 /* OEXRegistrationViewController.h */,
 				B4B6D5E71A9490FC000F44E8 /* OEXRegistrationViewController.m */,
 				69E1CD001D7D7BA300531449 /* OEXRegistrationViewController+Swift.swift */,
 				B4B6D6451A95CF33000F44E8 /* OEXUserLicenseAgreementViewController.h */,
 				B4B6D6461A95CF33000F44E8 /* OEXUserLicenseAgreementViewController.m */,
+				41A8C3651F2EFE8100869CAD /* LoginViewController.swift */,
+				41A8C3661F2EFE8100869CAD /* LoginViewController.xib */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -3105,6 +3147,7 @@
 		77E6489A1C91CC0C00B6740D /* Library Additions */ = {
 			isa = PBXGroup;
 			children = (
+				411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */,
 				77E6489B1C91CC6700B6740D /* Array+FunctionalTests.swift */,
 				77E648291C90DE5000B6740D /* NSString+OEXFormattingTests.m */,
 				77E648981C91CC0700B6740D /* NSObject+OEXDeallocActionTests.m */,
@@ -3712,6 +3755,7 @@
 				694D34A11D76B75F0047F3F4 /* UIAlertController+OEXBlockActionsTests.swift */,
 				63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */,
 				63F40F941EF8388D00DE9A9C /* DownloadProgressTests.swift */,
+				63EC021A1F3DF5C400B702C4 /* BrandingThemeTests.swift */,
 				77FDF4171B0269FA00E8C639 /* Test Data */,
 				77FFA2C41AC30D6300B4D69B /* Data Factories */,
 				7772BE901AF90C8A0081CA7A /* Helpers */,
@@ -3812,6 +3856,7 @@
 				1905BFF01A31B037001917FA /* COURSE_NOT_LISTED.htm */,
 				190AF7941A4061950029E23E /* Main.storyboard */,
 				1A3671F41BB03C7A00704032 /* OEXRearTableViewController.swift */,
+				63EC02161F3C9F8500B702C4 /* BrandingHeaderView.swift */,
 			);
 			name = "Front Rear views";
 			sourceTree = "<group>";
@@ -4095,6 +4140,7 @@
 				631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */,
 				D0871E641E4050B800B2C41F /* ic_downloading.png in Resources */,
 				D0249F841E68592000A55613 /* ic_leftTriangle@3x.png in Resources */,
+				63EC02191F3DC89C00B702C4 /* chemours_theming.json in Resources */,
 				19A1339719CAE108003ADD24 /* EULA.htm in Resources */,
 				69ECC6371D50D1170030CF87 /* ic_partiallywatched@3x.png in Resources */,
 				D085DDAD1E483F48009AA666 /* ic_discussion.png in Resources */,
@@ -4117,6 +4163,7 @@
 				D05B25D31E13CED400D1E77F /* FTUE3@3x.png in Resources */,
 				69ECC61D1D50D1170030CF87 /* bt_logout_default.png in Resources */,
 				D0249F861E68592000A55613 /* ic_rightTriangle@2x.png in Resources */,
+				63EC02091F3C7BF100B702C4 /* mckinsey_theming.json in Resources */,
 				D05B25D91E13CED400D1E77F /* FTUE5@3x.png in Resources */,
 				D0871E6E1E40C00800B2C41F /* Mountain.png in Resources */,
 				D07DD5EC1E586B6D00A8BC01 /* ic_tickmark@2x.png in Resources */,
@@ -4153,6 +4200,7 @@
 				D085DDAE1E483F48009AA666 /* ic_discussion@2x.png in Resources */,
 				19BB62311A9C656B007DBF47 /* OEXMySettingsViewController.xib in Resources */,
 				D0871E761E41A27100B2C41F /* next.png in Resources */,
+				63EC02121F3C84C700B702C4 /* img_logo_chemours@3x.png in Resources */,
 				9ED269D21AF114B900328A34 /* OEXLoginViewController.storyboard in Resources */,
 				0A543E261EB2388500465FC0 /* VRCoachmarkViewController.xib in Resources */,
 				88F7A6B91F46F411000F3AB7 /* AnnouncementsViewController.xib in Resources */,
@@ -4189,6 +4237,7 @@
 				69ECC62F1D50D1170030CF87 /* ic_cancel@3x.png in Resources */,
 				D0D5AB771E52C972005D6D8F /* ic_attachment@2x.png in Resources */,
 				198826E91952FE39005D4D8A /* OEXOpenInBrowserViewController.xib in Resources */,
+				63EC02151F3C84C700B702C4 /* img_logo_mckinsey@3x.png in Resources */,
 				D05B25CD1E13CED400D1E77F /* FTUE1@3x.png in Resources */,
 				114A30C11E56CD9F00EBCF6B /* Icon-76.png in Resources */,
 				D0842C6B1E5ECFBD002FC330 /* ic_backchevron@3x.png in Resources */,
@@ -4214,12 +4263,14 @@
 				69ECC6141D50D1170030CF87 /* bt_blue2.png in Resources */,
 				69ECC6321D50D1170030CF87 /* ic_download_arrow.png in Resources */,
 				69ECC6111D50D1170030CF87 /* bg_card_image.png in Resources */,
+				41A8C3681F2EFE8100869CAD /* LoginViewController.xib in Resources */,
 				D0FA80261E1E7A2200FB1226 /* Default-414w-736h@3x.png in Resources */,
 				69ECC6391D50D1170030CF87 /* ic_unwatched@3x.png in Resources */,
 				69ECC61B1D50D1170030CF87 /* bt_logout_active.png in Resources */,
 				D0871E7A1E41A27F00B2C41F /* previous.png in Resources */,
 				D05B25D01E13CED400D1E77F /* FTUE2@3x.png in Resources */,
 				D085DDA91E483989009AA666 /* ic_blue_download@3x.png in Resources */,
+				63EC02111F3C84C700B702C4 /* img_logo_chemours@2x.png in Resources */,
 				1905BFF11A31B037001917FA /* COURSE_NOT_LISTED.htm in Resources */,
 				D043E5501E27767600623079 /* pique_launch@3x.png in Resources */,
 				69ECC6291D50D1170030CF87 /* check@2x.png in Resources */,
@@ -4256,6 +4307,7 @@
 				D0871E6B1E40747200B2C41F /* ic_lock@2x.png in Resources */,
 				69ECC6101D50D1170030CF87 /* profilePhotoPlaceholder.png in Resources */,
 				D0FA801E1E1E191600FB1226 /* SIL Open Font License.txt in Resources */,
+				63EC02141F3C84C700B702C4 /* img_logo_mckinsey@2x.png in Resources */,
 				D0712CD51E376C8D0080E9D4 /* OEXCoursewareViewController.xib in Resources */,
 				69ECC6051D50D1170030CF87 /* OpenSans-Regular.ttf in Resources */,
 				1A03DEA31BBC72BA006783FB /* countries.json in Resources */,
@@ -4269,11 +4321,13 @@
 				D09C25451E308A0000E39CA8 /* pique_logo@3x.png in Resources */,
 				69ECC61F1D50D1170030CF87 /* bt_signin_active.png in Resources */,
 				6960892B1D53935500EE66DD /* courseCertificate.png in Resources */,
+				63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */,
 				69ECC6071D50D1170030CF87 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				114A30BC1E56CD9F00EBCF6B /* Icon-40.png in Resources */,
 				6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */,
 				BEEEBF80196AAACF00EF2C35 /* Localizable.strings in Resources */,
 				D0249F661E66996400A55613 /* ic_completed@2x.png in Resources */,
+				63EC02131F3C84C700B702C4 /* img_logo_mckinsey@1x.png in Resources */,
 				D0249F831E68592000A55613 /* ic_leftTriangle@2x.png in Resources */,
 				199B9B7B1935EA8000081A09 /* OEXFlowErrorViewController.xib in Resources */,
 				D05B25D21E13CED400D1E77F /* FTUE3@2x.png in Resources */,
@@ -4673,6 +4727,7 @@
 				1A9A1E481B8F3BB8005AE336 /* OEXCheckBox.swift in Sources */,
 				46CECC3C1B041D270073C63A /* CourseDashboardCell.swift in Sources */,
 				778F177A1C0D125A0099BF93 /* CoursesTableViewController.swift in Sources */,
+				41A8C3671F2EFE8100869CAD /* LoginViewController.swift in Sources */,
 				7E96F8E91E6EBE6100AE7322 /* PrefillCacheController.swift in Sources */,
 				77ADF4AF1AC1F80E00AC8955 /* OEXGoogleAuthProvider.m in Sources */,
 				88F7A6BB1F46F460000F3AB7 /* AnnouncementsAPI.swift in Sources */,
@@ -4716,7 +4771,6 @@
 				80056C9A1B0CDE1A0004D85C /* DiscussionResponsesViewController.swift in Sources */,
 				775716B91CB804E40091AB10 /* UserProfilePresenter.swift in Sources */,
 				631B35201F1D1F3A00914C59 /* CourseLessonsViewController.swift in Sources */,
-				BECB7B691924EE11009C77F1 /* OEXLoginViewController.m in Sources */,
 				775434891AD8121200635A40 /* OEXParsePushProvider.m in Sources */,
 				1AAD95F61CEA222500BBF70C /* StartupViewController.swift in Sources */,
 				1A5501A21BBA323700D5F9DD /* ProfileBanner.swift in Sources */,
@@ -4895,6 +4949,7 @@
 				714239931E64473D0013FD1E /* CourseWareView.swift in Sources */,
 				B4B285E51A9A49FF00DD603A /* OEXFabricConfig.m in Sources */,
 				63049D1A1EE544DB00B9D18D /* MediaPlaybackDecision.swift in Sources */,
+				63EC02001F3C3B6900B702C4 /* BrandingThemes.swift in Sources */,
 				1A81971B1C060FA50030254D /* ShareHelper.swift in Sources */,
 				77F76A6E1B0BD32A00ED3E39 /* OEXSession+Authorization.swift in Sources */,
 				7E053D2E1E9E1EDD006A3DEE /* NSData+Additions.m in Sources */,
@@ -4940,6 +4995,7 @@
 				8F562F881A1F2D2C00320DB3 /* OEXGoogleSocial.m in Sources */,
 				E03E6A151D38C91F00944AAA /* OfflineSupportViewController.swift in Sources */,
 				B4B6D6291A949F1B000F44E8 /* OEXRegistrationFieldEmailController.m in Sources */,
+				63EC02171F3C9F8500B702C4 /* BrandingHeaderView.swift in Sources */,
 				E0ED96E71D6EED1C00B48B64 /* OEXCourseInfoViewController+Swift.swift in Sources */,
 				773B1D421B1F48F100B861DF /* CourseOutlineHeaderView.swift in Sources */,
 				778B61061B06BD2100489532 /* NSNotificationCenter+SafeSwift.swift in Sources */,
@@ -5016,6 +5072,7 @@
 				77503E981B2F53C300C47229 /* StreamTests.swift in Sources */,
 				41AE8FF01EF005CE00CC6DCC /* ChatLoadingProtocolTests.swift in Sources */,
 				778F17711C0CFD310099BF93 /* OEXRouterTests.swift in Sources */,
+				63EC021B1F3DF5C400B702C4 /* BrandingThemeTests.swift in Sources */,
 				773B1D491B1F818300B861DF /* XCTestCase+Async.swift in Sources */,
 				E008D9061CCE150F007F3643 /* DiscussionResponsesViewControllerTests.swift in Sources */,
 				775434971AD8635200635A40 /* OEXUserDetails+OEXTestDataFactory.m in Sources */,
@@ -5042,6 +5099,7 @@
 				F2586E061CF5F8C7007C1118 /* NetworkManager+AuthenticatorTests.swift in Sources */,
 				194E01931A54204B00A0CFAE /* OEXFormEncodingTests.m in Sources */,
 				775EB3AA1B1FBF58009526A8 /* CourseOutlineHeaderViewTests.swift in Sources */,
+				411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */,
 				773181441B7066E5000CC050 /* DiscussionNewPostViewControllerTests.swift in Sources */,
 				7731813D1B6C237F000CC050 /* DiscussionTopicTests.swift in Sources */,
 				6987A86B1D6C57C100E9D183 /* OEXColorsTests.swift in Sources */,

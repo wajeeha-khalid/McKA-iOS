@@ -64,7 +64,7 @@ open class MenuOptionsViewController: UIViewController, UITableViewDataSource, U
     weak var delegate : MenuOptionsViewControllerDelegate?
     
     fileprivate var titleTextStyle : OEXTextStyle {
-        let style = OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared().neutralDark())
+        let style = OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.neutralDark())
         return style
     }
     
@@ -75,7 +75,7 @@ open class MenuOptionsViewController: UIViewController, UITableViewDataSource, U
         tableView?.register(MenuOptionTableViewCell.classForCoder(), forCellReuseIdentifier: MenuOptionTableViewCell.identifier)
         tableView?.dataSource = self
         tableView?.delegate = self
-        tableView?.layer.borderColor = OEXStyles.shared().neutralLight().cgColor
+        tableView?.layer.borderColor = OEXStyles.shared.neutralLight().cgColor
         tableView?.layer.borderWidth = 1.0
         tableView?.applyStandardSeparatorInsets()
         if #available(iOS 9.0, *) {
@@ -117,11 +117,11 @@ open class MenuOptionsViewController: UIViewController, UITableViewDataSource, U
         cell.selectionStyle = option.depth == 0 ? .none : .default
         
         if let optionIndex = selectedOptionIndex, indexPath.row == optionIndex {
-            cell.backgroundColor = OEXStyles.shared().neutralLight()
-            style = titleTextStyle.withColor(OEXStyles.shared().neutralBlack())
+            cell.backgroundColor = OEXStyles.shared.neutralLight()
+            style = titleTextStyle.withColor(OEXStyles.shared.neutralBlack())
         }
         else {
-            cell.backgroundColor = OEXStyles.shared().neutralWhite()
+            cell.backgroundColor = OEXStyles.shared.neutralWhite()
             style = titleTextStyle
         }
 

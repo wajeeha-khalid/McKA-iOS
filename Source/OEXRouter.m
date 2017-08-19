@@ -17,7 +17,6 @@
 #import "OEXFindCoursesViewController.h"
 #import "OEXInterface.h"
 #import "OEXLoginSplashViewController.h"
-#import "OEXLoginViewController.h"
 #import "OEXPushSettingsManager.h"
 #import "OEXRegistrationViewController.h"
 #import "OEXSession.h"
@@ -35,8 +34,7 @@ NSString* OEXSideNavigationChangedStateNotification = @"OEXSideNavigationChanged
 NSString* OEXSideNavigationChangedStateKey = @"OEXSideNavigationChangedStateKey";
 
 @interface OEXRouter () <
-OEXLoginViewControllerDelegate,
-OEXRegistrationViewControllerDelegate
+OEXRegistrationViewControllerDelegate, LoginViewControllerDelegate
 >
 
 @property (strong, nonatomic) UIStoryboard* mainStoryboard;
@@ -126,17 +124,9 @@ OEXRegistrationViewControllerDelegate
 }
 
 - (void)showLoginScreenFromController:(UIViewController*)controller completion:(void(^)(void))completion {
-    [self presentViewController:[self loginViewController] fromController:[controller topMostController] completion:completion];
+    [self presentViewController:self.loginViewController fromController:[controller topMostController] completion:completion];
 }
 
-- (OEXLoginViewController *) loginViewController {
-    OEXLoginViewController* loginController = [[UIStoryboard storyboardWithName:@"OEXLoginViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginView"];
-    loginController.delegate = self;
-    loginController.environment = self.environment;
-//    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginController];
-
-    return loginController;
-}
 
 - (void)showSignUpScreenFromController:(UIViewController*)controller completion:(void(^)(void))completion {
     self.registrationCompletion = completion;
@@ -256,7 +246,17 @@ OEXRegistrationViewControllerDelegate
     }
 }
 
-- (void)loginViewControllerDidLogin:(OEXLoginViewController *)loginController {
+- (void)loginViewControllerDidLogin:(LoginViewController *)loginController {
+    //TODO: This piece of code is placed here temporarily;
+    //Once, we will get company id information from server, then we will
+    //apply these theming changes after getting that info at appropriate place
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:CHEMOURS_THEME_FILE forKey:APPLIED_THEMING_FILE_KEY];
+    [userDefaults synchronize];
+    
+    
+    [BrandingThemes.shared applyThemeWithFileName:CHEMOURS_THEME_FILE];
+    [OEXStyles.sharedStyles applyGlobalAppearance];
     [self showLoggedInContent];
     [loginController dismissViewControllerAnimated:YES completion:nil];
 }

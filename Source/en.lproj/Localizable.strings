@@ -706,3 +706,5 @@
 "DISCUSSIONS" = "Discussions";
 /*Action sheet menu button showing Cancel*/
 "CANCEL" = "Cancel";
+/* Placeholder shown on email text fields */
+"EMAIL_ID_PLACEHOLDER" = "Enter your email id";

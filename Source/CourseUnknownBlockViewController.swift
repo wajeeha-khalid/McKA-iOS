@@ -78,7 +78,7 @@ class CourseUnknownBlockViewController: UIViewController, CourseBlockViewControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
     }
     

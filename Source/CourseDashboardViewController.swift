@@ -91,7 +91,7 @@ open class CourseDashboardViewController: UIViewController, UITableViewDataSourc
     open override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = OEXStyles.shared().neutralXLight()
+        self.view.backgroundColor = OEXStyles.shared.neutralXLight()
         
         self.navigationItem.rightBarButtonItem = self.progressController.navigationItem()
         
@@ -192,7 +192,7 @@ open class CourseDashboardViewController: UIViewController, UITableViewDataSourc
     fileprivate func addShareButton(_ courseView: CourseCardView) {
         if environment.config.courseSharingEnabled {
             shareButton.setImage(UIImage(named: "share"), for: UIControlState())
-            shareButton.tintColor = OEXStyles.shared().neutralDark()
+            shareButton.tintColor = OEXStyles.shared.neutralDark()
 
             courseView.titleAccessoryView = shareButton
             shareButton.snp.makeConstraints({ (make) -> Void in

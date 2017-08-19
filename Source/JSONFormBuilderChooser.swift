@@ -11,7 +11,7 @@ import Foundation
 private class JSONFormTableSelectionCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        tintColor = OEXStyles.shared().utilitySuccessBase()
+        tintColor = OEXStyles.shared.utilitySuccessBase()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,13 +41,13 @@ class JSONFormTableViewController<T>: UITableViewController {
     fileprivate func makeAndInstallHeader() {
         if let instructions = instructions {
             let headerView = UIView()
-            headerView.backgroundColor = OEXStyles.shared().neutralXLight()
+            headerView.backgroundColor = OEXStyles.shared.neutralXLight()
             
-            let instructionStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralBlackT())
+            let instructionStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralBlackT())
             let headerStr = instructionStyle.attributedString(withText: instructions).mutableCopy() as! NSMutableAttributedString
             
             if let subInstructions = subInstructions {
-                let style = OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared().neutralDark())
+                let style = OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared.neutralDark())
                 let subStr = style.attributedString(withText: "\n" + subInstructions)
                 headerStr.append(subStr)
             }

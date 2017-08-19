@@ -35,7 +35,7 @@ class RevealViewController: SWRevealViewController, SWRevealViewControllerDelega
         dimmingOverlay.isHidden = true
         dimmingOverlay.alpha = 0
         dimmingOverlay.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        dimmingOverlay.backgroundColor = OEXStyles.shared().neutralBlack()
+        dimmingOverlay.backgroundColor = OEXStyles.shared.neutralBlack()
         dimmingOverlay.isExclusiveTouch = true
         dimmingOverlay.accessibilityLabel = Strings.accessibilityCloseMenu
         dimmingOverlay.oex_addAction({[weak self] _ in

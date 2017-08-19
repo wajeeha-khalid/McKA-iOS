@@ -61,8 +61,8 @@ open class DiscussionTopicsViewController: OfflineSupportViewController, UITable
         self.navigationItem.title = Strings.discussionTopics
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         
-        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
-        searchBarSeparator.backgroundColor = OEXStyles.shared().neutralLight()
+        view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
+        searchBarSeparator.backgroundColor = OEXStyles.shared.neutralLight()
         
         self.view.addSubview(contentView)
         self.contentView.addSubview(tableView)

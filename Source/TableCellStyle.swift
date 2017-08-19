@@ -16,8 +16,8 @@ enum TableCellStyle {
 extension UITableViewCell {
     func applyStyle(_ style : TableCellStyle) {
         switch style {
-        case .normal: self.backgroundColor = OEXStyles.shared().standardBackgroundColor()
-        case .highlighted: self.backgroundColor = OEXStyles.shared().primaryXLightColor()
+        case .normal: self.backgroundColor = OEXStyles.shared.standardBackgroundColor()
+        case .highlighted: self.backgroundColor = OEXStyles.shared.primaryXLightColor()
         }
     }
 }

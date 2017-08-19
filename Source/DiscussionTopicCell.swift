@@ -15,7 +15,7 @@ class DiscussionTopicCell: UITableViewCell {
     fileprivate let titleLabel = UILabel()
     
     fileprivate var titleTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralXDark())
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -47,7 +47,7 @@ class DiscussionTopicCell: UITableViewCell {
     func configureViews() {
         applyStandardSeparatorInsets()
         
-        self.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         self.contentView.addSubview(titleLabel)
 
         self.titleLabel.snp.makeConstraints { (make) -> Void in

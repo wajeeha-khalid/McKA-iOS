@@ -41,8 +41,8 @@ class CourseAnnouncementsViewController: OfflineSupportViewController, UIWebView
     fileprivate let notificationLabel : UILabel
     fileprivate let notificationSwitch : UISwitch
     
-    fileprivate let fontStyle = OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared().neutralBlack())
-    fileprivate let switchStyle = OEXStyles.shared().standardSwitchStyle()
+    fileprivate let fontStyle = OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralBlack())
+    fileprivate let switchStyle = OEXStyles.shared.standardSwitchStyle()
     
     init(environment: CourseAnnouncementsViewControllerEnvironment, courseID: String) {
         self.courseID = courseID
@@ -66,8 +66,8 @@ class CourseAnnouncementsViewController: OfflineSupportViewController, UIWebView
         setConstraints()
         setStyles()
         
-        self.view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
-        webView.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        self.view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
+        webView.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         webView.isOpaque = false
         
         loadController.setupInController(self, contentView: self.webView)
@@ -164,7 +164,7 @@ class CourseAnnouncementsViewController: OfflineSupportViewController, UIWebView
     
     fileprivate func setStyles() {
         self.navigationItem.title = Strings.courseAnnouncements
-        notificationBar.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        notificationBar.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         switchStyle.apply(to: notificationSwitch)
         notificationLabel.attributedText = fontStyle.attributedString(withText: Strings.notificationsEnabled)
         notificationSwitch.isOn = !environment.dataManager.pushSettings.isPushDisabledForCourse(withID: courseID)
@@ -188,7 +188,7 @@ class CourseAnnouncementsViewController: OfflineSupportViewController, UIWebView
                     html += "<div class=\"announcement-separator\"/></div>"
                 }
         }
-        let displayHTML = OEXStyles.shared().styleHTMLContent(html, stylesheet: "handouts-announcements") ?? ""
+        let displayHTML = OEXStyles.shared.styleHTMLContent(html, stylesheet: "handouts-announcements") ?? ""
         let baseURL = self.environment.config.apiHostURL()
         self.webView.loadHTMLString(displayHTML, baseURL: baseURL)
     }

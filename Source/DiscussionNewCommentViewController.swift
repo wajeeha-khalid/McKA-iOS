@@ -82,7 +82,7 @@ open class DiscussionNewCommentViewController: UIViewController, UITextViewDeleg
     fileprivate let thread: DiscussionThread?
     
     fileprivate var editingStyle : OEXTextStyle {
-        let style = OEXMutableTextStyle(weight: OEXTextWeight.normal, size: .base, color: OEXStyles.shared().neutralDark())
+        let style = OEXMutableTextStyle(weight: OEXTextWeight.normal, size: .base, color: OEXStyles.shared.neutralDark())
         style.lineBreakMode = .byWordWrapping
         return style
     }
@@ -135,24 +135,24 @@ open class DiscussionNewCommentViewController: UIViewController, UITextViewDeleg
     }
     
     fileprivate var responseTitleStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size : .large, color : OEXStyles.shared().neutralXDark())
+        return OEXTextStyle(weight : .normal, size : .large, color : OEXStyles.shared.neutralXDark())
     }
     
     fileprivate var answerLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared().utilitySuccessBase())
+        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.utilitySuccessBase())
     }
     
     fileprivate var responseTextViewStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     fileprivate var personTimeLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .xxSmall, color: OEXStyles.shared().neutralBase())
+        return OEXTextStyle(weight: .normal, size: .xxSmall, color: OEXStyles.shared.neutralBase())
     }
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = OEXStyles.shared().discussionsBackgroundColor
+        self.view.backgroundColor = OEXStyles.shared.discussionsBackgroundColor
         
         setupContext()
         

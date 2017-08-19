@@ -51,7 +51,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     fileprivate let tapButton = UIButton()
     
     var titleTextStyle : OEXTextStyle{
-        return OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.neutralDark())
     }
     
     fileprivate var selectedThreadType: DiscussionThreadType = .Discussion {
@@ -59,11 +59,11 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
             switch selectedThreadType {
             case .Discussion:
                 self.contentTitleLabel.attributedText = NSAttributedString.joinInNaturalLayout([titleTextStyle.attributedString(withText: Strings.courseDashboardDiscussion), titleTextStyle.attributedString(withText: Strings.asteric)])
-                postButton.applyButtonStyle(OEXStyles.shared().filledPrimaryButtonStyle,withTitle: Strings.postDiscussion)
+                postButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle,withTitle: Strings.postDiscussion)
                 contentTextView.accessibilityLabel = Strings.courseDashboardDiscussion
             case .Question:
                 self.contentTitleLabel.attributedText = NSAttributedString.joinInNaturalLayout([titleTextStyle.attributedString(withText: Strings.question), titleTextStyle.attributedString(withText: Strings.asteric)])
-                postButton.applyButtonStyle(OEXStyles.shared().filledPrimaryButtonStyle, withTitle: Strings.postQuestion)
+                postButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.postQuestion)
                 contentTextView.accessibilityLabel = Strings.question
             }
         }
@@ -136,23 +136,23 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
         titleLabel.isAccessibilityElement = false
         titleLabel.attributedText = NSAttributedString.joinInNaturalLayout([titleTextStyle.attributedString(withText: Strings.title), titleTextStyle.attributedString(withText: Strings.asteric)])
         contentTextView.textContainer.lineFragmentPadding = 0
-        contentTextView.textContainerInset = OEXStyles.shared().standardTextViewInsets
-        contentTextView.typingAttributes = OEXStyles.shared().textAreaBodyStyle.attributes
-        contentTextView.placeholderTextColor = OEXStyles.shared().neutralLight()
-        contentTextView.applyBorderStyle(OEXStyles.shared().entryFieldBorderStyle)
+        contentTextView.textContainerInset = OEXStyles.shared.standardTextViewInsets
+        contentTextView.typingAttributes = OEXStyles.shared.textAreaBodyStyle.attributes
+        contentTextView.placeholderTextColor = OEXStyles.shared.neutralLight()
+        contentTextView.applyBorderStyle(OEXStyles.shared.entryFieldBorderStyle)
         contentTextView.delegate = self
         titleTextField.accessibilityLabel = Strings.title
         
-        self.view.backgroundColor = OEXStyles.shared().neutralXXLight()
+        self.view.backgroundColor = OEXStyles.shared.neutralXXLight()
         
         configureSegmentControl()
-        titleTextField.defaultTextAttributes = OEXStyles.shared().textAreaBodyStyle.attributes
+        titleTextField.defaultTextAttributes = OEXStyles.shared.textAreaBodyStyle.attributes
         setTopicsButtonTitle()
-        let insets = OEXStyles.shared().standardTextViewInsets
+        let insets = OEXStyles.shared.standardTextViewInsets
         topicButton.titleEdgeInsets = UIEdgeInsetsMake(0, insets.left, 0, insets.right)
         topicButton.accessibilityHint = Strings.accessibilityShowsDropdownHint
         
-        topicButton.applyBorderStyle(OEXStyles.shared().entryFieldBorderStyle)
+        topicButton.applyBorderStyle(OEXStyles.shared.entryFieldBorderStyle)
         topicButton.localizedHorizontalContentAlignment = .leading
         
         let dropdownLabel = UILabel()
@@ -229,8 +229,8 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
                 assert(true, "Invalid Segment ID, Remove this segment index OR handle it in the ThreadType enum")
             }
             } , for: UIControlEvents.valueChanged)
-        discussionQuestionSegmentedControl.tintColor = OEXStyles.shared().neutralDark()
-        discussionQuestionSegmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName: OEXStyles.shared().neutralWhite()], for: UIControlState.selected)
+        discussionQuestionSegmentedControl.tintColor = OEXStyles.shared.neutralDark()
+        discussionQuestionSegmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName: OEXStyles.shared.neutralWhite()], for: UIControlState.selected)
         discussionQuestionSegmentedControl.selectedSegmentIndex = 0
         
         updateSelectedTabColor()
@@ -238,17 +238,14 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     
     fileprivate func updateSelectedTabColor() {
         // //UIsegmentControl don't Multiple tint color so updating tint color of subviews to match desired behaviour
-        let subViews:NSArray = discussionQuestionSegmentedControl.subviews as NSArray
-        for i in 0..<subViews.count {
-            if (subViews.object(at: i) as AnyObject).isSelected ?? false {
-                let view = subViews.object(at: i) as! UIView
-                view.tintColor = OEXStyles.shared().primaryBaseColor()
-            }
-            else {
-                let view = subViews.object(at: i) as! UIView
-                view.tintColor = OEXStyles.shared().neutralDark()
+        discussionQuestionSegmentedControl.subviews.forEach { subView in
+            if (subView as? UIControl)?.isSelected == true {
+                subView.tintColor = OEXStyles.shared.primaryBaseColor()
+            } else {
+                subView.tintColor = OEXStyles.shared.neutralDark()
             }
         }
+        
     }
     
     override open func viewWillAppear(_ animated: Bool) {
@@ -277,7 +274,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     fileprivate func setTopicsButtonTitle() {
         if let topic = selectedTopic, let name = topic.name {
             let title = Strings.topic(topic: name)
-            topicButton.setAttributedTitle(OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared().neutralDark()).attributedString(withText: title), for: .normal)
+            topicButton.setAttributedTitle(OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.neutralDark()).attributedString(withText: title), for: .normal)
         }
     }
     

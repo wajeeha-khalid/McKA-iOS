@@ -106,11 +106,11 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     fileprivate var queryString : String?
     fileprivate var refineTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared().neutralDark())
+        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.neutralDark())
     }
 
     fileprivate var filterTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared().primaryBaseColor())
+        return OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.primaryBaseColor())
     }
     
     fileprivate var hasResults:Bool = false
@@ -296,7 +296,7 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
         newPostButton.snp.remakeConstraints{ (make) -> Void in
             make.leading.equalTo(view)
             make.trailing.equalTo(view)
-            make.height.equalTo(context?.allowsPosting ?? false ? OEXStyles.shared().standardFooterHeight : 0)
+            make.height.equalTo(context?.allowsPosting ?? false ? OEXStyles.shared.standardFooterHeight : 0)
             make.top.equalTo(contentView.snp.bottom)
             make.bottom.equalTo(view)
         }
@@ -318,9 +318,9 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     fileprivate func setStyles() {
         
-        let styles = OEXStyles.shared()
+        let styles = OEXStyles.shared
         
-        view.backgroundColor = OEXStyles.shared().standardBackgroundColor()
+        view.backgroundColor = OEXStyles.shared.standardBackgroundColor()
         
         self.refineLabel.attributedText = self.refineTextStyle.attributedString(withText: Strings.refine)
         
@@ -613,15 +613,15 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     var cellTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared().primaryBaseColor())
+        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared.primaryBaseColor())
     }
     
     var unreadIconTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared().primaryBaseColor())
+        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.primaryBaseColor())
     }
     
     var readIconTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared().neutralBase())
+        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared.neutralBase())
     }
     
     func styledCellTextWithIcon(_ icon : Icon, text : String?) -> NSAttributedString? {

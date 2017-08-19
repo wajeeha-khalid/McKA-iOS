@@ -31,7 +31,7 @@ open class CourseOutlineHeaderView: UIView {
     }
     
     fileprivate var subtitleLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color : OEXStyles.shared().neutralBlack())
+        return OEXTextStyle(weight: .normal, size: .small, color : OEXStyles.shared.neutralBlack())
     }
     
     fileprivate var viewButtonStyle : ButtonStyle {
