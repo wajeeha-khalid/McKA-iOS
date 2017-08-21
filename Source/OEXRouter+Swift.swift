@@ -298,6 +298,7 @@ extension OEXRouter {
     func showAnnouncementsController(_ fromController: UIViewController, animated: Bool = true, courseID: String? = nil) {
         let announcementsViewController = AnnouncementsViewController(environment: self.environment,
                                                                       courseId: courseID)
+        fromController.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         fromController.navigationController?.pushViewController(announcementsViewController, animated: true)
     }
     
