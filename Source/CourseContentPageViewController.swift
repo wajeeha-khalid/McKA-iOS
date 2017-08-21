@@ -8,6 +8,31 @@
 
 import Foundation
 
+protocol Command {
+    var title: String { get }
+    func execute()
+}
+
+protocol CommandProvider {
+    var command: Command? { get }
+}
+
+final class BlockCommand: Command {
+    var title: String {
+        return "Submit"
+    }
+    
+    func execute() {
+        
+    }
+}
+
+extension UIViewController: CommandProvider {
+    var command: Command? {
+        return nil
+    }
+}
+
 public protocol CourseContentPageViewControllerDelegate : class {
     func courseContentPageViewController(_ controller : CourseContentPageViewController, enteredBlockWithID blockID : CourseBlockID, parentID : CourseBlockID)
 }
@@ -37,6 +62,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
         return courseQuerier.courseID
     }
     
+    var commandToExecute: Command?
     fileprivate var openURLButtonItem : UIBarButtonItem?
     fileprivate var contentLoader = BackedStream<ListCursor<CourseOutlineQuerier.GroupItem>>()
     
@@ -286,37 +312,53 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
             
             let shouldShowPrevious = item.prevGroup != nil || cursor.hasPrev
             let shouldShowNext = item.nextGroup != nil || cursor.hasNext
-            
+            let vc = viewControllers?.first
+            let actionItem = vc?.command.map { command -> UIBarButtonItem in
+                let button = UIButton(type: .custom)
+                button.layer.cornerRadius = 14.0
+                button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
+                button.addTarget(self, action: #selector(self.executeCommand), for: .touchUpInside)
+                button.backgroundColor = UIColor(red:38/255.0, green:144/255.0, blue:240/255.0, alpha:1)
+                if #available(iOS 8.2, *) {
+                    button.titleLabel?.font = UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightSemibold)
+                }
+                button.setTitle(command.title, for: .normal)
+                button.sizeToFit()
+                return UIBarButtonItem(customView: button)
+            }
+            commandToExecute = vc?.command
+            let centerItems: [UIBarButtonItem]
+            if let item = actionItem {
+                centerItems = [
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                item,
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                ]
+            } else {
+                centerItems = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),]
+            }
             switch (shouldShowPrevious, shouldShowNext) {
             case (true, true):
                 self.setToolbarItems(
-                    [
-                        prevItem,
-                        UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-                        nextItem
-                    ], animated : true)
+                    [prevItem] + centerItems + [nextItem], animated : true)
             case (true, false):
                 self.setToolbarItems(
-                    [
-                        prevItem,
-                        UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-                    ], animated : true)
+                    [prevItem] + centerItems, animated : true)
             case (false, true):
                 self.setToolbarItems(
-                    [
-                        UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-                        nextItem
-                    ], animated : true)
+                    centerItems + [nextItem], animated : true)
             case (false, false):
                 self.setToolbarItems(
-                    [
-                        UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-                    ], animated : true)
+                   centerItems, animated : true)
             }
         }
         else {
             self.toolbarItems = []
         }
+    }
+    
+    func executeCommand() {
+        commandToExecute?.execute()
     }
     // MARK: Paging
     
