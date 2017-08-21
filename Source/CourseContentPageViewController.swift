@@ -17,19 +17,21 @@ protocol CommandProvider {
     var command: Command? { get }
 }
 
+
+
 final class BlockCommand: Command {
-    var title: String {
-        return "Submit"
+    
+    let executor: () -> Void
+    
+    init(title: String, executor:@escaping () -> Void) {
+        self.title = title
+        self.executor = executor
     }
     
+    let title: String
+    
     func execute() {
-        
-    }
-}
-
-extension UIViewController: CommandProvider {
-    var command: Command? {
-        return nil
+        executor()
     }
 }
 
@@ -329,7 +331,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
             let shouldShowPrevious = item.prevGroup != nil || cursor.hasPrev
             let shouldShowNext = item.nextGroup != nil || cursor.hasNext
             let vc = viewControllers?.first
-            let actionItem = vc?.command.map { command -> UIBarButtonItem in
+            let actionItem = (vc as? CommandProvider)?.command.map { command -> UIBarButtonItem in
                 let button = UIButton(type: .custom)
                 button.layer.cornerRadius = 14.0
                 button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
@@ -342,7 +344,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
                 button.sizeToFit()
                 return UIBarButtonItem(customView: button)
             }
-            commandToExecute = vc?.command
+            commandToExecute = (vc as? CommandProvider)?.command
             let centerItems: [UIBarButtonItem]
             if let item = actionItem {
                 centerItems = [

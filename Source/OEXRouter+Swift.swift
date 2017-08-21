@@ -471,3 +471,21 @@ class DummyViewController: UIViewController, CourseBlockViewController {
     }
     
 }
+
+/*
+extension MRQViewController: CommandProvider {
+    var command: Command? {
+        return BlockCommand(title: "Submit") {
+            //self.submit()
+        }
+    }
+}*/
+
+extension DummyViewController : CommandProvider {
+    var command: Command? {
+        return BlockCommand(title: "Submit") {
+            print("Executing Submit Command")
+        }
+    }
+}
+
