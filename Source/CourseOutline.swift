@@ -97,7 +97,7 @@ public struct CourseOutline {
                             Option(content: $0["content"].stringValue, value: $0["value"].stringValue)
                         }
                         let mcq = MCQ(question: question.string ?? "Some default question here", options: options)
-                        let title = body[Fields.Title].stringValue
+                        let title = studentViewData[Fields.Title].stringValue
                         type = .mrq(title: title, question: mcq)
                     case CourseBlock.Category.HTML:
                         type = .html
