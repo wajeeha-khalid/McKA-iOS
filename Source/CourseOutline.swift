@@ -86,7 +86,7 @@ public struct CourseOutline {
                             fatalError("unable to find content id of ooyala player")
                         }
                         
-                        type = .ooyalaVideo(contentId)
+                        type = .ooyalaVideo(contentID: contentId, descriptionURL: nil)
                     case CourseBlock.Category.Video :
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXVideoSummary(dictionary: bodyData ?? [:], videoID: blockID, name : name ?? Strings.untitled)
@@ -144,7 +144,7 @@ public enum CourseBlockType {
     case section // child of chapter
     case unit // child of section
     case video(OEXVideoSummary)
-    case ooyalaVideo(String)
+    case ooyalaVideo(contentID: String, descriptionURL: URL?)
     case problem
     case html
     case discussion(DiscussionModel)
@@ -197,7 +197,7 @@ open class CourseBlock {
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
-    open let type : CourseBlockType
+    open var type : CourseBlockType
     open let blockID : CourseBlockID
     
     /// Children in the navigation hierarchy.
