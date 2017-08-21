@@ -98,6 +98,9 @@ public struct CourseOutline {
                         }
                         let mcq = MCQ(question: question.string ?? "Some default question here", options: options)
                         let title = studentViewData[Fields.Title].stringValue
+//=======
+//                        let title = body[Fields.Title].stringValue
+//>>>>>>> Initial work
                         type = .mrq(title: title, question: mcq)
                     case CourseBlock.Category.HTML:
                         type = .html
