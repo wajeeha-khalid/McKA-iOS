@@ -118,7 +118,7 @@
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchImageFile</key>
-	<string>Default</string>
+	<string>iPhone4_bg</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
