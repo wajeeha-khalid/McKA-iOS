@@ -29,7 +29,8 @@ enum CourseBlockDisplayType {
     case html(CourseHTMLBlockSubkind)
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+    case mcq(MCQ)
+    case mrq(title: String, question: MCQ)
     
     var isUnknown : Bool {
         switch self {
@@ -53,8 +54,10 @@ extension CourseBlock {
             return .ooyalaVideo(contentID, url)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+        
         case let .discussion(discussionModel): return .discussion(discussionModel)
+        case let .mcq(question): return .mcq(question)
+        case let .mrq(title, question): return .mrq(title: title, question: question)
         }
     }
 }
@@ -99,6 +102,10 @@ extension OEXRouter {
             let outlineController = controllerForBlockWithID(blockID, type: type, courseID: courseID)
             controller.navigationController?.pushViewController(outlineController, animated: true)
         case .html:
+            fallthrough
+        case .mcq:
+            fallthrough
+        case .mrq:
             fallthrough
         case .video:
             fallthrough
@@ -172,6 +179,17 @@ extension OEXRouter {
         case .audio:
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
+        case .mcq(let question):
+            let text = (["MCQ", question.question] + question.options.map{$0.content}).joined(separator: "\n")
+            let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
+            return dummyViewController
+            //fatalError("implement MCQ here")
+        case let .mrq(title, question):
+            
+            let text = (["MRQ", title, question.question] + question.options.map{$0.content}).joined(separator: "\n")
+            let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
+            return dummyViewController
+            //fatalError("implement MRQ here")
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller
@@ -426,3 +444,30 @@ extension OEXRouter {
     }
 }
 
+class DummyViewController: UIViewController, CourseBlockViewController {
+    
+    
+    let blockID: CourseBlockID?
+    let courseID: CourseBlockID
+    
+    init(courseID: CourseBlockID, blockID: CourseBlockID?, text: String?) {
+        self.blockID = blockID
+        self.courseID = courseID
+        super.init(nibName: nil, bundle: nil)
+        let label = UILabel()
+        label.textColor = UIColor.red
+        label.numberOfLines = 0
+        label.text = text
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.center.equalTo(view)
+            make.size.equalTo(view)
+        }
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
