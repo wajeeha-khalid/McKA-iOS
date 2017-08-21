@@ -64,8 +64,21 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
         
         self.dataSource = self
         self.delegate = self
-        
+        let menuButtonItem = UIBarButtonItem(image: UIImage(named: "menu"),
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(self.showMenu))
+        navigationItem.rightBarButtonItem = menuButtonItem
         addStreamListeners()
+    }
+    
+    func showMenu()  {
+        if #available(iOS 9.0, *) {
+            if let adapter = viewControllers?.first as? OoylaPlayerCourseBlockAdapter {
+                adapter.adaptedViewController.puase()
+            }
+        }
+        environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
     }
 
     public required init?(coder aDecoder: NSCoder) {
