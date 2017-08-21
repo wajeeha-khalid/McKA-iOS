@@ -161,6 +161,10 @@ class CourseOutlineTableController : UITableViewController, CourseVideoTableView
             return cell
         case .ooyalaVideo:
             fatalError("unimplemented")
+        case .mcq:
+            fatalError("not supported")
+        case .mrq:
+            fatalError("not supported")
         }
     }
     
