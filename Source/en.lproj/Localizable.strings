@@ -608,6 +608,9 @@
 "SUBMIT_FEEDBACK.APP_VERSION" = "App Version: {version} ({build})";
 /* Line in submit feedback email that supplies device model information. For example, "Device Model: iPhone" */
 "SUBMIT_FEEDBACK.DEVICE_MODEL" = "Device Model: {model}";
+/* Line is submit feedback email that tells the application name
+ */
+"SUBMIT_FEEDBACK.APP_NAME" = "Academy for Mobile";
 /* Text that indicates the visibility of the post */
 "POST_VISIBILITY"="This post is visible only to {cohort}.";
 /* Text that indicates the visibility of the post to everyone */
