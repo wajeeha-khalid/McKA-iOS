@@ -52,24 +52,38 @@ fileprivate final class TitleView: UIView {
             lessonNameLabel.font = UIFont.systemFont(ofSize: 14.0)
         }
         lessonNameLabel.textColor = UIColor.white
-        lessonNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(self)
-            make.centerX.equalTo(self)
-        }
+        lessonNameLabel.numberOfLines = 1
         lessonNameLabel.textAlignment = .center
         
         addSubview(moduleNameLabel)
         moduleNameLabel.font = UIFont.systemFont(ofSize: 12.0)
         moduleNameLabel.textColor = UIColor(colorLiteralRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
-        moduleNameLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(self)
-            make.top.equalTo(lessonNameLabel.snp.bottom)
-            make.centerX.equalTo(self)
-            make.leading.equalTo(self)
-            make.trailing.equalTo(self)
-        }
+        moduleNameLabel.numberOfLines = 1
         moduleNameLabel.textAlignment = .center
         moduleNameLabel.lineBreakMode = .byTruncatingMiddle
+    }
+    
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        let lessonLabelSize = lessonNameLabel.sizeThatFits(size)
+        let moduleNameLabelSize = moduleNameLabel.sizeThatFits(size)
+        
+        let height = lessonLabelSize.height + moduleNameLabelSize.height
+        let width = min(max(moduleNameLabelSize.width, lessonLabelSize.width), size.width)
+        return CGSize(width: width, height: height)
+    }
+    
+
+    override func layoutSubviews() {
+        let lessonLabelSize = lessonNameLabel.sizeThatFits(frame.size)
+        lessonNameLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: lessonLabelSize.height)
+        var lessonNameLabelCenter = lessonNameLabel.center
+        lessonNameLabelCenter.x = frame.width / 2
+        lessonNameLabel.center = lessonNameLabelCenter
+        let moduleNameLabelSize = moduleNameLabel.sizeThatFits(frame.size)
+        moduleNameLabel.frame = CGRect(x: 0, y: lessonNameLabel.frame.height, width: frame.width, height: moduleNameLabelSize.height)
+        var moduleNameLabelCenter = moduleNameLabel.center
+        moduleNameLabelCenter.x = frame.width / 2
+        moduleNameLabel.center = moduleNameLabelCenter
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -187,10 +201,6 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
             }
         )
         loadIfNecessary()
-        titleView.translatesAutoresizingMaskIntoConstraints = false
-        titleView.layoutIfNeeded()
-        titleView.sizeToFit()
-        titleView.translatesAutoresizingMaskIntoConstraints = true
         navigationItem.titleView = titleView
 		UIApplication.shared.isIdleTimerDisabled = true
     }
@@ -349,14 +359,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
                 case .success(let value):
                     self.titleView.lessonName = value.1
                     self.titleView.moduleName = "\(value.0) . \(value.2) of \(value.3)"
-                    self.titleView.layoutIfNeeded()
                     self.titleView.sizeToFit()
-                    let size = self.titleView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-                    var rect = self.titleView.frame
-                    let centre = self.titleView.center
-                    rect.size = size
-                    self.titleView.frame = rect
-                    self.titleView.center = centre
                     print(value)
                 case .failure:
                     break
@@ -374,28 +377,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
                     }
                     })
             }
-            // setProgress(self.componentID!)
             
-            // only animate change if we haven't set a title yet, so the initial set happens without
-            // animation to make the push transition work right
-            /*let actions : () -> Void = {
-                let anotherView = TitleView()
-                anotherView.translatesAutoresizingMaskIntoConstraints = false
-                anotherView.layoutIfNeeded()
-                anotherView.sizeToFit()
-                anotherView.translatesAutoresizingMaskIntoConstraints = true
-                self.navigationItem.titleView = anotherView
-               // self.moduleName(cursor: cursor)
-            }
-            if let navigationBar = navigationController?.navigationBar, navigationItem.titleView != nil {
-                let animated = navigationItem.titleView != nil
-                UIView.transition(with: navigationBar,
-                                          duration: 0.3 * (animated ? 1.0 : 0.0), options: UIViewAnimationOptions.transitionCrossDissolve,
-                                          animations: actions, completion: nil)
-            }
-            else {
-                actions()
-            }*/
             
             var shouldEnableNextButton = false
             
