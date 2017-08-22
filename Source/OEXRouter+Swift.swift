@@ -192,9 +192,16 @@ extension OEXRouter {
 
         case let .mrq(title, question):
             
-            let text = (["MRQ", title, question.question] + question.options.map{$0.content}).joined(separator: "\n")
-            let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
-            return dummyViewController
+            
+            return CourseBlockViewControllerAdapter(
+                blockID: blockID,
+                courseID: courseID,
+                adaptedViewController: MRQViewController(screenType: .questionScreen)
+            )
+            
+//            let text = (["MRQ", title, question.question] + question.options.map{$0.content}).joined(separator: "\n")
+//            let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
+//            return dummyViewController
             //fatalError("implement MRQ here")
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)

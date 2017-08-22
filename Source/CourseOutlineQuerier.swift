@@ -310,6 +310,12 @@ open class CourseOutlineQuerier : NSObject {
             //description in a single block...
             if case .unit = block.type {
                 childBlocks  = combinedDescriptionBlocksWithVideoBlocks(from: childBlocks)
+                    .filter {
+                        switch $0.type {
+                        case .unknown: return false
+                        case _: return true
+                        }
+                }
             }
             
             if childBlocks.count > 0  {
@@ -399,6 +405,13 @@ open class CourseOutlineQuerier : NSObject {
                 outline.blocks[$0]
             }
             let combined = combinedDescriptionBlocksWithVideoBlocks(from: children)
+                .filter {
+                    if case .unknown = $0.type {
+                        return false
+                    } else {
+                        return true
+                    }
+            }
             mutableBlock.children = combined.map{$0.blockID}
             return block
         } else if let block = outline.blocks[id] {
