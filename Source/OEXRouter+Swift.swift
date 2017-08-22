@@ -180,10 +180,16 @@ extension OEXRouter {
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
         case .mcq(let question):
-            let text = (["MCQ", question.question] + question.options.map{$0.content}).joined(separator: "\n")
-            let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
-            return dummyViewController
-            //fatalError("implement MCQ here")
+            let bundle = Bundle(identifier: "com.arbisoft.MckinseyXBlocks")
+            let mcqViewController = MCQViewController(nibName: "MCQViewController", bundle: bundle)
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: mcqViewController)
+            return adapter
+            //return mcqViewController
+            
+          //  let text = (["MCQ", question.question] + question.options.map{$0.content}).joined(separator: "\n")
+           // let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
+           // return dummyViewController
+
         case let .mrq(title, question):
             
             let text = (["MRQ", title, question.question] + question.options.map{$0.content}).joined(separator: "\n")
@@ -444,6 +450,8 @@ extension OEXRouter {
     }
 }
 
+
+
 class DummyViewController: UIViewController, CourseBlockViewController {
     
     
@@ -472,6 +480,14 @@ class DummyViewController: UIViewController, CourseBlockViewController {
     
 }
 
+extension MCQViewController: CommandProvider {
+    var command: Command? {
+        return BlockCommand(title: "Submit") {
+            self.submit()
+        }
+    }
+}
+
 /*
 extension MRQViewController: CommandProvider {
     var command: Command? {
@@ -480,6 +496,45 @@ extension MRQViewController: CommandProvider {
         }
     }
 }*/
+
+class CourseBlockViewControllerAdapter: UIViewController, CourseBlockViewController {
+    
+    let blockID: CourseBlockID?
+    let courseID: CourseBlockID
+    let adaptedViewController: UIViewController
+    
+    init(blockID: CourseBlockID?, courseID: CourseBlockID, adaptedViewController: UIViewController) {
+        self.blockID = blockID
+        self.courseID = courseID
+        self.adaptedViewController = adaptedViewController
+        super.init(nibName: nil, bundle: nil)
+        if #available(iOS 9.0, *) {
+            loadViewIfNeeded()
+        } else {
+            loadView()
+        }
+        addChildViewController(adaptedViewController)
+        view.addSubview(adaptedViewController.view)
+        adaptedViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(view)
+            make.leading.equalTo(view)
+            make.trailing.equalTo(view)
+            make.height.equalTo(view)
+        }
+        adaptedViewController.didMove(toParentViewController: self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension CourseBlockViewControllerAdapter: CommandProvider {
+    var command: Command? {
+        return (adaptedViewController as? CommandProvider)?.command
+    }
+}
+
 
 extension DummyViewController : CommandProvider {
     var command: Command? {
