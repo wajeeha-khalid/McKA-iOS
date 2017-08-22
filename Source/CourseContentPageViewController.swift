@@ -284,13 +284,12 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
     }
     
     fileprivate func toolbarItemWithGroupItem(_ item : CourseOutlineQuerier.GroupItem, adjacentGroup : CourseBlock?, direction : DetailToolbarButton.Direction, enabled : Bool) -> UIBarButtonItem {
-        let titleText : String
-        let moveDirection : UIPageViewControllerNavigationDirection
         
         switch direction {
         case .next:
             
-            if contentLoader.value?.current.nextGroup != nil || contentLoader.value?.hasNext == false{
+            let upcomingModule = contentLoader.value?.current.nextGroup
+            if upcomingModule != nil {
                 let image = #imageLiteral(resourceName: "Icon_NextModule").withRenderingMode(.alwaysOriginal)
                 return UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.showNext))
             }
@@ -298,28 +297,15 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
                 return UIBarButtonItem(image: #imageLiteral(resourceName: "Icon_NextComponent").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.showNext))
             }
         case .prev:
-            //titleText = isGroup ? Strings.previousUnit : Strings.previous // Commented by Ravi as the Unit is changed to Section
-            if let _ = contentLoader.value?.current.prevGroup {
+            let previousModule = contentLoader.value?.current.prevGroup
+            if previousModule != nil {
                 return UIBarButtonItem(image: #imageLiteral(resourceName: "Icon_PreviousModule").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.showPrev))
             } else if contentLoader.value?.hasPrev == true {
                return UIBarButtonItem(image: #imageLiteral(resourceName: "Icon_PrevComponent").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.showPrev))
             } else {
-                titleText = ""
+                return UIBarButtonItem()
             }
-            moveDirection = .reverse
         }
-        
-        let destinationText = "";// Added by Ravi on 10Mar'17 as the Text should be removed.   //adjacentGroup?.displayName
-        
-        let view = DetailToolbarButton(direction: direction, titleText: titleText, destinationText: destinationText) {[weak self] in
-            self?.moveInDirection(moveDirection)
-        }
-        view.sizeToFit()
-        
-        let barButtonItem =  UIBarButtonItem(customView: view)
-        barButtonItem.isEnabled = enabled
-        view.button.isEnabled = enabled
-        return barButtonItem
     }
     
     
@@ -329,7 +315,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
             
             courseQuerier.blockWithID(item.parent).transform { module in
                 self.courseQuerier.parentOfBlockWithID(module.blockID)
-                    .transform{lessonID in  self.courseQuerier.blockWithID(lessonID)}
+                    .transform{ lessonID in  self.courseQuerier.blockWithID(lessonID) }
                     .map { lesson in
                     return (module.displayName, lesson.displayName)
                     }.map { (moduleName, lessonName) -> (String, String, Int, Int) in
@@ -338,18 +324,16 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
                 }
             }.extendLifetimeUntilFirstResult(completion: { (result) in
                 switch result {
-                case .success(let value):
-                    self.titleView.lessonName = value.1
-                    self.titleView.moduleName = "\(value.0) . \(value.2) of \(value.3)"
+                case .success(let (moduleName, lessonName, currentModule, totalModules)):
+                    self.titleView.lessonName = lessonName
+                    self.titleView.moduleName = "\(moduleName) . \(currentModule) of \(totalModules)"
                     self.titleView.sizeToFit()
-                    print(value)
                 case .failure:
                     break
                 }
             })
             
             self.componentID = item.block.blockID
-            //            storeViewedStatus()
             if environment.reachability.isReachable(){
                 let username = environment.session.currentUser?.username ?? ""
                 environment.networkManager.updateCourseProgress(username, componentIDs: self.componentID!, onCompletion: { [weak self] (success) in
@@ -410,6 +394,19 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
                 item,
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                ]
+            } else if let upcomingModule = item.nextGroup {
+                let label = UILabel()
+                label.text = "Up Next: \(upcomingModule.displayName)"
+                let item  = UIBarButtonItem(customView: label)
+                label.sizeToFit()
+                label.textColor = UIColor.lightGray
+                label.font = UIFont.systemFont(ofSize: 12.0)
+                let x = UIBarButtonItem(title: label.text, style: .plain, target: nil, action: nil)
+                centerItems = [
+                    UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                    x,
+                    UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
                 ]
             } else {
                 centerItems = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),]
