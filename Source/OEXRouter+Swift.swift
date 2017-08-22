@@ -488,14 +488,14 @@ extension MCQViewController: CommandProvider {
     }
 }
 
-/*
+
 extension MRQViewController: CommandProvider {
     var command: Command? {
         return BlockCommand(title: "Submit") {
-            //self.submit()
+            self.submit()
         }
     }
-}*/
+}
 
 class CourseBlockViewControllerAdapter: UIViewController, CourseBlockViewController {
     
