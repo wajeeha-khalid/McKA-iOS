@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 protocol Command {
     var title: String { get }
     func execute()
@@ -33,6 +34,60 @@ final class BlockCommand: Command {
     func execute() {
         executor()
     }
+}
+
+fileprivate final class TitleView: UIView {
+    
+    private let lessonNameLabel = UILabel()
+    private let moduleNameLabel = UILabel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        //lessonName
+        addSubview(lessonNameLabel)
+        if #available(iOS 8.2, *) {
+            lessonNameLabel.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightSemibold)
+        } else {
+            lessonNameLabel.font = UIFont.systemFont(ofSize: 14.0)
+        }
+        lessonNameLabel.textColor = UIColor.white
+        lessonNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(self)
+            make.centerX.equalTo(self)
+        }
+        lessonNameLabel.textAlignment = .center
+        
+        addSubview(moduleNameLabel)
+        moduleNameLabel.font = UIFont.systemFont(ofSize: 12.0)
+        moduleNameLabel.textColor = UIColor(colorLiteralRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
+        moduleNameLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(self)
+            make.top.equalTo(lessonNameLabel.snp.bottom)
+            make.centerX.equalTo(self)
+            make.leading.equalTo(self)
+            make.trailing.equalTo(self)
+        }
+        moduleNameLabel.textAlignment = .center
+        moduleNameLabel.lineBreakMode = .byTruncatingMiddle
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var lessonName: String? {
+        didSet {
+            lessonNameLabel.text = lessonName
+        }
+    }
+    var moduleName: String? {
+        didSet {
+            moduleNameLabel.text = moduleName
+        }
+    }
+    var currentComponent: Int?
+    var totalComponents: Int?
 }
 
 public protocol CourseContentPageViewControllerDelegate : class {
@@ -63,6 +118,7 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
     fileprivate var sequentialID : CourseBlockID?
     open var chapterID : CourseBlockID?
     open fileprivate(set) var blockID : CourseBlockID?
+    fileprivate let titleView = TitleView()
     open var courseID : String {
         return courseQuerier.courseID
     }
@@ -131,7 +187,11 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
             }
         )
         loadIfNecessary()
-
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.layoutIfNeeded()
+        titleView.sizeToFit()
+        titleView.translatesAutoresizingMaskIntoConstraints = true
+        navigationItem.titleView = titleView
 		UIApplication.shared.isIdleTimerDisabled = true
     }
 
@@ -270,9 +330,38 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
         return barButtonItem
     }
     
+    
     fileprivate func updateNavigationBars(_ controller : UIViewController? = nil, isChatCompleted: Bool = false) {
         if let cursor = contentLoader.value {
             let item = cursor.current
+            
+            courseQuerier.blockWithID(item.parent).transform { module in
+                self.courseQuerier.parentOfBlockWithID(module.blockID)
+                    .transform{lessonID in  self.courseQuerier.blockWithID(lessonID)}
+                    .map { lesson in
+                    return (module.displayName, lesson.displayName)
+                    }.map { (moduleName, lessonName) -> (String, String, Int, Int) in
+                        let index = module.children.index(of: item.block.blockID) ?? 0
+                        return (moduleName, lessonName, index + 1, module.children.count)
+                }
+            }.extendLifetimeUntilFirstResult(completion: { (result) in
+                switch result {
+                case .success(let value):
+                    self.titleView.lessonName = value.1
+                    self.titleView.moduleName = "\(value.0) . \(value.2) of \(value.3)"
+                    self.titleView.layoutIfNeeded()
+                    self.titleView.sizeToFit()
+                    let size = self.titleView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+                    var rect = self.titleView.frame
+                    let centre = self.titleView.center
+                    rect.size = size
+                    self.titleView.frame = rect
+                    self.titleView.center = centre
+                    print(value)
+                case .failure:
+                    break
+                }
+            })
             
             self.componentID = item.block.blockID
             //            storeViewedStatus()
@@ -289,18 +378,24 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
             
             // only animate change if we haven't set a title yet, so the initial set happens without
             // animation to make the push transition work right
-            let actions : () -> Void = {
-                self.navigationItem.title = item.block.displayName
+            /*let actions : () -> Void = {
+                let anotherView = TitleView()
+                anotherView.translatesAutoresizingMaskIntoConstraints = false
+                anotherView.layoutIfNeeded()
+                anotherView.sizeToFit()
+                anotherView.translatesAutoresizingMaskIntoConstraints = true
+                self.navigationItem.titleView = anotherView
+               // self.moduleName(cursor: cursor)
             }
-            if let navigationBar = navigationController?.navigationBar, navigationItem.title != nil {
-                let animated = navigationItem.title != nil
+            if let navigationBar = navigationController?.navigationBar, navigationItem.titleView != nil {
+                let animated = navigationItem.titleView != nil
                 UIView.transition(with: navigationBar,
                                           duration: 0.3 * (animated ? 1.0 : 0.0), options: UIViewAnimationOptions.transitionCrossDissolve,
                                           animations: actions, completion: nil)
             }
             else {
                 actions()
-            }
+            }*/
             
             var shouldEnableNextButton = false
             
