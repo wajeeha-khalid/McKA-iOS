@@ -8,6 +8,7 @@
 
 import UIKit
 import QuartzCore
+import SafariServices
 
 @objc protocol LoginViewControllerDelegate : class {
     func loginViewControllerDidLogin(_ vc: LoginViewController)
@@ -94,6 +95,7 @@ final class RemoteAuthenticator: Authenticator {
         
         return stream
     }
+    
 }
 
 //This class implements the business logic related to login
@@ -283,6 +285,26 @@ class LoginViewController: UIViewController {
     }
     
     
+    @IBAction func termsOfServiceTapped(_ sender: Any) {
+        let termsURL = URL(string: "https://www.mckinseyacademy.com/terms")!
+        open(url: termsURL)
+    }
+    
+    
+    func open(url: URL) {
+        if #available(iOS 9.0, *) {
+            UIApplication.shared.statusBarStyle = .default
+            let viewController = SFSafariViewController(url: url)
+            viewController.modalPresentationCapturesStatusBarAppearance = true
+            viewController.delegate = self
+            present(viewController, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func privacyPolicyTapped(_ sender: Any) {
+        let privacyURL = URL(string: "https://www.mckinseyacademy.com/privacy")!
+        open(url: privacyURL)
+    }
     
     @IBAction func textChanged(_ sender: UITextField) {
         if usernameField.text?.isEmpty == false && passwordField.text?.isEmpty == false {
@@ -333,6 +355,13 @@ extension LoginViewController : LoginView {
         delegate?.loginViewControllerDidLogin(self)
     }
     
+}
+
+@available(iOS 9.0, *)
+extension LoginViewController : SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
 }
 
 extension LoginViewController : UITextFieldDelegate {
