@@ -29,7 +29,7 @@ enum CourseBlockDisplayType {
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
     case mcq(MCQ)
-    case mrq(title: String, question: MCQ)
+    case mrq(MCQ)
     
     var isUnknown : Bool {
         switch self {
@@ -54,7 +54,7 @@ extension CourseBlock {
         
         case let .discussion(discussionModel): return .discussion(discussionModel)
         case let .mcq(question): return .mcq(question)
-        case let .mrq(title, question): return .mrq(title: title, question: question)
+        case let .mrq(question): return .mrq(question)
         }
     }
 }
@@ -147,7 +147,7 @@ extension OEXRouter {
             return controller
         case .mcq(let question):
             fatalError("implement MCQ here")
-        case let .mrq(title, question):
+        case .mrq(let question):
             fatalError("implement MRQ here")
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)

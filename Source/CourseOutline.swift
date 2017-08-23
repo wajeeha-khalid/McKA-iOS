@@ -34,6 +34,9 @@ public struct CourseOutline {
         case Summary = "summary"
         case Viewed = "is_viewed"
         case Title = "title"
+        case Message = "message"
+        case Tips = "tips"
+        case QuestionId = "id"
     }
     
     public let root : CourseBlockID
@@ -83,21 +86,52 @@ public struct CourseOutline {
                         type = .unit
                     case .MCQ:
                         let studentViewData = body[Fields.StudentViewData]
+                        
                         let question = studentViewData[Fields.Question]
-                        let options = studentViewData[Fields.Choices].arrayValue.map {
-                            Option(content: $0["content"].stringValue, value: $0["value"].stringValue)
+                        
+                        let title = studentViewData[Fields.Title]
+                        
+                        let questionID = studentViewData[Fields.QuestionId]
+                        
+                        let message = studentViewData[Fields.Message]
+                        
+                        var choiceToTipMap: [String: String] = [:]
+                        studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                            for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                            }
                         }
-                        let mcq = MCQ(question: question.string ?? "Some default question here", options: options)
+                        let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                            let choiceID = option["value"].stringValue
+                            return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                        }
+                        
+                        let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
                         type = .mcq(mcq)
                     case .MRQ:
                         let studentViewData = body[Fields.StudentViewData]
+                        
                         let question = studentViewData[Fields.Question]
-                        let options = studentViewData[Fields.Choices].arrayValue.map {
-                            Option(content: $0["content"].stringValue, value: $0["value"].stringValue)
+                        
+                        let title = studentViewData[Fields.Title]
+                        
+                        let questionID = studentViewData[Fields.QuestionId]
+                        
+                        let message = studentViewData[Fields.Message]
+                        
+                        var choiceToTipMap: [String: String] = [:]
+                        studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                            for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                            }
                         }
-                        let mcq = MCQ(question: question.string ?? "Some default question here", options: options)
-                        let title = body[Fields.Title].stringValue
-                        type = .mrq(title: title, question: mcq)
+                        let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                            let choiceID = option["value"].stringValue
+                            return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                        }
+                        
+                        let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                        type = .mrq(mcq)
                     case CourseBlock.Category.HTML:
                         type = .html
                     case CourseBlock.Category.Problem:
@@ -160,7 +194,7 @@ public enum CourseBlockType {
     case unit // child of section
     case video(OEXVideoSummary)
     case mcq(MCQ)
-    case mrq(title: String, question: MCQ)
+    case mrq(MCQ)
     case problem
     case html
     case discussion(DiscussionModel)
@@ -291,14 +325,16 @@ open class CourseBlock {
 }
 
 //MARK: MCQ
-
-
-public struct Option {
+public struct Choice {
     public let content: String
     public let value: String
+    public let tip: String
 }
 
 public struct MCQ {
+    public let id: String
+    public let choices: [Choice]
     public let question: String
-    public let options: [Option]
+    public let title: String?
+    public let message: String?
 }
