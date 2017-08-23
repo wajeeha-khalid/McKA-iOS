@@ -159,6 +159,12 @@ class CourseOutlineTableController : UITableViewController, CourseVideoTableView
             let cell = tableView.dequeueReusableCell(withIdentifier: DiscussionTableViewCell.identifier, for: indexPath) as! DiscussionTableViewCell
             cell.block = block
             return cell
+        case .ooyalaVideo:
+            fatalError("unimplemented")
+        case .mcq:
+            fatalError("not supported")
+        case .mrq:
+            fatalError("not supported")
         }
     }
     

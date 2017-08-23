@@ -18,6 +18,8 @@ public protocol LessonViewModelDataSource {
     var lessons: edXCore.Stream<[LessonViewModel]> { get }
 }
 
+
+
 final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  {
     
     let querier: CourseOutlineQuerier
@@ -41,7 +43,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
             return joinStreams(streams)
             }.map { progressStates in
                 progressStates.enumerated().map{ (index, blockState)  in
-                    return LessonViewModel(state: blockState.1, title: blockState.0.displayName, number:index )
+                    return LessonViewModel(lessonID: blockState.0.blockID, state: blockState.1, title: blockState.0.displayName, number:index )
                 }
         }
     }
@@ -116,6 +118,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
 }
 
 public struct LessonViewModel {
+    let lessonID: CourseBlockID
     let state: LessonProgressState
     let title: String
     let number: Int
@@ -137,6 +140,8 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     var lessonViewModel: [LessonViewModel] = []
     
     @IBOutlet weak var lessonsTableView: UITableView!
+    @IBOutlet weak var statsTopView: UIView!
+    @IBOutlet weak var statsViewBackgroundImageView: UIImageView!
     
     public init(environment: Environment, courseID: String, rootID : CourseBlockID?, lessonViewModelDataSource: LessonViewModelDataSource) {
         self.environment = environment
@@ -169,6 +174,8 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.addListeners()
+        self.addRightBarButtonsItems()
+        self.applyThemeingToStatsTopView()
     }
     
     fileprivate func resultLoaded(_ result : Result<UserCourseEnrollment>) {
@@ -232,7 +239,19 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     
     //MARK: Table view delegate
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.environment.router?.showCoursewareForCourseWithID(self.courseID, fromController: self)
+        let blockID = lessonViewModel[indexPath.row].lessonID
+        if let controller = self.environment.router?.unitControllerForCourseID(courseID, sequentialID:nil, blockID: blockID, initialChildID: nil) {
+            
+            /*if let delegate = controller as? CourseContentPageViewControllerDelegate {
+                controller.navigationDelegate = delegate
+            }*/
+            
+            controller.chapterID = blockID
+            
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+        
     }
     
     override open func didReceiveMemoryWarning() {
@@ -248,4 +267,32 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     func reload() {
         self.blockIDStream.backWithStream(Stream(value : courseID))
     }
+}
+
+extension CourseLessonsViewController {
+    fileprivate func addRightBarButtonsItems() {
+        let menuButtonItem = UIBarButtonItem(image: UIImage(named: "menu"),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(self.showMenu))
+
+        self.navigationItem.rightBarButtonItems = [menuButtonItem]
+    }
+    
+    @objc fileprivate func showMenu()  {
+        environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
+    }
+    
+    fileprivate func applyThemeingToStatsTopView() {
+        if let image = UIImage(named: "navigationBarBackground") {
+            let color = BrandingThemes.shared.getNavigationBarColor()
+            let colorImage = UIImage.image(from: color, size: image.size)
+            let blended = image.blendendImage(with: colorImage, blendMode: .normal, alpha: 1.0)
+            statsViewBackgroundImageView.image = blended
+//            UINavigationBar.appearance().setBackgroundImage(blended, for: UIBarMetrics.default)
+        } else {
+            statsTopView.backgroundColor = BrandingThemes.shared.getNavigationBarColor()
+        }
+    }
+
 }

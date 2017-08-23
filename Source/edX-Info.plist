@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>PiQUE</string>
+	<string>McKA</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
@@ -80,6 +80,8 @@
 	<string>so you can select a profile image</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-Pro-Text-Bold.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
 		<string>FontAwesome.otf</string>
 		<string>OpenSans-Italic.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
@@ -116,7 +118,7 @@
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchImageFile</key>
-	<string>Default</string>
+	<string>iPhone4_bg</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

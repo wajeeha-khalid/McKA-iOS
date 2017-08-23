@@ -55,8 +55,8 @@ class OEXRearTableViewController : UITableViewController {
         setupProfileLoader()
         updateUIWithUserInfo()
        
-        let environmentName = self.environment.config.environmentName()
-        let appVersion = Bundle.main.oex_buildVersionString()
+        let environmentName = "McKA"//self.environment.config.environmentName()
+        let appVersion = "0.5"//Bundle.main.oex_buildVersionString()
         appVersionButton.setAttributedTitle(versionButtonStyle.attributedString(withText: Strings.versionDisplay(number: appVersion, environment: environmentName)), for:.normal)
         appVersionButton.accessibilityTraits = UIAccessibilityTraitStaticText
         
@@ -239,7 +239,7 @@ extension OEXRearTableViewController : MFMailComposeViewControllerDelegate {
         let osVersionText = Strings.SubmitFeedback.osVersion(version: UIDevice.current.systemVersion)
         let appVersionText = Strings.SubmitFeedback.appVersion(version: Bundle.main.oex_shortVersionString(), build: Bundle.main.oex_buildVersionString())
         let deviceModelText = Strings.SubmitFeedback.deviceModel(model: UIDevice.current.model)
-        let body = ["\n", Strings.SubmitFeedback.marker, osVersionText, appVersionText, deviceModelText].joined(separator: "\n")
+        let body = ["\n", Strings.SubmitFeedback.appName, osVersionText, appVersionText, deviceModelText].joined(separator: "\n")
         return body
     }
 
