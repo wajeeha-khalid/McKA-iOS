@@ -394,4 +394,25 @@ extension CourseOutlineQuerier {
             return flattened
         }
     }
+    
+    func lessonContaining(unit: CourseBlock) -> edXCore.Stream<CourseBlock> {
+        guard case .unit = unit.type else {
+            fatalError("The type of unit must be a vertical")
+        }
+        
+        return parentOfBlockWithID(unit.blockID)
+            .transform {
+                self.blockWithID($0)
+            }.transform { block in
+                switch block.type {
+                case .chapter:
+                    return Stream(value: block)
+                case _:
+                    return self.parentOfBlockWithID(block.blockID).transform {
+                        self.blockWithID($0)
+                    }
+                }
+        }
+    }
+    
 }

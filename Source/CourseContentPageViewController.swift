@@ -8,32 +8,19 @@
 
 import Foundation
 
-
-protocol Command {
-    var title: String { get }
-    func execute()
+protocol ActionViewProvider {
+    var actionView: UIView? { get }
 }
 
-protocol CommandProvider {
-    var command: Command? { get }
-}
-
-final class BlockCommand: Command {
-    var title: String {
-        return "Submit"
-    }
-    
-    func execute() {
-        
-    }
-}
-
-extension UIViewController: CommandProvider {
-    var command: Command? {
+extension ActionViewProvider {
+    var actionView: UIView?  {
         return nil
     }
 }
 
+extension UIViewController: ActionViewProvider {}
+
+//This view is added as the titleView of navigationItem to display lesson title and module title
 fileprivate final class TitleView: UIView {
     
     private let lessonNameLabel = UILabel()
@@ -98,8 +85,6 @@ fileprivate final class TitleView: UIView {
             moduleNameLabel.text = moduleName
         }
     }
-    var currentComponent: Int?
-    var totalComponents: Int?
 }
 
 public protocol CourseContentPageViewControllerDelegate : class {
@@ -116,6 +101,8 @@ extension CourseBlockDisplayType {
     }
 }
 
+
+// This is shown at the bottom to implement navigation and action items
 class BottomBar: UIView {
     let rightButton: UIButton = UIButton()
     let leftButton: UIButton = UIButton()
@@ -183,7 +170,6 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         return courseQuerier.courseID
     }
     
-    var commandToExecute: Command?
     fileprivate var openURLButtonItem : UIBarButtonItem?
     fileprivate var contentLoader = BackedStream<ListCursor<CourseOutlineQuerier.GroupItem>>()
     
@@ -350,17 +336,77 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         moveInDirection(.reverse)
     }
     
-    
-
     fileprivate func updateNavigationBars(_ controller : UIViewController? = nil, isChatCompleted: Bool = false) {
         if let cursor = contentLoader.value {
+        
             let item = cursor.current
             
-            let nextGroup = item.nextGroup
+            // TODO: just leaving this if block here because it does some stuff related to course
+            // progress. Once we implement progress we should Remove this from here...
+            if let controller = controller {
+                
+                if let _ = unitCompletionPolicy(for: controller, itemId: item.block.blockID, chatCompleted: isChatCompleted), let _ = self.environment.interface {
+                    if item.nextGroup != nil || cursor.hasNext == false {
+                        setCompletedStatusForUnits()
+                    }
+                } else {
+                    storeViewedStatus()
+                    
+                    if item.nextGroup != nil || cursor.hasNext == false {
+                        setCompletedStatusForUnits()
+                    }
+                }
+            }
             
-            if nextGroup != nil {
-                bottomBar.rightButton.setImage(#imageLiteral(resourceName: "Icon_NextModule"), for: .normal)
+            let nextGroup = item.nextGroup
+            //update the navigation Items
+            if let next = nextGroup {
+                
+                // find the lesson that contains current module
+                let lessonOfCurrentUnit = courseQuerier.blockWithID(item.parent)
+                    .transform {
+                        self.courseQuerier.lessonContaining(unit: $0)
+                }
+                
+                // find the lesson that contains next module
+                let lessonOfNextUnit = courseQuerier.lessonContaining(unit: next)
+                
+                let nextStream: edXCore.Stream<(UIImage, String)> = joinStreams(lessonOfCurrentUnit, lessonOfNextUnit)
+                .transform { (parentOfCurrent, parentOfNext) in
+                    if parentOfCurrent.blockID == parentOfNext.blockID {
+                        return Stream(value: (#imageLiteral(resourceName: "Icon_NextModule"), "Up Next: \(next.displayName)"))
+                    } else {
+                        return self.courseQuerier.parentOfBlockWithID(parentOfNext.blockID)
+                            .transform {
+                                self.courseQuerier.blockWithID($0)
+                            }.map { course in
+                               let index = course.children.index(of: parentOfNext.blockID)! + 1
+                                return (#imageLiteral(resourceName: "Icon_NextModule"), "Up Next: Lesson \(index) \n \(next.displayName)")
+                        }
+                    }
+                }
+                
+                nextStream.extendLifetimeUntilFirstResult(completion: { result in
+                    switch result {
+                    case let .success(icon, text):
+                        let label = UILabel()
+                        label.font = UIFont.systemFont(ofSize: 12.0)
+                        label.textColor = UIColor.lightGray
+                        label.numberOfLines = 2
+                        label.textAlignment = .center
+                        label.text = text
+                        if let actionItem = controller?.actionView {
+                            self.bottomBar.actionView = actionItem
+                        } else {
+                            self.bottomBar.actionView = label
+                        }
+                        self.bottomBar.rightButton.setImage(icon, for: .normal)
+                    case _:
+                        break
+                    }
+                })
             } else {
+                self.bottomBar.actionView = controller?.actionView
                 bottomBar.rightButton.setImage(#imageLiteral(resourceName: "Icon_NextComponent"), for: .normal)
             }
             
@@ -370,26 +416,26 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                 bottomBar.leftButton.setImage(#imageLiteral(resourceName: "Icon_PrevComponent"), for: .normal)
             }
             
+            //update navigationItem Titles
             courseQuerier.blockWithID(item.parent).transform { module in
-                self.courseQuerier.parentOfBlockWithID(module.blockID)
-                    .transform{ lessonID in  self.courseQuerier.blockWithID(lessonID) }
-                    .map { lesson in
-                    return (module.displayName, lesson.displayName)
-                    }.map { (moduleName, lessonName) -> (String, String, Int, Int) in
-                        let index = module.children.index(of: item.block.blockID) ?? 0
-                        return (moduleName, lessonName, index + 1, module.children.count)
+                self.courseQuerier.lessonContaining(unit: module)
+                    .map {
+                        ($0, module)
                 }
-            }.extendLifetimeUntilFirstResult(completion: { (result) in
-                switch result {
-                case .success(let (moduleName, lessonName, currentModule, totalModules)):
-                    self.titleView.lessonName = lessonName
-                    self.titleView.moduleName = "\(moduleName) . \(currentModule) of \(totalModules)"
-                    self.titleView.sizeToFit()
-                case .failure:
-                    break
-                }
-            })
-            
+                }.map { (lesson, module) -> (String, String, Int, Int) in
+                    let index = module.children.index(of: item.block.blockID)!
+                    return (lesson.displayName, module.displayName, index + 1, module.children.count)
+                }.extendLifetimeUntilFirstResult(completion: { (result) in
+                    switch result {
+                    case .success(let (lessonName, moduleName, currentModule, totalModules)):
+                        self.titleView.lessonName = lessonName
+                        self.titleView.moduleName = "\(moduleName) . \(currentModule) of \(totalModules)"
+                        self.titleView.sizeToFit()
+                    case .failure:
+                        break
+                    }
+                })
+           
             self.componentID = item.block.blockID
             if environment.reachability.isReachable(){
                 let username = environment.session.currentUser?.username ?? ""
@@ -403,34 +449,6 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
             
             let shouldShowPrevious = item.prevGroup != nil || cursor.hasPrev
             let shouldShowNext = item.nextGroup != nil || cursor.hasNext
-            let vc = _pageViewController.viewControllers?.first
-            let actionItem = vc?.command.map { command -> UIBarButtonItem in
-                let button = UIButton(type: .custom)
-                button.layer.cornerRadius = 14.0
-                button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
-                button.addTarget(self, action: #selector(self.executeCommand), for: .touchUpInside)
-                button.backgroundColor = UIColor(red:38/255.0, green:144/255.0, blue:240/255.0, alpha:1)
-                if #available(iOS 8.2, *) {
-                    button.titleLabel?.font = UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightSemibold)
-                }
-                button.setTitle(command.title, for: .normal)
-                button.sizeToFit()
-                return UIBarButtonItem(customView: button)
-            }
-            if let _ = actionItem {
-                
-            } else if let nextGroup = item.nextGroup {
-                let label = UILabel()
-                label.text = "Up Next: \(nextGroup.displayName)"
-                label.font = UIFont.systemFont(ofSize: 12.0)
-                label.textColor = UIColor.lightGray
-                label.numberOfLines = 2
-                label.textAlignment = .center
-                bottomBar.actionView = label
-            } else {
-                bottomBar.actionView = nil
-            }
-            commandToExecute = vc?.command
             switch (shouldShowPrevious, shouldShowNext) {
             case (true, true):
                 bottomBar.rightButton.isHidden = false
@@ -449,12 +467,10 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         else {
             bottomBar.rightButton.isHidden = true
             bottomBar.leftButton.isHidden = true
+            bottomBar.actionView = nil
         }
     }
     
-    func executeCommand() {
-        commandToExecute?.execute()
-    }
     // MARK: Paging
     
     fileprivate func siblingWithDirection(_ direction : UIPageViewControllerNavigationDirection, fromController viewController: UIViewController) -> UIViewController? {
