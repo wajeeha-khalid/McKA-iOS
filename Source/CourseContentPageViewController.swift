@@ -381,7 +381,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                                 self.courseQuerier.blockWithID($0)
                             }.map { course in
                                let index = course.children.index(of: parentOfNext.blockID)! + 1
-                                return (#imageLiteral(resourceName: "Icon_NextModule"), "Up Next: Lesson \(index) \n \(next.displayName)")
+                                return (#imageLiteral(resourceName: "Icon_NextLesson"), "Up Next: Lesson \(index) \n \(next.displayName)")
                         }
                     }
                 }
@@ -410,8 +410,26 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                 bottomBar.rightButton.setImage(#imageLiteral(resourceName: "Icon_NextComponent"), for: .normal)
             }
             
-            if item.prevGroup != nil {
-                bottomBar.leftButton.setImage(#imageLiteral(resourceName: "Icon_PreviousModule"), for: .normal)
+            if let prev = item.prevGroup {
+                
+                // find the lesson that contains current module
+                let lessonOfCurrentUnit = courseQuerier.blockWithID(item.parent)
+                    .transform {
+                        self.courseQuerier.lessonContaining(unit: $0)
+                }
+                
+                // find the lesson that contains next module
+                let lessonOfPrevUnit = courseQuerier.lessonContaining(unit: prev)
+                joinStreams(lessonOfCurrentUnit, lessonOfPrevUnit)
+                    .extendLifetimeUntilFirstResult(completion: { result in
+                        switch result {
+                        case let .success(currentLesson, prevLesson)
+                            where currentLesson.blockID != prevLesson.blockID:
+                            self.bottomBar.leftButton.setImage(#imageLiteral(resourceName: "Icon_PrevLesson"), for: .normal)
+                        case _:
+                            self.bottomBar.leftButton.setImage(#imageLiteral(resourceName: "Icon_PreviousModule"), for: .normal)
+                        }
+                })
             } else {
                 bottomBar.leftButton.setImage(#imageLiteral(resourceName: "Icon_PrevComponent"), for: .normal)
             }
