@@ -27,8 +27,13 @@ public struct CourseOutline {
         case StudentViewMultiDevice = "student_view_multi_device"
         case StudentViewURL = "student_view_url"
         case StudentViewData = "student_view_data"
+        case Question = "question"
+        case Choices = "choices"
+        case OptionContent = "content"
+        case OptionValue = "value"
         case Summary = "summary"
         case Viewed = "is_viewed"
+        case Title = "title"
     }
     
     public let root : CourseBlockID
@@ -76,6 +81,23 @@ public struct CourseOutline {
                         type = .section
                     case CourseBlock.Category.Unit:
                         type = .unit
+                    case .MCQ:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let question = studentViewData[Fields.Question]
+                        let options = studentViewData[Fields.Choices].arrayValue.map {
+                            Option(content: $0["content"].stringValue, value: $0["value"].stringValue)
+                        }
+                        let mcq = MCQ(question: question.string ?? "Some default question here", options: options)
+                        type = .mcq(mcq)
+                    case .MRQ:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let question = studentViewData[Fields.Question]
+                        let options = studentViewData[Fields.Choices].arrayValue.map {
+                            Option(content: $0["content"].stringValue, value: $0["value"].stringValue)
+                        }
+                        let mcq = MCQ(question: question.string ?? "Some default question here", options: options)
+                        let title = body[Fields.Title].stringValue
+                        type = .mrq(title: title, question: mcq)
                     case CourseBlock.Category.HTML:
                         type = .html
                     case CourseBlock.Category.Problem:
@@ -137,6 +159,8 @@ public enum CourseBlockType {
     case section // child of chapter
     case unit // child of section
     case video(OEXVideoSummary)
+    case mcq(MCQ)
+    case mrq(title: String, question: MCQ)
     case problem
     case html
     case discussion(DiscussionModel)
@@ -184,6 +208,8 @@ open class CourseBlock {
         case Section = "sequential"
         case Unit = "vertical"
         case Video = "video"
+        case MCQ = "pb-mcq"
+        case MRQ = "pb-mrq"
         case Discussion = "discussion"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
@@ -264,3 +290,15 @@ open class CourseBlock {
     }
 }
 
+//MARK: MCQ
+
+
+public struct Option {
+    public let content: String
+    public let value: String
+}
+
+public struct MCQ {
+    public let question: String
+    public let options: [Option]
+}

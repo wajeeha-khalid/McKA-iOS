@@ -28,7 +28,8 @@ enum CourseBlockDisplayType {
     case html(CourseHTMLBlockSubkind)
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+    case mcq(MCQ)
+    case mrq(title: String, question: MCQ)
     
     var isUnknown : Bool {
         switch self {
@@ -50,8 +51,10 @@ extension CourseBlock {
         case .unit: return .unit
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+        
         case let .discussion(discussionModel): return .discussion(discussionModel)
+        case let .mcq(question): return .mcq(question)
+        case let .mrq(title, question): return .mrq(title: title, question: question)
         }
     }
 }
@@ -97,6 +100,10 @@ extension OEXRouter {
             controller.navigationController?.pushViewController(outlineController, animated: true)
         case .html:
             fallthrough
+        case .mcq:
+            fallthrough
+        case .mrq:
+            fallthrough
         case .video:
             fallthrough
         case .audio:
@@ -138,6 +145,10 @@ extension OEXRouter {
         case .audio:
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
+        case .mcq(let question):
+            fatalError("implement MCQ here")
+        case let .mrq(title, question):
+            fatalError("implement MRQ here")
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller
