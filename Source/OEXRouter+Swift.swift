@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MckinseyXBlocks
 
 // The router is an indirection point for navigation throw our app.
 
@@ -30,6 +31,7 @@ enum CourseBlockDisplayType {
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
     case mcq(MCQ)
     case mrq(title: String, question: MCQ)
+    case freeText(FreeText)
     
     var isUnknown : Bool {
         switch self {
@@ -55,6 +57,7 @@ extension CourseBlock {
         case let .discussion(discussionModel): return .discussion(discussionModel)
         case let .mcq(question): return .mcq(question)
         case let .mrq(title, question): return .mrq(title: title, question: question)
+        case let .freeText(question): return .freeText(question)
         }
     }
 }
@@ -104,6 +107,8 @@ extension OEXRouter {
             fallthrough
         case .mrq:
             fallthrough
+        case .freeText:
+            fallthrough
         case .video:
             fallthrough
         case .audio:
@@ -149,6 +154,10 @@ extension OEXRouter {
             fatalError("implement MCQ here")
         case let .mrq(title, question):
             fatalError("implement MRQ here")
+        case .freeText(let question):
+            let freeTextController = PulleyManagerViewController()
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: freeTextController)
+            return adapter
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller
@@ -350,4 +359,37 @@ extension OEXRouter {
         showContentStack(withRootController: debugMenu, animated: true)
     }
 }
+
+class CourseBlockViewControllerAdapter: UIViewController, CourseBlockViewController {
+    
+    let blockID: CourseBlockID?
+    let courseID: CourseBlockID
+    let adaptedViewController: UIViewController
+    
+    init(blockID: CourseBlockID?, courseID: CourseBlockID, adaptedViewController: UIViewController) {
+        self.blockID = blockID
+        self.courseID = courseID
+        self.adaptedViewController = adaptedViewController
+        super.init(nibName: nil, bundle: nil)
+        if #available(iOS 9.0, *) {
+            loadViewIfNeeded()
+        } else {
+            loadView()
+        }
+        addChildViewController(adaptedViewController)
+        view.addSubview(adaptedViewController.view)
+        adaptedViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(view)
+            make.leading.equalTo(view)
+            make.trailing.equalTo(view)
+            make.height.equalTo(view)
+        }
+        adaptedViewController.didMove(toParentViewController: self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 
