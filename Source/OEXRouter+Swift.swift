@@ -180,29 +180,30 @@ extension OEXRouter {
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
         case .mcq(let question):
-            let bundle = Bundle(identifier: "com.arbisoft.MckinseyXBlocks")
-            let mcqViewController = MCQViewController(nibName: "MCQViewController", bundle: bundle)
+            
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            let mcqViewController = MCQViewController(screenType: ScreenType.questionScreen, question: mcqQuestion)
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: mcqViewController)
             return adapter
-            //return mcqViewController
-            
           //  let text = (["MCQ", question.question] + question.options.map{$0.content}).joined(separator: "\n")
            // let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
            // return dummyViewController
-            
-            //fatalError("implement MCQ here")
-
         case .mrq(let question):
-            return CourseBlockViewControllerAdapter(
-                blockID: blockID,
-                courseID: courseID,
-                adaptedViewController: MRQViewController(screenType: .questionScreen)
-            )
-            
-//            let text = (["MRQ", title, question.question] + question.options.map{$0.content}).joined(separator: "\n")
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            let mrqViewController = MRQViewController(screenType: ScreenType.questionScreen, question: mcqQuestion)
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: mrqViewController)
+            return adapter
+//            let text = (["MRQ", question.question] + question.choices.map{$0.content}).joined(separator: "\n")
 //            let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
 //            return dummyViewController
-            //fatalError("implement MRQ here")
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller
