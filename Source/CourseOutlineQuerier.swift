@@ -297,11 +297,11 @@ open class CourseOutlineQuerier : NSObject {
             if case .unit = block.type {
                 
                 block.children = block.children.filter({ (blockID) -> Bool in
-                    if blockID.contains("type@discussion")  {
+                   /* if blockID.contains("type@discussion")  {
                         return false
                     } else {
                         return true
-                    }
+                    } */ return true
                 })
             }
             var childBlocks = block.children.flatMap({ self.blockWithID($0, inOutline: outline) })
@@ -318,7 +318,7 @@ open class CourseOutlineQuerier : NSObject {
                 }
             }
             
-            if childBlocks.count > 0  {
+           /* if childBlocks.count > 0  {
                 
                 switch childBlocks.first!.type {
                 case .unit:
@@ -336,7 +336,7 @@ open class CourseOutlineQuerier : NSObject {
                     break
                 }
                 
-            }
+            }*/
             return BlockGroup(block : block, children : childBlocks)
         }
         else {
