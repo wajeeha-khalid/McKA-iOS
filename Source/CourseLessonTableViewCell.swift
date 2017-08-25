@@ -30,17 +30,8 @@ class CourseLessonTableViewCell: UITableViewCell {
             if let model = lessonViewModel {
                 lessonNumber.text = "LESSON \(model.number + 1)"
                 lessonName.text = model.title
-                switch model.state {
-                case .complete:
-                    statusImageView.image = UIImage(named: "completed")
-                    completedStatus.text = "Completed"
-                case .inProgress:
-                    statusImageView.image = UIImage(named: "in_progress")
-                    completedStatus.text = "In Progress"
-                case .notStarted:
-                    statusImageView.image = UIImage(named: "not_started")
-                    completedStatus.text = "Not Started"
-                }
+                statusImageView.image = model.state.image
+                completedStatus.text = model.state.description
             }
         }
     }
