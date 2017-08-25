@@ -192,6 +192,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         
 
         _pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        
         super.init(nibName: nil, bundle: nil)
         let menuButtonItem = UIBarButtonItem(image: UIImage(named: "menu"),
                                              style: .plain,
@@ -218,8 +219,8 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         _pageViewController.didMove(toParentViewController: self)
         _pageViewController.setViewControllers([initialLoadController], direction: .forward, animated: false, completion: nil)
        
-        self._pageViewController.dataSource = self
-        self._pageViewController.delegate = self
+       // self._pageViewController.dataSource = self
+       // self._pageViewController.delegate = self
         
         addStreamListeners()
     }
@@ -354,7 +355,8 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
             
             // TODO: just leaving this if block here because it does some stuff related to course
             // progress. Once we implement progress we should Remove this from here...
-            if let controller = controller {
+           /* if let controller = controller {
+                
                 
                 if let _ = unitCompletionPolicy(for: controller, itemId: item.block.blockID, chatCompleted: isChatCompleted), let _ = self.environment.interface {
                     if item.nextGroup != nil || cursor.hasNext == false {
@@ -367,6 +369,11 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                         setCompletedStatusForUnits()
                     }
                 }
+                setCompletedStatusForUnits()
+            } */
+            storeViewedStatus()
+            if item.nextGroup != nil || cursor.hasNext == false {
+                setCompletedStatusForUnits()
             }
             
             let nextGroup = item.nextGroup

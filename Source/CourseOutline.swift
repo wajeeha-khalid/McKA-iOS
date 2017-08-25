@@ -65,7 +65,7 @@ public struct CourseOutline {
                 let blockURL = body[Fields.StudentViewURL].string.flatMap { NSURL(string:$0) }
                 let format = body[Fields.Format].string
                 let typeName = body[Fields.BlockType].string ?? ""
-                let multiDevice = body[Fields.StudentViewMultiDevice].bool ?? false
+                var multiDevice = body[Fields.StudentViewMultiDevice].bool ?? false
                 let blockCounts : [String:Int] = (body[Fields.BlockCounts].object as? NSDictionary)?.mapValues {
                     $0 as? Int ?? 0
                 } ?? [:]
@@ -128,13 +128,18 @@ public struct CourseOutline {
                         type = .audio(summary)
                     case CourseBlock.Category.Discussion:
                         // Inline discussion is in progress feature. Will remove this code when it's ready to ship
-                        type = .unknown(typeName)
+                       // type = .unknown(typeName)
                         
-                        if OEXConfig.shared().discussionsEnabled {
+                        /*if OEXConfig.shared().discussionsEnabled {
                             let bodyData = body[Fields.StudentViewData].object as? NSDictionary
                             let discussionModel = DiscussionModel(dictionary: bodyData ?? [:])
                             type = .discussion(discussionModel)
-                        }
+                        }*/
+                       /* let bodyData = body[Fields.StudentViewData].object as? NSDictionary
+                        let discussionModel = DiscussionModel(dictionary: bodyData ?? [:])
+                        type = .discussion(discussionModel) */
+                        type = .html
+                        multiDevice = true
                     }
                 }
                 else {
@@ -229,7 +234,7 @@ open class CourseBlock {
         case MCQ = "pb-mcq"
         case MRQ = "pb-mrq"
         case FREE_TEXT = "pb-answer"
-        case Discussion = "discussion"
+        case Discussion = "discussion-forum"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
