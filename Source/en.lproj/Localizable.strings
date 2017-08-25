@@ -309,7 +309,7 @@
 /* Button title showing screen providing information about why a course may not be visible */
 "ENROLLMENT_LIST.LOOKING_FOR_COURSE" = "Can't find one of your courses?";
 /* Error message when user is not enrolled to any course and course discovery is also disabled.*/
-"ENROLLMENT_LIST.NO_ENROLLMENT" = "To view courses, first click the activation link sent to your e-mail address and then return to the PiQUE app";
+"ENROLLMENT_LIST.NO_ENROLLMENT" = "To view courses, first click the activation link sent to your e-mail address and then return to the McKinsey App";
 /* Prompt indicating user needs to enter an email address */
 "ENTER_EMAIL"="Please enter your user name or e-mail address and try again.";
 /* Prompt indicating user needs to enter a password */
