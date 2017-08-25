@@ -514,6 +514,21 @@ extension MCQViewController: ActionViewProvider {
 
 
 
+extension PulleyManagerViewController: ActionViewProvider {
+    var actionView: UIView? {
+        let button = UIButton(type: .custom)
+        button.layer.cornerRadius = 14.0
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
+        //button.addTarget(self, action: #selector(self.submit), for: .touchUpInside)
+        button.backgroundColor = UIColor(red:38/255.0, green:144/255.0, blue:240/255.0, alpha:1)
+        if #available(iOS 8.2, *) {
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightSemibold)
+        }
+        button.setTitle("Submit", for: .normal)
+        return button
+    }
+}
+
 extension MRQViewController: ActionViewProvider {
     var actionView: UIView? {
         let button = UIButton(type: .custom)
