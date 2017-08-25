@@ -452,7 +452,8 @@ extension OEXRouter {
         alertController.addAction(coursesOverviewButton)
         alertController.addAction(resources)
         alertController.addAction(cancelButton)
-        
+        alertController.addAction(askTA)
+        alertController.addAction(discussions)
         controller.present(alertController, animated: true, completion: nil)
     }
 }
