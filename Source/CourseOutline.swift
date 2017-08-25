@@ -98,7 +98,15 @@ public struct CourseOutline {
                         }
                         let mcq = MCQ(question: question.string ?? "Some default question here", options: options)
                         let title = studentViewData[Fields.Title].stringValue
+//=======
+//                        let title = body[Fields.Title].stringValue
+//>>>>>>> Initial work
                         type = .mrq(title: title, question: mcq)
+                    case .FREE_TEXT:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let question = studentViewData[Fields.Question]
+                        let freeText = FreeText(question: question.stringValue)
+                        type = .freeText(freeText)
                     case CourseBlock.Category.HTML:
                         type = .html
                     case CourseBlock.Category.Problem:
@@ -174,6 +182,7 @@ public enum CourseBlockType {
     case ooyalaVideo(contentID: String, descriptionURL: URL?)
     case mcq(MCQ)
     case mrq(title: String, question: MCQ)
+    case freeText(FreeText)
     case problem
     case html
     case discussion(DiscussionModel)
@@ -224,6 +233,7 @@ open class CourseBlock {
         case Video = "video"
         case MCQ = "pb-mcq"
         case MRQ = "pb-mrq"
+        case FREE_TEXT = "pb-answer"
         case Discussion = "discussion-forum"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
@@ -315,4 +325,8 @@ public struct Option {
 public struct MCQ {
     public let question: String
     public let options: [Option]
+}
+
+public struct FreeText {
+    public let question: String
 }

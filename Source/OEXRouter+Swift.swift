@@ -8,6 +8,7 @@
 
 import Foundation
 import MckinseyXBlocks
+
 // The router is an indirection point for navigation throw our app.
 
 // New router logic should live here so it can be written in Swift.
@@ -31,6 +32,7 @@ enum CourseBlockDisplayType {
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
     case mcq(MCQ)
     case mrq(title: String, question: MCQ)
+    case freeText(FreeText)
     
     var isUnknown : Bool {
         switch self {
@@ -58,6 +60,7 @@ extension CourseBlock {
         case let .discussion(discussionModel): return .discussion(discussionModel)
         case let .mcq(question): return .mcq(question)
         case let .mrq(title, question): return .mrq(title: title, question: question)
+        case let .freeText(question): return .freeText(question)
         }
     }
 }
@@ -106,6 +109,8 @@ extension OEXRouter {
         case .mcq:
             fallthrough
         case .mrq:
+            fallthrough
+        case .freeText:
             fallthrough
         case .video:
             fallthrough
@@ -203,6 +208,10 @@ extension OEXRouter {
 //            let dummyViewController = DummyViewController(courseID: courseID, blockID: blockID, text: text)
 //            return dummyViewController
             //fatalError("implement MRQ here")
+        case .freeText(let question):
+            let freeTextController = PulleyManagerViewController()
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: freeTextController)
+            return adapter
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller
@@ -557,6 +566,4 @@ extension CourseBlockViewControllerAdapter: ActionViewProvider {
         return (adaptedViewController as? ActionViewProvider)?.actionView
     }
 }
-
-
 
