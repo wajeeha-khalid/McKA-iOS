@@ -25,7 +25,7 @@ enum CourseBlockDisplayType {
     case lesson
     case unit
     case video
-    case ooyalaVideo(String)
+    case ooyalaVideo(contentID: String, playerCode: String)
     case html(CourseHTMLBlockSubkind)
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
@@ -49,7 +49,7 @@ extension CourseBlock {
         case .chapter: return .lesson
         case .section: return .outline
         case .unit: return .unit
-        case .ooyalaVideo(let contentID): return .ooyalaVideo(contentID)
+        case let .ooyalaVideo(contentID, playerCode): return .ooyalaVideo(contentID: contentID, playerCode: playerCode)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
 
@@ -139,14 +139,15 @@ extension OEXRouter {
         case .video:
             let controller = VideoBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
-        case .ooyalaVideo(let contentID):
+        case let .ooyalaVideo(contentID, playerCode):
             // We are only going to support iOS 9 and above but currently chaging the deployment
             // target to 9.0 uncovers a some 150 warings that are there due to deprecations
             // it would take some time to fix those warnigns so for now i have wrapped the framework
             // usage around iOS 9.0 availability
             if #available(iOS 9.0, *) {
-                // not storing pcode in config currently since doing that will be insecure...
-                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: "5zdHcxOlM7fQJOMrCdwnnu16WP-d")
+                
+                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: playerCode)
+                
                 player.play()
                 let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: player)
                 return adapter
