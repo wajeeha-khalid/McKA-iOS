@@ -191,10 +191,8 @@ extension OEXRouter {
                 return option
             }
             let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
-            
-            
-            let matcherImplementation: MatcherImplementation = MatcherImplementation()
-            let viewController = MCQViewController(screenType: .questionScreen, question: mcqQuestion, resultMatcher: matcherImplementation)
+            let mcqManager = MCQManager(blockID: blockID!, courseID: courseID)
+            let viewController = MCQViewController(screenType: .questionScreen, question: mcqQuestion, resultMatcher: mcqManager)
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
             return adapter
