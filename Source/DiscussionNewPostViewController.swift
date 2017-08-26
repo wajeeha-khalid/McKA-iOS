@@ -245,7 +245,6 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
                 subView.tintColor = OEXStyles.shared.neutralDark()
             }
         }
-        
     }
     
     override open func viewWillAppear(_ animated: Bool) {
