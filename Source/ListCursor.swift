@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 open class ListCursor<A> {
     
     fileprivate var index : Int
@@ -61,6 +62,13 @@ open class ListCursor<A> {
             self.index = list.count - 1
             self.list = list
         }
+    }
+    
+    public func map<B>(transform: (A) -> B) -> ListCursor<B> {
+        let mapped = list.map(transform)
+        let cursor = ListCursor<B>(startOfList: mapped)
+        cursor!.index = self.index
+        return cursor!
     }
     
     open func updateCurrentToItemMatching(_ matcher : (A) -> Bool) {
