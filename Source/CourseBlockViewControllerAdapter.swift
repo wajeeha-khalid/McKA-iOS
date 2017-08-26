@@ -41,3 +41,15 @@ class CourseBlockViewControllerAdapter: UIViewController, CourseBlockViewControl
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension CourseBlockViewControllerAdapter: XBlock {
+    var primaryActionView: UIView? {
+        return (adaptedViewController as? XBlock)?.primaryActionView
+    }
+}
+
+extension CourseBlockViewControllerAdapter: ActionViewProvider {
+    
+}
+
+

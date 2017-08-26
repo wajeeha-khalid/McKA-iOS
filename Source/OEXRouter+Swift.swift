@@ -40,6 +40,24 @@ enum CourseBlockDisplayType {
     }
 }
 
+class MatcherImplementation: ResultMatching {
+    //MARK:- ResultMatching Protocol
+    func match(selectedOptions: [String], for question: String, completion: @escaping (Bool, Error?) -> Void) {
+        if selectedOptions.contains("Option1") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                completion(true, nil)
+            })
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                completion(false,
+                           NSError(domain: "", code: 0, userInfo: nil)
+                )
+            })
+        }
+    }
+    //MARK:---
+}
+
 extension CourseBlock {
     
     var displayType : CourseBlockDisplayType {
@@ -166,9 +184,34 @@ extension OEXRouter {
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
         case .mcq(let question):
-            fatalError("implement MCQ here")
+            //fatalError("implement MCQ here")
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            
+            
+            let matcherImplementation: MatcherImplementation = MatcherImplementation()
+            let viewController = MCQViewController(screenType: .questionScreen, question: mcqQuestion, resultMatcher: matcherImplementation)
+            
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
+            return adapter
+            
         case .mrq(let question):
-            fatalError("implement MRQ here")
+            //fatalError("implement MRQ here")
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            
+            
+            let matcherImplementation: MatcherImplementation = MatcherImplementation()
+            let viewController = MRQViewController(screenType: .questionScreen, question: mcqQuestion, resultMatcher: matcherImplementation)
+            
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
+            return adapter
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller

@@ -7,12 +7,27 @@
 //
 
 import Foundation
+import MckinseyXBlocks
 
 ///Types(mostly vc's) that want to show custom actions in the bottom bar should implement this
 /// protocol and return their custom actions. This protocol will be replaced once we get the
 /// XBlock Protocol in master since that also has this property...
 protocol ActionViewProvider {
     var actionView: UIView? { get }
+}
+
+extension ActionViewProvider where Self: XBlock {
+    var actionView: UIView? {
+        return self.primaryActionView
+    }
+}
+
+extension MRQViewController: ActionViewProvider {
+    
+}
+
+extension MCQViewController: ActionViewProvider {
+    
 }
 
 //This view is added as the titleView of navigationItem to display lesson title and module title
