@@ -16,6 +16,7 @@ extension CourseBlockDisplayType {
     var isCacheable : Bool {
         switch self {
         case .video: return false
+        case .ooyalaVideo: return false
         case .audio: return false //Added By Ravi on 22Jan'17 to Implement AudioPodcast
         case .unknown, .html(_), .outline, .lesson, .unit, .discussion: return true
         }
@@ -410,10 +411,6 @@ open class CourseContentPageViewController : UIPageViewController, UIPageViewCon
             return super.childViewControllerForStatusBarHidden
         }
         
-    }
-    
-    override open var shouldAutorotate : Bool {
-        return false
     }
     
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {
