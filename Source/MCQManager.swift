@@ -7,24 +7,58 @@
 //
 
 import Foundation
+import edXCore
 import MckinseyXBlocks
 
-class MCQManager: ResultMatchingMCQ {
+class MCQManager: NSObject, MCQResultMatching {
     let blockID: String
     let courseID: String
-    
-    public init(blockID: String, courseID: String) {
+    let enviroment: RouterEnvironment
+    var stream: edXCore.Stream<MCQResponseData>?
+
+    public init(blockID: String, courseID: String, environment: RouterEnvironment) {
         self.blockID = blockID
         self.courseID = courseID
+        self.enviroment = environment
     }
     
-    func matchMCQ(value: String, completion: @escaping (MCQResponse) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.50, execute: {
-            //completion(true, nil)
-            let mcqResponse = MCQResponse(success: true, tip: "TestingResponseTip", value: value)//(success: Bool, tip: String, value: String)
-            completion(mcqResponse)
-        })
-
+    public func matchMCQ(questionId: String, value: String, completion: @escaping (Bool) -> Swift.Void) {
+        // TODO: call the method to get the stream on the basis of questionID and value of the option
+        self.stream = mcqResponseStream(questionId: questionId, value: value, courseId: self.courseID, blockId: self.blockID)
+//        self.stream?.listen(self, action: { (result) in
+//            
+//        result.ifSuccess({ (mcqResponseData: MCQResponseData) -> Void in
+//                completion(mcqResponseData.status)
+//            
+//            })
+//        
+//            result.ifFailure({ (error) in
+//                print(error.localizedDescription)
+//            })
+//        
+//        })
+        completion(false)
     }
-    
 }
+
+extension MCQManager {
+
+    func mcqResponseStream(questionId: String, value: String, courseId: String, blockId: String) -> edXCore.Stream<MCQResponseData> {
+        let request = MCQAPI.getMCQResponse(questionId, value: value, courseId: courseId, blockId: blockId)
+        return enviroment.networkManager.streamForRequest(request)
+    }
+
+}
+
+class MockMCQMatcher: MCQResultMatching {
+    public func matchMCQ(questionId: String, value: String, completion: @escaping (Bool) -> Swift.Void) {
+        
+    }
+}
+
+/*
+ func freshFeedWithUsername(_ userID: Int, organizationCode: String?) -> Feed<[UserCourseEnrollment]> {
+ let request = CoursesAPI.getUserEnrollments(userID, organizationCode: organizationCode)
+ return Feed(request: request, manager: networkManager, persistResponse: true)
+ }
+ */

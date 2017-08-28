@@ -41,21 +41,24 @@ enum CourseBlockDisplayType {
 }
 
 class MatcherImplementation: ResultMatching {
+    func matchMRQ(selectedValues: [String], for questionID: String, completion: @escaping (MRQResponse) -> Void) {
+        
+    }
     //MARK:- ResultMatching Protocol
     //func match(selectedOptions: [String], completion: @escaping (Bool, Error?) -> Void) {
-    func match(selectedOptions: [String], for question: String, completion: @escaping (Bool, Error?) -> Void) {
-        if selectedOptions.contains("Option1") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                completion(true, nil)
-            })
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                completion(false,
-                           NSError(domain: "", code: 0, userInfo: nil)
-                )
-            })
-        }
-    }
+//    func match(selectedOptions: [String], for question: String, completion: @escaping (Bool, Error?) -> Void) {
+//        if selectedOptions.contains("Option1") {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+//                completion(true, nil)
+//            })
+//        } else {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+//                completion(false,
+//                           NSError(domain: "", code: 0, userInfo: nil)
+//                )
+//            })
+//        }
+//    }
     //MARK:---
 }
 
@@ -191,7 +194,7 @@ extension OEXRouter {
                 return option
             }
             let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
-            let mcqManager = MCQManager(blockID: blockID!, courseID: courseID)
+            let mcqManager = MCQManager(blockID: blockID!, courseID: courseID, environment: self.environment)
             let viewController = MCQViewController(screenType: .questionScreen, question: mcqQuestion, resultMatcher: mcqManager)
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
