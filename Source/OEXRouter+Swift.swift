@@ -151,11 +151,14 @@ extension OEXRouter {
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
         case .mcq(let question):
-            fatalError("implement MCQ here")
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: UIViewController())
+            return adapter
         case let .mrq(title, question):
-            fatalError("implement MRQ here")
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: UIViewController())
+            return adapter
         case .freeText(let question):
-            let freeTextController = PulleyManagerViewController()
+            let freeTextQuestion = FTQuestion(id: question.id, question: question.question, title: question.title, message: "")
+            let freeTextController = FTPulleyManagerViewController(question: freeTextQuestion)
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: freeTextController)
             return adapter
         case .unknown:

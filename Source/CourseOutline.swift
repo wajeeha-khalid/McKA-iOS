@@ -100,8 +100,10 @@ public struct CourseOutline {
                         type = .mrq(title: title, question: mcq)
                     case .FREE_TEXT:
                         let studentViewData = body[Fields.StudentViewData]
+                        let title = body[Fields.DisplayName].stringValue
                         let question = studentViewData[Fields.Question]
-                        let freeText = FreeText(question: question.stringValue)
+                        let id = studentViewData["id"]
+                        let freeText = FreeText(id: id.stringValue, title: title, question: question.stringValue)
                         type = .freeText(freeText)
                     case CourseBlock.Category.HTML:
                         type = .html
@@ -311,5 +313,7 @@ public struct MCQ {
 }
 
 public struct FreeText {
+    public let id: String
+    public let title: String
     public let question: String
 }
