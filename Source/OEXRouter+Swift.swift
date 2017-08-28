@@ -41,21 +41,24 @@ enum CourseBlockDisplayType {
 }
 
 class MatcherImplementation: ResultMatching {
+    func matchMRQ(selectedValues: [String], for questionID: String, completion: @escaping (MRQResponse) -> Void) {
+        
+    }
     //MARK:- ResultMatching Protocol
     //func match(selectedOptions: [String], completion: @escaping (Bool, Error?) -> Void) {
-    func match(selectedOptions: [String], for question: String, completion: @escaping (Bool, Error?) -> Void) {
-        if selectedOptions.contains("Option1") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                completion(true, nil)
-            })
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                completion(false,
-                           NSError(domain: "", code: 0, userInfo: nil)
-                )
-            })
-        }
-    }
+//    func match(selectedOptions: [String], for question: String, completion: @escaping (Bool, Error?) -> Void) {
+//        if selectedOptions.contains("Option1") {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+//                completion(true, nil)
+//            })
+//        } else {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+//                completion(false,
+//                           NSError(domain: "", code: 0, userInfo: nil)
+//                )
+//            })
+//        }
+//    }
     //MARK:---
 }
 

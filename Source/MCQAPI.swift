@@ -14,16 +14,16 @@ class MCQResponseData: NSObject {
     struct Keys {
         static let id = "id"
         static let value = "submission"
-        static let status = "status"
+        static let status = "completed"
         static let tip = "tips"
     }
 
     let id: String
     let value: String
-    let status: String
+    let status: Bool
     let tip: String
     
-    init(id: String, value: String, status: String, tip: String) {
+    init(id: String, value: String, status: Bool, tip: String) {
         self.id = id
         self.value = value
         self.status = status
@@ -32,7 +32,7 @@ class MCQResponseData: NSObject {
     init?(dictionary: [String: Any]) {
         self.id = dictionary[Keys.id] as? String ?? ""
         self.value = dictionary[Keys.value] as? String ?? ""
-        self.status = dictionary[Keys.status] as? String ?? ""
+        self.status = dictionary[Keys.status] as? Bool ?? false
         self.tip = dictionary[Keys.tip] as? String ?? ""
         
         super.init()
@@ -56,27 +56,40 @@ class MCQResponseData: NSObject {
 }
 
 struct MCQAPI {
+    struct Keys {
+        static let completed = "completed"
+        static let value = "submission"
+        static let tip = "tips"
+        static let results = "results"
+    }
+
     static func mcqResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<MCQResponseData> {
 
         //TODO: Need to implement the mapping of response to MCQResponseData and send the response for MCQResponse
+       guard let mcqResponse = json.dictionary else {
+            return .failure(NSError())
+        }
         
-//        let enrollments = json.arrayValue.flatMap { enrollmentJSON -> UserCourseEnrollment? in
-//            let courseJSON = enrollmentJSON["course"]
-//            let progress = enrollmentJSON["progress"].double
-//            let course = courseJSON.dictionaryObject.map {
-//                OEXCourse(json: $0, progress: progress.map {NSNumber(value: $0)})
-//            }
-//            return course.map {
-//                UserCourseEnrollment(course: $0, created: enrollmentJSON["created"].string, isActive: enrollmentJSON["is_active"].boolValue)
-//            }
-//        }
-//        return .success(enrollments)
-        let mcqResponseData = MCQResponseData(id: "TestId", value: "TestValue", status: "TestStatus", tip: "TestTip")
+        let isCompleted = mcqResponse[Keys.completed]?.boolValue ?? false
+        var id: String = ""
+        var value: String = ""
+        var tip: String = ""
+        
+        let results = mcqResponse[Keys.results]?.arrayValue
+        if (results?.count ?? 0) >= 2 {
+            id = (results?[0].stringValue) ?? ""
+            if let optionResult = results?[1].dictionaryValue {
+                value = (optionResult[Keys.value]?.stringValue) ?? ""
+                tip = (optionResult[Keys.value]?.stringValue) ?? ""
+            }
+        }
+        
+        let mcqResponseData = MCQResponseData(id: id, value: value, status: isCompleted, tip: tip)
         return .success(mcqResponseData)
     }
     
     static func getMCQResponse(_ questionId: String, value: String, courseId: String, blockId: String) -> NetworkRequest<MCQResponseData> {
-        let path = "/courses/{course_id}/xblock/{block_id}".oex_format(withParameters: ["user_id": courseId, "block_id": blockId])
+        let path = "/courses/{course_id}/xblock/{block_id}".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
         let requestBody = [questionId: ["value": value]]
         return NetworkRequest(method: .GET,
                        path: path,
