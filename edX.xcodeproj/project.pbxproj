@@ -586,6 +586,8 @@
 		948755101F4F33CE0059B73A /* DynamicOoyalaWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */; };
 		948755121F4F33D30059B73A /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755111F4F33D30059B73A /* Pulley.framework */; };
 		948755141F4F33D60059B73A /* TPKeyboardAvoidingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755131F4F33D60059B73A /* TPKeyboardAvoidingKit.framework */; };
+		94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353D1F55A9AE00FE8339 /* FTManager.swift */; };
+		94F235401F55AA7800FE8339 /* FTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353F1F55AA7800FE8339 /* FTAPI.swift */; };
 		9C9B7F6C1A8CC68400A857B2 /* OEXFindCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F641A8CC68400A857B2 /* OEXFindCoursesViewController.m */; };
 		9C9B7F6D1A8CC68400A857B2 /* OEXCourseInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F661A8CC68400A857B2 /* OEXCourseInfoViewController.m */; };
 		9C9B7F731A8CC80E00A857B2 /* OEXURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F721A8CC80E00A857B2 /* OEXURLSessionManager.m */; };
@@ -1587,6 +1589,8 @@
 		948755111F4F33D30059B73A /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
 		948755131F4F33D60059B73A /* TPKeyboardAvoidingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TPKeyboardAvoidingKit.framework; path = Carthage/Build/iOS/TPKeyboardAvoidingKit.framework; sourceTree = "<group>"; };
 		94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MckinseyXBlocks.framework; path = Carthage/Build/iOS/MckinseyXBlocks.framework; sourceTree = "<group>"; };
+		94F2353D1F55A9AE00FE8339 /* FTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTManager.swift; sourceTree = "<group>"; };
+		94F2353F1F55AA7800FE8339 /* FTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAPI.swift; sourceTree = "<group>"; };
 		9C9B7F631A8CC68400A857B2 /* OEXFindCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFindCoursesViewController.h; sourceTree = "<group>"; };
 		9C9B7F641A8CC68400A857B2 /* OEXFindCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFindCoursesViewController.m; sourceTree = "<group>"; };
 		9C9B7F651A8CC68400A857B2 /* OEXCourseInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoViewController.h; sourceTree = "<group>"; };
@@ -3226,6 +3230,15 @@
 			name = SocialLogin;
 			sourceTree = "<group>";
 		};
+		94F2353C1F55A97B00FE8339 /* XBlockManager */ = {
+			isa = PBXGroup;
+			children = (
+				94F2353D1F55A9AE00FE8339 /* FTManager.swift */,
+				94F2353F1F55AA7800FE8339 /* FTAPI.swift */,
+			);
+			name = XBlockManager;
+			sourceTree = "<group>";
+		};
 		9C9B7F701A8CC68D00A857B2 /* Course Enrollment */ = {
 			isa = PBXGroup;
 			children = (
@@ -3622,6 +3635,7 @@
 		BECB7B151924C0C3009C77F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				94F2353C1F55A97B00FE8339 /* XBlockManager */,
 				773A04691AF289650076532C /* edX-Bridging-Header.h */,
 				BEEEBF82196AAACF00EF2C35 /* Localizable.strings */,
 				B47780581AADA95400436DB4 /* Terms-and-Services.htm */,
@@ -4692,6 +4706,7 @@
 				9E1D952E1B678E4700ABE764 /* AccessibilityCLButton.swift in Sources */,
 				71DB6EC31E1B833C00E12C3E /* GVRVideoPlayerInterface.m in Sources */,
 				7765025F1C7CEBC5007384E7 /* SingleChildContainingViewController.swift in Sources */,
+				94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */,
 				7C2DD54F1D4A7901006148E0 /* UserPreference.swift in Sources */,
 				1A3AFFE51BD56370002846F3 /* CropViewController.swift in Sources */,
 				7731813B1B6C1442000CC050 /* SeparatorInsetable.swift in Sources */,
@@ -4857,6 +4872,7 @@
 				1894051C1E34AB4500AD6776 /* CourseAudioTableViewCell.swift in Sources */,
 				B4B6D6431A95335C000F44E8 /* OEXRegistrationAgreementController.m in Sources */,
 				0B1212221B4F089A002EE96C /* OEXCoursewareAccess.m in Sources */,
+				94F235401F55AA7800FE8339 /* FTAPI.swift in Sources */,
 				77DCD2391C2B13AA00CAEBB5 /* EnrolledCoursesFooterView.swift in Sources */,
 				77ADF4A91AC1B57800AC8955 /* UIImage+OEXColors.m in Sources */,
 				77D7FD261B04ED45002ACA8C /* Icon.swift in Sources */,
