@@ -47,12 +47,6 @@ extension MCQManager {
 
 }
 
-class MockMCQMatcher: MCQResultMatching {
-    public func matchMCQ(questionId: String, value: String, completion: @escaping (Bool) -> Swift.Void) {
-        
-    }
-}
-
 /*
  func freshFeedWithUsername(_ userID: Int, organizationCode: String?) -> Feed<[UserCourseEnrollment]> {
  let request = CoursesAPI.getUserEnrollments(userID, organizationCode: organizationCode)

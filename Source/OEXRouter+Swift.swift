@@ -40,10 +40,10 @@ enum CourseBlockDisplayType {
     }
 }
 
-class MatcherImplementation: ResultMatching {
-    func matchMRQ(selectedValues: [String], for questionID: String, completion: @escaping (MRQResponse) -> Void) {
-        
-    }
+//class MatcherImplementation: ResultMatching {
+//    func matchMRQ(selectedValues: [String], for questionID: String, completion: @escaping (MRQResponse) -> Void) {
+//        
+//    }
     //MARK:- ResultMatching Protocol
     //func match(selectedOptions: [String], completion: @escaping (Bool, Error?) -> Void) {
 //    func match(selectedOptions: [String], for question: String, completion: @escaping (Bool, Error?) -> Void) {
@@ -60,7 +60,7 @@ class MatcherImplementation: ResultMatching {
 //        }
 //    }
     //MARK:---
-}
+//}
 
 extension CourseBlock {
     
@@ -188,7 +188,6 @@ extension OEXRouter {
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
         case .mcq(let question):
-            //fatalError("implement MCQ here")
             let options = question.choices.flatMap{ (choice: Choice) -> Option in
                 let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
                 return option
@@ -201,16 +200,13 @@ extension OEXRouter {
             return adapter
             
         case .mrq(let question):
-            //fatalError("implement MRQ here")
             let options = question.choices.flatMap{ (choice: Choice) -> Option in
                 let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
                 return option
             }
-            let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
-            
-            
-            let matcherImplementation: MatcherImplementation = MatcherImplementation()
-            let viewController = MRQViewController(screenType: .questionScreen, question: mcqQuestion, resultMatcher: matcherImplementation)
+            let mrqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            let mrqManager = MRQManager(blockID: blockID!, courseID: courseID, environment: self.environment)
+            let viewController = MRQViewController(screenType: .questionScreen, question: mrqQuestion, resultMatcher: mrqManager)
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
             return adapter

@@ -1,7 +1,7 @@
 github "Alamofire/Alamofire" "4.5.0"
 github "SnapKit/SnapKit" "3.2.0"
 github "SwiftyJSON/SwiftyJSON" "3.1.4"
-github "mckinseyacademy/xblock-component-library-ios" "56e9e9ef1ca8ce8c0aed1ae8e5ca72f8fc4bb35e"
+github "mckinseyacademy/xblock-component-library-ios" "275c0b5b6ea7729e10dd3fbf72c31764134f73bf"
 github "onevcat/Kingfisher" "3.11.0"
 github "salmanjamil/DynamicOoyalaWrapper" "1.0"
 github "thii/FontAwesome.swift" "1.2.0"
