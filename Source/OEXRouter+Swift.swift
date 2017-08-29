@@ -395,4 +395,14 @@ class CourseBlockViewControllerAdapter: UIViewController, CourseBlockViewControl
     }
 }
 
+extension CourseBlockViewControllerAdapter: XBlock {
+    var primaryActionView: UIView? {
+        return (adaptedViewController as? XBlock)?.primaryActionView
+    }
+}
+
+extension CourseBlockViewControllerAdapter: ActionViewProvider {
+    
+}
+
 
