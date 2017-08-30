@@ -8,6 +8,7 @@
 
 import Foundation
 import MckinseyXBlocks
+
 // The router is an indirection point for navigation throw our app.
 
 // New router logic should live here so it can be written in Swift.
@@ -29,7 +30,9 @@ enum CourseBlockDisplayType {
     case html(CourseHTMLBlockSubkind)
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+    case mcq(MCQ)
+    case mrq(title: String, question: MCQ)
+    case freeText(FreeText)
     
     var isUnknown : Bool {
         switch self {
@@ -52,8 +55,11 @@ extension CourseBlock {
         case let .ooyalaVideo(contentID, playerCode): return .ooyalaVideo(contentID: contentID, playerCode: playerCode)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+        
         case let .discussion(discussionModel): return .discussion(discussionModel)
+        case let .mcq(question): return .mcq(question)
+        case let .mrq(title, question): return .mrq(title: title, question: question)
+        case let .freeText(question): return .freeText(question)
         }
     }
 }
@@ -98,6 +104,12 @@ extension OEXRouter {
             let outlineController = controllerForBlockWithID(blockID, type: type, courseID: courseID)
             controller.navigationController?.pushViewController(outlineController, animated: true)
         case .html:
+            fallthrough
+        case .mcq:
+            fallthrough
+        case .mrq:
+            fallthrough
+        case .freeText:
             fallthrough
         case .video:
             fallthrough
@@ -158,6 +170,18 @@ extension OEXRouter {
         case .audio:
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
+        case .mcq(let question):
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: UIViewController())
+            return adapter
+        case let .mrq(title, question):
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: UIViewController())
+            return adapter
+        case .freeText(let question):
+            let freeTextQuestion = FTQuestion(id: question.id, question: question.question, title: question.title, message: "")
+            let ftManager = FTManager(blockID: blockID!, courseID: courseID, environment: environment)
+            let freeTextController = FTPulleyManagerViewController(question: freeTextQuestion, ftSubmitter: ftManager)
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: freeTextController)
+            return adapter
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller
@@ -359,4 +383,15 @@ extension OEXRouter {
         showContentStack(withRootController: debugMenu, animated: true)
     }
 }
+
+extension CourseBlockViewControllerAdapter: XBlock {
+    var primaryActionView: UIView? {
+        return (adaptedViewController as? XBlock)?.primaryActionView
+    }
+}
+
+extension CourseBlockViewControllerAdapter: ActionViewProvider {
+    
+}
+
 
