@@ -1,7 +1,7 @@
 github "Alamofire/Alamofire" "4.5.0"
 github "SnapKit/SnapKit" "3.2.0"
 github "SwiftyJSON/SwiftyJSON" "3.1.4"
-github "mckinseyacademy/xblock-component-library-ios" "a4a8ff575627026b3084de1b828198fbe13d19b4"
+github "mckinseyacademy/xblock-component-library-ios" "5146b307f7cad8ac134a2bd83492eada2fe0b3d4"
 github "michaeltyson/TPKeyboardAvoiding" "1.3.1"
 github "mtbtalha/Pulley" "c2b6f74756004f512098e8f26b3bae42706687a6"
 github "onevcat/Kingfisher" "3.11.0"
