@@ -63,6 +63,13 @@ open class ListCursor<A> {
         }
     }
     
+    public func map<B>(transform: (A) -> B) -> ListCursor<B> {
+        let mapped = list.map(transform)
+        let cursor = ListCursor<B>(startOfList: mapped)
+        cursor!.index = self.index
+        return cursor!
+    }
+    
     open func updateCurrentToItemMatching(_ matcher : (A) -> Bool) {
         if let index = list.firstIndexMatching(matcher) {
             self.index = index

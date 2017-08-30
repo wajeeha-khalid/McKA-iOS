@@ -27,8 +27,16 @@ public struct CourseOutline {
         case StudentViewMultiDevice = "student_view_multi_device"
         case StudentViewURL = "student_view_url"
         case StudentViewData = "student_view_data"
+        case Question = "question"
+        case Choices = "choices"
+        case OptionContent = "content"
+        case OptionValue = "value"
         case Summary = "summary"
         case Viewed = "is_viewed"
+        case Title = "title"
+        case Message = "message"
+        case Tips = "tips"
+        case QuestionId = "id"
         case partnerCode = "partner_code"
         case contentId = "content_id"
     }
@@ -78,6 +86,42 @@ public struct CourseOutline {
                         type = .section
                     case CourseBlock.Category.Unit:
                         type = .unit
+                    case .MCQ:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let question = studentViewData[Fields.Question]
+                        let title = studentViewData[Fields.Title]
+                        let questionID = studentViewData[Fields.QuestionId]
+                        let message = studentViewData[Fields.Message]
+                        var choiceToTipMap: [String: String] = [:]
+                        studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                            for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                            }
+                        }
+                        let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                            let choiceID = option["value"].stringValue
+                            return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                        }
+                        let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                        type = .mcq(mcq)
+                    case .MRQ:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let question = studentViewData[Fields.Question]
+                        let title = studentViewData[Fields.Title]
+                        let questionID = studentViewData[Fields.QuestionId]
+                        let message = studentViewData[Fields.Message]
+                        var choiceToTipMap: [String: String] = [:]
+                        studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                            for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                            }
+                        }
+                        let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                            let choiceID = option["value"].stringValue
+                            return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                        }
+                        let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                        type = .mrq(mcq)
                     case CourseBlock.Category.HTML:
                         type = .html
                     case CourseBlock.Category.Problem:
@@ -145,6 +189,8 @@ public enum CourseBlockType {
     case section // child of chapter
     case unit // child of section
     case video(OEXVideoSummary)
+    case mcq(MCQ)
+    case mrq(MCQ)
     case ooyalaVideo(contentID: String, playerCode: String)
     case problem
     case html
@@ -194,6 +240,8 @@ open class CourseBlock {
         case Section = "sequential"
         case Unit = "vertical"
         case Video = "video"
+        case MCQ = "pb-mcq"
+        case MRQ = "pb-mrq"
         case Discussion = "discussion"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
@@ -274,3 +322,17 @@ open class CourseBlock {
     }
 }
 
+//MARK: MCQ
+public struct Choice {
+    public let content: String
+    public let value: String
+    public let tip: String
+}
+
+public struct MCQ {
+    public let id: String
+    public let choices: [Choice]
+    public let question: String
+    public let title: String?
+    public let message: String?
+}
