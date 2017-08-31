@@ -162,6 +162,10 @@
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
 		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
 		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
+		63D0F5C91F51E6CC005F56BE /* MCQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5C81F51E6CC005F56BE /* MCQManager.swift */; };
+		63D0F5CB1F51F62B005F56BE /* MRQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CA1F51F62B005F56BE /* MRQManager.swift */; };
+		63D0F5CE1F51F807005F56BE /* MCQAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CD1F51F807005F56BE /* MCQAPI.swift */; };
+		63D0F5D01F51F815005F56BE /* MRQAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CF1F51F815005F56BE /* MRQAPI.swift */; };
 		63EC02001F3C3B6900B702C4 /* BrandingThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC01FF1F3C3B6900B702C4 /* BrandingThemes.swift */; };
 		63EC02091F3C7BF100B702C4 /* mckinsey_theming.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */; };
 		63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */; };
@@ -1111,6 +1115,10 @@
 		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
 		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
 		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
+		63D0F5C81F51E6CC005F56BE /* MCQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCQManager.swift; sourceTree = "<group>"; };
+		63D0F5CA1F51F62B005F56BE /* MRQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRQManager.swift; sourceTree = "<group>"; };
+		63D0F5CD1F51F807005F56BE /* MCQAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCQAPI.swift; sourceTree = "<group>"; };
+		63D0F5CF1F51F815005F56BE /* MRQAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRQAPI.swift; sourceTree = "<group>"; };
 		63EC01FF1F3C3B6900B702C4 /* BrandingThemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandingThemes.swift; sourceTree = "<group>"; };
 		63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mckinsey_theming.json; sourceTree = "<group>"; };
 		63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@1x.png"; sourceTree = "<group>"; };
@@ -2343,6 +2351,25 @@
 			path = QLearnSDK;
 			sourceTree = SOURCE_ROOT;
 		};
+		63D0F5C71F51E6AC005F56BE /* XBlock Managers */ = {
+			isa = PBXGroup;
+			children = (
+				63D0F5CC1F51F7D2005F56BE /* XBlock API */,
+				63D0F5C81F51E6CC005F56BE /* MCQManager.swift */,
+				63D0F5CA1F51F62B005F56BE /* MRQManager.swift */,
+			);
+			name = "XBlock Managers";
+			sourceTree = "<group>";
+		};
+		63D0F5CC1F51F7D2005F56BE /* XBlock API */ = {
+			isa = PBXGroup;
+			children = (
+				63D0F5CD1F51F807005F56BE /* MCQAPI.swift */,
+				63D0F5CF1F51F815005F56BE /* MRQAPI.swift */,
+			);
+			name = "XBlock API";
+			sourceTree = "<group>";
+		};
 		63EC02031F3C4CBC00B702C4 /* BrandingTheme */ = {
 			isa = PBXGroup;
 			children = (
@@ -3503,6 +3530,7 @@
 		BE45DA86192605E7003BD39B /* Course */ = {
 			isa = PBXGroup;
 			children = (
+				63D0F5C71F51E6AC005F56BE /* XBlock Managers */,
 				71AF62A51E361AF9007B4410 /* Course Audio List View */,
 				778F17791C0D125A0099BF93 /* CoursesTableViewController.swift */,
 				77EA92251BB4590A00EC625A /* DownloadsAccessoryView.swift */,
@@ -4722,6 +4750,7 @@
 				B4B6D62A1A949F1B000F44E8 /* OEXRegistrationFieldSelectController.m in Sources */,
 				B4B6D5E51A9490E9000F44E8 /* OEXLoginSplashViewController.m in Sources */,
 				7726BD1D1A36572F003B3354 /* NSMutableDictionary+OEXSafeAccess.m in Sources */,
+				63D0F5CB1F51F62B005F56BE /* MRQManager.swift in Sources */,
 				778F177C1C0D12780099BF93 /* CourseCatalogAPI.swift in Sources */,
 				B4B285E21A9A497A00DD603A /* OEXSegmentConfig.m in Sources */,
 				773A04801AF2E6DA0076532C /* CourseOutlineTableSource.swift in Sources */,
@@ -4761,6 +4790,7 @@
 				9E4E6C411B4BDB5C0034F7EB /* MockLastAccessedProvider.swift in Sources */,
 				9EEFFD651B300E87002A88B0 /* OEXInterface+Swift.swift in Sources */,
 				1A9A1E481B8F3BB8005AE336 /* OEXCheckBox.swift in Sources */,
+				63D0F5C91F51E6CC005F56BE /* MCQManager.swift in Sources */,
 				46CECC3C1B041D270073C63A /* CourseDashboardCell.swift in Sources */,
 				778F177A1C0D125A0099BF93 /* CoursesTableViewController.swift in Sources */,
 				41A8C3671F2EFE8100869CAD /* LoginViewController.swift in Sources */,
@@ -4868,6 +4898,7 @@
 				1940D8CB1A230E25000318A3 /* OEXAnalytics.m in Sources */,
 				1A8AC0C01BB49EC5009D8F5E /* UserProfile.swift in Sources */,
 				1AC147371BCEB14900E0A230 /* CGRect+OEXHelpers.swift in Sources */,
+				63D0F5D01F51F815005F56BE /* MRQAPI.swift in Sources */,
 				7714A2601AB37CF7004C2254 /* OEXRegistrationFieldError.m in Sources */,
 				77E6486C1C912BD600B6740D /* Logger+OEXObjC.m in Sources */,
 				77000A4A1A7757E0007D306C /* NSDate+OEXComparisons.m in Sources */,
@@ -4909,6 +4940,7 @@
 				B4B6D6431A95335C000F44E8 /* OEXRegistrationAgreementController.m in Sources */,
 				0B1212221B4F089A002EE96C /* OEXCoursewareAccess.m in Sources */,
 				94F235401F55AA7800FE8339 /* FTAPI.swift in Sources */,
+				63D0F5CE1F51F807005F56BE /* MCQAPI.swift in Sources */,
 				77DCD2391C2B13AA00CAEBB5 /* EnrolledCoursesFooterView.swift in Sources */,
 				77ADF4A91AC1B57800AC8955 /* UIImage+OEXColors.m in Sources */,
 				77D7FD261B04ED45002ACA8C /* Icon.swift in Sources */,

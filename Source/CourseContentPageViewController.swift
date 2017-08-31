@@ -35,7 +35,6 @@ extension MCQViewController: ActionViewProvider {
 extension FTPulleyManagerViewController: ActionViewProvider {
 }
 
-
 //This view is added as the titleView of navigationItem to display lesson title and module title
 fileprivate final class TitleView: UIView {
     

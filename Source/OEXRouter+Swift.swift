@@ -31,7 +31,7 @@ enum CourseBlockDisplayType {
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
     case mcq(MCQ)
-    case mrq(title: String, question: MCQ)
+    case mrq(MCQ)
     case freeText(FreeText)
     
     var isUnknown : Bool {
@@ -55,10 +55,9 @@ extension CourseBlock {
         case let .ooyalaVideo(contentID, playerCode): return .ooyalaVideo(contentID: contentID, playerCode: playerCode)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-        
         case let .discussion(discussionModel): return .discussion(discussionModel)
         case let .mcq(question): return .mcq(question)
-        case let .mrq(title, question): return .mrq(title: title, question: question)
+        case let .mrq(question): return .mrq(question)
         case let .freeText(question): return .freeText(question)
         }
     }
@@ -171,10 +170,27 @@ extension OEXRouter {
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
         case .mcq(let question):
-            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: UIViewController())
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            let mcqManager = MCQManager(blockID: blockID!, courseID: courseID, environment: self.environment)
+            let viewController = MCQViewController(question: mcqQuestion, resultMatcher: mcqManager)
+            
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
             return adapter
-        case let .mrq(title, question):
-            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: UIViewController())
+            
+        case .mrq(let question):
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mrqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            let mrqManager = MRQManager(blockID: blockID!, courseID: courseID, environment: self.environment)
+            let viewController = MRQViewController(question: mrqQuestion, resultMatcher: mrqManager)
+            
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
             return adapter
         case .freeText(let question):
             let freeTextQuestion = FTQuestion(id: question.id, question: question.question, title: question.title, message: "")
@@ -384,14 +400,5 @@ extension OEXRouter {
     }
 }
 
-extension CourseBlockViewControllerAdapter: XBlock {
-    var primaryActionView: UIView? {
-        return (adaptedViewController as? XBlock)?.primaryActionView
-    }
-}
-
-extension CourseBlockViewControllerAdapter: ActionViewProvider {
-    
-}
 
 
