@@ -132,6 +132,8 @@ class BottomBar: UIView {
         leftButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         rightButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         rightButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        rightButton.accessibilityLabel = "Next"
+        leftButton.accessibilityLabel = "Previous"
         leftButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         let borderLine = UIView()
         addSubview(borderLine)
