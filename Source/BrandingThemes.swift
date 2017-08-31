@@ -75,6 +75,74 @@ open class BrandingThemes: NSObject {
         return themeDictionary[identifier] as! String
     }
     // MARK:---
+    
+    public lazy var nextModuleIcon: UIImage = {
+        return IconBuilder.arrowWithCircularBackground(
+            ofSize: CGSize(width: 24, height: 24),
+            backgroundColor : self.getNavigationBarColor(),
+            arrowWidth: 12.0,
+            arrowHeight: 1.5,
+            arrowColor: UIColor.white,
+            arrowDirection: .right
+        )
+    }()
+    
+    public lazy var prevModuleIcon: UIImage = {
+        return IconBuilder.arrowWithCircularBackground(
+            ofSize: CGSize(width: 24, height: 24),
+            backgroundColor : self.getNavigationBarColor(),
+            arrowWidth: 12.0,
+            arrowHeight: 1.5,
+            arrowColor: UIColor.white,
+            arrowDirection: .left
+        )
+    }()
+    
+    public lazy var nextLessonIcon: UIImage = {
+        return IconBuilder.arrowWithCircularBackground(
+            ofSize: CGSize(width: 24, height: 24),
+            backgroundColor : UIColor.lightGray,
+            arrowWidth: 12.0,
+            arrowHeight: 1.5,
+            arrowColor: UIColor.white,
+            arrowDirection: .right
+        )
+    }()
+    
+    public lazy var prevLessonIcon: UIImage = {
+        return IconBuilder.arrowWithCircularBackground(
+            ofSize: CGSize(width: 24, height: 24),
+            backgroundColor : UIColor.lightGray,
+            arrowWidth: 12.0,
+            arrowHeight: 1.5,
+            arrowColor: UIColor.white,
+            arrowDirection: .left
+        )
+    }()
+    
+    public lazy var prevComponentIcon: UIImage = {
+        return IconBuilder.arrowWithCircularBackground(
+            ofSize: CGSize(width: 24, height: 24),
+            backgroundColor : UIColor.clear,
+            arrowWidth: 16.0,
+            arrowHeight: 2.0,
+            arrowColor: self.getNavigationBarColor(),
+            arrowDirection: .left
+        )
+    }()
+    
+    public lazy var nextComponentIcon: UIImage = {
+        return IconBuilder.arrowWithCircularBackground(
+            ofSize: CGSize(width: 24, height: 24),
+            backgroundColor : UIColor.clear,
+            arrowWidth: 16.0,
+            arrowHeight: 2.0,
+            arrowColor: self.getNavigationBarColor(),
+            arrowDirection: .right
+        )
+    }()
+    
+    
 }
 
 /**
