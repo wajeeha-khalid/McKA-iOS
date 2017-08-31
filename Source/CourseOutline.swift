@@ -31,6 +31,7 @@ public struct CourseOutline {
         case Viewed = "is_viewed"
         case partnerCode = "partner_code"
         case contentId = "content_id"
+        case html = "html"
     }
     
     public let root : CourseBlockID
@@ -79,7 +80,9 @@ public struct CourseOutline {
                     case CourseBlock.Category.Unit:
                         type = .unit
                     case CourseBlock.Category.HTML:
-                        type = .html
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .html(content)
                     case CourseBlock.Category.Problem:
                         type = .problem
                     case .OOYALA:
@@ -87,7 +90,11 @@ public struct CourseOutline {
                             fatalError("unable to find content id of ooyala player")
                         }
                         let playerCode = body[Fields.StudentViewData][Fields.partnerCode].stringValue
-                        type = .ooyalaVideo(contentID: contentId, playerCode: playerCode)
+                        type = .ooyalaVideo(
+                            contentID: contentId,
+                            playerCode: playerCode,
+                            htmlDescription: nil
+                        )
                     case CourseBlock.Category.Video :
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXVideoSummary(dictionary: bodyData ?? [:], videoID: blockID, name : name ?? Strings.untitled)
@@ -145,9 +152,9 @@ public enum CourseBlockType {
     case section // child of chapter
     case unit // child of section
     case video(OEXVideoSummary)
-    case ooyalaVideo(contentID: String, playerCode: String)
+    case ooyalaVideo(contentID: String, playerCode: String, htmlDescription: String?)
     case problem
-    case html
+    case html(String)
     case discussion(DiscussionModel)
     case audio(OEXAudioSummary)// Added by Ravi on 18/01/17 to implement Audio Podcasts.
     
@@ -198,7 +205,7 @@ open class CourseBlock {
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
-    open let type : CourseBlockType
+    open var type : CourseBlockType
     open let blockID : CourseBlockID
     
     /// Children in the navigation hierarchy.

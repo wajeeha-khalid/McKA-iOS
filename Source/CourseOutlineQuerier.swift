@@ -304,7 +304,12 @@ open class CourseOutlineQuerier : NSObject {
                     }
                 })
             }
-            let childBlocks = block.children.flatMap({ self.blockWithID($0, inOutline: outline) })
+            var childBlocks = block.children.flatMap({ self.blockWithID($0, inOutline: outline) })
+            
+            // combine the html blocks followed by video blocks
+            if case .unit = block.type {
+                childBlocks  = combineDescriptionBlocksFollowedByVideoBlocks(from: childBlocks)
+            }
             
             if childBlocks.count > 0  {
                 
@@ -331,6 +336,25 @@ open class CourseOutlineQuerier : NSObject {
             return nil
         }
     }
+    
+    /// This method iterates all the blocks and look for an html component followed by an 
+    /// ooyala video component. In case any such component is found the html component is 
+    /// removed from the list and it's content are passed to ooyala video component....
+    func combineDescriptionBlocksFollowedByVideoBlocks(from blocks: [CourseBlock]) -> [CourseBlock] {
+        return blocks.reduce([], { (acc, block) -> [CourseBlock] in
+            guard let last = acc.last else {
+                return [block]
+            }
+            if case let .ooyalaVideo(contentID, playerCode, _) = block.type, case .html (let content) = last.type {
+                var clipped = acc.dropLast()
+                block.type = .ooyalaVideo(contentID: contentID, playerCode: playerCode, htmlDescription: content)
+                clipped.append(block)
+                return Array(clipped)
+            }
+            return acc + [block]
+        })
+    }
+    
     
     fileprivate func flatMapRootedAtBlockWithID<A>(_ id : CourseBlockID, inOutline outline : CourseOutline, transform : (CourseBlock) -> [A], accumulator : inout [A]) {
         if let block = self.blockWithID(id, inOutline: outline) {
@@ -369,7 +393,15 @@ open class CourseOutlineQuerier : NSObject {
     }
     
     fileprivate func blockWithID(_ id : CourseBlockID, inOutline outline : CourseOutline) -> CourseBlock? {
-        if let block = outline.blocks[id] {
+        if let block = outline.blocks[id], case .unit = block.type {
+            let mutableBlock = block
+            let children = mutableBlock.children.flatMap {
+                outline.blocks[$0]
+            }
+            let combined = combineDescriptionBlocksFollowedByVideoBlocks(from: children)
+            mutableBlock.children = combined.map{$0.blockID}
+            return block
+        } else if let block = outline.blocks[id] {
             return block
         }
         return nil
