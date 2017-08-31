@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 open class ListCursor<A> {
     
     fileprivate var index : Int
