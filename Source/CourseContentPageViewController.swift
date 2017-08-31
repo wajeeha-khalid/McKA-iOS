@@ -380,7 +380,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                                 self.courseQuerier.blockWithID($0)
                             }.map { course in
                                let index = course.children.index(of: parentOfNext.blockID)! + 1
-                                return (BrandingThemes.shared.nextLessonIcon, "Up Next: Lesson \(index) \n \(next.displayName)")
+                                return (BrandingThemes.shared.nextModuleIcon, "Up Next: Lesson \(index) \n \(next.displayName)")
                         }
                     }
                 }
@@ -425,7 +425,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                         switch result {
                         case let .success(currentLesson, prevLesson)
                             where currentLesson.blockID != prevLesson.blockID:
-                            self.bottomBar.leftButton.setImage(BrandingThemes.shared.prevLessonIcon, for: .normal)
+                            self.bottomBar.leftButton.setImage(BrandingThemes.shared.prevModuleIcon, for: .normal)
                         case _:
                             self.bottomBar.leftButton.setImage(BrandingThemes.shared.prevModuleIcon, for: .normal)
                         }
