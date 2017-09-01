@@ -89,9 +89,9 @@ struct MCQAPI {
     }
     
     static func getMCQResponse(_ questionId: String, value: String, courseId: String, blockId: String) -> NetworkRequest<MCQResponseData> {
-        let path = "/courses/{course_id}/xblock/{block_id}".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
+        let path = "/courses/{course_id}/xblock/{block_id}/handler/submit".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
         let requestBody = [questionId: ["value": value]]
-        return NetworkRequest(method: .GET,
+        return NetworkRequest(method: .POST,
                        path: path,
                        requiresAuth: true,
                        body: .jsonBody(JSON(requestBody)),
