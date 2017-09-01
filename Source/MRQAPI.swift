@@ -55,7 +55,7 @@ struct MRQAPI {
     }
     
     static func submitMRQ(questionId: String, values: [String], courseId: String, blockId: String) -> NetworkRequest<MRQResponse> {
-        let path = "/courses/{course_id}/xblock/{block_id}".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
+        let path = "/courses/{course_id}/xblock/{block_id}/handler/submit".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
         let requestBody = [questionId: values]
         return NetworkRequest(method: .POST,
                               path: path,

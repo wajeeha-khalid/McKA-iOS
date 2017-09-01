@@ -25,27 +25,27 @@ class MRQManager: NSObject, MRQResultMatching {
     func matchMRQ(selectedValues: [String], for questionID: String, completion: @escaping (MRQResponse) -> Void) {
         // TODO: call the method to get the stream on the basis of questionID and values of the options
         self.stream = mrqResponseStream(questionId: questionID, selectedValues: selectedValues, courseId: courseID, blockId: blockID)
-//        self.stream?.listen(self, action: { (result) in
-//            result.ifSuccess({ (mrqResponse: MRQResponse) -> Void in
-//                completion(mrqResponse)
-//            })
-//            result.ifFailure({ (error) in
-//                print(error.localizedDescription)
-//            })
-//        })
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            //MARK: Mock Data
-            let mrqResponseChoiceStatus = [Option(value: "Test Value1", tip: "Its Tip 1", isSelected: true, isCompleted: true),
-                                           Option(value: "Test Value2", tip: "Its Tip 2", isSelected: false, isCompleted: false),
-                                           Option(value: "Test Value3", tip: "Its Tip 3", isSelected: true, isCompleted: true),
-                                           Option(value: "Test Value4", tip: "Its Tip 4", isSelected: true, isCompleted: true)
-            ]
-            let mrqResponse = MRQResponse(id: "123", completed: false, message: "<p><b>Click each green check mark or red ! to read feedback.</b></p> <p>An ! shows that you were not right, either incorrectly selecting an item or incorrectly excluding it.</p> <p><i>Click <b>Next Question </b>to advance or click<b> Review final grade</b> to return to your results summary.</i></p>", choicesStatus: mrqResponseChoiceStatus)
-            
-            completion(mrqResponse)
+        self.stream?.listen(self, action: { (result) in
+            result.ifSuccess({ (mrqResponse: MRQResponse) -> Void in
+                completion(mrqResponse)
+            })
+            result.ifFailure({ (error) in
+                print(error.localizedDescription)
+            })
         })
+        
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+//            //MARK: Mock Data
+//            let mrqResponseChoiceStatus = [Option(value: "Test Value1", tip: "Its Tip 1", isSelected: true, isCompleted: true),
+//                                           Option(value: "Test Value2", tip: "Its Tip 2", isSelected: false, isCompleted: false),
+//                                           Option(value: "Test Value3", tip: "Its Tip 3", isSelected: true, isCompleted: true),
+//                                           Option(value: "Test Value4", tip: "Its Tip 4", isSelected: true, isCompleted: true)
+//            ]
+//            let mrqResponse = MRQResponse(id: "123", completed: false, message: "<p><b>Click each green check mark or red ! to read feedback.</b></p> <p>An ! shows that you were not right, either incorrectly selecting an item or incorrectly excluding it.</p> <p><i>Click <b>Next Question </b>to advance or click<b> Review final grade</b> to return to your results summary.</i></p>", choicesStatus: mrqResponseChoiceStatus)
+//            
+//            completion(mrqResponse)
+//        })
     }
 }
 
