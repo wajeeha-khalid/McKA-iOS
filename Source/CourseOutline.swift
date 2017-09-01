@@ -86,7 +86,59 @@ public struct CourseOutline {
                         type = .section
                     case CourseBlock.Category.Unit:
                         type = .unit
-                    case .MCQ:
+                    case .ProblemBuilder:
+                        var data = body[Fields.StudentViewData]
+                        let components = data["components"]
+                        
+                        guard let ourComponent = components.arrayValue.filter ({
+                            $0.dictionaryValue.keys.contains("question")
+                        }).first else {
+                            type = .unknown("problem-builder")
+                            continue
+                        }
+                        
+                        if ourComponent["type"].string == "pb-mcq" {
+                            let studentViewData = ourComponent
+                            let question = studentViewData[Fields.Question]
+                            let title = studentViewData[Fields.Title]
+                            let questionID = studentViewData[Fields.QuestionId]
+                            let message = studentViewData[Fields.Message]
+                            var choiceToTipMap: [String: String] = [:]
+                            studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                                for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                    choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                                }
+                            }
+                            let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                                let choiceID = option["value"].stringValue
+                                return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                            }
+                            let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                            type = .mcq(mcq)
+                        } else if ourComponent["type"].string == "pb-mrq" {
+                            let studentViewData = ourComponent
+                            let question = studentViewData[Fields.Question]
+                            let title = studentViewData[Fields.Title]
+                            let questionID = studentViewData[Fields.QuestionId]
+                            let message = studentViewData[Fields.Message]
+                            var choiceToTipMap: [String: String] = [:]
+                            studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                                for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                    choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                                }
+                            }
+                            let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                                let choiceID = option["value"].stringValue
+                                return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                            }
+                            let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                            type = .mrq(mcq)
+                        } else {
+                            type = .unknown("problem-builder")
+                            continue
+                        }
+                        
+                   /* case .MCQ:
                         let studentViewData = body[Fields.StudentViewData]
                         let question = studentViewData[Fields.Question]
                         let title = studentViewData[Fields.Title]
@@ -121,7 +173,7 @@ public struct CourseOutline {
                             return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
                         }
                         let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
-                        type = .mrq(mcq)
+                        type = .mrq(mcq)*/
                     case CourseBlock.Category.HTML:
                         type = .html
                     case CourseBlock.Category.Problem:
@@ -154,6 +206,7 @@ public struct CourseOutline {
                 }
                 else {
                     type = .unknown(typeName)
+                    continue
                 }
                 
                 validBlocks[blockID] = CourseBlock(
@@ -240,8 +293,9 @@ open class CourseBlock {
         case Section = "sequential"
         case Unit = "vertical"
         case Video = "video"
-        case MCQ = "pb-mcq"
-        case MRQ = "pb-mrq"
+       // case MCQ = "pb-mcq"
+       // case MRQ = "pb-mrq"
+        case ProblemBuilder = "problem-builder"
         case Discussion = "discussion"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
