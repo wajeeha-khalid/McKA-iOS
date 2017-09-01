@@ -89,11 +89,12 @@ public struct CourseOutline {
                     case .ProblemBuilder:
                         var data = body[Fields.StudentViewData]
                         let components = data["components"]
+                        
                         guard let ourComponent = components.arrayValue.filter ({
                             $0.dictionaryValue.keys.contains("question")
                         }).first else {
                             type = .unknown("problem-builder")
-                            break
+                            continue
                         }
                         
                         if ourComponent["type"].string == "pb-mcq" {
@@ -134,6 +135,7 @@ public struct CourseOutline {
                             type = .mrq(mcq)
                         } else {
                             type = .unknown("problem-builder")
+                            continue
                         }
                         
                    /* case .MCQ:
@@ -204,6 +206,7 @@ public struct CourseOutline {
                 }
                 else {
                     type = .unknown(typeName)
+                    continue
                 }
                 
                 validBlocks[blockID] = CourseBlock(
