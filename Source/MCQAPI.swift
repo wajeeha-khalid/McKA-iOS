@@ -70,6 +70,8 @@ struct MCQAPI {
             return .failure(NSError())
         }
         
+        print(mcqResponse.description)
+        
         let isCompleted = mcqResponse[Keys.completed]?.boolValue ?? false
         var id: String = ""
         var value: String = ""

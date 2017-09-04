@@ -26,6 +26,8 @@ struct MRQAPI {
         guard let mrqResponseDic = json.dictionary else {
             return .failure(NSError())
         }
+        
+        print(mrqResponseDic.description)
 
         var id = ""
         let completed = mrqResponseDic[Fields.completed]?.bool ?? false
