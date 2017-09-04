@@ -20,23 +20,36 @@ struct MRQAPI {
         case selected = "selected"
         case tip = "tips"
         case value = "value"
+        case status = "status"
     }
     
     static func mrqSubmitResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<MRQResponse> {
         guard let mrqResponseDic = json.dictionary else {
             return .failure(NSError())
         }
+        
+        print(mrqResponseDic.description)
 
         var id = ""
-        let completed = mrqResponseDic[Fields.completed]?.bool ?? false
+        var questionCorrectStatus = false
         let message = mrqResponseDic[Fields.message]?.string ?? ""
         var choices : [Option] = []
         
-        let results = mrqResponseDic[Fields.results]?.arrayValue
+        var results = mrqResponseDic[Fields.results]?.arrayValue
+        results = results?[0].arrayValue
         if (results?.count ?? 0) >= 2 {
             id = (results?[0].stringValue) ?? ""
             
             if let optionResult = results?[1].dictionaryValue {
+                if optionResult[Fields.status]?.stringValue == "correct" {
+                    //correct
+                    questionCorrectStatus = true
+                }
+                else {
+                    //incorrect or partial
+                    questionCorrectStatus = false
+                }
+                
                 let choicesArray = (optionResult[Fields.choices]?.arrayValue)
                 for choiceDic in choicesArray! {
                     let completed = choiceDic[Fields.completed].bool ?? false
@@ -50,7 +63,7 @@ struct MRQAPI {
             }
         }
         
-        let mrqResponse = MRQResponse(id: id, completed: completed, message: message, choicesStatus: choices)
+        let mrqResponse = MRQResponse(id: id, completed: questionCorrectStatus, message: message, choicesStatus: choices)
         return .success(mrqResponse)
     }
     

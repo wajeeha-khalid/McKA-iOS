@@ -61,6 +61,7 @@ struct MCQAPI {
         static let value = "submission"
         static let tip = "tips"
         static let results = "results"
+        static let status = "status"
     }
 
     static func mcqResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<MCQResponseData> {
@@ -70,21 +71,32 @@ struct MCQAPI {
             return .failure(NSError())
         }
         
-        let isCompleted = mcqResponse[Keys.completed]?.boolValue ?? false
+        print(mcqResponse.description)
+        
+        var questionCorrectStatus = false
         var id: String = ""
         var value: String = ""
         var tip: String = ""
         
-        let results = mcqResponse[Keys.results]?.arrayValue
+        var results = mcqResponse[Keys.results]?.arrayValue
+        results = results?[0].arrayValue
         if (results?.count ?? 0) >= 2 {
             id = (results?[0].stringValue) ?? ""
             if let optionResult = results?[1].dictionaryValue {
+                if optionResult[Keys.status]?.stringValue == "correct" {
+                    //correct
+                    questionCorrectStatus = true
+                }
+                else {
+                    //incorrect or partial
+                    questionCorrectStatus = false
+                }
                 value = (optionResult[Keys.value]?.stringValue) ?? ""
-                tip = (optionResult[Keys.value]?.stringValue) ?? ""
+                tip = (optionResult[Keys.tip]?.stringValue) ?? ""
             }
         }
         
-        let mcqResponseData = MCQResponseData(id: id, value: value, status: isCompleted, tip: tip)
+        let mcqResponseData = MCQResponseData(id: id, value: value, status: questionCorrectStatus, tip: tip)
         return .success(mcqResponseData)
     }
     
