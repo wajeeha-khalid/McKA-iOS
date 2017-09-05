@@ -169,7 +169,7 @@ extension OEXRouter {
                 return option
             }
             let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
-            let mcqManager = MCQManager(blockID: blockID!, courseID: courseID, environment: self.environment)
+            let mcqManager = MCQManager(blockID: blockID!, courseID: courseID, networkManager: self.environment.networkManager)
             let viewController = MCQViewController(question: mcqQuestion, resultMatcher: mcqManager)
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
@@ -181,7 +181,7 @@ extension OEXRouter {
                 return option
             }
             let mrqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
-            let mrqManager = MRQManager(blockID: blockID!, courseID: courseID, environment: self.environment)
+            let mrqManager = MRQManager(blockID: blockID!, courseID: courseID, networkManager: self.environment.networkManager)
             let viewController = MRQViewController(question: mrqQuestion, resultMatcher: mrqManager)
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)

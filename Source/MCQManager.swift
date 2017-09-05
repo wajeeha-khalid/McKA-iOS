@@ -13,37 +13,34 @@ import MckinseyXBlocks
 class MCQManager: NSObject, MCQResultMatching {
     let blockID: String
     let courseID: String
-    let enviroment: RouterEnvironment
-    var stream: edXCore.Stream<MCQResponseData>?
+    let networkManager: NetworkManager
+    var stream: edXCore.Stream<MCQResponse>?
 
-    public init(blockID: String, courseID: String, environment: RouterEnvironment) {
+    public init(blockID: String, courseID: String, networkManager: NetworkManager) {
         self.blockID = blockID
         self.courseID = courseID
-        self.enviroment = environment
+        self.networkManager = networkManager
     }
     
     public func matchMCQ(selectedValue: String, for questionId: String, completion: @escaping (Bool) -> Swift.Void) {
-        self.stream = mcqResponseStream(questionId: questionId, value: selectedValue, courseId: self.courseID, blockId: self.blockID)
-        self.stream?.listen(self, action: { (result) in
+        stream = mcqResponseStream(questionId: questionId, value: selectedValue, courseId: self.courseID, blockId: self.blockID)
+        stream?.listen(self, action: { (result) in
             
-        result.ifSuccess({ (mcqResponseData: MCQResponseData) -> Void in
+        result.ifSuccess({ (mcqResponseData: MCQResponse) -> Void in
                 completion(mcqResponseData.status)
-            
             })
-        
             result.ifFailure({ (error) in
-                print(error.localizedDescription)
+                Logger.logInfo("MCQ", error.localizedDescription)
             })
-        
         })
     }
 }
 
 extension MCQManager {
 
-    func mcqResponseStream(questionId: String, value: String, courseId: String, blockId: String) -> edXCore.Stream<MCQResponseData> {
+    func mcqResponseStream(questionId: String, value: String, courseId: String, blockId: String) -> edXCore.Stream<MCQResponse> {
         let request = MCQAPI.getMCQResponse(questionId, value: value, courseId: courseId, blockId: blockId)
-        return enviroment.networkManager.streamForRequest(request)
+        return self.networkManager.streamForRequest(request)
     }
 
 }

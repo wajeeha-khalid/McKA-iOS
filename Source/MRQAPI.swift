@@ -23,47 +23,39 @@ struct MRQAPI {
         case status = "status"
     }
     
-    static func mrqSubmitResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<MRQResponse> {
+    static func deserializerResponse(_ response: HTTPURLResponse, json: JSON) -> Result<MRQResponse> {
         guard let mrqResponseDic = json.dictionary else {
             return .failure(NSError())
         }
         
-        print(mrqResponseDic.description)
+        Logger.logInfo("MRQ", mrqResponseDic.description)
 
         var id = ""
         var questionCorrectStatus = false
-        let message = mrqResponseDic[Fields.message]?.string ?? ""
-        var choices : [Option] = []
+        let message = mrqResponseDic[Fields.message]?.stringValue
         
-        var results = mrqResponseDic[Fields.results]?.arrayValue
-        results = results?[0].arrayValue
-        if (results?.count ?? 0) >= 2 {
-            id = (results?[0].stringValue) ?? ""
-            
-            if let optionResult = results?[1].dictionaryValue {
-                if optionResult[Fields.status]?.stringValue == "correct" {
-                    //correct
-                    questionCorrectStatus = true
-                }
-                else {
-                    //incorrect or partial
-                    questionCorrectStatus = false
-                }
-                
-                let choicesArray = (optionResult[Fields.choices]?.arrayValue)
-                for choiceDic in choicesArray! {
-                    let completed = choiceDic[Fields.completed].bool ?? false
-                    let selected = choiceDic[Fields.selected].bool ?? false
-                    let tip = choiceDic[Fields.tip].string ?? ""
-                    let value = choiceDic[Fields.value].string ?? ""
-                    
-                    let option = Option(value: value, tip: tip, isSelected: selected, isCompleted: completed)
-                    choices.append(option)
-                }
-            }
+        guard let result = mrqResponseDic[Fields.results]?.arrayValue.first?.arrayValue,
+            result.count >= 2  else {
+                let mrqResponse = MRQResponse(id: id, completed: questionCorrectStatus, message: message!, choicesStatus: [])
+                return .success(mrqResponse)
         }
+        id = result[0].stringValue
+        let optionResult = result[1].dictionaryValue
+        questionCorrectStatus = optionResult[Fields.status]?.stringValue == "correct"
+        let choicesArray = (optionResult[Fields.choices]?.arrayValue)
+        let choices: [Option] = choicesArray.map { (array: [JSON]) in
+            array.map { choiceDic in
+                let completed = choiceDic[Fields.completed].boolValue
+                let selected = choiceDic[Fields.selected].boolValue
+                let tip = choiceDic[Fields.tip].stringValue
+                let value = choiceDic[Fields.value].stringValue
+                
+                return Option(value: value, tip: tip, isSelected: selected, isCompleted: completed)
+
+            }
+        } ?? []
         
-        let mrqResponse = MRQResponse(id: id, completed: questionCorrectStatus, message: message, choicesStatus: choices)
+        let mrqResponse = MRQResponse(id: id, completed: questionCorrectStatus, message: message!, choicesStatus: choices)
         return .success(mrqResponse)
     }
     
@@ -74,7 +66,7 @@ struct MRQAPI {
                               path: path,
                               requiresAuth: true,
                               body: .jsonBody(JSON(requestBody)),
-                              deserializer: .jsonResponse(mrqSubmitResponseDeserializer)
+                              deserializer: .jsonResponse(deserializerResponse)
         )
     }
 }

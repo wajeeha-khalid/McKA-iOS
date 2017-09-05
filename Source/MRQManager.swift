@@ -13,23 +13,23 @@ import MckinseyXBlocks
 class MRQManager: NSObject, MRQResultMatching {
     let blockID: String
     let courseID: String
-    let enviroment: RouterEnvironment
+    let networkManager: NetworkManager
     var stream: edXCore.Stream<MRQResponse>?
     
-    public init(blockID: String, courseID: String, environment: RouterEnvironment) {
+    public init(blockID: String, courseID: String, networkManager: NetworkManager) {
         self.blockID = blockID
         self.courseID = courseID
-        self.enviroment = environment
+        self.networkManager = networkManager
     }
     
     func matchMRQ(selectedValues: [String], for questionID: String, completion: @escaping (MRQResponse) -> Void) {
-        self.stream = mrqResponseStream(questionId: questionID, selectedValues: selectedValues, courseId: courseID, blockId: blockID)
-        self.stream?.listen(self, action: { (result) in
+        stream = mrqResponseStream(questionId: questionID, selectedValues: selectedValues, courseId: courseID, blockId: blockID)
+        stream?.listen(self, action: { (result) in
             result.ifSuccess({ (mrqResponse: MRQResponse) -> Void in
                 completion(mrqResponse)
             })
             result.ifFailure({ (error) in
-                print(error.localizedDescription)
+                Logger.logInfo("MRQ", error.localizedDescription)
             })
         })
     }
@@ -38,7 +38,7 @@ class MRQManager: NSObject, MRQResultMatching {
 extension MRQManager {
     func mrqResponseStream(questionId: String, selectedValues: [String], courseId: String, blockId: String) -> edXCore.Stream<MRQResponse> {
         let request = MRQAPI.submitMRQ(questionId: questionId, values: selectedValues, courseId: courseId, blockId: blockId)
-        return enviroment.networkManager.streamForRequest(request)
+        return self.networkManager.streamForRequest(request)
     }
 }
 

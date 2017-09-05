@@ -10,7 +10,7 @@ import Foundation
 import edXCore
 import SwiftyJSON
 
-class MCQResponseData: NSObject {
+struct MCQResponse {
     struct Keys {
         static let id = "id"
         static let value = "submission"
@@ -30,28 +30,27 @@ class MCQResponseData: NSObject {
         self.tip = tip
     }
     init?(dictionary: [String: Any]) {
-        self.id = dictionary[Keys.id] as? String ?? ""
-        self.value = dictionary[Keys.value] as? String ?? ""
-        self.status = dictionary[Keys.status] as? Bool ?? false
-        self.tip = dictionary[Keys.tip] as? String ?? ""
-        
-        super.init()
-    }
-    
-    convenience init?(json: JSON) {
-        let array = json.arrayValue
-        if array.count >= 2 {
-            let id = array[0].stringValue
-            guard var dictionary = json.dictionaryObject else {
-                self.init(dictionary:[:])
-                return nil
-            }
-            dictionary["id"] = id
-            self.init(dictionary: dictionary)
-        } else {
-            self.init(dictionary:[:])
+        guard let id = dictionary[Keys.id] as? String,
+        let value = dictionary[Keys.value] as? String,
+        let status = dictionary[Keys.status] as? Bool,
+        let tip = dictionary[Keys.tip] as? String else {
             return nil
         }
+        self.id = id
+        self.value = value
+        self.status = status
+        self.tip = tip
+    }
+    
+    init?(json: JSON) {
+        let array = json.arrayValue
+        
+        guard array.count >= 2, var dictionary = json.dictionaryObject else {
+            return nil
+        }
+        let id = array[0].stringValue
+        dictionary[Keys.id] = id
+        self.init(dictionary: dictionary)
     }
 }
 
@@ -64,50 +63,41 @@ struct MCQAPI {
         static let status = "status"
     }
 
-    static func mcqResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<MCQResponseData> {
-
-        //TODO: Need to implement the mapping of response to MCQResponseData and send the response for MCQResponse
+    static func deserializerResponse(_ response: HTTPURLResponse, json: JSON) -> Result<MCQResponse> {
        guard let mcqResponse = json.dictionary else {
             return .failure(NSError())
         }
         
-        print(mcqResponse.description)
+        Logger.logInfo("MCQ", mcqResponse.description)
         
         var questionCorrectStatus = false
         var id: String = ""
         var value: String = ""
         var tip: String = ""
         
-        var results = mcqResponse[Keys.results]?.arrayValue
-        results = results?[0].arrayValue
-        if (results?.count ?? 0) >= 2 {
-            id = (results?[0].stringValue) ?? ""
-            if let optionResult = results?[1].dictionaryValue {
-                if optionResult[Keys.status]?.stringValue == "correct" {
-                    //correct
-                    questionCorrectStatus = true
-                }
-                else {
-                    //incorrect or partial
-                    questionCorrectStatus = false
-                }
-                value = (optionResult[Keys.value]?.stringValue) ?? ""
-                tip = (optionResult[Keys.tip]?.stringValue) ?? ""
-            }
+        guard let result = mcqResponse[Keys.results]?.arrayValue.first?.arrayValue,
+            result.count >= 2  else {
+                let mcqResponseData = MCQResponse(id: id, value: value, status: questionCorrectStatus, tip: tip)
+                return .success(mcqResponseData)
         }
+        id = result[0].stringValue
+        let optionResult = result[1].dictionaryValue
+        questionCorrectStatus = optionResult[Keys.status]?.stringValue == "correct"
+        value = (optionResult[Keys.value]?.stringValue) ?? ""
+        tip = (optionResult[Keys.value]?.stringValue) ?? ""
         
-        let mcqResponseData = MCQResponseData(id: id, value: value, status: questionCorrectStatus, tip: tip)
+        let mcqResponseData = MCQResponse(id: id, value: value, status: questionCorrectStatus, tip: tip)
         return .success(mcqResponseData)
     }
     
-    static func getMCQResponse(_ questionId: String, value: String, courseId: String, blockId: String) -> NetworkRequest<MCQResponseData> {
+    static func getMCQResponse(_ questionId: String, value: String, courseId: String, blockId: String) -> NetworkRequest<MCQResponse> {
         let path = "/courses/{course_id}/xblock/{block_id}/handler/submit".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
         let requestBody = [questionId: ["value": value]]
         return NetworkRequest(method: .POST,
                        path: path,
                        requiresAuth: true,
                        body: .jsonBody(JSON(requestBody)),
-                       deserializer: .jsonResponse(mcqResponseDeserializer)
+                       deserializer: .jsonResponse(deserializerResponse)
         )
     }
 }
