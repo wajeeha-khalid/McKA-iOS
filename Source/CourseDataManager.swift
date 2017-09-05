@@ -52,7 +52,7 @@ open class CourseDataManager: NSObject {
         return networkManager.streamForRequest(request)
     }
     
-    func streamForCourseAnnouncements(_ courseID: String) -> edXCore.Stream<CourseAnnouncementContent> {
+    func streamForCourseAnnouncements(_ courseID: String) -> edXCore.Stream<[CourseAnnouncement]> {
         let request = AnnouncementsAPI.getAnnouncementsContent(courseID)
         return networkManager.streamForRequest(request)
     }

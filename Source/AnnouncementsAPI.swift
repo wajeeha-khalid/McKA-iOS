@@ -9,16 +9,21 @@
 import Foundation
 import SwiftyJSON
 
-class CourseAnnouncementContent {
+class CourseAnnouncement {
     struct Keys {
+        static let date = "date"
+        static let id = "id"
         static let content = "content"
     }
     
     let content: String?
+    let id: String?
+    let date: String?
     
     init(dictionary: [String: Any]) {
         self.content = dictionary[Keys.content] as? String
-        print(self.content ?? "")
+        self.id = dictionary[Keys.id] as? String
+        self.date = dictionary[Keys.date] as? String
     }
     
     convenience init?(json: JSON) {
@@ -29,20 +34,31 @@ class CourseAnnouncementContent {
         self.init(dictionary: dict)
     }
     
-    init(content: String) {
+    init(id: String, date: String,content: String) {
+        self.id = id
+        self.date = date
         self.content = content
     }
 }
 
 struct AnnouncementsAPI {
     
-    static func courseContentDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<CourseAnnouncementContent> {
-        let courseAnnouncementContent = CourseAnnouncementContent(content: json["content"].stringValue)
-        return .success(courseAnnouncementContent)
+    static func courseContentDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<[CourseAnnouncement]> {
+        let courseContentUpdates = json.arrayValue.filter{ courseUpdateContent in
+            courseUpdateContent["status"].stringValue == "visible"
+        }
+        let courseUpdates = courseContentUpdates.flatMap{ courseUpdate -> CourseAnnouncement? in
+            let id = courseUpdate["id"].stringValue
+            let date = courseUpdate["date"].stringValue
+            let content = courseUpdate["content"].stringValue
+            let courseAnnouncement = CourseAnnouncement(id: id, date: date, content: content)
+            return courseAnnouncement
+        }
+        return .success(courseUpdates)
     }
     
-    static func getAnnouncementsContent(_ courseId: String) -> NetworkRequest<CourseAnnouncementContent> {
-        let path = "/api/server/courses/{course_id}/updates".oex_format(withParameters: ["course_id": courseId])
+    static func getAnnouncementsContent(_ courseId: String) -> NetworkRequest<[CourseAnnouncement]> {
+        let path = "/api/mobile/v0.5/course_info/{course_id}/updates".oex_format(withParameters: ["course_id": courseId])
         return NetworkRequest(
             method: .GET,
             path: path,

@@ -6,18 +6,23 @@
 //  Copyright © 2017 edX. All rights reserved.
 //
 
+//  TODO: In the current senario the app is crashing if there is no announcements or the data is failed to load.
+
 import UIKit
 
 class AnnouncementsViewController: UIViewController {
 
     public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & OEXRouterProvider & OEXInterfaceProvider & OEXRouterProvider
     
+    @IBOutlet weak var noAnnouncementLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
+    
     fileprivate let environment: Environment
     fileprivate let courseId: String?
     
-    var stream: edXCore.Stream<CourseAnnouncementContent>?
-    var courseAnnouncementContent: CourseAnnouncementContent?
+    var stream: edXCore.Stream<[CourseAnnouncement]>?
+    var courseAnnouncements: [CourseAnnouncement]?
     
     let loadController: LoadStateViewController
     
@@ -54,18 +59,36 @@ class AnnouncementsViewController: UIViewController {
     }
     
     private func showStreamData() {
-        if (courseAnnouncementContent != nil) {
-            self.webView.loadHTMLString((courseAnnouncementContent?.content)!, baseURL: nil)
+        //TODO: adjust the loader view according to states rightnow the app is crashing if data fails to load in web view.
+        if (courseAnnouncements != nil) {
+            if (courseAnnouncements?.count)! > 0 {
+                self.dateLabel.isHidden = false
+                self.webView.isHidden = false
+                self.dateLabel.text = courseAnnouncements?[0].date
+                self.webView.loadHTMLString((courseAnnouncements?[0].content)!, baseURL: nil)
+            } else {
+                self.dateLabel.isHidden = true
+                self.webView.isHidden = true
+            }
         }
     }
 
     private func addListeners() {
         stream?.listen(self, action: { (result) in
-            result.ifSuccess({ (courseAnnouncementContent: CourseAnnouncementContent) -> Void in
-                self.courseAnnouncementContent = courseAnnouncementContent
-                self.showStreamData()
+            result.ifSuccess({ (courseAnnouncements: [CourseAnnouncement]) -> Void in
+                if courseAnnouncements.count > 0 {
+                    self.courseAnnouncements = courseAnnouncements
+                    self.showStreamData()
+                } else {
+                    self.dateLabel.isHidden = true
+                    self.webView.isHidden = true
+                    self.loadController.state = LoadState.failed(NSError())
+                }
+                
             })
             result.ifFailure({ (error) in
+                self.webView.isHidden = true
+                self.dateLabel.isHidden = true
                 self.loadController.state = LoadState.failed(error as NSError)
             })
         })
@@ -85,6 +108,7 @@ extension AnnouncementsViewController: UIWebViewDelegate {
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        self.loadController.state = .failed()
         self.loadController.state = LoadState.failed(error as NSError)
     }
 
