@@ -8,10 +8,33 @@
 
 import UIKit
 
-enum LessonProgressState {
+// An enum to track the progress of a course component
+enum ComponentProgressState: CustomStringConvertible {
     case complete
     case inProgress
     case notStarted
+    
+    var description: String {
+        switch self {
+        case .complete:
+            return "Completed"
+        case .inProgress:
+            return "In Progress"
+        case .notStarted:
+            return "Not Started"
+        }
+    }
+    
+    var image: UIImage {
+        switch self {
+        case .complete:
+            return #imageLiteral(resourceName: "completed")
+        case .inProgress:
+            return #imageLiteral(resourceName: "in_progress")
+        case .notStarted:
+            return #imageLiteral(resourceName: "downloaded")
+        }
+    }
 }
 
 public protocol LessonViewModelDataSource {
@@ -32,7 +55,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
     
     var lessons: edXCore.Stream<[LessonViewModel]> {
         let courseLoadingStream = querier.childrenOfBlockWithID(nil)
-        return courseLoadingStream.transform { group -> edXCore.Stream<[(CourseBlock, LessonProgressState)]> in
+        return courseLoadingStream.transform { group -> edXCore.Stream<[(CourseBlock, ComponentProgressState)]> in
             let streams =  group.children.filter{ lesson in
                 lesson.displayName.lowercased().contains("discussion_course") == false
                 } .map { lesson in
@@ -47,7 +70,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
                 }
         }
     }
-    private func progressForLesson(withID lessonID: CourseBlockID)  -> edXCore.Stream<LessonProgressState> {
+    private func progressForLesson(withID lessonID: CourseBlockID)  -> edXCore.Stream<ComponentProgressState> {
         
         func units(for lessonID: CourseBlockID) -> edXCore.Stream<[CourseBlock]> {
             return querier.childrenOfBlockWithID(lessonID).transform { lesson -> edXCore.Stream<[CourseBlock]> in
@@ -78,7 +101,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
                 return Stream(value: .inProgress)
             } else {
                 
-                let lessonUnits = units(for: lessonID).transform { units -> edXCore.Stream<[LessonProgressState]> in
+                let lessonUnits = units(for: lessonID).transform { units -> edXCore.Stream<[ComponentProgressState]> in
                     let streams = units.map {
                         self.progressForUnit(withID: $0.blockID)
                     }
@@ -96,7 +119,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
         }
     }
     
-    private func progressForUnit(withID unitID: CourseBlockID) -> edXCore.Stream<LessonProgressState> {
+    private func progressForUnit(withID unitID: CourseBlockID) -> edXCore.Stream<ComponentProgressState> {
         
         func numberOfComponentsInUnit(withID unitID: CourseBlockID) -> edXCore.Stream<Int> {
             return querier.childrenOfBlockWithID(unitID).map {
@@ -119,7 +142,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
 
 public struct LessonViewModel {
     let lessonID: CourseBlockID
-    let state: LessonProgressState
+    let state: ComponentProgressState
     let title: String
     let number: Int
 }

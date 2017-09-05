@@ -235,9 +235,34 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         self.pageViewController.dataSource = self
         self.pageViewController.delegate = self
         
+        let moduleListItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ModuleListIcon"), style: .plain, target: self, action: #selector(self.showModuleList))
+        navigationItem.rightBarButtonItem = moduleListItem
         addStreamListeners()
     }
-
+    
+    func showModuleList() {
+        
+        // a hack to quickly get the title without calculating
+        let lessonTitle = titleView.lessonName
+        
+        courseQuerier.unitsForLesson(withID: self.blockID!).map {
+            $0.enumerated().map({ (index, block) in
+                ModuleViewModel(identifier: block.blockID, title: block.displayName, progress: .notStarted, duration: 9, number: index + 1)
+            })
+        }.extendLifetimeUntilFirstResult { result in
+            switch result {
+            case .success(let modules):
+                
+                let moduleListViewController = ModuleTableViewController(lessonTitle: lessonTitle ?? "", modules: modules)
+                moduleListViewController.delegate = self
+                let drawerViewController = BottomDrawerViewController(childViewController: moduleListViewController, scrollView: moduleListViewController.tableView)
+                self.present(drawerViewController, animated: true, completion: nil)
+            case _:
+                break
+            }
+        }
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         // required by the compiler because UIViewController implements NSCoding,
         // but we don't actually want to serialize these things
@@ -360,6 +385,20 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         if let cursor = contentLoader.value {
         
             let item = cursor.current
+            
+            //update lesson id to track correct module list
+            courseQuerier.blockWithID(item.parent)
+                .transform {
+                    self.courseQuerier.lessonContaining(unit: $0)
+                }.extendLifetimeUntilFirstResult { result in
+                    switch result {
+                    case .success(let lesson):
+                        self.blockID = lesson.blockID
+                    case _:
+                        break
+                    }
+            }
+            
             
             // TODO: just leaving this if block here because it does some stuff related to course
             // progress. Once we implement progress we should Remove this from here...
@@ -703,7 +742,31 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
 }
 
 
-
+extension CourseContentPageViewController: ModuleTableViewControllerDelegate {
+    func moduleTableViewController(_ vc: ModuleTableViewController, didSelectModuleWithID moduleId: CourseBlockID) {
+        dismiss(animated: true, completion: nil)
+        
+        let current = contentLoader.value?.current
+        
+        // if we are already in the selected module don't do anything
+        if current?.parent == moduleId {
+            return
+        }
+        
+        contentLoader.value?.updateCurrentToItemMatching({ item in
+            item.parent == moduleId
+        })
+        
+        guard let newController = contentLoader.value?.current.block,
+            let viewController = controllerForBlock(newController) else {
+            return
+        }
+    
+        pageViewController.setViewControllers([viewController], direction: .forward, animated: false, completion: nil)
+        updateNavigationForEnteredController(viewController)
+        
+    }
+}
 
 // MARK: Testing
 extension CourseContentPageViewController {

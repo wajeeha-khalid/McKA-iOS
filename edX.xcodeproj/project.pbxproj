@@ -118,6 +118,7 @@
 		1AFEB1B91BBD88F3004C471D /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AFEB1BB1BBD88F3004C471D /* languages.json */; };
 		41030C781EE69EEB0026D72F /* ChatLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
+		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
 		415F84751F32F447004E54EE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; };
 		415F84761F330842004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
@@ -129,6 +130,7 @@
 		416F09291F39DC1B0074D32A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09281F39DC1A0074D32A /* AVFoundation.framework */; };
 		416F092B1F39DC680074D32A /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F092A1F39DC680074D32A /* JavaScriptCore.framework */; };
 		4160951B1F56A24500742589 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4160951A1F56A24500742589 /* Icons.swift */; };
+		418BCB221F53F36C0058470E /* DrawerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418BCB211F53F36C0058470E /* DrawerAnimation.swift */; };
 		41A0FC9A1EF7B331004FE882 /* ContentNavigationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */; };
 		41A0FC9C1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */; };
 		41A2AB321F1C8F91006B1727 /* UIImage+Blending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A2AB311F1C8F91006B1727 /* UIImage+Blending.swift */; };
@@ -1074,6 +1076,9 @@
 		416F09281F39DC1A0074D32A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		416F092A1F39DC680074D32A /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		4160951A1F56A24500742589 /* Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleListTableViewController.swift; sourceTree = "<group>"; };
+		414BBFF61F502A5B00B0C9C9 /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
+		418BCB211F53F36C0058470E /* DrawerAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerAnimation.swift; sourceTree = "<group>"; };
 		41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationPolicy.swift; sourceTree = "<group>"; };
 		41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCompletionPolicyTests.swift; sourceTree = "<group>"; };
 		41A2AB311F1C8F91006B1727 /* UIImage+Blending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Blending.swift"; sourceTree = "<group>"; };
@@ -2287,6 +2292,15 @@
 				41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */,
 			);
 			name = Chat;
+			sourceTree = "<group>";
+		};
+		414BBFF11F5000C800B0C9C9 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */,
+				418BCB211F53F36C0058470E /* DrawerAnimation.swift */,
+			);
+			name = Modules;
 			sourceTree = "<group>";
 		};
 		46D567A51B0292D40068F823 /* Discussion */ = {
@@ -3599,6 +3613,7 @@
 				416F09241F39DBDF0074D32A /* libxml2.tbd */,
 				416F09221F39DBC90074D32A /* libc++.tbd */,
 				416F09201F39DBA40074D32A /* MediaAccessibility.framework */,
+				414BBFF61F502A5B00B0C9C9 /* Pulley.framework */,
 				41B43F181F2F1C6F00D6A880 /* Alamofire.framework */,
 				41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */,
 				41B43F141F2F1C6500D6A880 /* SnapKit.framework */,
@@ -3629,6 +3644,7 @@
 		BECB7B141924C0C3009C77F1 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				414BBFF11F5000C800B0C9C9 /* Modules */,
 				41030C761EE69ECA0026D72F /* Chat */,
 				1972E3B619BF474900085F08 /* Analytics */,
 				772619B41ADC5CE8005BD7E4 /* Application */,
@@ -4848,6 +4864,7 @@
 				8FE04B4D1A1E2637007F88B8 /* OEXFBSocial.m in Sources */,
 				9EDB10B41B0C732300C760C6 /* CourseGenericBlockTableViewCell.swift in Sources */,
 				B4D5C7EC1A6FBAA300427D1D /* OEXPersistentCredentialStorage.m in Sources */,
+				418BCB221F53F36C0058470E /* DrawerAnimation.swift in Sources */,
 				7713DFBF1AC3C16C005A1756 /* OEXRegisteringUserDetails.m in Sources */,
 				1894051F1E34BAFF00AD6776 /* AudioBlockViewController.swift in Sources */,
 				77FDF40F1AFBAE7700E8C639 /* OEXRouter+Swift.swift in Sources */,
@@ -4896,6 +4913,7 @@
 				BECB7B5A1924D760009C77F1 /* SWRevealViewController.m in Sources */,
 				B4B6D62B1A949F1B000F44E8 /* OEXRegistrationFieldTextController.m in Sources */,
 				189405231E34BFBE00AD6776 /* OEXAudioPlayerInterface.m in Sources */,
+				414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */,
 				774B393B1B5EEF8A00595D33 /* UIAlertController+Selection.swift in Sources */,
 				1AC147391BCEC09F00E0A230 /* UIImage+OEXHelpers.swift in Sources */,
 				775DF4181AFAAC8C00F96B2F /* DataManager.swift in Sources */,
