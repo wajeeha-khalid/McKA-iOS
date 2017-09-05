@@ -91,15 +91,15 @@ public struct CourseOutline {
                         var data = body[Fields.StudentViewData]
                         let components = data["components"]
                         
-                        guard let ourComponent = components.arrayValue.filter ({
-                            $0.dictionaryValue.keys.contains("question")
+                        guard let requiredComponent = components.arrayValue.filter ({
+                            $0.dictionaryValue.keys.contains("type")
                         }).first else {
                             type = .unknown("problem-builder")
                             continue
                         }
                         
-                        if ourComponent["type"].string == "pb-mcq" {
-                            let studentViewData = ourComponent
+                        if requiredComponent["type"].string == "pb-mcq" {
+                            let studentViewData = requiredComponent
                             let question = studentViewData[Fields.Question]
                             let title = studentViewData[Fields.Title]
                             let questionID = studentViewData[Fields.QuestionId]
@@ -116,8 +116,8 @@ public struct CourseOutline {
                             }
                             let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
                             type = .mcq(mcq)
-                        } else if ourComponent["type"].string == "pb-mrq" {
-                            let studentViewData = ourComponent
+                        } else if requiredComponent["type"].string == "pb-mrq" {
+                            let studentViewData = requiredComponent
                             let question = studentViewData[Fields.Question]
                             let title = studentViewData[Fields.Title]
                             let questionID = studentViewData[Fields.QuestionId]
@@ -138,43 +138,6 @@ public struct CourseOutline {
                             type = .unknown("problem-builder")
                             continue
                         }
-                        
-                   /* case .MCQ:
-                        let studentViewData = body[Fields.StudentViewData]
-                        let question = studentViewData[Fields.Question]
-                        let title = studentViewData[Fields.Title]
-                        let questionID = studentViewData[Fields.QuestionId]
-                        let message = studentViewData[Fields.Message]
-                        var choiceToTipMap: [String: String] = [:]
-                        studentViewData[Fields.Tips].arrayValue.forEach { tip in
-                            for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
-                                choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
-                            }
-                        }
-                        let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
-                            let choiceID = option["value"].stringValue
-                            return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
-                        }
-                        let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
-                        type = .mcq(mcq)
-                    case .MRQ:
-                        let studentViewData = body[Fields.StudentViewData]
-                        let question = studentViewData[Fields.Question]
-                        let title = studentViewData[Fields.Title]
-                        let questionID = studentViewData[Fields.QuestionId]
-                        let message = studentViewData[Fields.Message]
-                        var choiceToTipMap: [String: String] = [:]
-                        studentViewData[Fields.Tips].arrayValue.forEach { tip in
-                            for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
-                                choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
-                            }
-                        }
-                        let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
-                            let choiceID = option["value"].stringValue
-                            return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
-                        }
-                        let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
-                        type = .mrq(mcq)*/
                     case CourseBlock.Category.HTML:
                         let studentViewData = body[Fields.StudentViewData]
                         let content = studentViewData[Fields.html].stringValue
