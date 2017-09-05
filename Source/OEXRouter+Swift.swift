@@ -8,6 +8,7 @@
 
 import Foundation
 import MckinseyXBlocks
+
 // The router is an indirection point for navigation throw our app.
 
 // New router logic should live here so it can be written in Swift.
@@ -30,6 +31,7 @@ enum CourseBlockDisplayType {
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
     case mcq(MCQ)
+    case freeText(FreeText)
     case mrq(MCQ)
     
     var isUnknown : Bool {
@@ -53,6 +55,7 @@ extension CourseBlock {
         case let .ooyalaVideo(contentID, playerCode, description): return .ooyalaVideo(contentID: contentID, playerCode: playerCode, description: description)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
+        case let .freeText(question): return .freeText(question)
         case let .discussion(discussionModel): return .discussion(discussionModel)
         case let .mcq(question): return .mcq(question)
         case let .mrq(question): return .mrq(question)
@@ -104,6 +107,8 @@ extension OEXRouter {
         case .mcq:
             fallthrough
         case .mrq:
+            fallthrough
+        case .freeText:
             fallthrough
         case .video:
             fallthrough
@@ -185,6 +190,13 @@ extension OEXRouter {
             let viewController = MRQViewController(question: mrqQuestion, resultMatcher: mrqManager)
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
+            return adapter
+        case .freeText(let question):
+            let message = question.message != "" ? question.message : nil
+            let freeTextQuestion = FTQuestion(id: question.id, question: question.question, message: message)
+            let ftManager = FTManager(blockID: blockID!, courseID: courseID, environment: environment)
+            let freeTextController = FTPulleyManagerViewController(question: freeTextQuestion, ftSubmitProtocol: ftManager)
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: freeTextController)
             return adapter
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
@@ -387,4 +399,6 @@ extension OEXRouter {
         showContentStack(withRootController: debugMenu, animated: true)
     }
 }
+
+
 
