@@ -79,7 +79,7 @@ open class BrandingThemes: NSObject {
     public lazy var nextModuleIcon: UIImage = {
         return IconBuilder.arrowWithCircularBackground(
             ofSize: CGSize(width: 24, height: 24),
-            backgroundColor : self.getNavigationBarColor(),
+            backgroundColor : UIColor(hexString: "#2790F0", alpha: 1.0),
             arrowWidth: 12.0,
             arrowHeight: 1.5,
             arrowColor: UIColor.white,
@@ -90,7 +90,7 @@ open class BrandingThemes: NSObject {
     public lazy var prevModuleIcon: UIImage = {
         return IconBuilder.arrowWithCircularBackground(
             ofSize: CGSize(width: 24, height: 24),
-            backgroundColor : self.getNavigationBarColor(),
+            backgroundColor : UIColor(hexString: "#2790F0", alpha: 1.0),
             arrowWidth: 12.0,
             arrowHeight: 1.5,
             arrowColor: UIColor.white,
@@ -126,7 +126,7 @@ open class BrandingThemes: NSObject {
             backgroundColor : UIColor.clear,
             arrowWidth: 16.0,
             arrowHeight: 2.0,
-            arrowColor: self.getNavigationBarColor(),
+            arrowColor: UIColor(hexString: "#2790F0", alpha: 1.0),
             arrowDirection: .left
         )
     }()
@@ -137,7 +137,7 @@ open class BrandingThemes: NSObject {
             backgroundColor : UIColor.clear,
             arrowWidth: 16.0,
             arrowHeight: 2.0,
-            arrowColor: self.getNavigationBarColor(),
+            arrowColor: UIColor(hexString: "#2790F0", alpha: 1.0),
             arrowDirection: .right
         )
     }()

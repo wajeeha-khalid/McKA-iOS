@@ -32,7 +32,7 @@ enum ComponentProgressState: CustomStringConvertible {
         case .inProgress:
             return #imageLiteral(resourceName: "in_progress")
         case .notStarted:
-            return #imageLiteral(resourceName: "not_started")
+            return #imageLiteral(resourceName: "downloaded")
         }
     }
 }
