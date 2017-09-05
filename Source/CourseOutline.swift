@@ -73,7 +73,7 @@ public struct CourseOutline {
                 let multiDevice = body[Fields.StudentViewMultiDevice].bool ?? false
                 let blockCounts : [String:Int] = (body[Fields.BlockCounts].object as? NSDictionary)?.mapValues {
                     $0 as? Int ?? 0
-                } ?? [:]
+                    } ?? [:]
                 let graded = body[Fields.Graded].bool ?? false
                 let viewed = body[Fields.Viewed].bool ?? false
                 var type : CourseBlockType
@@ -134,6 +134,19 @@ public struct CourseOutline {
                             }
                             let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
                             type = .mrq(mcq)
+                        } else if requiredComponent["type"].string == "pb-answer" {
+                            let studentViewData = data
+                            let message = studentViewData["messages"].dictionaryObject
+                            var completionMsg = ""
+                            if let completedMsg = message?["completed"] as? String {
+                                completionMsg = completedMsg
+                            }
+                            
+                            let title = body[Fields.DisplayName].stringValue
+                            let question = requiredComponent[Fields.Question]
+                            let id = requiredComponent["id"]
+                            let freeText = FreeText(id: id.stringValue, title: title, question: question.stringValue, message: completionMsg)
+                            type = .freeText(freeText)
                         } else {
                             type = .unknown("problem-builder")
                             continue
@@ -158,7 +171,7 @@ public struct CourseOutline {
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXVideoSummary(dictionary: bodyData ?? [:], videoID: blockID, name : name ?? Strings.untitled)
                         type = .video(summary)
-                        //Added By Ravi on 22Jan'17 to Implement AudioPodcast
+                    //Added By Ravi on 22Jan'17 to Implement AudioPodcast
                     case CourseBlock.Category.Audio:
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXAudioSummary(dictionary: bodyData ?? [:], studentUrl:blockID ,name : name ?? Strings.untitled )
@@ -214,6 +227,7 @@ public enum CourseBlockType {
     case video(OEXVideoSummary)
     case mcq(MCQ)
     case mrq(MCQ)
+    case freeText(FreeText)
     case ooyalaVideo(contentID: String, playerCode: String, htmlDescription: String?)
     case problem
     case html(String)
@@ -263,8 +277,6 @@ open class CourseBlock {
         case Section = "sequential"
         case Unit = "vertical"
         case Video = "video"
-       // case MCQ = "pb-mcq"
-       // case MRQ = "pb-mrq"
         case ProblemBuilder = "problem-builder"
         case Discussion = "discussion"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
@@ -322,16 +334,16 @@ open class CourseBlock {
     open var viewedState : CellType?
     open let viewed : Bool?
     public init(type : CourseBlockType,
-        children : [CourseBlockID],
-        blockID : CourseBlockID,
-        name : String?,
-        blockCounts : [String:Int] = [:],
-        blockURL : URL? = nil,
-        webURL : URL? = nil,
-        format : String? = nil,
-        multiDevice : Bool,
-        viewed : Bool = false,
-        graded : Bool = false) {
+                children : [CourseBlockID],
+                blockID : CourseBlockID,
+                name : String?,
+                blockCounts : [String:Int] = [:],
+                blockURL : URL? = nil,
+                webURL : URL? = nil,
+                format : String? = nil,
+                multiDevice : Bool,
+                viewed : Bool = false,
+                graded : Bool = false) {
         self.type = type
         self.children = children
         self.name = name
@@ -347,6 +359,12 @@ open class CourseBlock {
 }
 
 //MARK: MCQ
+public struct FreeText {
+    public let id: String
+    public let title: String
+    public let question: String
+    public let message: String
+}
 public struct Choice {
     public let content: String
     public let value: String

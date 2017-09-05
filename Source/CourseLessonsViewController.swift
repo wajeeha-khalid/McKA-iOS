@@ -65,6 +65,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
             }
             return joinStreams(streams)
             }.map { progressStates in
+                
                 progressStates.enumerated().map{ (index, blockState)  in
                     return LessonViewModel(lessonID: blockState.0.blockID, state: blockState.1, title: blockState.0.displayName, number:index )
                 }
