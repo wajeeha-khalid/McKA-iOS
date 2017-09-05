@@ -7,12 +7,29 @@
 //
 
 import Foundation
+import MckinseyXBlocks
+
+
 
 ///Types(mostly vc's) that want to show custom actions in the bottom bar should implement this
 /// protocol and return their custom actions. This protocol will be replaced once we get the
 /// XBlock Protocol in master since that also has this property...
 protocol ActionViewProvider {
     var actionView: UIView? { get }
+}
+
+extension ActionViewProvider where Self: XBlock {
+    var actionView: UIView? {
+        return self.primaryActionView
+    }
+}
+
+extension MRQViewController: ActionViewProvider {
+    
+}
+
+extension MCQViewController: ActionViewProvider {
+    
 }
 
 //This view is added as the titleView of navigationItem to display lesson title and module title
@@ -90,6 +107,8 @@ extension CourseBlockDisplayType {
     var isCacheable : Bool {
         switch self {
         case .video: return false
+        case .mcq: return false
+        case .mrq: return false
         case .ooyalaVideo: return false
         case .audio: return false //Added By Ravi on 22Jan'17 to Implement AudioPodcast
         case .unknown, .html(_), .outline, .lesson, .unit, .discussion: return true
@@ -129,6 +148,7 @@ class BottomBar: UIView {
             make.centerY.equalTo(self)
             make.leading.equalTo(self).offset(StandardHorizontalMargin)
         }
+
         leftButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         rightButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         rightButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
@@ -155,7 +175,7 @@ class BottomBar: UIView {
 open class CourseContentPageViewController : UIViewController,UIPageViewControllerDataSource, UIPageViewControllerDelegate, CourseBlockViewController, StatusBarOverriding, InterfaceOrientationOverriding {
     
     public typealias Environment = OEXAnalyticsProvider & DataManagerProvider & OEXRouterProvider & OEXSessionProvider & NetworkManagerProvider & ReachabilityProvider & OEXInterfaceProvider
-    
+
     fileprivate let pageViewController: UIPageViewController
     fileprivate let initialLoadController : LoadStateViewController
     fileprivate let environment : Environment
@@ -200,6 +220,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
             make.leading.equalTo(view)
             make.bottom.equalTo(view)
         }
+        
         pageViewController.view.snp.makeConstraints { make in
             make.top.equalTo(view)
             make.leading.equalTo(view)
@@ -292,7 +313,6 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         guard let blockId = notification.userInfo?["blockId"] as? String else { return }
         guard blockId == self.componentID else { return }
         guard let controller = pageViewController.viewControllers?.first else { return }
-
         storeViewedStatus()
         updateNavigationBars(controller)
     }
@@ -326,6 +346,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                 
                 return
             }, failure : {[weak self] error in
+
                 self?.pageViewController.dataSource = nil
              self?.initialLoadController.state = LoadState.failed(NSError.oex_courseContentLoadError())
             }
