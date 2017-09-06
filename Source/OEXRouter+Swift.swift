@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MckinseyXBlocks
 
 // The router is an indirection point for navigation throw our app.
 
@@ -25,10 +26,13 @@ enum CourseBlockDisplayType {
     case lesson
     case unit
     case video
+    case ooyalaVideo(contentID: String, playerCode: String, description: String?)
     case html(CourseHTMLBlockSubkind)
     case discussion(DiscussionModel)
     case audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+    case mcq(MCQ)
+    case freeText(FreeText)
+    case mrq(MCQ)
     
     var isUnknown : Bool {
         switch self {
@@ -48,10 +52,13 @@ extension CourseBlock {
         case .chapter: return .lesson
         case .section: return .outline
         case .unit: return .unit
+        case let .ooyalaVideo(contentID, playerCode, description): return .ooyalaVideo(contentID: contentID, playerCode: playerCode, description: description)
         case let .video(summary): return (summary.isSupportedVideo) ? .video : .unknown
         case let .audio(summary): return (summary.onlyOnWeb || summary.isYoutubeVideo) ? .unknown : .audio //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-
+        case let .freeText(question): return .freeText(question)
         case let .discussion(discussionModel): return .discussion(discussionModel)
+        case let .mcq(question): return .mcq(question)
+        case let .mrq(question): return .mrq(question)
         }
     }
 }
@@ -97,7 +104,15 @@ extension OEXRouter {
             controller.navigationController?.pushViewController(outlineController, animated: true)
         case .html:
             fallthrough
+        case .mcq:
+            fallthrough
+        case .mrq:
+            fallthrough
+        case .freeText:
+            fallthrough
         case .video:
+            fallthrough
+        case .ooyalaVideo:
             fallthrough
         case .audio:
             fallthrough
@@ -135,9 +150,54 @@ extension OEXRouter {
         case .video:
             let controller = VideoBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
+        case let .ooyalaVideo(contentID, playerCode, description):
+            // We are only going to support iOS 9 and above but currently chaging the deployment
+            // target to 9.0 uncovers a some 150 warings that are there due to deprecations
+            // it would take some time to fix those warnigns so for now i have wrapped the framework
+            // usage around iOS 9.0 availability
+            if #available(iOS 9.0, *) {
+                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: playerCode, description: description)
+                player.play()
+                let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: player)
+
+                return adapter
+            } else {
+                fatalError("We need to upgrade build settings to iOS")
+            }
+           
         case .audio:
             let controller = AudioBlockViewController(environment: environment, blockID: blockID, courseID: courseID)
             return controller
+        case .mcq(let question):
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mcqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            let mcqManager = MCQManager(blockID: blockID!, courseID: courseID, networkManager: self.environment.networkManager)
+            let viewController = MCQViewController(question: mcqQuestion, resultMatcher: mcqManager)
+            
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
+            return adapter
+            
+        case .mrq(let question):
+            let options = question.choices.flatMap{ (choice: Choice) -> Option in
+                let option = Option(content: choice.content, value: choice.value, tip: choice.tip)
+                return option
+            }
+            let mrqQuestion = Question(id: question.id, choices: options, question: question.question, title: question.title, message: question.message)
+            let mrqManager = MRQManager(blockID: blockID!, courseID: courseID, networkManager: self.environment.networkManager)
+            let viewController = MRQViewController(question: mrqQuestion, resultMatcher: mrqManager)
+            
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
+            return adapter
+        case .freeText(let question):
+            let message = question.message != "" ? question.message : nil
+            let freeTextQuestion = FTQuestion(id: question.id, question: question.question, message: message)
+            let ftManager = FTManager(blockID: blockID!, courseID: courseID, environment: environment)
+            let freeTextController = FTPulleyManagerViewController(question: freeTextQuestion, ftSubmitProtocol: ftManager)
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: freeTextController)
+            return adapter
         case .unknown:
             let controller = CourseUnknownBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller
@@ -390,4 +450,6 @@ extension OEXRouter {
         controller.present(alertController, animated: true, completion: nil)
     }
 }
+
+
 

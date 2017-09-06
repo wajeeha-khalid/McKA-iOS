@@ -27,8 +27,19 @@ public struct CourseOutline {
         case StudentViewMultiDevice = "student_view_multi_device"
         case StudentViewURL = "student_view_url"
         case StudentViewData = "student_view_data"
+        case Question = "question"
+        case Choices = "choices"
+        case OptionContent = "content"
+        case OptionValue = "value"
         case Summary = "summary"
         case Viewed = "is_viewed"
+        case Title = "title"
+        case Message = "message"
+        case Tips = "tips"
+        case QuestionId = "id"
+        case partnerCode = "partner_code"
+        case contentId = "content_id"
+        case html = "html"
     }
     
     public let root : CourseBlockID
@@ -62,7 +73,7 @@ public struct CourseOutline {
                 let multiDevice = body[Fields.StudentViewMultiDevice].bool ?? false
                 let blockCounts : [String:Int] = (body[Fields.BlockCounts].object as? NSDictionary)?.mapValues {
                     $0 as? Int ?? 0
-                } ?? [:]
+                    } ?? [:]
                 let graded = body[Fields.Graded].bool ?? false
                 let viewed = body[Fields.Viewed].bool ?? false
                 var type : CourseBlockType
@@ -76,15 +87,91 @@ public struct CourseOutline {
                         type = .section
                     case CourseBlock.Category.Unit:
                         type = .unit
+                    case .ProblemBuilder:
+                        var data = body[Fields.StudentViewData]
+                        let components = data["components"]
+                        
+                        guard let requiredComponent = components.arrayValue.filter ({
+                            $0.dictionaryValue.keys.contains("type")
+                        }).first else {
+                            type = .unknown("problem-builder")
+                            continue
+                        }
+                        
+                        if requiredComponent["type"].string == "pb-mcq" {
+                            let studentViewData = requiredComponent
+                            let question = studentViewData[Fields.Question]
+                            let title = studentViewData[Fields.Title]
+                            let questionID = studentViewData[Fields.QuestionId]
+                            let message = studentViewData[Fields.Message]
+                            var choiceToTipMap: [String: String] = [:]
+                            studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                                for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                    choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                                }
+                            }
+                            let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                                let choiceID = option["value"].stringValue
+                                return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                            }
+                            let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                            type = .mcq(mcq)
+                        } else if requiredComponent["type"].string == "pb-mrq" {
+                            let studentViewData = requiredComponent
+                            let question = studentViewData[Fields.Question]
+                            let title = studentViewData[Fields.Title]
+                            let questionID = studentViewData[Fields.QuestionId]
+                            let message = studentViewData[Fields.Message]
+                            var choiceToTipMap: [String: String] = [:]
+                            studentViewData[Fields.Tips].arrayValue.forEach { tip in
+                                for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
+                                    choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
+                                }
+                            }
+                            let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
+                                let choiceID = option["value"].stringValue
+                                return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
+                            }
+                            let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                            type = .mrq(mcq)
+                        } else if requiredComponent["type"].string == "pb-answer" {
+                            let studentViewData = data
+                            let message = studentViewData["messages"].dictionaryObject
+                            var completionMsg = ""
+                            if let completedMsg = message?["completed"] as? String {
+                                completionMsg = completedMsg
+                            }
+                            
+                            let title = body[Fields.DisplayName].stringValue
+                            let question = requiredComponent[Fields.Question]
+                            let id = requiredComponent["id"]
+                            let freeText = FreeText(id: id.stringValue, title: title, question: question.stringValue, message: completionMsg)
+                            type = .freeText(freeText)
+                        } else {
+                            type = .unknown("problem-builder")
+                            continue
+                        }
                     case CourseBlock.Category.HTML:
-                        type = .html
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .html(content)
                     case CourseBlock.Category.Problem:
                         type = .problem
+                    case .OOYALA:
+                        guard let contentId = body[Fields.StudentViewData][Fields.contentId].string else {
+                            fatalError("unable to find content id of ooyala player")
+                        }
+                        let playerCode = body[Fields.StudentViewData][Fields.partnerCode].stringValue
+                        type = .ooyalaVideo(
+                            contentID: contentId,
+                            playerCode: playerCode,
+                            htmlDescription: nil
+                        )
                     case CourseBlock.Category.Video :
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXVideoSummary(dictionary: bodyData ?? [:], videoID: blockID, name : name ?? Strings.untitled)
                         type = .video(summary)
-                        //Added By Ravi on 22Jan'17 to Implement AudioPodcast
+                    //Added By Ravi on 22Jan'17 to Implement AudioPodcast
                     case CourseBlock.Category.Audio:
                         let bodyData = (body[Fields.StudentViewData].object as? NSDictionary).map { [Fields.Summary.rawValue : $0 ] }
                         let summary = OEXAudioSummary(dictionary: bodyData ?? [:], studentUrl:blockID ,name : name ?? Strings.untitled )
@@ -102,6 +189,7 @@ public struct CourseOutline {
                 }
                 else {
                     type = .unknown(typeName)
+                    continue
                 }
                 
                 validBlocks[blockID] = CourseBlock(
@@ -137,8 +225,12 @@ public enum CourseBlockType {
     case section // child of chapter
     case unit // child of section
     case video(OEXVideoSummary)
+    case mcq(MCQ)
+    case mrq(MCQ)
+    case freeText(FreeText)
+    case ooyalaVideo(contentID: String, playerCode: String, htmlDescription: String?)
     case problem
-    case html
+    case html(String)
     case discussion(DiscussionModel)
     case audio(OEXAudioSummary)// Added by Ravi on 18/01/17 to implement Audio Podcasts.
     
@@ -180,15 +272,17 @@ open class CourseBlock {
         case Chapter = "chapter"
         case Course = "course"
         case HTML = "html"
+        case OOYALA = "ooyala-player"
         case Problem = "problem"
         case Section = "sequential"
         case Unit = "vertical"
         case Video = "video"
+        case ProblemBuilder = "problem-builder"
         case Discussion = "discussion"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
-    open let type : CourseBlockType
+    open var type : CourseBlockType
     open let blockID : CourseBlockID
     
     /// Children in the navigation hierarchy.
@@ -240,16 +334,16 @@ open class CourseBlock {
     open var viewedState : CellType?
     open let viewed : Bool?
     public init(type : CourseBlockType,
-        children : [CourseBlockID],
-        blockID : CourseBlockID,
-        name : String?,
-        blockCounts : [String:Int] = [:],
-        blockURL : URL? = nil,
-        webURL : URL? = nil,
-        format : String? = nil,
-        multiDevice : Bool,
-        viewed : Bool = false,
-        graded : Bool = false) {
+                children : [CourseBlockID],
+                blockID : CourseBlockID,
+                name : String?,
+                blockCounts : [String:Int] = [:],
+                blockURL : URL? = nil,
+                webURL : URL? = nil,
+                format : String? = nil,
+                multiDevice : Bool,
+                viewed : Bool = false,
+                graded : Bool = false) {
         self.type = type
         self.children = children
         self.name = name
@@ -264,3 +358,23 @@ open class CourseBlock {
     }
 }
 
+//MARK: MCQ
+public struct FreeText {
+    public let id: String
+    public let title: String
+    public let question: String
+    public let message: String
+}
+public struct Choice {
+    public let content: String
+    public let value: String
+    public let tip: String
+}
+
+public struct MCQ {
+    public let id: String
+    public let choices: [Choice]
+    public let question: String
+    public let title: String?
+    public let message: String?
+}

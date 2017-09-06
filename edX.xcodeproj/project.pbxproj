@@ -118,9 +118,20 @@
 		1AFEB1B91BBD88F3004C471D /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AFEB1BB1BBD88F3004C471D /* languages.json */; };
 		41030C781EE69EEB0026D72F /* ChatLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
+		411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
 		415F84751F32F447004E54EE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; };
 		415F84761F330842004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
+		4160951B1F56A24500742589 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4160951A1F56A24500742589 /* Icons.swift */; };
+		416F091D1F39BF6A0074D32A /* CourseBlockViewControllerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416F091C1F39BF6A0074D32A /* CourseBlockViewControllerAdapter.swift */; };
+		416F09211F39DBA40074D32A /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09201F39DBA40074D32A /* MediaAccessibility.framework */; };
+		416F09231F39DBC90074D32A /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09221F39DBC90074D32A /* libc++.tbd */; };
+		416F09251F39DBDF0074D32A /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09241F39DBDF0074D32A /* libxml2.tbd */; };
+		416F09271F39DBF90074D32A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09261F39DBF90074D32A /* MediaPlayer.framework */; };
+		416F09291F39DC1B0074D32A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09281F39DC1A0074D32A /* AVFoundation.framework */; };
+		416F092B1F39DC680074D32A /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F092A1F39DC680074D32A /* JavaScriptCore.framework */; };
+		418BCB221F53F36C0058470E /* DrawerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418BCB211F53F36C0058470E /* DrawerAnimation.swift */; };
 		41A0FC9A1EF7B331004FE882 /* ContentNavigationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */; };
 		41A0FC9C1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */; };
 		41A2AB321F1C8F91006B1727 /* UIImage+Blending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A2AB311F1C8F91006B1727 /* UIImage+Blending.swift */; };
@@ -133,6 +144,7 @@
 		41B43F171F2F1C6D00D6A880 /* FontAwesome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */; };
 		41B43F191F2F1C6F00D6A880 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; };
 		41B716BB1F25FBA500AE5151 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B716BA1F25FBA500AE5151 /* Kingfisher.framework */; };
+		41D50F811F3F9176008DAAD7 /* MckinseyXBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D50F801F3F9176008DAAD7 /* MckinseyXBlocks.framework */; };
 		46CECC3A1B041CDC0073C63A /* CourseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CECC391B041CDC0073C63A /* CourseCardView.swift */; };
 		46CECC3C1B041D270073C63A /* CourseDashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CECC3B1B041D270073C63A /* CourseDashboardCell.swift */; };
 		46CECC401B041FCA0073C63A /* DiscussionTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CECC3F1B041FCA0073C63A /* DiscussionTopicsViewController.swift */; };
@@ -153,6 +165,10 @@
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
 		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
 		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
+		63D0F5C91F51E6CC005F56BE /* MCQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5C81F51E6CC005F56BE /* MCQManager.swift */; };
+		63D0F5CB1F51F62B005F56BE /* MRQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CA1F51F62B005F56BE /* MRQManager.swift */; };
+		63D0F5CE1F51F807005F56BE /* MCQAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CD1F51F807005F56BE /* MCQAPI.swift */; };
+		63D0F5D01F51F815005F56BE /* MRQAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CF1F51F815005F56BE /* MRQAPI.swift */; };
 		63EC02001F3C3B6900B702C4 /* BrandingThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC01FF1F3C3B6900B702C4 /* BrandingThemes.swift */; };
 		63EC02091F3C7BF100B702C4 /* mckinsey_theming.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */; };
 		63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */; };
@@ -415,7 +431,6 @@
 		7772BE801AF821540081CA7A /* UIBarButtonItem+OEXBlockActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772BE7F1AF821540081CA7A /* UIBarButtonItem+OEXBlockActions.m */; };
 		7772BE821AF822500081CA7A /* UIBarButtonItem+OEXBlockActionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772BE811AF822500081CA7A /* UIBarButtonItem+OEXBlockActionsTests.m */; };
 		7772BE841AF834EC0081CA7A /* CourseOutlineQuerier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772BE831AF834EC0081CA7A /* CourseOutlineQuerier.swift */; };
-		7772BE961AF9587E0081CA7A /* CourseContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772BE951AF9587E0081CA7A /* CourseContentPageViewController.swift */; };
 		7773D1A91B1E557D0037214B /* OEXVideoEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 7773D1A81B1E557D0037214B /* OEXVideoEncoding.m */; };
 		7778F0951ABA2C3600B4CDA0 /* OEXRegistrationFieldEmailViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7778F0941ABA2C3600B4CDA0 /* OEXRegistrationFieldEmailViewTests.m */; };
 		7778F0981ABB1A6C00B4CDA0 /* NSError+OEXKnownErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 7778F0971ABB1A6C00B4CDA0 /* NSError+OEXKnownErrors.m */; };
@@ -588,6 +603,13 @@
 		8F562F901A1F451600320DB3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F562F8F1A1F451600320DB3 /* CoreMotion.framework */; };
 		8F7F6DAD1A795AA60063B9D6 /* OEXSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F6DAC1A795AA60063B9D6 /* OEXSessionTests.m */; };
 		8FE04B4D1A1E2637007F88B8 /* OEXFBSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE04B4C1A1E2637007F88B8 /* OEXFBSocial.m */; };
+		94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */; };
+		9487550C1F4F33250059B73A /* MckinseyXBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */; };
+		948755101F4F33CE0059B73A /* DynamicOoyalaWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */; };
+		948755121F4F33D30059B73A /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755111F4F33D30059B73A /* Pulley.framework */; };
+		948755141F4F33D60059B73A /* TPKeyboardAvoidingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755131F4F33D60059B73A /* TPKeyboardAvoidingKit.framework */; };
+		94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353D1F55A9AE00FE8339 /* FTManager.swift */; };
+		94F235401F55AA7800FE8339 /* FTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353F1F55AA7800FE8339 /* FTAPI.swift */; };
 		9C9B7F6C1A8CC68400A857B2 /* OEXFindCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F641A8CC68400A857B2 /* OEXFindCoursesViewController.m */; };
 		9C9B7F6D1A8CC68400A857B2 /* OEXCourseInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F661A8CC68400A857B2 /* OEXCourseInfoViewController.m */; };
 		9C9B7F731A8CC80E00A857B2 /* OEXURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F721A8CC80E00A857B2 /* OEXURLSessionManager.m */; };
@@ -854,6 +876,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		411E2C121F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 41E0C4F51F3B185E000D95AA;
+			remoteInfo = MckinseyXBlocks;
+		};
+		411E2C141F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 41AD98071F3C326A00F8F4A6;
+			remoteInfo = OyalaPlayerClient;
+		};
+		411E2C161F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 630A537F1F4B5D7300BF6A19;
+			remoteInfo = MRQClient;
+		};
+		411E2C181F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 630A53951F4B5D7E00BF6A19;
+			remoteInfo = MCQClient;
+		};
+		411E2C1A1F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 943A3D441F5EE38900B9BB3B;
+			remoteInfo = FreeTextClient;
+		};
+		411E2C1E1F5FEFE000A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41E0C4F41F3B185E000D95AA;
+			remoteInfo = MckinseyXBlocks;
+		};
 		415F846E1F32EDCF004E54EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BECB7B031924C0C3009C77F1 /* Project object */;
@@ -898,6 +962,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */,
 				77E647CB1C90CA1400B6740D /* edXCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -1058,6 +1123,17 @@
 		2627CDB85E06CBBFEAC91585 /* Pods-edXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-edXTests/Pods-edXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLoadingProtocol.swift; sourceTree = "<group>"; };
 		411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenterTests.swift; sourceTree = SOURCE_ROOT; };
+		411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MckinseyXBlocks.xcodeproj; path = "xblock-component-library-ios/MckinseyXBlocks.xcodeproj"; sourceTree = "<group>"; };
+		414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleListTableViewController.swift; sourceTree = "<group>"; };
+		4160951A1F56A24500742589 /* Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		416F091C1F39BF6A0074D32A /* CourseBlockViewControllerAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseBlockViewControllerAdapter.swift; sourceTree = "<group>"; };
+		416F09201F39DBA40074D32A /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
+		416F09221F39DBC90074D32A /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		416F09241F39DBDF0074D32A /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		416F09261F39DBF90074D32A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		416F09281F39DC1A0074D32A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		416F092A1F39DC680074D32A /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		418BCB211F53F36C0058470E /* DrawerAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerAnimation.swift; sourceTree = "<group>"; };
 		41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationPolicy.swift; sourceTree = "<group>"; };
 		41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCompletionPolicyTests.swift; sourceTree = "<group>"; };
 		41A2AB311F1C8F91006B1727 /* UIImage+Blending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Blending.swift"; sourceTree = "<group>"; };
@@ -1070,7 +1146,9 @@
 		41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesome.framework; path = Carthage/Build/iOS/FontAwesome.framework; sourceTree = "<group>"; };
 		41B43F181F2F1C6F00D6A880 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		41B716BA1F25FBA500AE5151 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
-		46CECC391B041CDC0073C63A /* CourseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCardView.swift; sourceTree = "<group>"; };
+		41D50F801F3F9176008DAAD7 /* MckinseyXBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MckinseyXBlocks.framework; path = Carthage/Build/iOS/MckinseyXBlocks.framework; sourceTree = "<group>"; };
+		41EE66831F45B42F00930274 /* DynamicOoyalaWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DynamicOoyalaWrapper.framework; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework; sourceTree = "<group>"; };
+		46CECC391B041CDC0073C63A /* CourseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CourseCardView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46CECC3B1B041D270073C63A /* CourseDashboardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDashboardCell.swift; sourceTree = "<group>"; };
 		46CECC3D1B041FAF0073C63A /* DiscussionTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionTopicCell.swift; sourceTree = "<group>"; };
 		46CECC3F1B041FCA0073C63A /* DiscussionTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionTopicsViewController.swift; sourceTree = "<group>"; };
@@ -1092,6 +1170,10 @@
 		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
 		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
 		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
+		63D0F5C81F51E6CC005F56BE /* MCQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCQManager.swift; sourceTree = "<group>"; };
+		63D0F5CA1F51F62B005F56BE /* MRQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRQManager.swift; sourceTree = "<group>"; };
+		63D0F5CD1F51F807005F56BE /* MCQAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCQAPI.swift; sourceTree = "<group>"; };
+		63D0F5CF1F51F815005F56BE /* MRQAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRQAPI.swift; sourceTree = "<group>"; };
 		63EC01FF1F3C3B6900B702C4 /* BrandingThemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandingThemes.swift; sourceTree = "<group>"; };
 		63EC02081F3C7BF100B702C4 /* mckinsey_theming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mckinsey_theming.json; sourceTree = "<group>"; };
 		63EC020A1F3C84C700B702C4 /* img_logo_chemours@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_logo_chemours@1x.png"; sourceTree = "<group>"; };
@@ -1392,7 +1474,6 @@
 		7772BE7F1AF821540081CA7A /* UIBarButtonItem+OEXBlockActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+OEXBlockActions.m"; sourceTree = "<group>"; };
 		7772BE811AF822500081CA7A /* UIBarButtonItem+OEXBlockActionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+OEXBlockActionsTests.m"; sourceTree = "<group>"; };
 		7772BE831AF834EC0081CA7A /* CourseOutlineQuerier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CourseOutlineQuerier.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		7772BE951AF9587E0081CA7A /* CourseContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentPageViewController.swift; sourceTree = "<group>"; };
 		7773D1A71B1E557D0037214B /* OEXVideoEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXVideoEncoding.h; sourceTree = "<group>"; };
 		7773D1A81B1E557D0037214B /* OEXVideoEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXVideoEncoding.m; sourceTree = "<group>"; };
 		7778F0941ABA2C3600B4CDA0 /* OEXRegistrationFieldEmailViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXRegistrationFieldEmailViewTests.m; sourceTree = "<group>"; };
@@ -1590,6 +1671,14 @@
 		8F7F6DAC1A795AA60063B9D6 /* OEXSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXSessionTests.m; sourceTree = "<group>"; };
 		8FE04B4B1A1E2637007F88B8 /* OEXFBSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFBSocial.h; sourceTree = "<group>"; };
 		8FE04B4C1A1E2637007F88B8 /* OEXFBSocial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFBSocial.m; sourceTree = "<group>"; };
+		94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentPageViewController.swift; sourceTree = "<group>"; };
+		9487550D1F4F33C10059B73A /* DynamicOoyalaWrapper.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = DynamicOoyalaWrapper.framework.dSYM; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework.dSYM; sourceTree = "<group>"; };
+		9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DynamicOoyalaWrapper.framework; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework; sourceTree = "<group>"; };
+		948755111F4F33D30059B73A /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
+		948755131F4F33D60059B73A /* TPKeyboardAvoidingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TPKeyboardAvoidingKit.framework; path = Carthage/Build/iOS/TPKeyboardAvoidingKit.framework; sourceTree = "<group>"; };
+		94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MckinseyXBlocks.framework; path = Carthage/Build/iOS/MckinseyXBlocks.framework; sourceTree = "<group>"; };
+		94F2353D1F55A9AE00FE8339 /* FTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTManager.swift; sourceTree = "<group>"; };
+		94F2353F1F55AA7800FE8339 /* FTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAPI.swift; sourceTree = "<group>"; };
 		9C9B7F631A8CC68400A857B2 /* OEXFindCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFindCoursesViewController.h; sourceTree = "<group>"; };
 		9C9B7F641A8CC68400A857B2 /* OEXFindCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFindCoursesViewController.m; sourceTree = "<group>"; };
 		9C9B7F651A8CC68400A857B2 /* OEXCourseInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoViewController.h; sourceTree = "<group>"; };
@@ -1959,11 +2048,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				416F092B1F39DC680074D32A /* JavaScriptCore.framework in Frameworks */,
+				416F09291F39DC1B0074D32A /* AVFoundation.framework in Frameworks */,
+				416F09271F39DBF90074D32A /* MediaPlayer.framework in Frameworks */,
+				416F09251F39DBDF0074D32A /* libxml2.tbd in Frameworks */,
+				416F09231F39DBC90074D32A /* libc++.tbd in Frameworks */,
+				41D50F811F3F9176008DAAD7 /* MckinseyXBlocks.framework in Frameworks */,
+				416F09211F39DBA40074D32A /* MediaAccessibility.framework in Frameworks */,
 				41B716BB1F25FBA500AE5151 /* Kingfisher.framework in Frameworks */,
 				776F39291B4EF4CD00ED11E3 /* WebKit.framework in Frameworks */,
 				41B43F151F2F1C6500D6A880 /* SnapKit.framework in Frameworks */,
 				41B43F131F2F1C6300D6A880 /* SwiftyJSON.framework in Frameworks */,
 				41B43F191F2F1C6F00D6A880 /* Alamofire.framework in Frameworks */,
+				9487550C1F4F33250059B73A /* MckinseyXBlocks.framework in Frameworks */,
 				805329121B0EA2DC0093B177 /* QuartzCore.framework in Frameworks */,
 				8F562F901A1F451600320DB3 /* CoreMotion.framework in Frameworks */,
 				41B43F171F2F1C6D00D6A880 /* FontAwesome.framework in Frameworks */,
@@ -1975,8 +2072,11 @@
 				77ACA1CB1A323C2500039AD1 /* Fabric.framework in Frameworks */,
 				BE8163F61954244E00F9A2C5 /* MessageUI.framework in Frameworks */,
 				BE0EE28B192B78DA00F9FF98 /* libz.dylib in Frameworks */,
+				948755141F4F33D60059B73A /* TPKeyboardAvoidingKit.framework in Frameworks */,
 				77ACA1CA1A323C2500039AD1 /* Crashlytics.framework in Frameworks */,
+				948755121F4F33D30059B73A /* Pulley.framework in Frameworks */,
 				BE0EE289192B78CF00F9FF98 /* SystemConfiguration.framework in Frameworks */,
+				948755101F4F33CE0059B73A /* DynamicOoyalaWrapper.framework in Frameworks */,
 				BE0EE287192B78C400F9FF98 /* CoreTelephony.framework in Frameworks */,
 				BECB7B111924C0C3009C77F1 /* CoreGraphics.framework in Frameworks */,
 				BECB7B131924C0C3009C77F1 /* UIKit.framework in Frameworks */,
@@ -2142,6 +2242,7 @@
 		199B9B6419349DE800081A09 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				416F091C1F39BF6A0074D32A /* CourseBlockViewControllerAdapter.swift */,
 				63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */,
 				77FDF4101AFBF0C300E8C639 /* VideoBlockViewController.swift */,
 				BECB7B4C1924C9EA009C77F1 /* Video Player */,
@@ -2264,6 +2365,27 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
+		411E2C0B1F5FEFB600A73FAD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */,
+				411E2C151F5FEFB600A73FAD /* OyalaPlayerClient.app */,
+				411E2C171F5FEFB600A73FAD /* MRQClient.app */,
+				411E2C191F5FEFB600A73FAD /* MCQClient.app */,
+				411E2C1B1F5FEFB600A73FAD /* FreeTextClient.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		414BBFF11F5000C800B0C9C9 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */,
+				418BCB211F53F36C0058470E /* DrawerAnimation.swift */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
 		46D567A51B0292D40068F823 /* Discussion */ = {
 			isa = PBXGroup;
 			children = (
@@ -2310,6 +2432,25 @@
 			);
 			path = QLearnSDK;
 			sourceTree = SOURCE_ROOT;
+		};
+		63D0F5C71F51E6AC005F56BE /* XBlock Managers */ = {
+			isa = PBXGroup;
+			children = (
+				63D0F5CC1F51F7D2005F56BE /* XBlock API */,
+				63D0F5C81F51E6CC005F56BE /* MCQManager.swift */,
+				63D0F5CA1F51F62B005F56BE /* MRQManager.swift */,
+			);
+			name = "XBlock Managers";
+			sourceTree = "<group>";
+		};
+		63D0F5CC1F51F7D2005F56BE /* XBlock API */ = {
+			isa = PBXGroup;
+			children = (
+				63D0F5CD1F51F807005F56BE /* MCQAPI.swift */,
+				63D0F5CF1F51F815005F56BE /* MRQAPI.swift */,
+			);
+			name = "XBlock API";
+			sourceTree = "<group>";
 		};
 		63EC02031F3C4CBC00B702C4 /* BrandingTheme */ = {
 			isa = PBXGroup;
@@ -2946,6 +3087,7 @@
 				694D349F1D75BDF80047F3F4 /* UIAlertController+OEXBlockActions.swift */,
 				77AF07761CB42AC400A42704 /* TabContainerView.swift */,
 				E03E6A161D38EB9000944AAA /* SnackbarViews.swift */,
+				4160951A1F56A24500742589 /* Icons.swift */,
 			);
 			name = "Helper Views";
 			sourceTree = "<group>";
@@ -3245,6 +3387,15 @@
 			name = SocialLogin;
 			sourceTree = "<group>";
 		};
+		94F2353C1F55A97B00FE8339 /* XBlockManager */ = {
+			isa = PBXGroup;
+			children = (
+				94F2353D1F55A9AE00FE8339 /* FTManager.swift */,
+				94F2353F1F55AA7800FE8339 /* FTAPI.swift */,
+			);
+			name = XBlockManager;
+			sourceTree = "<group>";
+		};
 		9C9B7F701A8CC68D00A857B2 /* Course Enrollment */ = {
 			isa = PBXGroup;
 			children = (
@@ -3481,13 +3632,14 @@
 		BE45DA86192605E7003BD39B /* Course */ = {
 			isa = PBXGroup;
 			children = (
+				63D0F5C71F51E6AC005F56BE /* XBlock Managers */,
 				71AF62A51E361AF9007B4410 /* Course Audio List View */,
 				778F17791C0D125A0099BF93 /* CoursesTableViewController.swift */,
 				77EA92251BB4590A00EC625A /* DownloadsAccessoryView.swift */,
 				77056C3D1B3F320800D9DB4A /* DetailToolbarButton.swift */,
 				9EDB10B21B0C72EF00C760C6 /* Custom Cells */,
 				7772BE791AF41E660081CA7A /* CourseBlockViewController.swift */,
-				7772BE951AF9587E0081CA7A /* CourseContentPageViewController.swift */,
+				94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */,
 				770C514A1B1685E3009B9696 /* HTMLBlockViewController.swift */,
 				773A04771AF2D5DE0076532C /* CourseOutlineViewController.swift */,
 				D0712CD21E376C8D0080E9D4 /* OEXCoursewareViewController.swift */,
@@ -3539,6 +3691,7 @@
 		BECB7B021924C0C3009C77F1 = {
 			isa = PBXGroup;
 			children = (
+				411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */,
 				112CB1A61E41DB62001D4C29 /* AirshipConfig.plist */,
 				E052F5A81D9953BB009F6B6F /* edX.entitlements */,
 				77E647B11C90C21100B6740D /* App */,
@@ -3565,6 +3718,17 @@
 		BECB7B0D1924C0C3009C77F1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41EE66831F45B42F00930274 /* DynamicOoyalaWrapper.framework */,
+				41D50F801F3F9176008DAAD7 /* MckinseyXBlocks.framework */,
+				416F092A1F39DC680074D32A /* JavaScriptCore.framework */,
+				416F09281F39DC1A0074D32A /* AVFoundation.framework */,
+				416F09261F39DBF90074D32A /* MediaPlayer.framework */,
+				416F09241F39DBDF0074D32A /* libxml2.tbd */,
+				416F09221F39DBC90074D32A /* libc++.tbd */,
+				416F09201F39DBA40074D32A /* MediaAccessibility.framework */,
+				948755131F4F33D60059B73A /* TPKeyboardAvoidingKit.framework */,
+				948755111F4F33D30059B73A /* Pulley.framework */,
+				9487550D1F4F33C10059B73A /* DynamicOoyalaWrapper.framework.dSYM */,
 				41B43F181F2F1C6F00D6A880 /* Alamofire.framework */,
 				41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */,
 				41B43F141F2F1C6500D6A880 /* SnapKit.framework */,
@@ -3597,6 +3761,7 @@
 			children = (
 				88F7A6B51F45F632000F3AB7 /* Announcements */,
 				888A7F841F3C919D000FD7C8 /* Resources */,
+				414BBFF11F5000C800B0C9C9 /* Modules */,
 				41030C761EE69ECA0026D72F /* Chat */,
 				1972E3B619BF474900085F08 /* Analytics */,
 				772619B41ADC5CE8005BD7E4 /* Application */,
@@ -3638,6 +3803,7 @@
 		BECB7B151924C0C3009C77F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				94F2353C1F55A97B00FE8339 /* XBlockManager */,
 				773A04691AF289650076532C /* edX-Bridging-Header.h */,
 				BEEEBF82196AAACF00EF2C35 /* Localizable.strings */,
 				B47780581AADA95400436DB4 /* Terms-and-Services.htm */,
@@ -3997,6 +4163,7 @@
 			);
 			dependencies = (
 				77E647A21C90C10300B6740D /* PBXTargetDependency */,
+				411E2C1F1F5FEFE000A73FAD /* PBXTargetDependency */,
 			);
 			name = edX;
 			productName = edXVideoLocker;
@@ -4033,7 +4200,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = edX;
 				TargetAttributes = {
 					77E6478D1C90C10300B6740D = {
@@ -4086,6 +4253,12 @@
 			mainGroup = BECB7B021924C0C3009C77F1;
 			productRefGroup = BECB7B0C1924C0C3009C77F1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 411E2C0B1F5FEFB600A73FAD /* Products */;
+					ProjectRef = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				BECB7B0A1924C0C3009C77F1 /* edX */,
@@ -4096,6 +4269,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MckinseyXBlocks.framework;
+			remoteRef = 411E2C121F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C151F5FEFB600A73FAD /* OyalaPlayerClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OyalaPlayerClient.app;
+			remoteRef = 411E2C141F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C171F5FEFB600A73FAD /* MRQClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MRQClient.app;
+			remoteRef = 411E2C161F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C191F5FEFB600A73FAD /* MCQClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MCQClient.app;
+			remoteRef = 411E2C181F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C1B1F5FEFB600A73FAD /* FreeTextClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FreeTextClient.app;
+			remoteRef = 411E2C1A1F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		77E6478C1C90C10300B6740D /* Resources */ = {
@@ -4461,6 +4672,9 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FontAwesome.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TPKeyboardAvoidingKit.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/DynamicOoyalaWrapper.framework",
 			);
 			outputPaths = (
 			);
@@ -4679,6 +4893,7 @@
 				F22A0ABB1CE60D5E00D50DFF /* NetworkManager+Authenticators.swift in Sources */,
 				9EC6E1001BDE40E100729704 /* OEXCourse+Swift.swift in Sources */,
 				7706AAC11BCFEEBF00728432 /* NSAttributedString+Formatting.swift in Sources */,
+				94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */,
 				D0BF32B21E0CEBBA007EF8A3 /* OEXPageContentViewController.m in Sources */,
 				778D53351B3D96E900441A98 /* ListCursor.swift in Sources */,
 				E0C6EF971BFF4B9900B315E3 /* UIButton+TintColor.swift in Sources */,
@@ -4687,6 +4902,7 @@
 				B4B6D62A1A949F1B000F44E8 /* OEXRegistrationFieldSelectController.m in Sources */,
 				B4B6D5E51A9490E9000F44E8 /* OEXLoginSplashViewController.m in Sources */,
 				7726BD1D1A36572F003B3354 /* NSMutableDictionary+OEXSafeAccess.m in Sources */,
+				63D0F5CB1F51F62B005F56BE /* MRQManager.swift in Sources */,
 				778F177C1C0D12780099BF93 /* CourseCatalogAPI.swift in Sources */,
 				B4B285E21A9A497A00DD603A /* OEXSegmentConfig.m in Sources */,
 				773A04801AF2E6DA0076532C /* CourseOutlineTableSource.swift in Sources */,
@@ -4706,6 +4922,7 @@
 				9E1D952E1B678E4700ABE764 /* AccessibilityCLButton.swift in Sources */,
 				71DB6EC31E1B833C00E12C3E /* GVRVideoPlayerInterface.m in Sources */,
 				7765025F1C7CEBC5007384E7 /* SingleChildContainingViewController.swift in Sources */,
+				94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */,
 				7C2DD54F1D4A7901006148E0 /* UserPreference.swift in Sources */,
 				1A3AFFE51BD56370002846F3 /* CropViewController.swift in Sources */,
 				7731813B1B6C1442000CC050 /* SeparatorInsetable.swift in Sources */,
@@ -4725,6 +4942,7 @@
 				9E4E6C411B4BDB5C0034F7EB /* MockLastAccessedProvider.swift in Sources */,
 				9EEFFD651B300E87002A88B0 /* OEXInterface+Swift.swift in Sources */,
 				1A9A1E481B8F3BB8005AE336 /* OEXCheckBox.swift in Sources */,
+				63D0F5C91F51E6CC005F56BE /* MCQManager.swift in Sources */,
 				46CECC3C1B041D270073C63A /* CourseDashboardCell.swift in Sources */,
 				778F177A1C0D125A0099BF93 /* CoursesTableViewController.swift in Sources */,
 				41A8C3671F2EFE8100869CAD /* LoginViewController.swift in Sources */,
@@ -4815,6 +5033,7 @@
 				8FE04B4D1A1E2637007F88B8 /* OEXFBSocial.m in Sources */,
 				9EDB10B41B0C732300C760C6 /* CourseGenericBlockTableViewCell.swift in Sources */,
 				B4D5C7EC1A6FBAA300427D1D /* OEXPersistentCredentialStorage.m in Sources */,
+				418BCB221F53F36C0058470E /* DrawerAnimation.swift in Sources */,
 				7713DFBF1AC3C16C005A1756 /* OEXRegisteringUserDetails.m in Sources */,
 				1894051F1E34BAFF00AD6776 /* AudioBlockViewController.swift in Sources */,
 				77FDF40F1AFBAE7700E8C639 /* OEXRouter+Swift.swift in Sources */,
@@ -4833,6 +5052,7 @@
 				1940D8CB1A230E25000318A3 /* OEXAnalytics.m in Sources */,
 				1A8AC0C01BB49EC5009D8F5E /* UserProfile.swift in Sources */,
 				1AC147371BCEB14900E0A230 /* CGRect+OEXHelpers.swift in Sources */,
+				63D0F5D01F51F815005F56BE /* MRQAPI.swift in Sources */,
 				7714A2601AB37CF7004C2254 /* OEXRegistrationFieldError.m in Sources */,
 				77E6486C1C912BD600B6740D /* Logger+OEXObjC.m in Sources */,
 				77000A4A1A7757E0007D306C /* NSDate+OEXComparisons.m in Sources */,
@@ -4851,6 +5071,7 @@
 				9ED168B01B29A9EF00AA7B5B /* CouseLastAccessed.swift in Sources */,
 				B4B6D61A1A949F0F000F44E8 /* OEXRegistrationFieldTextAreaView.m in Sources */,
 				1AAD95F81CEB725900BBF70C /* OEXTextStyle+Swift.swift in Sources */,
+				4160951B1F56A24500742589 /* Icons.swift in Sources */,
 				1A67E5411BD7D61800C53401 /* Feed.swift in Sources */,
 				BECB7B521924C9FB009C77F1 /* OEXVideoPlayerInterface.m in Sources */,
 				888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */,
@@ -4863,6 +5084,7 @@
 				BECB7B5A1924D760009C77F1 /* SWRevealViewController.m in Sources */,
 				B4B6D62B1A949F1B000F44E8 /* OEXRegistrationFieldTextController.m in Sources */,
 				189405231E34BFBE00AD6776 /* OEXAudioPlayerInterface.m in Sources */,
+				414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */,
 				774B393B1B5EEF8A00595D33 /* UIAlertController+Selection.swift in Sources */,
 				1AC147391BCEC09F00E0A230 /* UIImage+OEXHelpers.swift in Sources */,
 				775DF4181AFAAC8C00F96B2F /* DataManager.swift in Sources */,
@@ -4874,6 +5096,8 @@
 				1894051C1E34AB4500AD6776 /* CourseAudioTableViewCell.swift in Sources */,
 				B4B6D6431A95335C000F44E8 /* OEXRegistrationAgreementController.m in Sources */,
 				0B1212221B4F089A002EE96C /* OEXCoursewareAccess.m in Sources */,
+				94F235401F55AA7800FE8339 /* FTAPI.swift in Sources */,
+				63D0F5CE1F51F807005F56BE /* MCQAPI.swift in Sources */,
 				77DCD2391C2B13AA00CAEBB5 /* EnrolledCoursesFooterView.swift in Sources */,
 				77ADF4A91AC1B57800AC8955 /* UIImage+OEXColors.m in Sources */,
 				77D7FD261B04ED45002ACA8C /* Icon.swift in Sources */,
@@ -4973,6 +5197,7 @@
 				77567B771AC9FC1400877A7B /* NSNotificationCenter+OEXSafeAccess.m in Sources */,
 				9E4E6C3F1B4BBB5C0034F7EB /* LastAccessedProvider.swift in Sources */,
 				B4B6D5E91A9490FC000F44E8 /* OEXRegistrationViewController.m in Sources */,
+				416F091D1F39BF6A0074D32A /* CourseBlockViewControllerAdapter.swift in Sources */,
 				77ADF4A31AC1AF9800AC8955 /* OEXFacebookAuthProvider.m in Sources */,
 				775434831AD7394D00635A40 /* OEXPushNotificationManager.m in Sources */,
 				7793764F1BED404C00900A8C /* OEXConfig+URLCredentialProvider.swift in Sources */,
@@ -5006,7 +5231,6 @@
 				D0220E481E56D2CC004EAAFD /* OEXHelperOfflineTracker.m in Sources */,
 				D05B077F1E2CDB3C00ED8184 /* OEXWebViewController.swift in Sources */,
 				77EC889E1AB787630050F9CF /* OEXAnalyticsData.m in Sources */,
-				7772BE961AF9587E0081CA7A /* CourseContentPageViewController.swift in Sources */,
 				9EDB10B61B0C742C00C760C6 /* CourseOutlineItemView.swift in Sources */,
 				B4B2F16A1AA4F4E500A66A71 /* OEXRegistrationFieldValidator.m in Sources */,
 				1A5501A01BBA316900D5F9DD /* UserProfileEditViewController.swift in Sources */,
@@ -5178,6 +5402,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		411E2C1F1F5FEFE000A73FAD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MckinseyXBlocks;
+			targetProxy = 411E2C1E1F5FEFE000A73FAD /* PBXContainerItemProxy */;
+		};
 		415F846F1F32EDCF004E54EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BECB7B0A1924C0C3009C77F1 /* edX */;
@@ -5302,14 +5531,18 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/MckinseyXBlocks",
+					"$(PROJECT_DIR)/Carthage/Checkouts/OyalaSDKHost",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "Source/edX-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
@@ -5371,6 +5604,7 @@
 					"\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
 				);
 				INFOPLIST_FILE = "Test/edXTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.mobile;
 				PRODUCT_NAME = edXTests;
@@ -5403,7 +5637,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Source/Core/SupportingFiles/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.edXCore;
@@ -5440,7 +5674,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Source/Core/SupportingFiles/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.edXCore;
@@ -5476,7 +5710,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Source/Core/SupportingFiles/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.edXCore;
@@ -5504,7 +5738,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Source/Core/Test/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.edXCoreTests;
@@ -5531,7 +5765,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Source/Core/Test/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.edXCoreTests;
@@ -5557,7 +5791,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Source/Core/Test/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.edXCoreTests;
@@ -5748,13 +5982,17 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/MckinseyXBlocks",
+					"$(PROJECT_DIR)/Carthage/Checkouts/OyalaSDKHost",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "Source/edX-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -5786,14 +6024,18 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/MckinseyXBlocks",
+					"$(PROJECT_DIR)/Carthage/Checkouts/OyalaSDKHost",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "Source/edX-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
@@ -5855,6 +6097,7 @@
 					"\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
 				);
 				INFOPLIST_FILE = "Test/edXTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.mobile;
 				PRODUCT_NAME = edXTests;
@@ -5914,6 +6157,7 @@
 					"\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
 				);
 				INFOPLIST_FILE = "Test/edXTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.edx.mobile;
 				PRODUCT_NAME = edXTests;

@@ -196,6 +196,8 @@ open class NetworkManager : NSObject {
         self.credentialProvider = credentialProvider
         self.baseURL = baseURL
         self.cache = cache
+        super.init()
+        SessionManager.default.adapter = self
     }
     
     open static var unknownError : NSError { return NSError.oex_unknownNetworkError() }
@@ -481,3 +483,14 @@ open class NetworkManager : NSObject {
 }
 }
 
+extension NetworkManager: RequestAdapter {
+    public func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
+        guard urlRequest.url?.pathComponents.contains("submit") == true else {
+            return urlRequest
+        }
+        
+        var requestWithoutCookies = urlRequest
+        requestWithoutCookies.httpShouldHandleCookies = false
+        return requestWithoutCookies
+    }
+}
