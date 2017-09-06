@@ -87,6 +87,10 @@ public struct CourseOutline {
                         type = .section
                     case CourseBlock.Category.Unit:
                         type = .unit
+                    case .StepBuilder:
+                        let studentViewJSON = body[Fields.StudentViewData]
+                        let assessment = Assessment(id: blockID, json: studentViewJSON)
+                        continue
                     case .ProblemBuilder:
                         var data = body[Fields.StudentViewData]
                         let components = data["components"]
@@ -99,40 +103,10 @@ public struct CourseOutline {
                         }
                         
                         if requiredComponent["type"].string == "pb-mcq" {
-                            let studentViewData = requiredComponent
-                            let question = studentViewData[Fields.Question]
-                            let title = studentViewData[Fields.Title]
-                            let questionID = studentViewData[Fields.QuestionId]
-                            let message = studentViewData[Fields.Message]
-                            var choiceToTipMap: [String: String] = [:]
-                            studentViewData[Fields.Tips].arrayValue.forEach { tip in
-                                for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
-                                    choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
-                                }
-                            }
-                            let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
-                                let choiceID = option["value"].stringValue
-                                return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
-                            }
-                            let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                            let mcq = MCQ(json: requiredComponent)
                             type = .mcq(mcq)
                         } else if requiredComponent["type"].string == "pb-mrq" {
-                            let studentViewData = requiredComponent
-                            let question = studentViewData[Fields.Question]
-                            let title = studentViewData[Fields.Title]
-                            let questionID = studentViewData[Fields.QuestionId]
-                            let message = studentViewData[Fields.Message]
-                            var choiceToTipMap: [String: String] = [:]
-                            studentViewData[Fields.Tips].arrayValue.forEach { tip in
-                                for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
-                                    choiceToTipMap[choiceID.stringValue] = tip["content"].stringValue
-                                }
-                            }
-                            let choices = studentViewData[Fields.Choices].arrayValue.map { option -> Choice in
-                                let choiceID = option["value"].stringValue
-                                return Choice(content: option["content"].stringValue, value: choiceID, tip: choiceToTipMap[choiceID] ?? "")
-                            }
-                            let mcq = MCQ(id: questionID.stringValue, choices: choices, question: question.stringValue, title: title.string, message: message.string)
+                            let mcq = MCQ(json: requiredComponent)
                             type = .mrq(mcq)
                         } else if requiredComponent["type"].string == "pb-answer" {
                             let studentViewData = data
@@ -227,6 +201,7 @@ public enum CourseBlockType {
     case video(OEXVideoSummary)
     case mcq(MCQ)
     case mrq(MCQ)
+    case assessment(Assessment)
     case freeText(FreeText)
     case ooyalaVideo(contentID: String, playerCode: String, htmlDescription: String?)
     case problem
@@ -278,6 +253,7 @@ open class CourseBlock {
         case Unit = "vertical"
         case Video = "video"
         case ProblemBuilder = "problem-builder"
+        case StepBuilder = "step-builder"
         case Discussion = "discussion"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
@@ -371,10 +347,4 @@ public struct Choice {
     public let tip: String
 }
 
-public struct MCQ {
-    public let id: String
-    public let choices: [Choice]
-    public let question: String
-    public let title: String?
-    public let message: String?
-}
+

@@ -112,6 +112,7 @@ extension CourseBlockDisplayType {
         case .video: return false
         case .mcq: return false
         case .mrq: return false
+        case .assessment: return false
         case .freeText: return false
         case .ooyalaVideo: return false
         case .audio: return false //Added By Ravi on 22Jan'17 to Implement AudioPodcast
