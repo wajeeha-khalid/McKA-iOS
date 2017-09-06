@@ -1,0 +1,3 @@
+[submodule "xblock-component-library-ios"]
+	path = xblock-component-library-ios
+	url = https://github.com/mckinseyacademy/xblock-component-library-ios.git
