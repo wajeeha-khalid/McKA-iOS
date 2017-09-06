@@ -195,7 +195,7 @@ extension OEXRouter {
             let message = question.message != "" ? question.message : nil
             let freeTextQuestion = FTQuestion(id: question.id, question: question.question, message: message)
             let ftManager = FTManager(blockID: blockID!, courseID: courseID, environment: environment)
-            let freeTextController = FTPulleyManagerViewController(question: freeTextQuestion, ftSubmitProtocol: ftManager)
+            let freeTextController = FTPulleyManagerViewController(question: freeTextQuestion, ftAPIProtocol: ftManager)
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: freeTextController)
             return adapter
         case .unknown:
