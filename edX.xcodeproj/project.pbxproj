@@ -118,6 +118,7 @@
 		1AFEB1B91BBD88F3004C471D /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AFEB1BB1BBD88F3004C471D /* languages.json */; };
 		41030C781EE69EEB0026D72F /* ChatLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
+		411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
 		415F84751F32F447004E54EE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; };
@@ -130,7 +131,6 @@
 		416F09271F39DBF90074D32A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09261F39DBF90074D32A /* MediaPlayer.framework */; };
 		416F09291F39DC1B0074D32A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09281F39DC1A0074D32A /* AVFoundation.framework */; };
 		416F092B1F39DC680074D32A /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F092A1F39DC680074D32A /* JavaScriptCore.framework */; };
-		4160951B1F56A24500742589 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4160951A1F56A24500742589 /* Icons.swift */; };
 		418BCB221F53F36C0058470E /* DrawerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418BCB211F53F36C0058470E /* DrawerAnimation.swift */; };
 		41A0FC9A1EF7B331004FE882 /* ContentNavigationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */; };
 		41A0FC9C1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */; };
@@ -870,6 +870,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		411E2C121F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 41E0C4F51F3B185E000D95AA;
+			remoteInfo = MckinseyXBlocks;
+		};
+		411E2C141F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 41AD98071F3C326A00F8F4A6;
+			remoteInfo = OyalaPlayerClient;
+		};
+		411E2C161F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 630A537F1F4B5D7300BF6A19;
+			remoteInfo = MRQClient;
+		};
+		411E2C181F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 630A53951F4B5D7E00BF6A19;
+			remoteInfo = MCQClient;
+		};
+		411E2C1A1F5FEFB600A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 943A3D441F5EE38900B9BB3B;
+			remoteInfo = FreeTextClient;
+		};
+		411E2C1E1F5FEFE000A73FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41E0C4F41F3B185E000D95AA;
+			remoteInfo = MckinseyXBlocks;
+		};
 		415F846E1F32EDCF004E54EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BECB7B031924C0C3009C77F1 /* Project object */;
@@ -914,6 +956,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */,
 				77E647CB1C90CA1400B6740D /* edXCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -1074,6 +1117,8 @@
 		2627CDB85E06CBBFEAC91585 /* Pods-edXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-edXTests/Pods-edXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLoadingProtocol.swift; sourceTree = "<group>"; };
 		411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenterTests.swift; sourceTree = SOURCE_ROOT; };
+		411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MckinseyXBlocks.xcodeproj; path = "xblock-component-library-ios/MckinseyXBlocks.xcodeproj"; sourceTree = "<group>"; };
+		414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleListTableViewController.swift; sourceTree = "<group>"; };
 		4160951A1F56A24500742589 /* Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		416F091C1F39BF6A0074D32A /* CourseBlockViewControllerAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseBlockViewControllerAdapter.swift; sourceTree = "<group>"; };
 		416F09201F39DBA40074D32A /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -1082,9 +1127,6 @@
 		416F09261F39DBF90074D32A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		416F09281F39DC1A0074D32A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		416F092A1F39DC680074D32A /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		4160951A1F56A24500742589 /* Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
-		414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleListTableViewController.swift; sourceTree = "<group>"; };
-		414BBFF61F502A5B00B0C9C9 /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
 		418BCB211F53F36C0058470E /* DrawerAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerAnimation.swift; sourceTree = "<group>"; };
 		41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationPolicy.swift; sourceTree = "<group>"; };
 		41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCompletionPolicyTests.swift; sourceTree = "<group>"; };
@@ -2309,6 +2351,18 @@
 				41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */,
 			);
 			name = Chat;
+			sourceTree = "<group>";
+		};
+		411E2C0B1F5FEFB600A73FAD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */,
+				411E2C151F5FEFB600A73FAD /* OyalaPlayerClient.app */,
+				411E2C171F5FEFB600A73FAD /* MRQClient.app */,
+				411E2C191F5FEFB600A73FAD /* MCQClient.app */,
+				411E2C1B1F5FEFB600A73FAD /* FreeTextClient.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		414BBFF11F5000C800B0C9C9 /* Modules */ = {
@@ -3605,6 +3659,7 @@
 		BECB7B021924C0C3009C77F1 = {
 			isa = PBXGroup;
 			children = (
+				411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */,
 				112CB1A61E41DB62001D4C29 /* AirshipConfig.plist */,
 				E052F5A81D9953BB009F6B6F /* edX.entitlements */,
 				77E647B11C90C21100B6740D /* App */,
@@ -4074,6 +4129,7 @@
 			);
 			dependencies = (
 				77E647A21C90C10300B6740D /* PBXTargetDependency */,
+				411E2C1F1F5FEFE000A73FAD /* PBXTargetDependency */,
 			);
 			name = edX;
 			productName = edXVideoLocker;
@@ -4163,6 +4219,12 @@
 			mainGroup = BECB7B021924C0C3009C77F1;
 			productRefGroup = BECB7B0C1924C0C3009C77F1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 411E2C0B1F5FEFB600A73FAD /* Products */;
+					ProjectRef = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				BECB7B0A1924C0C3009C77F1 /* edX */,
@@ -4173,6 +4235,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MckinseyXBlocks.framework;
+			remoteRef = 411E2C121F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C151F5FEFB600A73FAD /* OyalaPlayerClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OyalaPlayerClient.app;
+			remoteRef = 411E2C141F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C171F5FEFB600A73FAD /* MRQClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MRQClient.app;
+			remoteRef = 411E2C161F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C191F5FEFB600A73FAD /* MCQClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MCQClient.app;
+			remoteRef = 411E2C181F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		411E2C1B1F5FEFB600A73FAD /* FreeTextClient.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FreeTextClient.app;
+			remoteRef = 411E2C1A1F5FEFB600A73FAD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		77E6478C1C90C10300B6740D /* Resources */ = {
@@ -4536,10 +4636,9 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FontAwesome.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/MckinseyXBlocks.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Pulley.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/TPKeyboardAvoidingKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/DynamicOoyalaWrapper.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TPKeyboardAvoidingKit.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/DynamicOoyalaWrapper.framework",
 			);
 			outputPaths = (
 			);
@@ -5263,6 +5362,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		411E2C1F1F5FEFE000A73FAD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MckinseyXBlocks;
+			targetProxy = 411E2C1E1F5FEFE000A73FAD /* PBXContainerItemProxy */;
+		};
 		415F846F1F32EDCF004E54EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BECB7B0A1924C0C3009C77F1 /* edX */;
@@ -5389,6 +5493,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/MckinseyXBlocks",
 					"$(PROJECT_DIR)/Carthage/Checkouts/OyalaSDKHost",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -5839,6 +5944,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/MckinseyXBlocks",
 					"$(PROJECT_DIR)/Carthage/Checkouts/OyalaSDKHost",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -5880,6 +5986,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/MckinseyXBlocks",
 					"$(PROJECT_DIR)/Carthage/Checkouts/OyalaSDKHost",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
