@@ -106,7 +106,7 @@ class FreeTextCompletedAnswerResponseData: NSObject {
             return nil
         }
         
-        answerDic[Keys.answer] = answerDataDic[Keys.answer]?.string ?? ""
+        answerDic[Keys.answer] = answerDataDic[Keys.answer]?.stringValue
         self.init(dictionary: answerDic)
     }
 }
@@ -128,7 +128,7 @@ struct FTAPI {
         }
         
         var id = ""
-        let completed = freeTextResponseDic[Fields.completed]?.bool ?? false
+        let completed = freeTextResponseDic[Fields.completed]?.boolValue ?? false
         var status = ""
         var value = ""
         
@@ -164,8 +164,8 @@ struct FTAPI {
             return .failure(NSError())
         }
         
-        let attempted = freeTextResponseDic[Fields.attempted]?.boolValue
-        let completed = freeTextResponseDic[Fields.completed]?.boolValue
+        let attempted = freeTextResponseDic[Fields.attempted]?.boolValue ?? false
+        let completed = freeTextResponseDic[Fields.completed]?.boolValue ?? false
         var answer = ""
         
         guard let components = freeTextResponseDic[Fields.components]?.dictionary else {
@@ -185,8 +185,8 @@ struct FTAPI {
             return .failure(NSError())
         }
         
-        answer = answerDataDic[Fields.value]?.string ?? ""
-        let ftResponse = FreeTextCompletedAnswerResponseData(attempted: attempted!, answer: answer, completed: completed!)
+        answer = answerDataDic[Fields.value]?.stringValue ?? ""
+        let ftResponse = FreeTextCompletedAnswerResponseData(attempted: attempted, answer: answer, completed: completed)
         return .success(ftResponse)
     }
     
