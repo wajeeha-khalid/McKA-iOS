@@ -32,6 +32,8 @@ extension MCQViewController: ActionViewProvider {
     
 }
 
+extension AssessmentViewController: ActionViewProvider {}
+
 extension FTPulleyManagerViewController: ActionViewProvider {
 }
 

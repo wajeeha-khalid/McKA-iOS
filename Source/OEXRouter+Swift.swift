@@ -195,8 +195,12 @@ extension OEXRouter {
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
             return adapter
-        case .assessment:
-            fatalError("Implement Assessment here")
+        case .assessment(let assessment):
+            let assessmentAdapter = AssessmentAdapter(courseID: courseID, blockID: blockID!, assessment: assessment, networkManager: environment.networkManager)
+            let assessmentViewController = AssessmentViewController(assessment: assessmentAdapter)
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: assessmentViewController)
+            assessmentAdapter.moduleDelegate = assessmentViewController
+            return adapter
         case .freeText(let question):
             let message = question.message != "" ? question.message : nil
             let freeTextQuestion = FTQuestion(id: question.id, question: question.question, message: message)

@@ -90,7 +90,7 @@ public struct CourseOutline {
                     case .StepBuilder:
                         let studentViewJSON = body[Fields.StudentViewData]
                         let assessment = Assessment(id: blockID, json: studentViewJSON)
-                        continue
+                        type  = .assessment(assessment)
                     case .ProblemBuilder:
                         var data = body[Fields.StudentViewData]
                         let components = data["components"]
@@ -341,10 +341,6 @@ public struct FreeText {
     public let question: String
     public let message: String
 }
-public struct Choice {
-    public let content: String
-    public let value: String
-    public let tip: String
-}
+
 
 
