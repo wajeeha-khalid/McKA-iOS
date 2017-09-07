@@ -15,8 +15,7 @@ class AnnouncementsViewController: UIViewController {
     public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & OEXRouterProvider & OEXInterfaceProvider & OEXRouterProvider
     
     @IBOutlet weak var noAnnouncementLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     fileprivate let environment: Environment
     fileprivate let courseId: String?
@@ -44,12 +43,25 @@ class AnnouncementsViewController: UIViewController {
         super.viewDidLoad()
         addListeners()
         setupUI()
+        registerNibs()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        var insets = self.collectionView.contentInset
+        let value = 20 
+        insets.left = CGFloat(value)
+        insets.right = CGFloat(value)
+        insets.top = CGFloat(value)
+        insets.bottom = CGFloat(value)
+        self.collectionView.contentInset = insets
+        print("\(value)")
+        self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     }
 
     private func setupUI () {
-        webView.delegate = self
         self.navigationItem.title = Strings.courseAnnouncements
-        loadController.setupInController(self, contentView: self.webView)
+        loadController.setupInController(self, contentView: self.collectionView)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
     }
     
@@ -62,13 +74,10 @@ class AnnouncementsViewController: UIViewController {
         //TODO: adjust the loader view according to states rightnow the app is crashing if data fails to load in web view.
         if (courseAnnouncements != nil) {
             if (courseAnnouncements?.count)! > 0 {
-                self.dateLabel.isHidden = false
-                self.webView.isHidden = false
-                self.dateLabel.text = courseAnnouncements?[0].date
-                self.webView.loadHTMLString((courseAnnouncements?[0].content)!, baseURL: nil)
+                collectionView.isHidden = false
+                collectionView.reloadData()
             } else {
-                self.dateLabel.isHidden = true
-                self.webView.isHidden = true
+                collectionView.isHidden = false
             }
         }
     }
@@ -77,39 +86,80 @@ class AnnouncementsViewController: UIViewController {
         stream?.listen(self, action: { (result) in
             result.ifSuccess({ (courseAnnouncements: [CourseAnnouncement]) -> Void in
                 if courseAnnouncements.count > 0 {
+                    self.loadController.state = LoadState.loaded
                     self.courseAnnouncements = courseAnnouncements
+                    self.noAnnouncementLabel.isHidden = true
                     self.showStreamData()
                 } else {
-                    self.dateLabel.isHidden = true
-                    self.webView.isHidden = true
-                    self.loadController.state = LoadState.failed(NSError())
+                    self.collectionView.isHidden = true
+                    self.loadController.state = LoadState.loaded
                 }
                 
             })
             result.ifFailure({ (error) in
-                self.webView.isHidden = true
-                self.dateLabel.isHidden = true
-                self.loadController.state = LoadState.failed(error as NSError)
+                self.collectionView.isHidden = true
+                self.loadController.state = LoadState.loaded
             })
         })
     }
 
 }
 
-extension AnnouncementsViewController: UIWebViewDelegate {
+extension AnnouncementsViewController {
+    func registerNibs() {
+        self.collectionView.register(UINib(nibName: "AnnouncementCollectionViewCell", bundle: nil),
+                                     forCellWithReuseIdentifier: "AnnouncementCollectionViewCell")
+    }
+}
+
+extension AnnouncementsViewController: UICollectionViewDelegate {
+
+}
+
+extension AnnouncementsViewController: UICollectionViewDelegateFlowLayout {
     
-    func webViewDidStartLoad(_ webView: UIWebView){
-        self.webView.isUserInteractionEnabled = false
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var cellSize = collectionView.bounds.size
+        cellSize.width -= 40.0
+        cellSize.height -= 20.0
+        return cellSize
+    }
+    
+}
+
+extension AnnouncementsViewController: UICollectionViewDataSource {
+ 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return courseAnnouncements?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnnouncementCollectionViewCell",
+                                                      for: indexPath) as! AnnouncementCollectionViewCell
+        configureCollectionViewCell(indexPath: indexPath, cell: cell)
+        return cell
     }
 
-    func webViewDidFinishLoad(_ webView :UIWebView){
-        self.loadController.state = .loaded
-        self.webView.isUserInteractionEnabled = true
+}
+
+extension AnnouncementsViewController {
+
+    func configureCollectionViewCell(indexPath: IndexPath, cell: AnnouncementCollectionViewCell) {
+        cell.courseAnnounement = courseAnnouncements?[indexPath.row]
+        cell.configureCellContent()
+        addShadowToCell(cell: cell)
     }
     
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        self.loadController.state = .failed()
-        self.loadController.state = LoadState.failed(error as NSError)
+    func addShadowToCell(cell: UICollectionViewCell) {
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cell.layer.shadowRadius = 2.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds,
+                                             cornerRadius:cell.contentView.layer.cornerRadius).cgPath
     }
-
 }

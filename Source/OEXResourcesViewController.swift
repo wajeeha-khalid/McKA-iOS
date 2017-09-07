@@ -56,6 +56,15 @@ class OEXResourcesViewController: UIViewController {
         }
         if (resourseContent != nil) {
             self.webView.loadHTMLString((resourseContent?.content)!, baseURL: nil)
+            
+            let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
+            let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
+            print(htmlString ?? "Nil nothing found in file content")
+            let htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
+                                                                     with: resourseContent?.content ?? "")
+            let path: String = Bundle.main.bundlePath
+            let baseURL = URL.init(fileURLWithPath: path)
+            webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
         }
     }
 
@@ -82,6 +91,10 @@ extension OEXResourcesViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(_ webView :UIWebView){
         self.loadController.state = .loaded
         self.webView.isUserInteractionEnabled = true
+        
+        guard let path = Bundle.main.path(forResource: "template", ofType: "css") else { return }
+        let javaScriptStr = "var link = document.createElement('link'); link.href = '\(path)'; link.rel = 'stylesheet'; document.head.appendChild(link)"
+        webView.stringByEvaluatingJavaScript(from: javaScriptStr)
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {

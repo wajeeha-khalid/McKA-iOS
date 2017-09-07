@@ -593,6 +593,11 @@
 		888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */; };
 		888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */; };
 		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
+		88CDEAEB1F60449300CC99FB /* AnnouncementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */; };
+		88CDEAEC1F60449300CC99FB /* AnnouncementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */; };
+		88CDEAEF1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */; };
+		88CDEAF31F6047B800CC99FB /* template.css in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAF11F6047B800CC99FB /* template.css */; };
+		88CDEAF41F6047B800CC99FB /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAF21F6047B800CC99FB /* template.html */; };
 		88F7A6B81F46F411000F3AB7 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */; };
 		88F7A6B91F46F411000F3AB7 /* AnnouncementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */; };
 		88F7A6BB1F46F460000F3AB7 /* AnnouncementsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */; };
@@ -1658,6 +1663,11 @@
 		888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXResourcesViewController.swift; sourceTree = "<group>"; };
 		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
 		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
+		88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementCollectionViewCell.swift; sourceTree = "<group>"; };
+		88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnouncementCollectionViewCell.xib; sourceTree = "<group>"; };
+		88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		88CDEAF11F6047B800CC99FB /* template.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = template.css; sourceTree = "<group>"; };
+		88CDEAF21F6047B800CC99FB /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
 		88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnouncementsViewController.xib; sourceTree = "<group>"; };
 		88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsAPI.swift; sourceTree = "<group>"; };
@@ -3366,9 +3376,38 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		88CDEAE41F60440300CC99FB /* Announcement Collection View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */,
+				88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */,
+			);
+			name = "Announcement Collection View Cell";
+			sourceTree = "<group>";
+		};
+		88CDEAED1F60456800CC99FB /* Announcement Collection View Flow Layout */ = {
+			isa = PBXGroup;
+			children = (
+				88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */,
+			);
+			name = "Announcement Collection View Flow Layout";
+			sourceTree = "<group>";
+		};
+		88CDEAF01F60471A00CC99FB /* HTML + CSS */ = {
+			isa = PBXGroup;
+			children = (
+				88CDEAF11F6047B800CC99FB /* template.css */,
+				88CDEAF21F6047B800CC99FB /* template.html */,
+			);
+			name = "HTML + CSS";
+			sourceTree = "<group>";
+		};
 		88F7A6B51F45F632000F3AB7 /* Announcements */ = {
 			isa = PBXGroup;
 			children = (
+				88CDEAF01F60471A00CC99FB /* HTML + CSS */,
+				88CDEAED1F60456800CC99FB /* Announcement Collection View Flow Layout */,
+				88CDEAE41F60440300CC99FB /* Announcement Collection View Cell */,
 				88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */,
 				88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */,
 				88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */,
@@ -4403,6 +4442,7 @@
 				D0FA800F1E1E191600FB1226 /* Raleway-BoldItalic.ttf in Resources */,
 				69ECC6191D50D1170030CF87 /* bt_grey_deactive.png in Resources */,
 				6926CDAC1D59BE3600A16E22 /* ic_next.png in Resources */,
+				88CDEAF41F6047B800CC99FB /* template.html in Resources */,
 				69ECC6241D50D1170030CF87 /* bt_view_default.png in Resources */,
 				114A30BF1E56CD9F00EBCF6B /* Icon-60@2x.png in Resources */,
 				D0FA801D1E1E191600FB1226 /* Raleway-ThinItalic.ttf in Resources */,
@@ -4479,6 +4519,7 @@
 				69ECC6391D50D1170030CF87 /* ic_unwatched@3x.png in Resources */,
 				69ECC61B1D50D1170030CF87 /* bt_logout_active.png in Resources */,
 				D0871E7A1E41A27F00B2C41F /* previous.png in Resources */,
+				88CDEAF31F6047B800CC99FB /* template.css in Resources */,
 				D05B25D01E13CED400D1E77F /* FTUE2@3x.png in Resources */,
 				D085DDA91E483989009AA666 /* ic_blue_download@3x.png in Resources */,
 				63EC02111F3C84C700B702C4 /* img_logo_chemours@2x.png in Resources */,
@@ -4539,6 +4580,7 @@
 				BEEEBF80196AAACF00EF2C35 /* Localizable.strings in Resources */,
 				D0249F661E66996400A55613 /* ic_completed@2x.png in Resources */,
 				63EC02131F3C84C700B702C4 /* img_logo_mckinsey@1x.png in Resources */,
+				88CDEAEC1F60449300CC99FB /* AnnouncementCollectionViewCell.xib in Resources */,
 				D0249F831E68592000A55613 /* ic_leftTriangle@2x.png in Resources */,
 				199B9B7B1935EA8000081A09 /* OEXFlowErrorViewController.xib in Resources */,
 				D05B25D21E13CED400D1E77F /* FTUE3@2x.png in Resources */,
@@ -4896,6 +4938,7 @@
 				94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */,
 				D0BF32B21E0CEBBA007EF8A3 /* OEXPageContentViewController.m in Sources */,
 				778D53351B3D96E900441A98 /* ListCursor.swift in Sources */,
+				88CDEAEB1F60449300CC99FB /* AnnouncementCollectionViewCell.swift in Sources */,
 				E0C6EF971BFF4B9900B315E3 /* UIButton+TintColor.swift in Sources */,
 				D07DD5E71E5848D100A8BC01 /* UnitData.m in Sources */,
 				B498405919753C6C00019D1F /* CLVideoPlayer.m in Sources */,
@@ -4921,6 +4964,7 @@
 				B4B285DF1A9A493A00DD603A /* OEXNewRelicConfig.m in Sources */,
 				9E1D952E1B678E4700ABE764 /* AccessibilityCLButton.swift in Sources */,
 				71DB6EC31E1B833C00E12C3E /* GVRVideoPlayerInterface.m in Sources */,
+				88CDEAEF1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				7765025F1C7CEBC5007384E7 /* SingleChildContainingViewController.swift in Sources */,
 				94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */,
 				7C2DD54F1D4A7901006148E0 /* UserPreference.swift in Sources */,
