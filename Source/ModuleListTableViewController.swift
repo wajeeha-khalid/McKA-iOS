@@ -51,7 +51,7 @@ final class ModuleTableHeaderView: UIView {
         moduleCountLabel.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel)
             make.top.equalTo(titleLabel.snp.bottom).offset(5.0)
-            make.bottom.equalTo(self).offset(-ModuleListOffsets.headerVerticalOffset)
+            make.bottom.equalTo(self).inset(ModuleListOffsets.headerVerticalOffset)
         }
         
         let seperatorView = UIView()
@@ -59,7 +59,7 @@ final class ModuleTableHeaderView: UIView {
         seperatorView.backgroundColor = UIColor.lightGray
         seperatorView.snp.makeConstraints { make in
             make.leading.equalTo(self).offset(ModuleListOffsets.horizontalOffset)
-            make.trailing.equalTo(self).offset(-ModuleListOffsets.horizontalOffset)
+            make.trailing.equalTo(self).inset(ModuleListOffsets.horizontalOffset)
             make.height.equalTo(0.5)
             make.bottom.equalTo(self)
         }
@@ -87,6 +87,8 @@ final class ModuleTableViewCell: UITableViewCell {
         
         titleLabel.font = UIFont.systemFont(ofSize: 16.0)
         titleLabel.textColor = UIColor.black
+        titleLabel.numberOfLines = 0
+        titleLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(contentView).offset(ModuleListOffsets.horizontalOffset)
             make.top.equalTo(contentView).offset(ModuleListOffsets.verticalOffset)
@@ -103,8 +105,10 @@ final class ModuleTableViewCell: UITableViewCell {
         
         progressImageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.trailing.equalTo(contentView).offset(-ModuleListOffsets.horizontalOffset)
+            make.trailing.equalTo(contentView).inset(ModuleListOffsets.horizontalOffset)
         }
+        progressImageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        progressImageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         
         let seperatorView = UIView()
         contentView.addSubview(seperatorView)
