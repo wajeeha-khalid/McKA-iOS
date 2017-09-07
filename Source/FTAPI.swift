@@ -11,7 +11,7 @@ import edXCore
 import SwiftyJSON
 import MckinseyXBlocks
 
-class FTSubmissionResponseData: NSObject {
+class FreeTextSubmissionResponseData: NSObject {
     struct Keys {
         static let id = "id"
         static let value = "student_input"
@@ -55,7 +55,7 @@ class FTSubmissionResponseData: NSObject {
     }
 }
 
-class FTCompletedAnswerResponseData: NSObject {
+class FreeTextCompletedAnswerResponseData: NSObject {
     struct Keys {
         static let attempted = "attempted"
         static let answer = "student_input"
@@ -80,12 +80,12 @@ class FTCompletedAnswerResponseData: NSObject {
     }
     
     convenience init?(json: JSON) {
-        let responseDic = json.dictionaryObject
+        let responseDic = json.dictionary
         var answerDic: [String:Any] = [:]
-        answerDic[Keys.attempted] = responseDic?[Keys.attempted] as? Bool ?? false
-        answerDic[Keys.attempted] = responseDic?[Keys.completed] as? Bool ?? false
+        answerDic[Keys.attempted] = responseDic?[Keys.attempted]?.boolValue
+        answerDic[Keys.attempted] = responseDic?[Keys.completed]?.boolValue
         
-        guard let components = responseDic?["components"] as? [String:Any] else {
+        guard let components = responseDic?["components"]?.dictionary else {
             self.init(dictionary: answerDic)
             return nil
         }
@@ -95,18 +95,18 @@ class FTCompletedAnswerResponseData: NSObject {
             return nil
         }
         
-        guard let xBlockDic = components[components.keys.first!] as? [String:Any] else {
+        guard let xBlockDic = components[components.keys.first!]?.dictionary else {
             self.init(dictionary: answerDic)
             return nil
         }
         
         
-        guard let answerDataDic = xBlockDic["answer_data"] as? [String:Any] else {
+        guard let answerDataDic = xBlockDic["answer_data"]?.dictionary else {
             self.init(dictionary: answerDic)
             return nil
         }
         
-        answerDic[Keys.answer] = answerDataDic[Keys.answer] as? String ?? ""
+        answerDic[Keys.answer] = answerDataDic[Keys.answer]?.string ?? ""
         self.init(dictionary: answerDic)
     }
 }
@@ -122,33 +122,33 @@ struct FTAPI {
         case attempted = "attempted"
     }
     
-    static func ftSubmitResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<FTSubmissionResponseData> {
-        guard let ftResponseDic = json.dictionary else {
+    static func ftSubmitResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<FreeTextSubmissionResponseData> {
+        guard let freeTextResponseDic = json.dictionary else {
             return .failure(NSError())
         }
         
         var id = ""
-        let completed = ftResponseDic[Fields.completed]?.bool ?? false
+        let completed = freeTextResponseDic[Fields.completed]?.bool ?? false
         var status = ""
         var value = ""
         
-        let results = ftResponseDic[Fields.results]?.arrayValue.first?.arrayValue
+        let results = freeTextResponseDic[Fields.results]?.arrayValue.first?.arrayValue
         if (results?.count ?? 0) >= 2 {
             id = (results?[0].stringValue) ?? ""
             
-            if let ftResult = results?[1].dictionaryValue {
-                status = ftResult[Fields.status]?.stringValue ?? ""
-                value = ftResult[Fields.value]?.stringValue ?? ""
+            if let freeTextResult = results?[1].dictionaryValue {
+                status = freeTextResult[Fields.status]?.stringValue ?? ""
+                value = freeTextResult[Fields.value]?.stringValue ?? ""
             }
         } else {
             return .failure(NSError())
         }
         
-        let ftResponse = FTSubmissionResponseData(id: id, value: value, status: status, completed: completed)
+        let ftResponse = FreeTextSubmissionResponseData(id: id, value: value, status: status, completed: completed)
         return .success(ftResponse)
     }
     
-    static func submitFT(questionId: String, answer: String, courseId: String, blockId: String) -> NetworkRequest<FTSubmissionResponseData> {
+    static func submitFT(questionId: String, answer: String, courseId: String, blockId: String) -> NetworkRequest<FreeTextSubmissionResponseData> {
         let path = "/courses/{course_id}/xblock/{block_id}/handler/submit".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
         let requestBody = [questionId: ["value": answer]]
         return NetworkRequest(method: .POST,
@@ -159,16 +159,16 @@ struct FTAPI {
         )
     }
     
-    static func ftCompletedAnswerResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<FTCompletedAnswerResponseData> {
-        guard let ftResponseDic = json.dictionaryObject else {
+    static func ftCompletedAnswerResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<FreeTextCompletedAnswerResponseData> {
+        guard let freeTextResponseDic = json.dictionary else {
             return .failure(NSError())
         }
         
-        let attempted = ftResponseDic[Fields.attempted] as? Bool ?? false
-        let completed = ftResponseDic[Fields.completed] as? Bool ?? false
+        let attempted = freeTextResponseDic[Fields.attempted]?.boolValue
+        let completed = freeTextResponseDic[Fields.completed]?.boolValue
         var answer = ""
         
-        guard let components = ftResponseDic[Fields.components] as? [String:Any] else {
+        guard let components = freeTextResponseDic[Fields.components]?.dictionary else {
             return .failure(NSError())
         }
         
@@ -176,21 +176,21 @@ struct FTAPI {
             return .failure(NSError())
         }
         
-        guard let xBlockDic = components[components.keys.first!] as? [String:Any] else {
+        guard let xBlockDic = components[components.keys.first!]?.dictionary else {
             return .failure(NSError())
         }
         
         
-        guard let answerDataDic = xBlockDic[Fields.answerData] as? [String:Any] else {
+        guard let answerDataDic = xBlockDic[Fields.answerData]?.dictionary else {
             return .failure(NSError())
         }
         
-        answer = answerDataDic[Fields.value] as? String ?? ""
-        let ftResponse = FTCompletedAnswerResponseData(attempted: attempted, answer: answer, completed: completed)
+        answer = answerDataDic[Fields.value]?.string ?? ""
+        let ftResponse = FreeTextCompletedAnswerResponseData(attempted: attempted!, answer: answer, completed: completed!)
         return .success(ftResponse)
     }
     
-    static func getCompletedAnswer(courseId: String, blockId: String) -> NetworkRequest<FTCompletedAnswerResponseData> {
+    static func getCompletedAnswer(courseId: String, blockId: String) -> NetworkRequest<FreeTextCompletedAnswerResponseData> {
         let path = "courses/{course_id}/xblock/{block_id}/handler/student_view_user_state".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
         return NetworkRequest(method: .GET,
                               path: path,

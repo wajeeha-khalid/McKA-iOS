@@ -14,8 +14,8 @@ class FTManager: NSObject, FreeTextAPIProtocol {
     let blockID: String
     let courseID: String
     let enviroment: RouterEnvironment
-    var submissionStream: edXCore.Stream<FTSubmissionResponseData>?
-    var completionStream: edXCore.Stream<FTCompletedAnswerResponseData>?
+    var submissionStream: edXCore.Stream<FreeTextSubmissionResponseData>?
+    var completionStream: edXCore.Stream<FreeTextCompletedAnswerResponseData>?
     
     public init(blockID: String, courseID: String, environment: RouterEnvironment) {
         self.blockID = blockID
@@ -54,12 +54,12 @@ class FTManager: NSObject, FreeTextAPIProtocol {
 }
 
 extension FTManager {
-    func ftSubmitResponseStream(questionId: String, answer: String, courseId: String, blockId: String) -> edXCore.Stream<FTSubmissionResponseData> {
+    func ftSubmitResponseStream(questionId: String, answer: String, courseId: String, blockId: String) -> edXCore.Stream<FreeTextSubmissionResponseData> {
         let request = FTAPI.submitFT(questionId: questionId, answer: answer, courseId: courseId, blockId: blockId)
         return enviroment.networkManager.streamForRequest(request)
     }
     
-    func ftGetCompletedAnswerStream(courseId: String, blockId: String) -> edXCore.Stream<FTCompletedAnswerResponseData> {
+    func ftGetCompletedAnswerStream(courseId: String, blockId: String) -> edXCore.Stream<FreeTextCompletedAnswerResponseData> {
         let request = FTAPI.getCompletedAnswer(courseId: courseId, blockId: blockId)
         return enviroment.networkManager.streamForRequest(request)
     }
