@@ -424,6 +424,8 @@ extension CourseOutlineQuerier {
             }
             
             return flattened
+            }.map {
+                $0.filter { !$0.children.isEmpty }
         }
     }
     
