@@ -42,7 +42,7 @@ class FTManager: NSObject, FreeTextAPIProtocol {
         self.completionStream?.listen(self, action: { (result) in
             
             result.ifSuccess({ (ftCompletedAnswerResponseData) in
-                let completedAnswer = FTCompletedAnswer(attempted: ftCompletedAnswerResponseData.attempted, completed: ftCompletedAnswerResponseData.completed, answer: ftCompletedAnswerResponseData.answer)
+                let completedAnswer = FTCompletedAnswer(answer: ftCompletedAnswerResponseData.answer, completed: ftCompletedAnswerResponseData.completed)
                 completion(completedAnswer, ftCompletedAnswerResponseData.completed)
             })
             
