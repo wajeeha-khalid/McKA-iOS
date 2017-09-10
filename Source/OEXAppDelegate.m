@@ -96,7 +96,8 @@
     {
          [userDefaults setBool:YES forKey:FTUE];
     }
-    
+
+    [NSURLProtocol registerClass:[WebViewLocalLoadingProtocol class]];
     return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

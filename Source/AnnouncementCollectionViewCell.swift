@@ -21,17 +21,12 @@ class AnnouncementCollectionViewCell: UICollectionViewCell {
     
     func configureCellContent() {
         self.dateLabel.text = courseAnnounement?.date
-        webView.isHidden = true
         loadTemplateHTML()
     }
 }
 
 extension AnnouncementCollectionViewCell: UIWebViewDelegate {
     func webViewDidFinishLoad(_ webView: UIWebView){
-        guard let path = Bundle.main.path(forResource: "template", ofType: "css") else { return }
-        let javaScriptStr = "var link = document.createElement('link'); link.href = '\(path)'; link.rel = 'stylesheet'; document.head.appendChild(link)"
-        webView.stringByEvaluatingJavaScript(from: javaScriptStr)
-        webView.isHidden = false
     }
 }
 

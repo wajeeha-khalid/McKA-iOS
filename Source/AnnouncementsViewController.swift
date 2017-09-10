@@ -9,6 +9,7 @@
 //  TODO: In the current senario the app is crashing if there is no announcements or the data is failed to load.
 
 import UIKit
+import Foundation
 
 class AnnouncementsViewController: UIViewController {
 
