@@ -66,8 +66,7 @@ open class WebViewLocalLoadingProtocol: URLProtocol {
         
         if let path = Bundle.main.path(forResource: "web-cache", ofType: "plist") {
             if let dic = NSDictionary(contentsOfFile: path) as? [String: String] {
-                var filepath = request.url?.relativeString ?? ""
-                filepath = filepath.replacingOccurrences(of: "file://", with: "")
+                let filepath = request.url?.relativePath ?? ""
                 
                 if dic[filepath] != nil {
                     return true

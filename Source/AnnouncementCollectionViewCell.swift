@@ -36,7 +36,7 @@ extension AnnouncementCollectionViewCell {
         let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
         let htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER", with: courseAnnounement?.content ?? "")
         let path: String = Bundle.main.bundlePath
-        let baseURL = URL.init(fileURLWithPath: path)
+        let baseURL = URL.init(string: path)
         webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
     }
 }

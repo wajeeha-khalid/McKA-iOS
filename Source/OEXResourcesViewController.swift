@@ -12,14 +12,25 @@ class OEXResourcesViewController: UIViewController {
 
     public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & OEXRouterProvider & OEXInterfaceProvider & OEXRouterProvider
     
+    @IBOutlet weak var farwardBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var backBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var refreshBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var stopBarButtonItem: UIBarButtonItem!
+    
     @IBOutlet weak var webView: UIWebView!
+    
     fileprivate let environment: Environment
     fileprivate let courseId: String?
+    fileprivate var htmlLoadingString: String?
     var stream: edXCore.Stream<[CourseContent]>?
     var courseContents: [CourseContent]?
     var resourseContent: CourseContent?
     let loadController : LoadStateViewController
 
+    private func setWebviewSettings() {
+        webView.allowsInlineMediaPlayback = true
+    }
+    
     public init(environment: Environment, courseId: String) {
         self.environment = environment
         self.courseId = courseId
@@ -37,6 +48,8 @@ class OEXResourcesViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         addListeners()
+        setWebviewSettings()
+        setBarButtonItemActions()
     }
 
     private func setupUI () {
@@ -60,14 +73,13 @@ class OEXResourcesViewController: UIViewController {
             let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
             let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
             print(htmlString ?? "Nil nothing found in file content")
-            var htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
+            htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
                                                                      with: resourseContent?.content ?? "")
-            htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: "'", with: "\'")
-            htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: "//player.ooyala.co", with: "http://player.ooyala.co")
+            htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: "//player.ooyala.co", with: "https://player.ooyala.co")
+            webView.loadRequest(URLRequest(url: URL(string: "about:blank")!))
             
-            let path: String = Bundle.main.bundlePath
-            let baseURL = URL.init(fileURLWithPath: path)
-            webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
+        } else {
+            self.loadController.state = LoadState.failed(NSError())
         }
     }
 
@@ -88,17 +100,79 @@ class OEXResourcesViewController: UIViewController {
 extension OEXResourcesViewController: UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView){
+       
         self.webView.isUserInteractionEnabled = false
+        setBarButtonItemStatus()
     }
     
     func webViewDidFinishLoad(_ webView :UIWebView){
         self.loadController.state = .loaded
         self.webView.isUserInteractionEnabled = true
-
+        setBarButtonItemStatus()
+        checkIfLoadingFirstTime()
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        setBarButtonItemStatus()
         
     }
     
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        return true
+    }
+    
+}
+
+
+extension OEXResourcesViewController {
+    
+    func setBarButtonItemActions() {
+        farwardBarButtonItem.action = #selector(OEXResourcesViewController.farwardBarButtonItemAction)
+        backBarButtonItem.action = #selector(OEXResourcesViewController.backBarButtonItemAction)
+        refreshBarButtonItem.action = #selector(OEXResourcesViewController.refreshBarButtonItemAction)
+        stopBarButtonItem.action = #selector(OEXResourcesViewController.stopLoadingBarButtonItemAction)
+    }
+    
+    func backBarButtonItemAction() {
+        webView.goBack()
+    }
+    
+    func farwardBarButtonItemAction() {
+        webView.goForward()
+    }
+    
+    func refreshBarButtonItemAction() {
+        webView.reload()
+    }
+    
+    func stopLoadingBarButtonItemAction() {
+        webView.stopLoading()
+    }
+    
+    func setBarButtonItemStatus() {
+        if webView.isLoading {
+            stopBarButtonItem.isEnabled = true
+        } else {
+            stopBarButtonItem.isEnabled = false
+        }
+        
+        if webView.canGoBack {
+            backBarButtonItem.isEnabled = true
+        } else {
+            backBarButtonItem.isEnabled = false
+        }
+        
+        if webView.canGoForward {
+            farwardBarButtonItem.isEnabled = true
+        } else {
+            farwardBarButtonItem.isEnabled = false
+        }
+    }
+    
+    func checkIfLoadingFirstTime() {
+        if (webView.request?.url?.absoluteString == "about:blank") && !webView.canGoBack {
+            let baseURL = URL.init(string: "https://courses.qa.mckinsey.edx.org")
+            webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
+        }
+    }
 }
