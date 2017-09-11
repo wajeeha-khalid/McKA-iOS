@@ -178,12 +178,14 @@ public struct CourseOutline {
                         type = .audio(summary)
                     case CourseBlock.Category.Discussion:
                         // Inline discussion is in progress feature. Will remove this code when it's ready to ship
-                        type = .unknown(typeName)
                         
                         if OEXConfig.shared().discussionsEnabled {
                             let bodyData = body[Fields.StudentViewData].object as? NSDictionary
                             let discussionModel = DiscussionModel(dictionary: bodyData ?? [:])
                             type = .discussion(discussionModel)
+                        } else {
+                            type = .unknown(typeName)
+                            continue
                         }
                     }
                 }
@@ -278,7 +280,7 @@ open class CourseBlock {
         case Unit = "vertical"
         case Video = "video"
         case ProblemBuilder = "problem-builder"
-        case Discussion = "discussion"
+        case Discussion = "discussion-forum"
         case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
