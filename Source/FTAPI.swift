@@ -57,23 +57,19 @@ class FreeTextSubmissionResponseData: NSObject {
 
 class FreeTextCompletedAnswerResponseData: NSObject {
     struct Keys {
-        static let attempted = "attempted"
         static let answer = "student_input"
         static let completed = "completed"
     }
     
-    let attempted: Bool
     let answer: String
     let completed: Bool
     
-    init(attempted: Bool, answer: String, completed: Bool) {
-        self.attempted = attempted
+    init(answer: String, completed: Bool) {
         self.answer = answer
         self.completed = completed
     }
     
     init?(dictionary: [String: Any]) {
-        self.attempted = dictionary[Keys.attempted] as? Bool ?? false
         self.answer = dictionary[Keys.answer] as? String ?? ""
         self.completed = dictionary[Keys.completed] as? Bool ?? false
         super.init()
@@ -82,8 +78,7 @@ class FreeTextCompletedAnswerResponseData: NSObject {
     convenience init?(json: JSON) {
         let responseDic = json.dictionary
         var answerDic: [String:Any] = [:]
-        answerDic[Keys.attempted] = responseDic?[Keys.attempted]?.boolValue
-        answerDic[Keys.attempted] = responseDic?[Keys.completed]?.boolValue
+        answerDic[Keys.completed] = responseDic?[Keys.completed]?.boolValue
         
         guard let components = responseDic?["components"]?.dictionary else {
             self.init(dictionary: answerDic)
@@ -100,13 +95,7 @@ class FreeTextCompletedAnswerResponseData: NSObject {
             return nil
         }
         
-        
-        guard let answerDataDic = xBlockDic["answer_data"]?.dictionary else {
-            self.init(dictionary: answerDic)
-            return nil
-        }
-        
-        answerDic[Keys.answer] = answerDataDic[Keys.answer]?.stringValue
+        answerDic[Keys.answer] = xBlockDic[Keys.answer]?.stringValue
         self.init(dictionary: answerDic)
     }
 }
@@ -118,8 +107,6 @@ struct FTAPI {
         case value = "student_input"
         case status = "status"
         case components = "components"
-        case answerData = "answer_data"
-        case attempted = "attempted"
     }
     
     static func ftSubmitResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<FreeTextSubmissionResponseData> {
@@ -164,7 +151,6 @@ struct FTAPI {
             return .failure(NSError())
         }
         
-        let attempted = freeTextResponseDic[Fields.attempted]?.boolValue ?? false
         let completed = freeTextResponseDic[Fields.completed]?.boolValue ?? false
         var answer = ""
         
@@ -180,13 +166,9 @@ struct FTAPI {
             return .failure(NSError())
         }
         
+        answer = xBlockDic[Fields.value]?.stringValue ?? ""
         
-        guard let answerDataDic = xBlockDic[Fields.answerData]?.dictionary else {
-            return .failure(NSError())
-        }
-        
-        answer = answerDataDic[Fields.value]?.stringValue ?? ""
-        let ftResponse = FreeTextCompletedAnswerResponseData(attempted: attempted, answer: answer, completed: completed)
+        let ftResponse = FreeTextCompletedAnswerResponseData(answer: answer, completed: completed)
         return .success(ftResponse)
     }
     
