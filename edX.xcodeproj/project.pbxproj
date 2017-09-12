@@ -594,6 +594,8 @@
 		888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */; };
 		888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */; };
 		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
+		888B89271F67C48D008F87E8 /* WebNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B89251F67C48D008F87E8 /* WebNavigationViewController.swift */; };
+		888B89281F67C48D008F87E8 /* WebNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888B89261F67C48D008F87E8 /* WebNavigationViewController.xib */; };
 		88CDEAEB1F60449300CC99FB /* AnnouncementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */; };
 		88CDEAEC1F60449300CC99FB /* AnnouncementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */; };
 		88CDEAEF1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */; };
@@ -1666,6 +1668,8 @@
 		888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXResourcesViewController.swift; sourceTree = "<group>"; };
 		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
 		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
+		888B89251F67C48D008F87E8 /* WebNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebNavigationViewController.swift; sourceTree = "<group>"; };
+		888B89261F67C48D008F87E8 /* WebNavigationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebNavigationViewController.xib; sourceTree = "<group>"; };
 		88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementCollectionViewCell.swift; sourceTree = "<group>"; };
 		88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnouncementCollectionViewCell.xib; sourceTree = "<group>"; };
 		88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -3380,6 +3384,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		888B89201F67C448008F87E8 /* WebNavigationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				888B89251F67C48D008F87E8 /* WebNavigationViewController.swift */,
+				888B89261F67C48D008F87E8 /* WebNavigationViewController.xib */,
+			);
+			name = WebNavigationViewController;
+			sourceTree = "<group>";
+		};
 		88CDEAE41F60440300CC99FB /* Announcement Collection View Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3418,6 +3431,7 @@
 		88F7A6B51F45F632000F3AB7 /* Announcements */ = {
 			isa = PBXGroup;
 			children = (
+				888B89201F67C448008F87E8 /* WebNavigationViewController */,
 				88CDEAF51F617E6E00CC99FB /* Local Substitute Cache */,
 				88CDEAF01F60471A00CC99FB /* HTML + CSS */,
 				88CDEAED1F60456800CC99FB /* Announcement Collection View Flow Layout */,
@@ -4618,6 +4632,7 @@
 				0A26CB871EA7B19800822E9C /* UnitCoachmarkViewController.xib in Resources */,
 				6926CDB11D59BE3600A16E22 /* ic_seek_thumb@2x.png in Resources */,
 				69ECC6351D50D1170030CF87 /* ic_next_default.png in Resources */,
+				888B89281F67C48D008F87E8 /* WebNavigationViewController.xib in Resources */,
 				114A30BB1E56CD9F00EBCF6B /* Icon-29@3x.png in Resources */,
 				D0871E781E41A27100B2C41F /* next@3x.png in Resources */,
 				69ECC6311D50D1170030CF87 /* ic_download.png in Resources */,
@@ -5285,6 +5300,7 @@
 				773B1D421B1F48F100B861DF /* CourseOutlineHeaderView.swift in Sources */,
 				778B61061B06BD2100489532 /* NSNotificationCenter+SafeSwift.swift in Sources */,
 				B4B6D6011A949EFC000F44E8 /* OEXRegistrationError.m in Sources */,
+				888B89271F67C48D008F87E8 /* WebNavigationViewController.swift in Sources */,
 				1904A14D1A1386C2006A5524 /* edXDB.xcdatamodel in Sources */,
 				114A30AA1E544C8A00EBCF6B /* GVRTransitionCounterView.m in Sources */,
 				E03E6A191D38EC7500944AAA /* UIView+UIViewController.swift in Sources */,

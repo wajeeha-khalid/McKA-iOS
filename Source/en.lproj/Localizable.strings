@@ -708,3 +708,5 @@
 "CANCEL" = "Cancel";
 /* Placeholder shown on email text fields */
 "EMAIL_ID_PLACEHOLDER" = "Enter your email id";
+/* Done button text */
+"DONE" = "Done";

@@ -148,6 +148,7 @@ extension AnnouncementsViewController {
     func configureCollectionViewCell(indexPath: IndexPath, cell: AnnouncementCollectionViewCell) {
         cell.courseAnnounement = courseAnnouncements?[indexPath.row]
         cell.configureCellContent()
+        cell.delegate = self
         addShadowToCell(cell: cell)
     }
     
@@ -163,4 +164,15 @@ extension AnnouncementsViewController {
         cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds,
                                              cornerRadius:cell.contentView.layer.cornerRadius).cgPath
     }
+}
+
+extension AnnouncementsViewController: AnnouncementsWebViewEvent {
+
+    func showWebNavigationViewController(request: URLRequest) {
+        let webNavigationViewController = WebNavigationViewController(request: request,
+                                                                      title: Strings.courseAnnouncements)
+        let navigationController = UINavigationController(rootViewController: webNavigationViewController)
+        self.present(navigationController, animated: false, completion: nil)
+    }
+    
 }
