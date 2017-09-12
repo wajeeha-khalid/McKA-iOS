@@ -12,6 +12,7 @@ class WebNavigationViewController: UIViewController {
 
     @IBOutlet weak var webView: UIWebView!
     
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var backBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var farwardBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var refreshBarButtonItem: UIBarButtonItem!
@@ -53,17 +54,23 @@ extension WebNavigationViewController: UIWebViewDelegate {
         
         self.webView.isUserInteractionEnabled = false
         setBarButtonItemStatus()
+        progressView.isHidden = false
+        progressView.setProgress(0.0, animated: false)
+        progressView.setProgress(0.3, animated: true)
     }
     
     func webViewDidFinishLoad(_ webView :UIWebView){
         self.loadController.state = .loaded
+        progressView.setProgress(1.0, animated: true)
         self.webView.isUserInteractionEnabled = true
         setBarButtonItemStatus()
+//        progressView.isHidden = true
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         setBarButtonItemStatus()
-        
+        progressView.setProgress(1.0, animated: true)
+        progressView.isHidden = true
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -97,6 +104,7 @@ extension WebNavigationViewController {
             refreshBarButtonItem.isEnabled = false
         } else {
             refreshBarButtonItem.isEnabled = true
+            progressView.isHidden = true
         }
         
         if webView.canGoBack {
@@ -132,5 +140,6 @@ extension WebNavigationViewController {
 extension WebNavigationViewController {
     fileprivate func uiSetup() {
         navigationItem.title = navigationBarTitle
+        progressView.isHidden = true
     }
 }

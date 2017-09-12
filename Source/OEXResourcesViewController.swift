@@ -16,7 +16,8 @@ class OEXResourcesViewController: UIViewController {
     @IBOutlet weak var backBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var refreshBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
-
+    
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var webView: UIWebView!
     
     fileprivate let environment: Environment
@@ -53,6 +54,7 @@ class OEXResourcesViewController: UIViewController {
     }
 
     private func setupUI () {
+        self.progressView.isHidden = true
         self.navigationItem.title = Strings.resources
         loadController.setupInController(self, contentView: self.webView)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
@@ -104,6 +106,9 @@ extension OEXResourcesViewController: UIWebViewDelegate {
        
         self.webView.isUserInteractionEnabled = false
         setBarButtonItemStatus()
+        progressView.isHidden = false
+        progressView.setProgress(0.0, animated: false)
+        progressView.setProgress(0.3, animated: true)
     }
     
     func webViewDidFinishLoad(_ webView :UIWebView){
@@ -111,11 +116,12 @@ extension OEXResourcesViewController: UIWebViewDelegate {
         self.webView.isUserInteractionEnabled = true
         setBarButtonItemStatus()
         checkIfLoadingFirstTime()
+        progressView.setProgress(1.0, animated: true)
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         setBarButtonItemStatus()
-        
+        progressView.setProgress(1.0, animated: true)
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -149,7 +155,7 @@ extension OEXResourcesViewController {
         if webView.isLoading {
             refreshBarButtonItem.isEnabled = false
         } else {
-            refreshBarButtonItem.isEnabled = false
+            refreshBarButtonItem.isEnabled = true
         }
         
         if webView.canGoBack {

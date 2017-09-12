@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="backBarButtonItem" destination="SVe-zQ-nlo" id="klK-u0-aov"/>
                 <outlet property="farwardBarButtonItem" destination="YMC-sj-ibb" id="pIP-ts-8f1"/>
+                <outlet property="progressView" destination="Iy9-L4-Qdv" id="v06-0d-bI8"/>
                 <outlet property="refreshBarButtonItem" destination="oeQ-34-FbT" id="9vb-Qo-8SX"/>
                 <outlet property="toolbar" destination="2wr-8A-Af4" id="nIT-Ph-hbJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -26,8 +27,9 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Resources have been posted yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="HI8-fr-N3x">
                     <rect key="frame" x="47" y="323" width="280" height="21"/>
+                    <color key="tintColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyk-Mi-d8R">
@@ -40,17 +42,19 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2wr-8A-Af4">
                     <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                     <items>
-                        <barButtonItem image="backWeb" id="SVe-zQ-nlo">
-                            <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
+                        <barButtonItem image="backWeb" id="SVe-zQ-nlo"/>
                         <barButtonItem image="forwardWeb" id="YMC-sj-ibb"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="pFb-cI-Xsd"/>
                         <barButtonItem systemItem="refresh" id="oeQ-34-FbT"/>
                     </items>
                 </toolbar>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Iy9-L4-Qdv">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                </progressView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="Iy9-L4-Qdv" secondAttribute="trailing" id="9Iw-uQ-QZV"/>
                 <constraint firstAttribute="trailing" secondItem="2wr-8A-Af4" secondAttribute="trailing" id="G7s-D5-a9l"/>
                 <constraint firstItem="HI8-fr-N3x" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="K1r-dY-kHa"/>
                 <constraint firstAttribute="bottom" secondItem="2wr-8A-Af4" secondAttribute="bottom" id="M8y-8P-jD2"/>
@@ -59,7 +63,9 @@
                 <constraint firstItem="Fyk-Mi-d8R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Zh0-Na-X90"/>
                 <constraint firstItem="2wr-8A-Af4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="e4r-kn-6kU"/>
                 <constraint firstAttribute="trailing" secondItem="Fyk-Mi-d8R" secondAttribute="trailing" id="fmz-nd-aHm"/>
+                <constraint firstItem="Iy9-L4-Qdv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jcp-TG-PHS"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HI8-fr-N3x" secondAttribute="trailing" constant="10" id="mh7-BO-Eo7"/>
+                <constraint firstItem="Iy9-L4-Qdv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pzx-Uh-Ghl"/>
                 <constraint firstItem="HI8-fr-N3x" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="tDD-az-CGd"/>
                 <constraint firstItem="HI8-fr-N3x" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="ujR-xW-bh8"/>
             </constraints>

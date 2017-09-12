@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="backBarButtonItem" destination="jg4-Qw-hFl" id="sYU-Vv-vWO"/>
                 <outlet property="farwardBarButtonItem" destination="V6N-us-VxE" id="G4B-8U-Xtr"/>
+                <outlet property="progressView" destination="dY2-ti-d66" id="FcU-iN-Kkp"/>
                 <outlet property="refreshBarButtonItem" destination="wBr-wC-z0T" id="xf2-a3-sOR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="J7f-xN-AG1" id="BPN-YS-XYT"/>
@@ -39,6 +40,9 @@
                         <barButtonItem systemItem="refresh" id="wBr-wC-z0T"/>
                     </items>
                 </toolbar>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dY2-ti-d66">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                </progressView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -46,9 +50,12 @@
                 <constraint firstAttribute="bottom" secondItem="wE2-KB-h1v" secondAttribute="bottom" id="6nv-eX-B0H"/>
                 <constraint firstAttribute="trailing" secondItem="J7f-xN-AG1" secondAttribute="trailing" id="FlR-oy-t0V"/>
                 <constraint firstItem="J7f-xN-AG1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="L0i-2a-nNA"/>
+                <constraint firstItem="dY2-ti-d66" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MRB-qO-Stg"/>
                 <constraint firstItem="wE2-KB-h1v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QFf-gM-84G"/>
+                <constraint firstAttribute="trailing" secondItem="dY2-ti-d66" secondAttribute="trailing" id="QVr-mE-eqd"/>
                 <constraint firstItem="J7f-xN-AG1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="agw-5Z-1bS"/>
                 <constraint firstItem="wE2-KB-h1v" firstAttribute="top" secondItem="J7f-xN-AG1" secondAttribute="bottom" id="awL-wk-Sw2"/>
+                <constraint firstItem="dY2-ti-d66" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mXs-FH-rd8"/>
             </constraints>
         </view>
     </objects>
