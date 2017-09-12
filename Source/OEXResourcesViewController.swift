@@ -15,8 +15,8 @@ class OEXResourcesViewController: UIViewController {
     @IBOutlet weak var farwardBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var backBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var refreshBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var stopBarButtonItem: UIBarButtonItem!
-    
+    @IBOutlet weak var toolbar: UIToolbar!
+
     @IBOutlet weak var webView: UIWebView!
     
     fileprivate let environment: Environment
@@ -72,14 +72,15 @@ class OEXResourcesViewController: UIViewController {
             
             let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
             let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
-            print(htmlString ?? "Nil nothing found in file content")
             htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
                                                                      with: resourseContent?.content ?? "")
             htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: "//player.ooyala.co", with: "https://player.ooyala.co")
             webView.loadRequest(URLRequest(url: URL(string: "about:blank")!))
             
         } else {
-            self.loadController.state = LoadState.failed(NSError())
+            self.webView.isHidden = true
+            self.toolbar.isHidden = true
+            self.loadController.state = LoadState.loaded
         }
     }
 
@@ -130,7 +131,6 @@ extension OEXResourcesViewController {
         farwardBarButtonItem.action = #selector(OEXResourcesViewController.farwardBarButtonItemAction)
         backBarButtonItem.action = #selector(OEXResourcesViewController.backBarButtonItemAction)
         refreshBarButtonItem.action = #selector(OEXResourcesViewController.refreshBarButtonItemAction)
-        stopBarButtonItem.action = #selector(OEXResourcesViewController.stopLoadingBarButtonItemAction)
     }
     
     func backBarButtonItemAction() {
@@ -144,16 +144,12 @@ extension OEXResourcesViewController {
     func refreshBarButtonItemAction() {
         webView.reload()
     }
-    
-    func stopLoadingBarButtonItemAction() {
-        webView.stopLoading()
-    }
-    
+        
     func setBarButtonItemStatus() {
         if webView.isLoading {
-            stopBarButtonItem.isEnabled = true
+            refreshBarButtonItem.isEnabled = false
         } else {
-            stopBarButtonItem.isEnabled = false
+            refreshBarButtonItem.isEnabled = false
         }
         
         if webView.canGoBack {

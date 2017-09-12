@@ -14,7 +14,6 @@
                 <outlet property="backBarButtonItem" destination="jg4-Qw-hFl" id="sYU-Vv-vWO"/>
                 <outlet property="farwardBarButtonItem" destination="V6N-us-VxE" id="G4B-8U-Xtr"/>
                 <outlet property="refreshBarButtonItem" destination="wBr-wC-z0T" id="xf2-a3-sOR"/>
-                <outlet property="stopBarButtonItem" destination="EYA-f3-nPb" id="MIc-BO-lFU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="J7f-xN-AG1" id="BPN-YS-XYT"/>
             </connections>
@@ -38,8 +37,6 @@
                         <barButtonItem image="forwardWeb" id="V6N-us-VxE"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Z9e-be-QHS"/>
                         <barButtonItem systemItem="refresh" id="wBr-wC-z0T"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="NdR-qm-eWD"/>
-                        <barButtonItem systemItem="stop" id="EYA-f3-nPb"/>
                     </items>
                 </toolbar>
             </subviews>

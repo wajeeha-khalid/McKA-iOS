@@ -15,7 +15,6 @@ class WebNavigationViewController: UIViewController {
     @IBOutlet weak var backBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var farwardBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var refreshBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var stopBarButtonItem: UIBarButtonItem!
     let loadController: LoadStateViewController
     let loadingRequest: URLRequest
     let navigationBarTitle: String?
@@ -79,7 +78,6 @@ extension WebNavigationViewController {
         farwardBarButtonItem.action = #selector(OEXResourcesViewController.farwardBarButtonItemAction)
         backBarButtonItem.action = #selector(OEXResourcesViewController.backBarButtonItemAction)
         refreshBarButtonItem.action = #selector(OEXResourcesViewController.refreshBarButtonItemAction)
-        stopBarButtonItem.action = #selector(OEXResourcesViewController.stopLoadingBarButtonItemAction)
     }
     
     func backBarButtonItemAction() {
@@ -94,15 +92,11 @@ extension WebNavigationViewController {
         webView.reload()
     }
     
-    func stopLoadingBarButtonItemAction() {
-        webView.stopLoading()
-    }
-    
     func setBarButtonItemStatus() {
         if webView.isLoading {
-            stopBarButtonItem.isEnabled = true
+            refreshBarButtonItem.isEnabled = false
         } else {
-            stopBarButtonItem.isEnabled = false
+            refreshBarButtonItem.isEnabled = true
         }
         
         if webView.canGoBack {
