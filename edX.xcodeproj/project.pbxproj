@@ -425,7 +425,7 @@
 		77691FAD1B3C764F003922F2 /* UIBarButtonItem+Touchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77691FAC1B3C764F003922F2 /* UIBarButtonItem+Touchable.swift */; };
 		77691FB01B3C820B003922F2 /* CourseOutlineViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77691FAE1B3C81E4003922F2 /* CourseOutlineViewControllerTests.swift */; };
 		77691FB21B3C824E003922F2 /* CourseOutlineQuerierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77691FB11B3C824E003922F2 /* CourseOutlineQuerierTests.swift */; };
-		776F39291B4EF4CD00ED11E3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776F39281B4EF4CD00ED11E3 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		776F39291B4EF4CD00ED11E3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776F39281B4EF4CD00ED11E3 /* WebKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7772BE731AF2FECC0081CA7A /* CourseOutlineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772BE721AF2FECC0081CA7A /* CourseOutlineHeaderCell.swift */; };
 		7772BE7A1AF41E660081CA7A /* CourseBlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772BE791AF41E660081CA7A /* CourseBlockViewController.swift */; };
 		7772BE801AF821540081CA7A /* UIBarButtonItem+OEXBlockActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772BE7F1AF821540081CA7A /* UIBarButtonItem+OEXBlockActions.m */; };
@@ -588,8 +588,23 @@
 		80056C9A1B0CDE1A0004D85C /* DiscussionResponsesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80056C991B0CDE1A0004D85C /* DiscussionResponsesViewController.swift */; };
 		805329101B0E80E50093B177 /* DiscussionResponses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8053290F1B0E80E50093B177 /* DiscussionResponses.storyboard */; };
 		805329121B0EA2DC0093B177 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805329111B0EA2DC0093B177 /* QuartzCore.framework */; };
+		881EE3261F63E6BD0058D889 /* WebViewLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881EE3251F63E6BD0058D889 /* WebViewLoadingProtocol.swift */; };
 		882140451F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */; };
+		8847A9451F45886500127FE3 /* ResourseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847A9441F45886500127FE3 /* ResourseAPI.swift */; };
+		888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */; };
+		888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */; };
 		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
+		888B89271F67C48D008F87E8 /* WebNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B89251F67C48D008F87E8 /* WebNavigationViewController.swift */; };
+		888B89281F67C48D008F87E8 /* WebNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888B89261F67C48D008F87E8 /* WebNavigationViewController.xib */; };
+		88CDEAEB1F60449300CC99FB /* AnnouncementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */; };
+		88CDEAEC1F60449300CC99FB /* AnnouncementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */; };
+		88CDEAEF1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */; };
+		88CDEAF31F6047B800CC99FB /* template.css in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAF11F6047B800CC99FB /* template.css */; };
+		88CDEAF41F6047B800CC99FB /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAF21F6047B800CC99FB /* template.html */; };
+		88CDEAFA1F617EB500CC99FB /* web-cache.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88CDEAF91F617EB500CC99FB /* web-cache.plist */; };
+		88F7A6B81F46F411000F3AB7 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */; };
+		88F7A6B91F46F411000F3AB7 /* AnnouncementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */; };
+		88F7A6BB1F46F460000F3AB7 /* AnnouncementsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */; };
 		890D027F1967343A002CE7EC /* OEXCourseInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */; };
 		8F562F881A1F2D2C00320DB3 /* OEXGoogleSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F562F871A1F2D2C00320DB3 /* OEXGoogleSocial.m */; };
 		8F562F8C1A1F44FC00320DB3 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F562F8B1A1F44FC00320DB3 /* AddressBook.framework */; };
@@ -1648,8 +1663,23 @@
 		80056C991B0CDE1A0004D85C /* DiscussionResponsesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DiscussionResponsesViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8053290F1B0E80E50093B177 /* DiscussionResponses.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DiscussionResponses.storyboard; sourceTree = "<group>"; };
 		805329111B0EA2DC0093B177 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		881EE3251F63E6BD0058D889 /* WebViewLoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewLoadingProtocol.swift; sourceTree = "<group>"; };
 		882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonsViewControllerTests.swift; sourceTree = "<group>"; };
+		8847A9441F45886500127FE3 /* ResourseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourseAPI.swift; sourceTree = "<group>"; };
+		888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXResourcesViewController.swift; sourceTree = "<group>"; };
+		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
 		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
+		888B89251F67C48D008F87E8 /* WebNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebNavigationViewController.swift; sourceTree = "<group>"; };
+		888B89261F67C48D008F87E8 /* WebNavigationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebNavigationViewController.xib; sourceTree = "<group>"; };
+		88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementCollectionViewCell.swift; sourceTree = "<group>"; };
+		88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnouncementCollectionViewCell.xib; sourceTree = "<group>"; };
+		88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		88CDEAF11F6047B800CC99FB /* template.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = template.css; sourceTree = "<group>"; };
+		88CDEAF21F6047B800CC99FB /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
+		88CDEAF91F617EB500CC99FB /* web-cache.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "web-cache.plist"; sourceTree = "<group>"; };
+		88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
+		88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnnouncementsViewController.xib; sourceTree = "<group>"; };
+		88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsAPI.swift; sourceTree = "<group>"; };
 		890D027D1967343A002CE7EC /* OEXCourseInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoCell.h; sourceTree = "<group>"; };
 		890D027E1967343A002CE7EC /* OEXCourseInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXCourseInfoCell.m; sourceTree = "<group>"; };
 		8F562F861A1F2D2C00320DB3 /* OEXGoogleSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXGoogleSocial.h; sourceTree = "<group>"; };
@@ -2038,6 +2068,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				776F39291B4EF4CD00ED11E3 /* WebKit.framework in Frameworks */,
 				416F092B1F39DC680074D32A /* JavaScriptCore.framework in Frameworks */,
 				416F09291F39DC1B0074D32A /* AVFoundation.framework in Frameworks */,
 				416F09271F39DBF90074D32A /* MediaPlayer.framework in Frameworks */,
@@ -2046,7 +2077,6 @@
 				41D50F811F3F9176008DAAD7 /* MckinseyXBlocks.framework in Frameworks */,
 				416F09211F39DBA40074D32A /* MediaAccessibility.framework in Frameworks */,
 				41B716BB1F25FBA500AE5151 /* Kingfisher.framework in Frameworks */,
-				776F39291B4EF4CD00ED11E3 /* WebKit.framework in Frameworks */,
 				41B43F151F2F1C6500D6A880 /* SnapKit.framework in Frameworks */,
 				41B43F131F2F1C6300D6A880 /* SwiftyJSON.framework in Frameworks */,
 				41B43F191F2F1C6F00D6A880 /* Alamofire.framework in Frameworks */,
@@ -3347,6 +3377,75 @@
 			path = ../Libraries/EVURLCache;
 			sourceTree = "<group>";
 		};
+		888A7F841F3C919D000FD7C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */,
+				888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */,
+				8847A9441F45886500127FE3 /* ResourseAPI.swift */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		888B89201F67C448008F87E8 /* WebNavigationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				888B89251F67C48D008F87E8 /* WebNavigationViewController.swift */,
+				888B89261F67C48D008F87E8 /* WebNavigationViewController.xib */,
+			);
+			name = WebNavigationViewController;
+			sourceTree = "<group>";
+		};
+		88CDEAE41F60440300CC99FB /* Announcement Collection View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				88CDEAE91F60449300CC99FB /* AnnouncementCollectionViewCell.swift */,
+				88CDEAEA1F60449300CC99FB /* AnnouncementCollectionViewCell.xib */,
+			);
+			name = "Announcement Collection View Cell";
+			sourceTree = "<group>";
+		};
+		88CDEAED1F60456800CC99FB /* Announcement Collection View Flow Layout */ = {
+			isa = PBXGroup;
+			children = (
+				88CDEAEE1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift */,
+			);
+			name = "Announcement Collection View Flow Layout";
+			sourceTree = "<group>";
+		};
+		88CDEAF01F60471A00CC99FB /* HTML + CSS */ = {
+			isa = PBXGroup;
+			children = (
+				88CDEAF11F6047B800CC99FB /* template.css */,
+				88CDEAF21F6047B800CC99FB /* template.html */,
+			);
+			name = "HTML + CSS";
+			sourceTree = "<group>";
+		};
+		88CDEAF51F617E6E00CC99FB /* Local Substitute Cache */ = {
+			isa = PBXGroup;
+			children = (
+				88CDEAF91F617EB500CC99FB /* web-cache.plist */,
+				881EE3251F63E6BD0058D889 /* WebViewLoadingProtocol.swift */,
+			);
+			name = "Local Substitute Cache";
+			sourceTree = "<group>";
+		};
+		88F7A6B51F45F632000F3AB7 /* Announcements */ = {
+			isa = PBXGroup;
+			children = (
+				888B89201F67C448008F87E8 /* WebNavigationViewController */,
+				88CDEAF51F617E6E00CC99FB /* Local Substitute Cache */,
+				88CDEAF01F60471A00CC99FB /* HTML + CSS */,
+				88CDEAED1F60456800CC99FB /* Announcement Collection View Flow Layout */,
+				88CDEAE41F60440300CC99FB /* Announcement Collection View Cell */,
+				88F7A6B61F46F411000F3AB7 /* AnnouncementsViewController.swift */,
+				88F7A6B71F46F411000F3AB7 /* AnnouncementsViewController.xib */,
+				88F7A6BA1F46F460000F3AB7 /* AnnouncementsAPI.swift */,
+			);
+			name = Announcements;
+			sourceTree = "<group>";
+		};
 		8FE04B4A1A1E24C7007F88B8 /* SocialLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -3730,6 +3829,8 @@
 		BECB7B141924C0C3009C77F1 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				88F7A6B51F45F632000F3AB7 /* Announcements */,
+				888A7F841F3C919D000FD7C8 /* Resources */,
 				414BBFF11F5000C800B0C9C9 /* Modules */,
 				41030C761EE69ECA0026D72F /* Chat */,
 				1972E3B619BF474900085F08 /* Analytics */,
@@ -4357,6 +4458,7 @@
 				69ECC6161D50D1170030CF87 /* bt_facebook_RTL.png in Resources */,
 				D0D5AB761E52C972005D6D8F /* ic_attachment.png in Resources */,
 				D0249F751E68590C00A55613 /* Left-Gray@3x.png in Resources */,
+				88CDEAFA1F617EB500CC99FB /* web-cache.plist in Resources */,
 				69ECC6411D50D1170030CF87 /* iTunesArtwork@2x in Resources */,
 				6926CDAE1D59BE3600A16E22 /* ic_previous.png in Resources */,
 				D0871E661E4050B800B2C41F /* ic_downloading@3x.png in Resources */,
@@ -4373,6 +4475,7 @@
 				D0FA800F1E1E191600FB1226 /* Raleway-BoldItalic.ttf in Resources */,
 				69ECC6191D50D1170030CF87 /* bt_grey_deactive.png in Resources */,
 				6926CDAC1D59BE3600A16E22 /* ic_next.png in Resources */,
+				88CDEAF41F6047B800CC99FB /* template.html in Resources */,
 				69ECC6241D50D1170030CF87 /* bt_view_default.png in Resources */,
 				114A30BF1E56CD9F00EBCF6B /* Icon-60@2x.png in Resources */,
 				D0FA801D1E1E191600FB1226 /* Raleway-ThinItalic.ttf in Resources */,
@@ -4384,6 +4487,7 @@
 				63EC02121F3C84C700B702C4 /* img_logo_chemours@3x.png in Resources */,
 				9ED269D21AF114B900328A34 /* OEXLoginViewController.storyboard in Resources */,
 				0A543E261EB2388500465FC0 /* VRCoachmarkViewController.xib in Resources */,
+				88F7A6B91F46F411000F3AB7 /* AnnouncementsViewController.xib in Resources */,
 				69ECC62C1D50D1170030CF87 /* ic_back.png in Resources */,
 				D0249F651E66996400A55613 /* ic_completed.png in Resources */,
 				71F1F6101E27A1D8008FFAE4 /* Image.xcassets in Resources */,
@@ -4448,6 +4552,7 @@
 				69ECC6391D50D1170030CF87 /* ic_unwatched@3x.png in Resources */,
 				69ECC61B1D50D1170030CF87 /* bt_logout_active.png in Resources */,
 				D0871E7A1E41A27F00B2C41F /* previous.png in Resources */,
+				88CDEAF31F6047B800CC99FB /* template.css in Resources */,
 				D05B25D01E13CED400D1E77F /* FTUE2@3x.png in Resources */,
 				D085DDA91E483989009AA666 /* ic_blue_download@3x.png in Resources */,
 				63EC02111F3C84C700B702C4 /* img_logo_chemours@2x.png in Resources */,
@@ -4491,6 +4596,7 @@
 				D0712CD51E376C8D0080E9D4 /* OEXCoursewareViewController.xib in Resources */,
 				69ECC6051D50D1170030CF87 /* OpenSans-Regular.ttf in Resources */,
 				1A03DEA31BBC72BA006783FB /* countries.json in Resources */,
+				888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */,
 				69ECC63F1D50D1170030CF87 /* icon_google_white@2x.png in Resources */,
 				114A30BE1E56CD9F00EBCF6B /* Icon-40@3x.png in Resources */,
 				D09C25431E308A0000E39CA8 /* pique_logo.png in Resources */,
@@ -4508,6 +4614,7 @@
 				BEEEBF80196AAACF00EF2C35 /* Localizable.strings in Resources */,
 				D0249F661E66996400A55613 /* ic_completed@2x.png in Resources */,
 				63EC02131F3C84C700B702C4 /* img_logo_mckinsey@1x.png in Resources */,
+				88CDEAEC1F60449300CC99FB /* AnnouncementCollectionViewCell.xib in Resources */,
 				D0249F831E68592000A55613 /* ic_leftTriangle@2x.png in Resources */,
 				199B9B7B1935EA8000081A09 /* OEXFlowErrorViewController.xib in Resources */,
 				D05B25D21E13CED400D1E77F /* FTUE3@2x.png in Resources */,
@@ -4529,6 +4636,7 @@
 				0A26CB871EA7B19800822E9C /* UnitCoachmarkViewController.xib in Resources */,
 				6926CDB11D59BE3600A16E22 /* ic_seek_thumb@2x.png in Resources */,
 				69ECC6351D50D1170030CF87 /* ic_next_default.png in Resources */,
+				888B89281F67C48D008F87E8 /* WebNavigationViewController.xib in Resources */,
 				114A30BB1E56CD9F00EBCF6B /* Icon-29@3x.png in Resources */,
 				D0871E781E41A27100B2C41F /* next@3x.png in Resources */,
 				69ECC6311D50D1170030CF87 /* ic_download.png in Resources */,
@@ -4864,6 +4972,7 @@
 				94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */,
 				D0BF32B21E0CEBBA007EF8A3 /* OEXPageContentViewController.m in Sources */,
 				778D53351B3D96E900441A98 /* ListCursor.swift in Sources */,
+				88CDEAEB1F60449300CC99FB /* AnnouncementCollectionViewCell.swift in Sources */,
 				E0C6EF971BFF4B9900B315E3 /* UIButton+TintColor.swift in Sources */,
 				D07DD5E71E5848D100A8BC01 /* UnitData.m in Sources */,
 				B498405919753C6C00019D1F /* CLVideoPlayer.m in Sources */,
@@ -4889,6 +4998,7 @@
 				B4B285DF1A9A493A00DD603A /* OEXNewRelicConfig.m in Sources */,
 				9E1D952E1B678E4700ABE764 /* AccessibilityCLButton.swift in Sources */,
 				71DB6EC31E1B833C00E12C3E /* GVRVideoPlayerInterface.m in Sources */,
+				88CDEAEF1F60467500CC99FB /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				7765025F1C7CEBC5007384E7 /* SingleChildContainingViewController.swift in Sources */,
 				94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */,
 				7C2DD54F1D4A7901006148E0 /* UserPreference.swift in Sources */,
@@ -4916,6 +5026,7 @@
 				41A8C3671F2EFE8100869CAD /* LoginViewController.swift in Sources */,
 				7E96F8E91E6EBE6100AE7322 /* PrefillCacheController.swift in Sources */,
 				77ADF4AF1AC1F80E00AC8955 /* OEXGoogleAuthProvider.m in Sources */,
+				88F7A6BB1F46F460000F3AB7 /* AnnouncementsAPI.swift in Sources */,
 				1A7CEA331BABA8C70043A58C /* ProfileImageView.swift in Sources */,
 				77236EED1C21C376006AC1A4 /* Paginator.swift in Sources */,
 				7727EC351BBC73F300C9987F /* RevealViewController.swift in Sources */,
@@ -4941,6 +5052,7 @@
 				890D027F1967343A002CE7EC /* OEXCourseInfoCell.m in Sources */,
 				E0A2461D1D5CA6950066C766 /* LogoutApi.swift in Sources */,
 				770A27961A6995DF00DFC6FF /* NSArray+OEXFunctional.m in Sources */,
+				881EE3261F63E6BD0058D889 /* WebViewLoadingProtocol.swift in Sources */,
 				9CADE2F71A91E91A00ACDAF7 /* NSURL+OEXPathExtensions.m in Sources */,
 				D0871E5D1E3F592F00B2C41F /* CourseLiveUnitViewCell.swift in Sources */,
 				1AB676AE1BA0964B002AD0EB /* OEXVideoPlayerSettings.swift in Sources */,
@@ -5032,6 +5144,7 @@
 				199627831945AB5B0022C489 /* OEXCustomTextField.m in Sources */,
 				193B50481945A0520038E11C /* OEXCustomLabel.m in Sources */,
 				77000A371A76EF8C007D306C /* NSString+OEXValidation.m in Sources */,
+				88F7A6B81F46F411000F3AB7 /* AnnouncementsViewController.swift in Sources */,
 				9EC0AC7F1BCE371D00291B64 /* UIButton+Animations.swift in Sources */,
 				E08A008B1CF7546200F92DE7 /* DiscussionModel.swift in Sources */,
 				9ED168B01B29A9EF00AA7B5B /* CouseLastAccessed.swift in Sources */,
@@ -5040,6 +5153,7 @@
 				4160951B1F56A24500742589 /* Icons.swift in Sources */,
 				1A67E5411BD7D61800C53401 /* Feed.swift in Sources */,
 				BECB7B521924C9FB009C77F1 /* OEXVideoPlayerInterface.m in Sources */,
+				888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */,
 				B4B285D91A9A48D500DD603A /* OEXGoogleConfig.m in Sources */,
 				9E1D95321B68CEA000ABE764 /* UIButton+Accessibility.swift in Sources */,
 				1A373E911C45807D00E3AAAA /* NSError+JSON.swift in Sources */,
@@ -5177,6 +5291,7 @@
 				D0871E591E3F590D00B2C41F /* CourseUnitsViewCell.swift in Sources */,
 				7772BE7A1AF41E660081CA7A /* CourseBlockViewController.swift in Sources */,
 				7748F5781AEAB5C200767700 /* OEXSwitchStyle.m in Sources */,
+				8847A9451F45886500127FE3 /* ResourseAPI.swift in Sources */,
 				713A5A101E28BA60009B7B30 /* ImageMessageView.swift in Sources */,
 				B42DA1891A1539F000E3AD4E /* OEXFileUtility.m in Sources */,
 				777EFEFD1A7AFF0E00F8BF06 /* OEXRouter.m in Sources */,
@@ -5189,6 +5304,7 @@
 				773B1D421B1F48F100B861DF /* CourseOutlineHeaderView.swift in Sources */,
 				778B61061B06BD2100489532 /* NSNotificationCenter+SafeSwift.swift in Sources */,
 				B4B6D6011A949EFC000F44E8 /* OEXRegistrationError.m in Sources */,
+				888B89271F67C48D008F87E8 /* WebNavigationViewController.swift in Sources */,
 				1904A14D1A1386C2006A5524 /* edXDB.xcdatamodel in Sources */,
 				114A30AA1E544C8A00EBCF6B /* GVRTransitionCounterView.m in Sources */,
 				E03E6A191D38EC7500944AAA /* UIView+UIViewController.swift in Sources */,

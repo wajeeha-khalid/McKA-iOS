@@ -197,6 +197,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.addListeners()
+        self.addRightBarButtonsItems()
     }
     
     fileprivate func resultLoaded(_ result : Result<UserCourseEnrollment>) {
@@ -288,15 +289,14 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
 extension CourseLessonsViewController {
     fileprivate func addRightBarButtonsItems() {
         let menuButtonItem = UIBarButtonItem(image: UIImage(named: "menu"),
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(self.showMenu))
-        
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(self.showMenu))
+
         self.navigationItem.rightBarButtonItems = [menuButtonItem]
     }
     
     @objc fileprivate func showMenu()  {
         environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
     }
-    
 }

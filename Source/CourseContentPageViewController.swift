@@ -239,8 +239,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         self.pageViewController.dataSource = self
         self.pageViewController.delegate = self
         
-        let moduleListItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ModuleListIcon"), style: .plain, target: self, action: #selector(self.showModuleList))
-        navigationItem.rightBarButtonItem = moduleListItem
+        addRightBarButtonsItems()
         addStreamListeners()
     }
     
@@ -745,6 +744,24 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
     }
 }
 
+extension CourseContentPageViewController {
+    fileprivate func addRightBarButtonsItems() {
+        let menuButtonItem = UIBarButtonItem(image: UIImage(named: "menu"),
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(self.showMenu))
+        let moduleListItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ModuleListIcon"),
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(self.showModuleList))
+        
+        self.navigationItem.rightBarButtonItems = [menuButtonItem, moduleListItem]
+    }
+    
+    @objc fileprivate func showMenu()  {
+        environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
+    }
+}
 
 extension CourseContentPageViewController: ModuleTableViewControllerDelegate {
     func moduleTableViewController(_ vc: ModuleTableViewController, didSelectModuleWithID moduleId: CourseBlockID) {
