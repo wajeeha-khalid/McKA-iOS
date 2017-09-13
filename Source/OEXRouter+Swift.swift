@@ -356,6 +356,22 @@ extension OEXRouter {
         let detailController = CourseCatalogDetailViewController(environment: environment, courseID: courseID)
         fromController.navigationController?.pushViewController(detailController, animated: true)
     }
+    
+    func showMenuAlert(controller: UIViewController, courseId: String) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let discussions = UIAlertAction(title: "Discussions", style: .default, handler: { (action) -> Void in
+            self.showDiscussionTopicsFromController(controller, courseID: courseId)
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+        })
+        
+        alertController.addAction(discussions)
+        alertController.addAction(cancelButton)
+        
+        controller.present(alertController, animated: true, completion: nil)
+    }
 
     // MARK: - LOGIN / LOGOUT
 
