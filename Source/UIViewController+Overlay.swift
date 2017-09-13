@@ -26,7 +26,7 @@ private class StatusMessageView : UIView {
         messageLabel.numberOfLines = 0
         addSubview(messageLabel)
         
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         //always fill the view
         blurEffectView.frame = self.bounds
