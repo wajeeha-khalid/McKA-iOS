@@ -596,7 +596,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
         cell.bodyTextView.attributedText = detailTextStyle.markdownString(withText: response.renderedBody)
         
         if let thread = thread {
-            let formatedTitle = response.formattedUserLabel(response.endorsedBy, date: response.endorsedAt!,label: response.endorsedByLabel ,endorsedLabel: true, threadType: thread.type, textStyle: infoTextStyle)
+            let formatedTitle = response.formattedUserLabel(response.endorsedBy, date: response.endorsedAt,label: response.endorsedByLabel ,endorsedLabel: true, threadType: thread.type, textStyle: infoTextStyle)
             
             cell.endorsedByButton.setAttributedTitle(formatedTitle, for: [])
             

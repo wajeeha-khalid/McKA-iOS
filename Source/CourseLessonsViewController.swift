@@ -184,6 +184,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        addRightBarButtonsItems()
         self.lessonsTableView.register(UINib(nibName: "CourseLessonTableViewCell", bundle: nil), forCellReuseIdentifier: "CourseLessonTableViewCell")
         
         let courseStream = BackedStream<UserCourseEnrollment>()
@@ -298,5 +299,4 @@ extension CourseLessonsViewController {
     @objc fileprivate func showMenu()  {
         environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
     }
-
 }
