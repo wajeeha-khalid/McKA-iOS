@@ -110,7 +110,7 @@ class NewCourseCardView: UIView {
             if case .completed = newValue {
                 overlayView.backgroundColor = BrandingThemes.shared.getCourseCardOverlayColor()
             } else {
-                overlayView.backgroundColor = UIColor.clear
+                overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
             }
         }
     }
