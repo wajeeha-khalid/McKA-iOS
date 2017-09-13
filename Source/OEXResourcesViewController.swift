@@ -104,7 +104,6 @@ extension OEXResourcesViewController: UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView){
        
-        self.webView.isUserInteractionEnabled = false
         setBarButtonItemStatus()
         progressView.isHidden = false
         progressView.setProgress(0.0, animated: false)
@@ -113,7 +112,6 @@ extension OEXResourcesViewController: UIWebViewDelegate {
     
     func webViewDidFinishLoad(_ webView :UIWebView){
         self.loadController.state = .loaded
-        self.webView.isUserInteractionEnabled = true
         setBarButtonItemStatus()
         checkIfLoadingFirstTime()
         progressView.setProgress(1.0, animated: true)
@@ -162,6 +160,7 @@ extension OEXResourcesViewController {
             backBarButtonItem.isEnabled = true
         } else {
             backBarButtonItem.isEnabled = false
+            refreshBarButtonItem.isEnabled = false
         }
         
         if webView.canGoForward {

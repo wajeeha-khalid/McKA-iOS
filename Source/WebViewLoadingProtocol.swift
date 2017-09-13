@@ -115,7 +115,7 @@ open class WebViewLocalLoadingProtocol: URLProtocol {
         guard let urlPath = url else{
             return nil
         }
-        var urlPathString = urlPath.absoluteString
+        var urlPathString = urlPath.relativePath
         urlPathString = urlPathString.replacingOccurrences(of: "file://", with: "")
         guard let resourseFilePath = Bundle.main.path(forResource: substitutionPath[urlPathString], ofType: urlPath.pathExtension) else {
             client?.urlProtocol(self,

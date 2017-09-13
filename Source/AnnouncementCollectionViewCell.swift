@@ -58,9 +58,9 @@ extension AnnouncementCollectionViewCell {
     func loadTemplateHTML() {
         let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
         let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
-        let htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER", with: courseAnnounement?.content ?? "")
-        let path: String = Bundle.main.bundlePath
-        let baseURL = URL.init(string: path)
+        let htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
+                                                             with: courseAnnounement?.content ?? "")
+        let baseURL = URL.init(string: "https://courses.qa.mckinsey.edx.org")
         webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
     }
     
