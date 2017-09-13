@@ -225,6 +225,8 @@ class LoginViewController: UIViewController {
     
     func toggleSecureText(_ sender: UIButton) {
         passwordField.isSecureTextEntry = !passwordField.isSecureTextEntry
+        let image = passwordField.isSecureTextEntry ? #imageLiteral(resourceName: "eyeIcon") : #imageLiteral(resourceName: "eyeIconBlue")
+        sender.setImage(image, for: .normal)
     }
     
     func showActivityIndicator() {
