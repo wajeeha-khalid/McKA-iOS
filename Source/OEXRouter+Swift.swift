@@ -373,22 +373,6 @@ extension OEXRouter {
         fromController.navigationController?.pushViewController(detailController, animated: true)
     }
     
-    func showMenuAlert(controller: UIViewController, courseId: String) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let discussions = UIAlertAction(title: "Discussions", style: .default, handler: { (action) -> Void in
-            self.showDiscussionTopicsFromController(controller, courseID: courseId)
-        })
-        
-        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
-        })
-        
-        alertController.addAction(discussions)
-        alertController.addAction(cancelButton)
-        
-        controller.present(alertController, animated: true, completion: nil)
-    }
-
     // MARK: - LOGIN / LOGOUT
 
     func showSplash() {
@@ -451,7 +435,7 @@ extension OEXRouter {
         })
         
         let  discussions = UIAlertAction(title: "Discussions", style: .default, handler: { (action) -> Void in
-        // TODO: Participent goto the discussions section
+            self.showDiscussionTopicsFromController(controller, courseID: courseId)
         })
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
@@ -461,6 +445,8 @@ extension OEXRouter {
         alertController.addAction(announcementsButton)
         alertController.addAction(coursesOverviewButton)
         alertController.addAction(resources)
+        alertController.addAction(askTA)
+        alertController.addAction(discussions)
         alertController.addAction(cancelButton)
         
         controller.present(alertController, animated: true, completion: nil)
