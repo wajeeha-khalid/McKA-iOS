@@ -597,6 +597,11 @@
 		8F562F901A1F451600320DB3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F562F8F1A1F451600320DB3 /* CoreMotion.framework */; };
 		8F7F6DAD1A795AA60063B9D6 /* OEXSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F6DAC1A795AA60063B9D6 /* OEXSessionTests.m */; };
 		8FE04B4D1A1E2637007F88B8 /* OEXFBSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE04B4C1A1E2637007F88B8 /* OEXFBSocial.m */; };
+		944C792F1F6937E50008753B /* Default-375w-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792A1F6937E50008753B /* Default-375w-667h@2x.png */; };
+		944C79301F6937E50008753B /* Default-414w-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792B1F6937E50008753B /* Default-414w-736h@3x.png */; };
+		944C79311F6937E50008753B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792C1F6937E50008753B /* Default-568h@2x.png */; };
+		944C79321F6937E50008753B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792D1F6937E50008753B /* Default.png */; };
+		944C79331F6937E50008753B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792E1F6937E50008753B /* Default@2x.png */; };
 		94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */; };
 		9487550C1F4F33250059B73A /* MckinseyXBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */; };
 		948755101F4F33CE0059B73A /* DynamicOoyalaWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */; };
@@ -825,10 +830,6 @@
 		D0FA801C1E1E191600FB1226 /* Raleway-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0FA80091E1E191600FB1226 /* Raleway-Thin.ttf */; };
 		D0FA801D1E1E191600FB1226 /* Raleway-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0FA800A1E1E191600FB1226 /* Raleway-ThinItalic.ttf */; };
 		D0FA801E1E1E191600FB1226 /* SIL Open Font License.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0FA800B1E1E191600FB1226 /* SIL Open Font License.txt */; };
-		D0FA80231E1E7A2200FB1226 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FA801F1E1E7A2200FB1226 /* Default-568h@2x.png */; };
-		D0FA80241E1E7A2200FB1226 /* Default-375w-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FA80201E1E7A2200FB1226 /* Default-375w-667h@2x.png */; };
-		D0FA80251E1E7A2200FB1226 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FA80211E1E7A2200FB1226 /* Default@2x.png */; };
-		D0FA80261E1E7A2200FB1226 /* Default-414w-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FA80221E1E7A2200FB1226 /* Default-414w-736h@3x.png */; };
 		D0FA80361E1FAF1800FB1226 /* OEXAfterLogOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FA80341E1FAF1800FB1226 /* OEXAfterLogOutViewController.m */; };
 		D0FA80371E1FAF1800FB1226 /* OEXAfterLogOutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0FA80351E1FAF1800FB1226 /* OEXAfterLogOutViewController.xib */; };
 		E00523431CF81D9800B7F5C3 /* DiscussionBlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00523421CF81D9800B7F5C3 /* DiscussionBlockViewController.swift */; };
@@ -1659,6 +1660,11 @@
 		8F7F6DAC1A795AA60063B9D6 /* OEXSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXSessionTests.m; sourceTree = "<group>"; };
 		8FE04B4B1A1E2637007F88B8 /* OEXFBSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFBSocial.h; sourceTree = "<group>"; };
 		8FE04B4C1A1E2637007F88B8 /* OEXFBSocial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFBSocial.m; sourceTree = "<group>"; };
+		944C792A1F6937E50008753B /* Default-375w-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-375w-667h@2x.png"; sourceTree = "<group>"; };
+		944C792B1F6937E50008753B /* Default-414w-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-414w-736h@3x.png"; sourceTree = "<group>"; };
+		944C792C1F6937E50008753B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		944C792D1F6937E50008753B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		944C792E1F6937E50008753B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentPageViewController.swift; sourceTree = "<group>"; };
 		9487550D1F4F33C10059B73A /* DynamicOoyalaWrapper.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = DynamicOoyalaWrapper.framework.dSYM; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework.dSYM; sourceTree = "<group>"; };
 		9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DynamicOoyalaWrapper.framework; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework; sourceTree = "<group>"; };
@@ -1961,10 +1967,6 @@
 		D0FA80091E1E191600FB1226 /* Raleway-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Thin.ttf"; sourceTree = "<group>"; };
 		D0FA800A1E1E191600FB1226 /* Raleway-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-ThinItalic.ttf"; sourceTree = "<group>"; };
 		D0FA800B1E1E191600FB1226 /* SIL Open Font License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SIL Open Font License.txt"; sourceTree = "<group>"; };
-		D0FA801F1E1E7A2200FB1226 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		D0FA80201E1E7A2200FB1226 /* Default-375w-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-375w-667h@2x.png"; sourceTree = "<group>"; };
-		D0FA80211E1E7A2200FB1226 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		D0FA80221E1E7A2200FB1226 /* Default-414w-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-414w-736h@3x.png"; sourceTree = "<group>"; };
 		D0FA80331E1FAF1800FB1226 /* OEXAfterLogOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXAfterLogOutViewController.h; sourceTree = "<group>"; };
 		D0FA80341E1FAF1800FB1226 /* OEXAfterLogOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXAfterLogOutViewController.m; sourceTree = "<group>"; };
 		D0FA80351E1FAF1800FB1226 /* OEXAfterLogOutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXAfterLogOutViewController.xib; sourceTree = "<group>"; };
@@ -2681,10 +2683,11 @@
 		69ECC5F41D50D1170030CF87 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				D0FA801F1E1E7A2200FB1226 /* Default-568h@2x.png */,
-				D0FA80201E1E7A2200FB1226 /* Default-375w-667h@2x.png */,
-				D0FA80211E1E7A2200FB1226 /* Default@2x.png */,
-				D0FA80221E1E7A2200FB1226 /* Default-414w-736h@3x.png */,
+				944C792A1F6937E50008753B /* Default-375w-667h@2x.png */,
+				944C792B1F6937E50008753B /* Default-414w-736h@3x.png */,
+				944C792C1F6937E50008753B /* Default-568h@2x.png */,
+				944C792D1F6937E50008753B /* Default.png */,
+				944C792E1F6937E50008753B /* Default@2x.png */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -4363,6 +4366,7 @@
 				69ECC61E1D50D1170030CF87 /* bt_scrollbar_tap.png in Resources */,
 				D0FA800D1E1E191600FB1226 /* Raleway-BlackItalic.ttf in Resources */,
 				69ECC62B1D50D1170030CF87 /* downloading.png in Resources */,
+				944C79311F6937E50008753B /* Default-568h@2x.png in Resources */,
 				69ECC6221D50D1170030CF87 /* bt_view_active.png in Resources */,
 				D0871E5A1E3F590D00B2C41F /* CourseUnitsViewCell.xib in Resources */,
 				114A30BD1E56CD9F00EBCF6B /* Icon-40@2x.png in Resources */,
@@ -4404,10 +4408,11 @@
 				112CB1A71E41DB62001D4C29 /* AirshipConfig.plist in Resources */,
 				6926CDB01D59BE3600A16E22 /* ic_seek_thumb.png in Resources */,
 				B47780591AADA95400436DB4 /* Terms-and-Services.htm in Resources */,
-				D0FA80231E1E7A2200FB1226 /* Default-568h@2x.png in Resources */,
 				D0BF32AE1E0CEAEE007EF8A3 /* OEXFTUEViewController.xib in Resources */,
 				69ECC64A1D50D1170030CF87 /* launchBackground.png in Resources */,
 				D0FA800E1E1E191600FB1226 /* Raleway-Bold.ttf in Resources */,
+				944C79301F6937E50008753B /* Default-414w-736h@3x.png in Resources */,
+				944C79321F6937E50008753B /* Default.png in Resources */,
 				69ECC6201D50D1170030CF87 /* bt_signin_deactive.png in Resources */,
 				D05B07801E2CDB3C00ED8184 /* OEXWebViewController.xib in Resources */,
 				69ECC62F1D50D1170030CF87 /* ic_cancel@3x.png in Resources */,
@@ -4426,7 +4431,6 @@
 				69ECC6281D50D1170030CF87 /* check.png in Resources */,
 				5DD0FFD21B1D23DA00837121 /* DiscussionNewPostViewController.xib in Resources */,
 				69ECC6521D50D1170030CF87 /* inline-content.css in Resources */,
-				D0FA80251E1E7A2200FB1226 /* Default@2x.png in Resources */,
 				69ECC61C1D50D1170030CF87 /* bt_logout_deactive.png in Resources */,
 				D0871E6A1E40747200B2C41F /* ic_lock.png in Resources */,
 				D0FA80191E1E191600FB1226 /* Raleway-Regular.ttf in Resources */,
@@ -4439,8 +4443,8 @@
 				69ECC6141D50D1170030CF87 /* bt_blue2.png in Resources */,
 				69ECC6321D50D1170030CF87 /* ic_download_arrow.png in Resources */,
 				69ECC6111D50D1170030CF87 /* bg_card_image.png in Resources */,
+				944C792F1F6937E50008753B /* Default-375w-667h@2x.png in Resources */,
 				41A8C3681F2EFE8100869CAD /* LoginViewController.xib in Resources */,
-				D0FA80261E1E7A2200FB1226 /* Default-414w-736h@3x.png in Resources */,
 				69ECC6391D50D1170030CF87 /* ic_unwatched@3x.png in Resources */,
 				69ECC61B1D50D1170030CF87 /* bt_logout_active.png in Resources */,
 				D0871E7A1E41A27F00B2C41F /* previous.png in Resources */,
@@ -4499,6 +4503,7 @@
 				63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */,
 				69ECC6071D50D1170030CF87 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				114A30BC1E56CD9F00EBCF6B /* Icon-40.png in Resources */,
+				944C79331F6937E50008753B /* Default@2x.png in Resources */,
 				6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */,
 				BEEEBF80196AAACF00EF2C35 /* Localizable.strings in Resources */,
 				D0249F661E66996400A55613 /* ic_completed@2x.png in Resources */,
@@ -4515,7 +4520,6 @@
 				69ECC63B1D50D1170030CF87 /* ic_watched@3x.png in Resources */,
 				69ECC6211D50D1170030CF87 /* bt_signin_default.png in Resources */,
 				19A1339519CAAC21003ADD24 /* OEXClosedCaptionTableViewCell.xib in Resources */,
-				D0FA80241E1E7A2200FB1226 /* Default-375w-667h@2x.png in Resources */,
 				114A30C21E56CD9F00EBCF6B /* Icon-76@2x.png in Resources */,
 				D085DDA71E483989009AA666 /* ic_blue_download.png in Resources */,
 				805329101B0E80E50093B177 /* DiscussionResponses.storyboard in Resources */,
