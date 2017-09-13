@@ -56,7 +56,6 @@ class AnnouncementsViewController: UIViewController {
         insets.top = CGFloat(value)
         insets.bottom = CGFloat(value)
         self.collectionView.contentInset = insets
-        print("\(value)")
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     }
 

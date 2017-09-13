@@ -69,21 +69,22 @@ class OEXResourcesViewController: UIViewController {
                 resourseContent = courseContent
             }
         }
-        if (resourseContent != nil) {
-            self.webView.loadHTMLString((resourseContent?.content)!, baseURL: nil)
-            
-            let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
-            let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
-            htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
-                                                                     with: resourseContent?.content ?? "")
-            htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: "//player.ooyala.co", with: "https://player.ooyala.co")
-            webView.loadRequest(URLRequest(url: URL(string: "about:blank")!))
-            
-        } else {
+        
+        guard let resourcesContent = resourseContent else {
             self.webView.isHidden = true
             self.toolbar.isHidden = true
             self.loadController.state = LoadState.loaded
+            return
         }
+        
+        self.webView.loadHTMLString(resourcesContent.content!, baseURL: nil)
+        
+        let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
+        let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
+        htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
+                                                             with: resourseContent?.content ?? "")
+        htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: "//player.ooyala.co", with: "https://player.ooyala.co")
+        webView.loadRequest(URLRequest(url: URL(string: "about:blank")!))
     }
 
     private func addListeners() {

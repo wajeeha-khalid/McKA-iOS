@@ -46,10 +46,10 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
                     return proposedContentOffset
                 }
                 
-                guard let _ = candidateAttributes else {
+                guard let candidateAttribute = candidateAttributes else {
                     return mostRecentOffset
                 }
-                mostRecentOffset = CGPoint(x: floor(candidateAttributes!.center.x - halfWidth), y: proposedContentOffset.y)
+                mostRecentOffset = CGPoint(x: floor(candidateAttribute.center.x - halfWidth), y: proposedContentOffset.y)
                 return mostRecentOffset
                 
             }
