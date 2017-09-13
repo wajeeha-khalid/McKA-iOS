@@ -286,7 +286,9 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func termsOfServiceTapped(_ sender: Any) {
-        let termsURL = URL(string: "https://www.mckinseyacademy.com/terms")!
+        //TODO: Need to make if configurable when server change, then base url also change.
+        //https://www.mckinseyacademy.com/terms
+        let termsURL = URL(string: "https://qa.mckinsey.edx.org/terms/")!
         open(url: termsURL)
     }
     
@@ -302,7 +304,9 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func privacyPolicyTapped(_ sender: Any) {
-        let privacyURL = URL(string: "https://www.mckinseyacademy.com/privacy")!
+        //TODO: Need to make if configurable when server change, then base url also change.
+        //https://www.mckinseyacademy.com/privacy
+        let privacyURL = URL(string: "https://qa.mckinsey.edx.org/privacy/")!
         open(url: privacyURL)
     }
     
