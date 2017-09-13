@@ -184,6 +184,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        addRightBarButtonsItems()
         self.lessonsTableView.register(UINib(nibName: "CourseLessonTableViewCell", bundle: nil), forCellReuseIdentifier: "CourseLessonTableViewCell")
         
         let courseStream = BackedStream<UserCourseEnrollment>()
@@ -282,4 +283,20 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     func reload() {
         self.blockIDStream.backWithStream(Stream(value : courseID))
     }
+}
+
+extension CourseLessonsViewController {
+    fileprivate func addRightBarButtonsItems() {
+        let menuButtonItem = UIBarButtonItem(image: UIImage(named: "menu"),
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(self.showMenu))
+        
+        self.navigationItem.rightBarButtonItems = [menuButtonItem]
+    }
+    
+    @objc fileprivate func showMenu()  {
+        environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
+    }
+    
 }

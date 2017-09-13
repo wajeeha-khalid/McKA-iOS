@@ -91,9 +91,6 @@ open class DiscussionNewCommentViewController: UIViewController, UITextViewDeleg
         didSet {
             containerView.applyBorderStyle(BorderStyle())
             answerLabel.isHidden = !isEndorsed
-            responseTitle.snp.updateConstraints { (make) -> Void in
-                make.top.equalTo(authorProfileImage.snp.bottom).offset(StandardVerticalMargin)
-            }
         }
     }
     
