@@ -70,7 +70,7 @@ public struct CourseOutline {
                 let blockURL = body[Fields.StudentViewURL].string.flatMap { NSURL(string:$0) }
                 let format = body[Fields.Format].string
                 let typeName = body[Fields.BlockType].string ?? ""
-                let multiDevice = body[Fields.StudentViewMultiDevice].bool ?? false
+                var multiDevice = body[Fields.StudentViewMultiDevice].bool ?? false
                 let blockCounts : [String:Int] = (body[Fields.BlockCounts].object as? NSDictionary)?.mapValues {
                     $0 as? Int ?? 0
                     } ?? [:]
@@ -154,6 +154,11 @@ public struct CourseOutline {
                     case CourseBlock.Category.HTML:
                         let studentViewData = body[Fields.StudentViewData]
                         let content = studentViewData[Fields.html].stringValue
+                        type = .html(content)
+                    case CourseBlock.Category.IMAGEEXPLORER:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        multiDevice = true
                         type = .html(content)
                     case CourseBlock.Category.Problem:
                         type = .problem
@@ -274,6 +279,7 @@ open class CourseBlock {
         case Chapter = "chapter"
         case Course = "course"
         case HTML = "html"
+        case IMAGEEXPLORER = "image-explorer"
         case OOYALA = "ooyala-player"
         case Problem = "problem"
         case Section = "sequential"
