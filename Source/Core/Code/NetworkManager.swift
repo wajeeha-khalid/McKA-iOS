@@ -485,8 +485,10 @@ open class NetworkManager : NSObject {
 
 extension NetworkManager: RequestAdapter {
     public func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
-        guard urlRequest.url?.pathComponents.contains("submit") == true else {
-            return urlRequest
+        guard urlRequest.url?.pathComponents.contains("submit") == true ||
+             urlRequest.url?.pathComponents.contains("student_view_user_state") == true ||
+            urlRequest.url?.pathComponents.contains("try_again") == true  else {
+                return urlRequest
         }
         
         var requestWithoutCookies = urlRequest
