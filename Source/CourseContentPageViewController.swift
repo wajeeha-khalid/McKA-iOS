@@ -384,6 +384,26 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
         moveInDirection(.reverse)
     }
     
+    
+    private func attributedString(with str: String) -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4.0
+        paragraphStyle.alignment = .center
+        let attributedString = NSMutableAttributedString(string: str)
+        let split = str.components(separatedBy: "\n")
+        let first = split[0]
+        let second = split[1]
+        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, str.characters.count))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 12.0), range: NSMakeRange(0, first.characters.count))
+        let boldAttributes: [String : Any] = [
+            NSFontAttributeName: UIFont.systemFont(ofSize: 14.0),
+            NSForegroundColorAttributeName: UIColor.black
+        ]
+        attributedString.addAttributes(boldAttributes, range: NSMakeRange(first.characters.count + 1, second.characters.count))
+        return attributedString
+    }
+    
+    //TODO: We need to visit this method. it's getting way too complicated....
     fileprivate func updateNavigationBars(_ controller : UIViewController? = nil, isChatCompleted: Bool = false) {
         if let cursor = contentLoader.value {
         
@@ -433,17 +453,27 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                 // find the lesson that contains next module
                 let lessonOfNextUnit = courseQuerier.lessonContaining(unit: next)
                 
-                let nextStream: edXCore.Stream<(UIImage, String)> = joinStreams(lessonOfCurrentUnit, lessonOfNextUnit)
+                let nextStream: edXCore.Stream<(UIImage, NSAttributedString)> = joinStreams(lessonOfCurrentUnit, lessonOfNextUnit)
                 .transform { (parentOfCurrent, parentOfNext) in
                     if parentOfCurrent.blockID == parentOfNext.blockID {
-                        return Stream(value: (BrandingThemes.shared.nextModuleIcon, "Up Next: \(next.displayName)"))
+                        return self.courseQuerier.unitsForLesson(withID: parentOfCurrent.blockID)
+                            .map { units -> NSAttributedString in
+                                let totalUnits = units.count
+                                let index = units.index {$0.blockID == next.blockID}! + 1
+                                let str = "Up Next: Module \(index) of \(totalUnits) \n \(next.displayName)"
+                                return self.attributedString(with: str)
+                            }.map {
+                                (BrandingThemes.shared.nextModuleIcon, $0)
+                        }
                     } else {
                         return self.courseQuerier.parentOfBlockWithID(parentOfNext.blockID)
                             .transform {
                                 self.courseQuerier.blockWithID($0)
                             }.map { course in
                                let index = course.children.index(of: parentOfNext.blockID)! + 1
-                                return (BrandingThemes.shared.nextModuleIcon, "Up Next: Lesson \(index) \n \(next.displayName)")
+                                let str = "Up Next: Lesson \(index), Module 1 \n \(next.displayName)"
+                                let attributedString = self.attributedString(with: str)
+                                return (BrandingThemes.shared.nextModuleIcon, attributedString)
                         }
                     }
                 }
@@ -456,7 +486,7 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                         label.textColor = UIColor.lightGray
                         label.numberOfLines = 2
                         label.textAlignment = .center
-                        label.text = text
+                        label.attributedText = text
                         if let actionItem = (controller as? ActionViewProvider)?.actionView {
                             self.bottomBar.actionView = actionItem
                         } else {
@@ -497,15 +527,18 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
                 bottomBar.leftButton.setImage(BrandingThemes.shared.prevComponentIcon, for: .normal)
             }
             
+            //TODO: We seriously need to revisit this....
             //update navigationItem Titles
             courseQuerier.blockWithID(item.parent).transform { module in
                 self.courseQuerier.lessonContaining(unit: module)
                     .map {
                         ($0, module)
                 }
-                }.map { (lesson, module) -> (String, String, Int, Int) in
-                    let index = module.children.index(of: item.block.blockID)!
-                    return (lesson.displayName, module.displayName, index + 1, module.children.count)
+                }.transform { (lesson, module) -> edXCore.Stream<(String, String, Int, Int)> in
+                    return self.courseQuerier.unitsForLesson(withID: lesson.blockID).map { (units) in
+                        let index = units.index(where: {$0.blockID == module.blockID})
+                        return (lesson.displayName, module.displayName, index! + 1, units.count)
+                    }
                 }.extendLifetimeUntilFirstResult(completion: { (result) in
                     switch result {
                     case .success(let (lessonName, moduleName, currentModule, totalModules)):
