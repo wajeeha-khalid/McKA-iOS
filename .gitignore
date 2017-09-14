@@ -177,6 +177,8 @@ fastlane/test_output
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
 
+buildSrc/
+
 xcuserdata
 *.xcuserstate
 
