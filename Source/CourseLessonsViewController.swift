@@ -164,6 +164,8 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     var lessonViewModel: [LessonViewModel] = []
     
     @IBOutlet weak var lessonsTableView: UITableView!
+    @IBOutlet weak var statsTopView: UIView!
+    @IBOutlet weak var StatsTopViewBackgroundImageView: UIImageView!
     
     public init(environment: Environment, courseID: String, rootID : CourseBlockID?, lessonViewModelDataSource: LessonViewModelDataSource) {
         self.environment = environment
