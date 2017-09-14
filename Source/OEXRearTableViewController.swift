@@ -32,6 +32,7 @@ class OEXRearTableViewController : UITableViewController {
         weak var router = OEXRouter.shared()
     }
     
+    @IBOutlet weak var profileCell: UITableViewCell!
     @IBOutlet var coursesLabel: UILabel!
     @IBOutlet var videosLabel: UILabel!
     //@IBOutlet var recentMediaLabel: UILabel!
@@ -61,7 +62,7 @@ class OEXRearTableViewController : UITableViewController {
         appVersionButton.accessibilityTraits = UIAccessibilityTraitStaticText
         
         //UI
-        logoutButton.setBackgroundImage(UIImage(named: "bt_logout_active"), for: .highlighted)
+        //logoutButton.setBackgroundImage(UIImage(named: "bt_logout_active"), for: .highlighted)
         
         //Listen to notification
         NotificationCenter.default.addObserver(self, selector: #selector(OEXRearTableViewController.dataAvailable(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_URL_RESPONSE), object: nil)
@@ -77,6 +78,29 @@ class OEXRearTableViewController : UITableViewController {
         setFonts()
         setNaturalTextAlignment()
         setAccessibilityLabels()
+        let backgrounView = UIView()
+        let topView = UIView()
+        let bottomView = UIView()
+        topView.backgroundColor = BrandingThemes.shared.getNavigationBarColor()
+        bottomView.backgroundColor = UIColor(colorLiteralRed: 40/255.0, green: 43/255.0, blue: 47/255.0, alpha: 1.0)
+        backgrounView.addSubview(topView)
+        backgrounView.addSubview(bottomView)
+        topView.snp.makeConstraints { make in
+            make.width.equalTo(backgrounView)
+            make.top.equalTo(backgrounView)
+            make.leading.equalTo(backgrounView)
+            make.height.equalTo(backgrounView.snp.height).dividedBy(2)
+        }
+        bottomView.snp.makeConstraints { make in
+            make.width.equalTo(backgrounView)
+            make.leading.equalTo(backgrounView)
+            make.top.equalTo(topView.snp.bottom)
+            make.height.equalTo(topView)
+        }
+        tableView.backgroundView = backgrounView
+        profileCell.contentView.backgroundColor = UIColor.clear//BrandingThemes.shared.getNavigationBarColor()
+        //  tableView.backgroundColor = BrandingThemes.shared.getNavigationBarColor()
+        logoutButton.backgroundColor = BrandingThemes.shared.getNavigationBarColor()
         
 //        if !environment.config.profilesEnabled {
 //            //hide the profile image while not display the feature
@@ -94,7 +118,7 @@ class OEXRearTableViewController : UITableViewController {
         guard environment.config.profilesEnabled else { return }
         profileFeed = self.environment.userProfileManager.feedForCurrentUser()
         profileFeed?.output.listen(self,  success: { profile in
-            self.userProfilePicture.remoteImage = profile.image(self.environment.networkManager)
+            //self.userProfilePicture.remoteImage = profile.image(self.environment.networkManager)
             }, failure : { _ in
                 Logger.logError("Profiles", "Unable to fetch profile")
         })

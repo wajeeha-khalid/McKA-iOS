@@ -94,7 +94,7 @@
                                                 <constraint firstItem="Ov6-L3-h2F" firstAttribute="leading" secondItem="rh2-oS-pei" secondAttribute="trailing" constant="16" id="zIx-L5-w2x"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.23529411764705882" green="0.25098039215686274" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellMyCourse" rowHeight="50" id="YuS-qn-B4x">
                                         <rect key="frame" x="0.0" y="141" width="320" height="50"/>
@@ -303,7 +303,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="YOy-0Q-7B8"/>
                                                         <constraint firstAttribute="width" constant="186" id="bN3-V5-WIl"/>
                                                     </constraints>
-                                                    <state key="normal" title="LOGOUT" backgroundImage="bt_logout_default.png">
+                                                    <state key="normal" title="LOGOUT">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -350,6 +350,7 @@
                         <outlet property="coursesLabel" destination="Lcp-ZJ-taY" id="Ltg-vL-WbI"/>
                         <outlet property="licensingTermsLabel" destination="qMf-9X-bGF" id="UaS-Gn-vAw"/>
                         <outlet property="logoutButton" destination="Jag-qX-pQo" id="hNY-j6-mlg"/>
+                        <outlet property="profileCell" destination="2GA-rf-wmh" id="awX-Jh-fcI"/>
                         <outlet property="settingsLabel" destination="koV-6t-sw8" id="PrN-kg-bXp"/>
                         <outlet property="submitFeedbackLabel" destination="37K-Bp-8DS" id="qD4-FX-dAb"/>
                         <outlet property="userEmailLabel" destination="o3n-qF-MxO" id="Qul-S1-8Gb"/>
@@ -366,7 +367,6 @@
     <resources>
         <image name="avatarPlaceholder" width="12" height="12"/>
         <image name="bt_logout_active.png" width="368" height="80"/>
-        <image name="bt_logout_default.png" width="368" height="80"/>
         <image name="separator1.png" width="416" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
