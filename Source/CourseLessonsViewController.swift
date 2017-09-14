@@ -164,6 +164,8 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     var lessonViewModel: [LessonViewModel] = []
     
     @IBOutlet weak var lessonsTableView: UITableView!
+    @IBOutlet weak var statsTopView: UIView!
+    @IBOutlet weak var StatsTopViewBackgroundImageView: UIImageView!
     
     public init(environment: Environment, courseID: String, rootID : CourseBlockID?, lessonViewModelDataSource: LessonViewModelDataSource) {
         self.environment = environment
@@ -198,6 +200,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
         super.viewWillAppear(animated)
         self.addListeners()
         self.addRightBarButtonsItems()
+        self.applyThemeingToStatsTopView()
     }
     
     fileprivate func resultLoaded(_ result : Result<UserCourseEnrollment>) {
@@ -298,5 +301,16 @@ extension CourseLessonsViewController {
     
     @objc fileprivate func showMenu()  {
         environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
+    }
+    
+    fileprivate func applyThemeingToStatsTopView() {
+        if let image = UIImage(named: "navigationBarBackground") {
+            let color = BrandingThemes.shared.getNavigationBarColor()
+            let colorImage = UIImage.image(from: color, size: image.size)
+            let blended = image.blendendImage(with: colorImage, blendMode: .normal, alpha: 1.0)
+            StatsTopViewBackgroundImageView.image = blended
+        } else {
+            statsTopView.backgroundColor = BrandingThemes.shared.getNavigationBarColor()
+        }
     }
 }
