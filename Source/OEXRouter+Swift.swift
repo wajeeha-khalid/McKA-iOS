@@ -422,9 +422,9 @@ extension OEXRouter {
             self.showAnnouncementsController(controller, animated: true, courseID: courseId)
         })
         
-        let  coursesOverviewButton = UIAlertAction(title: "Courses Overview", style: .default, handler: { (action) -> Void in
-        // TODO: Participent goto courses overview
-        })
+//        let  coursesOverviewButton = UIAlertAction(title: "Courses Overview", style: .default, handler: { (action) -> Void in
+//        // TODO: Participent goto courses overview
+//        })
         
         let  resources = UIAlertAction(title: "Resources", style: .default, handler: { (action) -> Void in
             self.showResourcesController(controller, courseID: courseId)
@@ -443,7 +443,7 @@ extension OEXRouter {
         })
         
         alertController.addAction(announcementsButton)
-        alertController.addAction(coursesOverviewButton)
+//        alertController.addAction(coursesOverviewButton)
         alertController.addAction(resources)
         alertController.addAction(askTA)
         alertController.addAction(discussions)
