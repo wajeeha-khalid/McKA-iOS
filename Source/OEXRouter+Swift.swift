@@ -33,6 +33,7 @@ enum CourseBlockDisplayType {
     case mcq(MCQ)
     case freeText(FreeText)
     case mrq(MCQ)
+    case assessment(Assessment)
     
     var isUnknown : Bool {
         switch self {
@@ -59,6 +60,7 @@ extension CourseBlock {
         case let .discussion(discussionModel): return .discussion(discussionModel)
         case let .mcq(question): return .mcq(question)
         case let .mrq(question): return .mrq(question)
+        case let .assessment(assessment): return .assessment(assessment)
         }
     }
 }
@@ -109,6 +111,8 @@ extension OEXRouter {
         case .mrq:
             fallthrough
         case .freeText:
+            fallthrough
+        case .assessment:
             fallthrough
         case .video:
             fallthrough
@@ -190,6 +194,12 @@ extension OEXRouter {
             let viewController = MRQViewController(question: mrqQuestion, resultMatcher: mrqManager)
             
             let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: viewController)
+            return adapter
+        case .assessment(let assessment):
+            let assessmentAdapter = AssessmentAdapter(courseID: courseID, blockID: blockID!, assessment: assessment, networkManager: environment.networkManager)
+            let assessmentViewController = AssessmentViewController(assessment: assessmentAdapter)
+            let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: assessmentViewController)
+            assessmentAdapter.moduleDelegate = assessmentViewController
             return adapter
         case .freeText(let question):
             let message = question.message != "" ? question.message : nil

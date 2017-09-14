@@ -117,6 +117,9 @@
 		1AFEB1B61BBD5B95004C471D /* ProfilePictureTaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEB1B51BBD5B95004C471D /* ProfilePictureTaker.swift */; };
 		1AFEB1B91BBD88F3004C471D /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AFEB1BB1BBD88F3004C471D /* languages.json */; };
 		41030C781EE69EEB0026D72F /* ChatLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */; };
+		4105B7371F6AC83800E0FC05 /* Grades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105B7361F6AC83800E0FC05 /* Grades.swift */; };
+		4105B7391F6AC83E00E0FC05 /* Assessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105B7381F6AC83E00E0FC05 /* Assessment.swift */; };
+		4105B73B1F6AC8C400E0FC05 /* HTMLStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105B73A1F6AC8C400E0FC05 /* HTMLStyles.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
 		411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
@@ -1132,6 +1135,9 @@
 		1AFEB1BA1BBD88F3004C471D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/languages.json; sourceTree = "<group>"; };
 		2627CDB85E06CBBFEAC91585 /* Pods-edXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-edXTests/Pods-edXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLoadingProtocol.swift; sourceTree = "<group>"; };
+		4105B7361F6AC83800E0FC05 /* Grades.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grades.swift; sourceTree = "<group>"; };
+		4105B7381F6AC83E00E0FC05 /* Assessment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assessment.swift; sourceTree = "<group>"; };
+		4105B73A1F6AC8C400E0FC05 /* HTMLStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLStyles.swift; sourceTree = "<group>"; };
 		411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenterTests.swift; sourceTree = SOURCE_ROOT; };
 		411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MckinseyXBlocks.xcodeproj; path = "xblock-component-library-ios/MckinseyXBlocks.xcodeproj"; sourceTree = "<group>"; };
 		414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleListTableViewController.swift; sourceTree = "<group>"; };
@@ -2385,6 +2391,15 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
+		4105B7311F6AC82700E0FC05 /* Assessments */ = {
+			isa = PBXGroup;
+			children = (
+				4105B7381F6AC83E00E0FC05 /* Assessment.swift */,
+				4105B7361F6AC83800E0FC05 /* Grades.swift */,
+			);
+			name = Assessments;
+			sourceTree = "<group>";
+		};
 		411E2C0B1F5FEFB600A73FAD /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -3490,6 +3505,7 @@
 		9EAFFA211B2F00B600B100AB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4105B73A1F6AC8C400E0FC05 /* HTMLStyles.swift */,
 				7712732A1BA8885E008BA397 /* Logger+OEXObjC.h */,
 				7712732B1BA8885F008BA397 /* Logger+OEXObjC.m */,
 				77691FA11B3B4596003922F2 /* UIColor+OEXHex.h */,
@@ -3829,6 +3845,7 @@
 		BECB7B141924C0C3009C77F1 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4105B7311F6AC82700E0FC05 /* Assessments */,
 				88F7A6B51F45F632000F3AB7 /* Announcements */,
 				888A7F841F3C919D000FD7C8 /* Resources */,
 				414BBFF11F5000C800B0C9C9 /* Modules */,
@@ -4751,6 +4768,9 @@
 				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
 				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TPKeyboardAvoidingKit.framework",
 				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/DynamicOoyalaWrapper.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TTTAttributedLabel.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/ToastSwiftFramework.framework",
 			);
 			outputPaths = (
 			);
@@ -5160,6 +5180,7 @@
 				697B5A091D92DB3F002C3ABD /* RegistrationFormAPI.swift in Sources */,
 				77D6A9A41C28F32900E67CCF /* CoursesAPI.swift in Sources */,
 				778B40D91C2F62520009F33E /* EnrollmentManager.swift in Sources */,
+				4105B7371F6AC83800E0FC05 /* Grades.swift in Sources */,
 				BECB7B5A1924D760009C77F1 /* SWRevealViewController.m in Sources */,
 				B4B6D62B1A949F1B000F44E8 /* OEXRegistrationFieldTextController.m in Sources */,
 				189405231E34BFBE00AD6776 /* OEXAudioPlayerInterface.m in Sources */,
@@ -5210,6 +5231,7 @@
 				770A279D1A6F150B00DFC6FF /* OEXVideoPathEntry.m in Sources */,
 				B4B6D6161A949F0F000F44E8 /* OEXRegistrationFieldEmailView.m in Sources */,
 				D0BF32AD1E0CEAEE007EF8A3 /* OEXFTUEViewController.m in Sources */,
+				4105B73B1F6AC8C400E0FC05 /* HTMLStyles.swift in Sources */,
 				9C9B7F6D1A8CC68400A857B2 /* OEXCourseInfoViewController.m in Sources */,
 				199B9B6F1935C72900081A09 /* DACircularProgressView.m in Sources */,
 				D0220E451E55C961004EAAFD /* ComponentData.m in Sources */,
@@ -5279,6 +5301,7 @@
 				416F091D1F39BF6A0074D32A /* CourseBlockViewControllerAdapter.swift in Sources */,
 				77ADF4A31AC1AF9800AC8955 /* OEXFacebookAuthProvider.m in Sources */,
 				775434831AD7394D00635A40 /* OEXPushNotificationManager.m in Sources */,
+				4105B7391F6AC83E00E0FC05 /* Assessment.swift in Sources */,
 				7793764F1BED404C00900A8C /* OEXConfig+URLCredentialProvider.swift in Sources */,
 				77E648591C91235A00B6740D /* OEXConfig+AppFeatures.swift in Sources */,
 				77E00B711B82A06F00573622 /* GrowingTextViewController.swift in Sources */,
