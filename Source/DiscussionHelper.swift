@@ -45,7 +45,7 @@ class DiscussionHelper: NSObject {
     }
     
     class func profileImage(_ hasProfileImage: Bool, imageURL: String?) ->RemoteImage {
-        let placeholder = UIImage(named: "profilePhotoPlaceholder")
+        let placeholder = UIImage(named: "avatarPlaceholder")
         if let URL = imageURL, hasProfileImage {
             return RemoteImageImpl(url: URL, networkManager: OEXRouter.shared().environment.networkManager, placeholder: placeholder, persist: true)
         }
