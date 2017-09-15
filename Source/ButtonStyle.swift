@@ -30,7 +30,6 @@ open class ButtonStyle : NSObject {
         // Use a background image instead of a backgroundColor so that it picks up a pressed state automatically
         button.setBackgroundImage(backgroundColor.map { UIImage.oex_image(with: $0) }, for: UIControlState())
         button.contentEdgeInsets = contentInsets
-
         if let shadowStyle = shadow {
             button.layer.shadowColor = shadowStyle.color.cgColor
             button.layer.shadowRadius = shadowStyle.size

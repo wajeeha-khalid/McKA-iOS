@@ -271,6 +271,12 @@ open class DiscussionNewCommentViewController: UIViewController, UITextViewDeleg
         responseTextView.attributedText = responseTextViewStyle.markdownString(withText: context.renderedBody ?? "")
         
         addCommentButton.applyButtonStyle(environment.styles.filledPrimaryButtonStyle, withTitle: buttonTitle)
+        
+        var attributes = [String: AnyObject]()
+        attributes[NSForegroundColorAttributeName] = UIColor.white
+        let attributedString = NSAttributedString(string: buttonTitle, attributes: attributes)
+        addCommentButton.setAttributedTitle(attributedString, for: .normal)
+        
         self.contentTitleLabel.attributedText = NSAttributedString.joinInNaturalLayout([responseTextViewStyle.attributedString(withText: titleText), responseTextViewStyle.attributedString(withText: Strings.asteric)])
         self.contentTitleLabel.isAccessibilityElement = false
         self.navigationItem.title = navigationItemTitle

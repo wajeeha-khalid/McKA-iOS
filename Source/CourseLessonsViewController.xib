@@ -32,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CNs-ZN-ilR">
-                    <rect key="frame" x="0.0" y="128" width="375" height="489"/>
+                    <rect key="frame" x="0.0" y="128" width="375" height="539"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Ny5-3g-dY1"/>
@@ -203,10 +203,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9s2-PO-SBJ">
-                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                     <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Mrh-SD-eBk"/>
+                        <constraint firstAttribute="height" id="Mrh-SD-eBk"/>
                     </constraints>
                 </view>
             </subviews>
