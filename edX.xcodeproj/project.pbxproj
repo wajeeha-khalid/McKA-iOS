@@ -118,6 +118,7 @@
 		1AFEB1B91BBD88F3004C471D /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AFEB1BB1BBD88F3004C471D /* languages.json */; };
 		41030C781EE69EEB0026D72F /* ChatLoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
+		411C066D1F6BD960002A5083 /* HTMLStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411C066C1F6BD960002A5083 /* HTMLStyles.swift */; };
 		411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
@@ -1133,6 +1134,7 @@
 		2627CDB85E06CBBFEAC91585 /* Pods-edXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-edXTests/Pods-edXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		41030C771EE69EEB0026D72F /* ChatLoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLoadingProtocol.swift; sourceTree = "<group>"; };
 		411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenterTests.swift; sourceTree = SOURCE_ROOT; };
+		411C066C1F6BD960002A5083 /* HTMLStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLStyles.swift; sourceTree = "<group>"; };
 		411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MckinseyXBlocks.xcodeproj; path = "xblock-component-library-ios/MckinseyXBlocks.xcodeproj"; sourceTree = "<group>"; };
 		414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleListTableViewController.swift; sourceTree = "<group>"; };
 		4160951A1F56A24500742589 /* Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
@@ -2385,6 +2387,15 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
+		411C06651F6BD92F002A5083 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */,
+				9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		411E2C0B1F5FEFB600A73FAD /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -3490,6 +3501,7 @@
 		9EAFFA211B2F00B600B100AB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				411C066C1F6BD960002A5083 /* HTMLStyles.swift */,
 				7712732A1BA8885E008BA397 /* Logger+OEXObjC.h */,
 				7712732B1BA8885F008BA397 /* Logger+OEXObjC.m */,
 				77691FA11B3B4596003922F2 /* UIColor+OEXHex.h */,
@@ -3770,6 +3782,7 @@
 				BECB7B0D1924C0C3009C77F1 /* Frameworks */,
 				BECB7B0C1924C0C3009C77F1 /* Products */,
 				54A076344959CD5B33345034 /* Pods */,
+				411C06651F6BD92F002A5083 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5063,6 +5076,7 @@
 				69E1CD011D7D7BA300531449 /* OEXRegistrationViewController+Swift.swift in Sources */,
 				19BB622A1A9B28F1007DBF47 /* OEXRegistrationFieldWrapperView.m in Sources */,
 				D07DD5E11E582A5000A8BC01 /* OEXHelperUnitCompletionTracker.m in Sources */,
+				411C066D1F6BD960002A5083 /* HTMLStyles.swift in Sources */,
 				9E1081081B8B7EEC00888746 /* PaginatedFeed.swift in Sources */,
 				B4B6D6061A949EFC000F44E8 /* OEXRegistrationErrorMessage.m in Sources */,
 				80056C9A1B0CDE1A0004D85C /* DiscussionResponsesViewController.swift in Sources */,
