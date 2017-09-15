@@ -106,11 +106,11 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     fileprivate var queryString : String?
     fileprivate var refineTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.neutralDark())
+        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralDark())
     }
 
     fileprivate var filterTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.primaryBaseColor())
+        return OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared.primaryBaseColor())
     }
     
     fileprivate var hasResults:Bool = false
@@ -335,7 +335,7 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         newPostButton.backgroundColor = styles.primaryXDarkColor()
         
-        let style = OEXTextStyle(weight : .normal, size: .base, color: styles.neutralWhite())
+        let style = OEXTextStyle(weight : .normal, size: .large, color: styles.neutralWhite())
         buttonTitle = NSAttributedString.joinInNaturalLayout([Icon.create.attributedTextWithStyle(style.withSize(.xSmall)),
             style.attributedString(withText: Strings.createANewPost)])
         newPostButton.setAttributedTitle(buttonTitle, for: [])

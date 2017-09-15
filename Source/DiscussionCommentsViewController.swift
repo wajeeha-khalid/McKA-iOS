@@ -9,15 +9,15 @@
 import UIKit
 
 private var commentTextStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralDark())
+    return OEXTextStyle(weight: .normal, size: .large, color : OEXStyles.shared.neutralDark())
 }
 
 private var smallTextStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralDark())
+    return OEXTextStyle(weight: .normal, size: .large, color : OEXStyles.shared.neutralDark())
 }
 
 private var smallIconStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
+    return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralDark())
 }
 
 private let smallIconSelectedStyle = smallIconStyle.withColor(OEXStyles.shared.primaryBaseColor())
@@ -37,7 +37,7 @@ class DiscussionCommentCell: UITableViewCell {
     fileprivate let dateLabel = UILabel()
     
     fileprivate var endorsedTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.utilitySuccessBase())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.utilitySuccessBase())
     }
     
     fileprivate func setEndorsed(_ endorsed : Bool) {
@@ -278,7 +278,7 @@ class DiscussionCommentsViewController: UIViewController, UITableViewDataSource,
             
             addCommentButton.backgroundColor = commentsClosed ? styles.neutralBase() : styles.primaryXDarkColor()
             
-            let textStyle = OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralWhite())
+            let textStyle = OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared.neutralWhite())
             let icon = commentsClosed ? Icon.closed : Icon.create
             let buttonText = commentsClosed ? Strings.commentsClosed : Strings.addAComment
             let buttonTitle = NSAttributedString.joinInNaturalLayout([icon.attributedTextWithStyle(textStyle.withSize(.xSmall)), textStyle.attributedString(withText: buttonText)])

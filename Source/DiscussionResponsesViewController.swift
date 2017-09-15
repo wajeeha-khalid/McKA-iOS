@@ -10,9 +10,9 @@ import Foundation
 
 private let GeneralPadding: CGFloat = 8.0
 
-private let cellButtonStyle = OEXTextStyle(weight:.normal, size:.base, color: OEXStyles.shared.neutralDark())
+private let cellButtonStyle = OEXTextStyle(weight:.normal, size:.large, color: OEXStyles.shared.neutralDark())
 private let cellIconSelectedStyle = cellButtonStyle.withColor(OEXStyles.shared.primaryBaseColor())
-private let responseMessageStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
+private let responseMessageStyle = OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralDark())
 
 class DiscussionCellButton: UIButton {
     var indexPath: IndexPath?
@@ -157,7 +157,7 @@ class DiscussionResponseCell: UITableViewCell {
     }
     
     var endorsedTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.utilitySuccessBase())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.utilitySuccessBase())
     }
     
     override func updateConstraints() {
@@ -239,7 +239,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
             logScreenEvent()
         }
         let styles = OEXStyles.shared
-        let footerStyle = OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralWhite())
+        let footerStyle = OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralWhite())
         
         let icon = postClosed ? Icon.closed : Icon.create
         let text = postClosed ? Strings.responsesClosed : Strings.addAResponse
@@ -270,11 +270,11 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
     }
     
     var detailTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralXDark())
+        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralXDark())
     }
     
     var infoTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
+        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralDark())
 
     }
     

@@ -51,21 +51,28 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     fileprivate let tapButton = UIButton()
     
     var titleTextStyle : OEXTextStyle{
-        return OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.neutralDark())
+        return OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     fileprivate var selectedThreadType: DiscussionThreadType = .Discussion {
         didSet {
+            var buttonTitle = ""
             switch selectedThreadType {
             case .Discussion:
                 self.contentTitleLabel.attributedText = NSAttributedString.joinInNaturalLayout([titleTextStyle.attributedString(withText: Strings.courseDashboardDiscussion), titleTextStyle.attributedString(withText: Strings.asteric)])
-                postButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle,withTitle: Strings.postDiscussion)
+                buttonTitle = Strings.postDiscussion
                 contentTextView.accessibilityLabel = Strings.courseDashboardDiscussion
             case .Question:
                 self.contentTitleLabel.attributedText = NSAttributedString.joinInNaturalLayout([titleTextStyle.attributedString(withText: Strings.question), titleTextStyle.attributedString(withText: Strings.asteric)])
-                postButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: Strings.postQuestion)
+                buttonTitle = Strings.postQuestion
                 contentTextView.accessibilityLabel = Strings.question
             }
+            
+            var attributes = [String: AnyObject]()
+            attributes[NSForegroundColorAttributeName] = UIColor.white
+            let attributedString = NSAttributedString(string: buttonTitle, attributes: attributes)
+            postButton.applyButtonStyle(OEXStyles.shared.filledPrimaryButtonStyle, withTitle: buttonTitle)
+            postButton.setAttributedTitle(attributedString, for: .normal)
         }
     }
     
@@ -273,7 +280,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     fileprivate func setTopicsButtonTitle() {
         if let topic = selectedTopic, let name = topic.name {
             let title = Strings.topic(topic: name)
-            topicButton.setAttributedTitle(OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.neutralDark()).attributedString(withText: title), for: .normal)
+            topicButton.setAttributedTitle(OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralDark()).attributedString(withText: title), for: .normal)
         }
     }
     
