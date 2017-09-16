@@ -88,8 +88,8 @@ extension OEXRouter {
         showContainerForBlockWithID(nil, type: CourseBlockDisplayType.outline, parentID: nil, courseID : courseID, fromController: controller)
     }
     
-    func unitControllerForCourseID(_ courseID : String, sequentialID : CourseBlockID?, blockID : CourseBlockID?, initialChildID : CourseBlockID?) -> CourseContentPageViewController {
-        let contentPageController = CourseContentPageViewController(environment: environment, courseID: courseID, rootID: blockID, sequentialID:sequentialID, initialChildID: initialChildID)
+    func unitControllerForCourseID(_ courseID : String, sequentialID : CourseBlockID?, blockID : CourseBlockID?, initialChildID : CourseBlockID?, courseProgressStats: ProgressStats?) -> CourseContentPageViewController {
+        let contentPageController = CourseContentPageViewController(environment: environment, courseID: courseID, rootID: blockID, sequentialID:sequentialID, initialChildID: initialChildID, courseProgressStats: courseProgressStats)
         return contentPageController
     }
     
@@ -117,13 +117,13 @@ extension OEXRouter {
         case .audio:
             fallthrough
         case .unknown:
-            let pageController = unitControllerForCourseID(courseID, sequentialID:nil, blockID: parentID, initialChildID: blockID)
+            let pageController = unitControllerForCourseID(courseID, sequentialID:nil, blockID: parentID, initialChildID: blockID, courseProgressStats: nil)
             if let delegate = controller as? CourseContentPageViewControllerDelegate {
                 pageController.navigationDelegate = delegate
             }
             controller.navigationController?.pushViewController(pageController, animated: true)
         case .discussion:
-            let pageController = unitControllerForCourseID(courseID, sequentialID:nil, blockID: parentID, initialChildID: blockID)
+            let pageController = unitControllerForCourseID(courseID, sequentialID:nil, blockID: parentID, initialChildID: blockID, courseProgressStats: nil)
             if let delegate = controller as? CourseContentPageViewControllerDelegate {
                 pageController.navigationDelegate = delegate
             }
@@ -143,7 +143,7 @@ extension OEXRouter {
             let courseLessonController = CourseLessonsViewController(environment: self.environment, courseID: courseID, rootID: blockID, lessonViewModelDataSource: lessonViewModelDataSource)
             return courseLessonController
         case .unit:
-            return unitControllerForCourseID(courseID, sequentialID: nil, blockID: blockID, initialChildID: nil)
+            return unitControllerForCourseID(courseID, sequentialID: nil, blockID: blockID, initialChildID: nil, courseProgressStats: nil)
         case .html:
             let controller = HTMLBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
             return controller

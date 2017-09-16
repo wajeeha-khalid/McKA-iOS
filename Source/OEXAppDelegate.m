@@ -285,7 +285,11 @@
             }
     }];
     
-    [EVURLCache activate];
+    ///Replace EVURLCache with URLCache because EVURLCache doesn't respect
+    ///the type of URLResponse while constructing back the URLResponse from
+    ///archive and that was causing problems for us
+    
+    //[EVURLCache activate];
     NetworkRequestLoader *loader = [[NetworkRequestLoader alloc] initWithSession:[NSURLSession sharedSession]];
     CachedRequestLoader *cachedLoader = [[CachedRequestLoader alloc] initWithCache:[EVURLCache sharedURLCache] loader:loader];
     [WebViewLoadingProtocol setRequestLoader:cachedLoader];

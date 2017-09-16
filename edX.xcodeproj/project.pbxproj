@@ -625,6 +625,7 @@
 		948755141F4F33D60059B73A /* TPKeyboardAvoidingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755131F4F33D60059B73A /* TPKeyboardAvoidingKit.framework */; };
 		94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353D1F55A9AE00FE8339 /* FTManager.swift */; };
 		94F235401F55AA7800FE8339 /* FTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353F1F55AA7800FE8339 /* FTAPI.swift */; };
+		94F3114C1F6D3954002E45C4 /* CourseProgressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3114B1F6D3954002E45C4 /* CourseProgressAPI.swift */; };
 		9C9B7F6C1A8CC68400A857B2 /* OEXFindCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F641A8CC68400A857B2 /* OEXFindCoursesViewController.m */; };
 		9C9B7F6D1A8CC68400A857B2 /* OEXCourseInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F661A8CC68400A857B2 /* OEXCourseInfoViewController.m */; };
 		9C9B7F731A8CC80E00A857B2 /* OEXURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B7F721A8CC80E00A857B2 /* OEXURLSessionManager.m */; };
@@ -1705,6 +1706,7 @@
 		94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MckinseyXBlocks.framework; path = Carthage/Build/iOS/MckinseyXBlocks.framework; sourceTree = "<group>"; };
 		94F2353D1F55A9AE00FE8339 /* FTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTManager.swift; sourceTree = "<group>"; };
 		94F2353F1F55AA7800FE8339 /* FTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAPI.swift; sourceTree = "<group>"; };
+		94F3114B1F6D3954002E45C4 /* CourseProgressAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseProgressAPI.swift; sourceTree = "<group>"; };
 		9C9B7F631A8CC68400A857B2 /* OEXFindCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFindCoursesViewController.h; sourceTree = "<group>"; };
 		9C9B7F641A8CC68400A857B2 /* OEXFindCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFindCoursesViewController.m; sourceTree = "<group>"; };
 		9C9B7F651A8CC68400A857B2 /* OEXCourseInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXCourseInfoViewController.h; sourceTree = "<group>"; };
@@ -3473,6 +3475,7 @@
 			children = (
 				94F2353D1F55A9AE00FE8339 /* FTManager.swift */,
 				94F2353F1F55AA7800FE8339 /* FTAPI.swift */,
+				94F3114B1F6D3954002E45C4 /* CourseProgressAPI.swift */,
 			);
 			name = XBlockManager;
 			sourceTree = "<group>";
@@ -4742,6 +4745,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
 			);
 			outputPaths = (
 			);
@@ -5174,6 +5178,7 @@
 				697B5A091D92DB3F002C3ABD /* RegistrationFormAPI.swift in Sources */,
 				77D6A9A41C28F32900E67CCF /* CoursesAPI.swift in Sources */,
 				778B40D91C2F62520009F33E /* EnrollmentManager.swift in Sources */,
+				94F3114C1F6D3954002E45C4 /* CourseProgressAPI.swift in Sources */,
 				BECB7B5A1924D760009C77F1 /* SWRevealViewController.m in Sources */,
 				B4B6D62B1A949F1B000F44E8 /* OEXRegistrationFieldTextController.m in Sources */,
 				189405231E34BFBE00AD6776 /* OEXAudioPlayerInterface.m in Sources */,
@@ -5665,6 +5670,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
@@ -6158,6 +6164,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
@@ -6218,6 +6225,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";

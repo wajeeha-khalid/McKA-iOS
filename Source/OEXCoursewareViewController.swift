@@ -593,7 +593,7 @@ open class OEXCoursewareViewController: OfflineSupportViewController, UITableVie
             }
             let initialComponent = targetStartingIndex < unit.children.count ? unit.children[targetStartingIndex] : unit.children.first
             
-            if let controller = self.environment.router?.unitControllerForCourseID(courseID, sequentialID:unit.blockID, blockID: nil, initialChildID: initialComponent) {
+            if let controller = self.environment.router?.unitControllerForCourseID(courseID, sequentialID:unit.blockID, blockID: nil, initialChildID: initialComponent, courseProgressStats: nil) {
                 
                 if let delegate = controller as? CourseContentPageViewControllerDelegate {
                     controller.navigationDelegate = delegate
