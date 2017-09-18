@@ -30,7 +30,7 @@ Building
     carthage update --platform iOS
     pod install
     cd xblock-component-library-ios
-    carthage udpate --platform iOS
+    carthage update --platform iOS
     ```
 
 1. Launch the workspace: `open edX.xcworkspace` (Important: always open the .xcworkspace
