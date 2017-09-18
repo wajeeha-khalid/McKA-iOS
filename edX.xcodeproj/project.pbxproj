@@ -4742,6 +4742,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
 			);
 			outputPaths = (
 			);
@@ -5665,6 +5666,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
@@ -6158,6 +6160,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
@@ -6218,6 +6221,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Libraries/",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/xblock-component-library-ios/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/edX-Prefix.pch";
