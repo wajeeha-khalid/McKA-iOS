@@ -82,9 +82,9 @@ extension WebNavigationViewController: UIWebViewDelegate {
 extension WebNavigationViewController {
     
     func setBarButtonItemActions() {
-        farwardBarButtonItem.action = #selector(OEXResourcesViewController.farwardBarButtonItemAction)
-        backBarButtonItem.action = #selector(OEXResourcesViewController.backBarButtonItemAction)
-        refreshBarButtonItem.action = #selector(OEXResourcesViewController.refreshBarButtonItemAction)
+        farwardBarButtonItem.action = #selector(farwardBarButtonItemAction)
+        backBarButtonItem.action = #selector(backBarButtonItemAction)
+        refreshBarButtonItem.action = #selector(refreshBarButtonItemAction)
     }
     
     func backBarButtonItemAction() {
@@ -141,5 +141,6 @@ extension WebNavigationViewController {
     fileprivate func uiSetup() {
         navigationItem.title = navigationBarTitle
         progressView.isHidden = true
+        webView.scalesPageToFit = true
     }
 }
