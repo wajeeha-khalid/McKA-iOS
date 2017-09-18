@@ -185,9 +185,7 @@ xcuserdata
 # Carthage
 
 Carthage/Checkouts
-Carthage/Build
 
-Pods/
 
 ## Obj-C/Swift specific
 *.hmap

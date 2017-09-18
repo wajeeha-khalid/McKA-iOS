@@ -1,0 +1,1 @@
+../../../UrbanAirship-iOS-SDK/AirshipKit/AirshipKit/UAAPNSRegistrationProtocol+Internal.h

@@ -1,0 +1,10 @@
+framework module TZStackView {
+  umbrella header "TZStackView.h"
+
+  export *
+  module * { export * }
+}
+
+module TZStackView.Swift {
+    header "TZStackView-Swift.h"
+}

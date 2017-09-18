@@ -1,0 +1,9 @@
+{
+  "commitish" : "1.3.0",
+  "iOS" : [
+    {
+      "hash" : "99fd26e08357dca3e2f6da0eb55627926e76d382fc59461a03e7fde08e77a235",
+      "name" : "TZStackView"
+    }
+  ]
+}
