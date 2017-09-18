@@ -9,13 +9,13 @@
 import UIKit
 
 class OEXResourcesViewController: UIViewController {
-
+    struct Keys {
+        static let baseUrl = OEXConfig.shared().apiHostURL()?.absoluteString ?? ""
+        static let mckinseyPlaceholder = "MCKINSEY_PLACEHOLDER"
+        static let ooyalaPlayerWithoutHttpHeader = "//player.ooyala.co"
+        static let ooyalaPlayerWithHttpHeader = "https://player.ooyala.co"
+    }
     public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & NetworkManagerProvider & OEXRouterProvider & OEXInterfaceProvider & OEXRouterProvider
-    
-    @IBOutlet weak var farwardBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var backBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var refreshBarButtonItem: UIBarButtonItem!
-    @IBOutlet weak var toolbar: UIToolbar!
     
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var webView: UIWebView!
@@ -27,7 +27,8 @@ class OEXResourcesViewController: UIViewController {
     var courseContents: [CourseContent]?
     var resourseContent: CourseContent?
     let loadController : LoadStateViewController
-
+    var loadedFirstTime = true
+    
     private func setWebviewSettings() {
         webView.allowsInlineMediaPlayback = true
     }
@@ -50,7 +51,6 @@ class OEXResourcesViewController: UIViewController {
         setupUI()
         addListeners()
         setWebviewSettings()
-        setBarButtonItemActions()
     }
 
     private func setupUI () {
@@ -70,21 +70,21 @@ class OEXResourcesViewController: UIViewController {
             }
         }
         
-        guard let resourcesContent = resourseContent else {
+        guard resourseContent != nil else {
             self.webView.isHidden = true
-            self.toolbar.isHidden = true
             self.loadController.state = LoadState.loaded
             return
         }
         
-        self.webView.loadHTMLString(resourcesContent.content!, baseURL: nil)
         
         let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
         let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
-        htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
+        htmlLoadingString = htmlString?.replacingOccurrences(of: Keys.mckinseyPlaceholder,
                                                              with: resourseContent?.content ?? "")
-        htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: "//player.ooyala.co", with: "https://player.ooyala.co")
-        webView.loadRequest(URLRequest(url: URL(string: "about:blank")!))
+        htmlLoadingString = htmlLoadingString?.replacingOccurrences(of: Keys.ooyalaPlayerWithoutHttpHeader,
+                                                                    with: Keys.ooyalaPlayerWithHttpHeader)
+        let baseURL = URL.init(string: Keys.baseUrl)
+        webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
     }
 
     private func addListeners() {
@@ -104,8 +104,6 @@ class OEXResourcesViewController: UIViewController {
 extension OEXResourcesViewController: UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView){
-       
-        setBarButtonItemStatus()
         progressView.isHidden = false
         progressView.setProgress(0.0, animated: false)
         progressView.setProgress(0.3, animated: true)
@@ -113,68 +111,44 @@ extension OEXResourcesViewController: UIWebViewDelegate {
     
     func webViewDidFinishLoad(_ webView :UIWebView){
         self.loadController.state = .loaded
-        setBarButtonItemStatus()
-        checkIfLoadingFirstTime()
         progressView.setProgress(1.0, animated: true)
+        loadedFirstTime = false
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        setBarButtonItemStatus()
         progressView.setProgress(1.0, animated: true)
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        return true
+        if checkIfLoadingFirstTime(request: request)  {
+            return true
+        } else {
+            loadRequest(request: request, navigationType:  navigationType)
+        }
+        return loadedFirstTime
     }
     
 }
 
-
 extension OEXResourcesViewController {
     
-    func setBarButtonItemActions() {
-        farwardBarButtonItem.action = #selector(OEXResourcesViewController.farwardBarButtonItemAction)
-        backBarButtonItem.action = #selector(OEXResourcesViewController.backBarButtonItemAction)
-        refreshBarButtonItem.action = #selector(OEXResourcesViewController.refreshBarButtonItemAction)
-    }
-    
-    func backBarButtonItemAction() {
-        webView.goBack()
-    }
-    
-    func farwardBarButtonItemAction() {
-        webView.goForward()
-    }
-    
-    func refreshBarButtonItemAction() {
-        webView.reload()
-    }
-        
-    func setBarButtonItemStatus() {
-        if webView.isLoading {
-            refreshBarButtonItem.isEnabled = false
-        } else {
-            refreshBarButtonItem.isEnabled = true
-        }
-        
-        if webView.canGoBack {
-            backBarButtonItem.isEnabled = true
-        } else {
-            backBarButtonItem.isEnabled = false
-            refreshBarButtonItem.isEnabled = false
-        }
-        
-        if webView.canGoForward {
-            farwardBarButtonItem.isEnabled = true
-        } else {
-            farwardBarButtonItem.isEnabled = false
+    func loadRequest(request: URLRequest, navigationType: UIWebViewNavigationType) {
+        if !loadedFirstTime && navigationType == .linkClicked {
+            showWebNavigationViewController(request: request)
         }
     }
     
-    func checkIfLoadingFirstTime() {
-        if (webView.request?.url?.absoluteString == "about:blank") && !webView.canGoBack {
-            let baseURL = URL.init(string: "https://courses.qa.mckinsey.edx.org")
-            webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
-        }
+    
+    func showWebNavigationViewController(request: URLRequest) {
+        let webNavigationViewController = WebNavigationViewController(request: request,
+                                                                      title: Strings.resources)
+        let navigationController = UINavigationController(rootViewController: webNavigationViewController)
+        self.present(navigationController, animated: false, completion: nil)
     }
+    
+    func checkIfLoadingFirstTime(request: URLRequest) -> Bool {
+        return request.url?.absoluteString.contains(Keys.baseUrl) ?? false &&
+            request.url?.absoluteString.contains("#") ?? false
+    }
+    
 }

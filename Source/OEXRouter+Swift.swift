@@ -156,7 +156,7 @@ extension OEXRouter {
             // it would take some time to fix those warnigns so for now i have wrapped the framework
             // usage around iOS 9.0 availability
             if #available(iOS 9.0, *) {
-                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: playerCode, description: description)
+                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: "5zdHcxOlM7fQJOMrCdwnnu16WP-d" , description: description)
                 player.play()
                 let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: player)
 
@@ -422,9 +422,9 @@ extension OEXRouter {
             self.showAnnouncementsController(controller, animated: true, courseID: courseId)
         })
         
-        let  coursesOverviewButton = UIAlertAction(title: "Courses Overview", style: .default, handler: { (action) -> Void in
-        // TODO: Participent goto courses overview
-        })
+//        let  coursesOverviewButton = UIAlertAction(title: "Courses Overview", style: .default, handler: { (action) -> Void in
+//        // TODO: Participent goto courses overview
+//        })
         
         let  resources = UIAlertAction(title: "Resources", style: .default, handler: { (action) -> Void in
             self.showResourcesController(controller, courseID: courseId)
@@ -443,7 +443,7 @@ extension OEXRouter {
         })
         
         alertController.addAction(announcementsButton)
-        alertController.addAction(coursesOverviewButton)
+//        alertController.addAction(coursesOverviewButton)
         alertController.addAction(resources)
         alertController.addAction(askTA)
         alertController.addAction(discussions)

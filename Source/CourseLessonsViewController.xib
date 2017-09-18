@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Bold.otf">
+            <string>SFProText-Bold</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CourseLessonsViewController" customModule="edX" customModuleProvider="target">
             <connections>
+                <outlet property="StatsTopViewBackgroundImageView" destination="Xnf-JE-a4t" id="RBU-6x-HxR"/>
                 <outlet property="lessonsTableView" destination="CNs-ZN-ilR" id="rZ3-8w-RVQ"/>
+                <outlet property="statsTopView" destination="HsU-60-eV8" id="HRk-5H-TjI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,40 +32,196 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CNs-ZN-ilR">
-                    <rect key="frame" x="0.0" y="128" width="375" height="489"/>
+                    <rect key="frame" x="0.0" y="128" width="375" height="539"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Ny5-3g-dY1"/>
                         <outlet property="delegate" destination="-1" id="vW8-7a-x7f"/>
                     </connections>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m4a-ch-Ce1">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HsU-60-eV8">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xnf-JE-a4t">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="29M-px-Lce" userLabel="Proficiency View">
+                            <rect key="frame" x="0.0" y="0.0" width="125.5" height="128"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="79" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdd-1k-4aV">
+                                    <rect key="frame" x="15" y="24" width="45" height="43"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="36"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proficiency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxC-wx-RNv">
+                                    <rect key="frame" x="15" y="69" width="69.5" height="17"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 57" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JbJ-vj-3mm">
+                                    <rect key="frame" x="15" y="100" width="88.5" height="14"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
+                                    <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.56999999284744263" translatesAutoresizingMaskIntoConstraints="NO" id="J44-sI-mCN">
+                                    <rect key="frame" x="15" y="92" width="95" height="2"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="95" id="hb8-rk-9XF"/>
+                                    </constraints>
+                                    <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="trackTintColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                                </progressView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="sxC-wx-RNv" firstAttribute="top" secondItem="sdd-1k-4aV" secondAttribute="bottom" constant="2" id="1zJ-0n-gaz"/>
+                                <constraint firstItem="J44-sI-mCN" firstAttribute="leading" secondItem="sxC-wx-RNv" secondAttribute="leading" id="3sD-OI-Ggc"/>
+                                <constraint firstItem="JbJ-vj-3mm" firstAttribute="leading" secondItem="sxC-wx-RNv" secondAttribute="leading" id="7UI-vx-bUh"/>
+                                <constraint firstItem="J44-sI-mCN" firstAttribute="top" secondItem="sxC-wx-RNv" secondAttribute="bottom" constant="6" id="MsG-xj-msc"/>
+                                <constraint firstItem="sdd-1k-4aV" firstAttribute="top" secondItem="29M-px-Lce" secondAttribute="top" constant="24" id="Vg7-G1-euY"/>
+                                <constraint firstItem="JbJ-vj-3mm" firstAttribute="top" secondItem="J44-sI-mCN" secondAttribute="bottom" constant="6" id="c0W-aH-j6z"/>
+                                <constraint firstItem="sxC-wx-RNv" firstAttribute="leading" secondItem="sdd-1k-4aV" secondAttribute="leading" id="hRf-IJ-Omr"/>
+                                <constraint firstItem="sdd-1k-4aV" firstAttribute="leading" secondItem="29M-px-Lce" secondAttribute="leading" constant="15" id="mpt-ko-x3G"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXk-jH-oZS" userLabel="My Progress View">
+                            <rect key="frame" x="125.5" y="0.0" width="125" height="128"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAM-7b-gOw">
+                                    <rect key="frame" x="15.5" y="24" width="46" height="43"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="36"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwK-I5-M91">
+                                    <rect key="frame" x="15.5" y="69" width="79" height="17"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 74%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ble-6N-RQZ">
+                                    <rect key="frame" x="15.5" y="100" width="97.5" height="14"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
+                                    <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="YMq-4r-Ka8">
+                                    <rect key="frame" x="15.5" y="92" width="95" height="2"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="95" id="NDJ-98-U68"/>
+                                    </constraints>
+                                    <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="trackTintColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                                </progressView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8M-3E-Un3">
+                                    <rect key="frame" x="61" y="36" width="24" height="28"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="24"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="c8M-3E-Un3" firstAttribute="bottom" secondItem="CAM-7b-gOw" secondAttribute="bottom" constant="-3" id="Ang-1p-NRV"/>
+                                <constraint firstItem="qwK-I5-M91" firstAttribute="leading" secondItem="CAM-7b-gOw" secondAttribute="leading" id="Md4-dm-8LI"/>
+                                <constraint firstItem="YMq-4r-Ka8" firstAttribute="top" secondItem="qwK-I5-M91" secondAttribute="bottom" constant="6" id="SFb-AN-z0Y"/>
+                                <constraint firstItem="c8M-3E-Un3" firstAttribute="leading" secondItem="CAM-7b-gOw" secondAttribute="trailing" id="TCX-gP-TCl"/>
+                                <constraint firstItem="Ble-6N-RQZ" firstAttribute="top" secondItem="YMq-4r-Ka8" secondAttribute="bottom" constant="6" id="Ywx-xg-Q0P"/>
+                                <constraint firstItem="qwK-I5-M91" firstAttribute="top" secondItem="CAM-7b-gOw" secondAttribute="bottom" constant="2" id="a9P-sd-NUf"/>
+                                <constraint firstItem="Ble-6N-RQZ" firstAttribute="leading" secondItem="qwK-I5-M91" secondAttribute="leading" id="bF7-08-JB3"/>
+                                <constraint firstItem="CAM-7b-gOw" firstAttribute="top" secondItem="XXk-jH-oZS" secondAttribute="top" constant="24" id="cJq-5N-tYE"/>
+                                <constraint firstItem="YMq-4r-Ka8" firstAttribute="leading" secondItem="qwK-I5-M91" secondAttribute="leading" id="iMX-1l-B55"/>
+                                <constraint firstItem="CAM-7b-gOw" firstAttribute="leading" secondItem="XXk-jH-oZS" secondAttribute="leading" constant="15" id="rEl-GG-3mT"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a94-AL-Snq" userLabel="Engagment View">
+                            <rect key="frame" x="250.5" y="0.0" width="125.5" height="128"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6g-YR-tGE">
+                                    <rect key="frame" x="15.5" y="24" width="24.5" height="43"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="36"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Engagement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANR-mm-MXu">
+                                    <rect key="frame" x="15.5" y="69" width="79.5" height="17"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ayu-n9-9m6">
+                                    <rect key="frame" x="15.5" y="100" width="80.5" height="14"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
+                                    <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="2Rz-Bd-615">
+                                    <rect key="frame" x="15.5" y="92" width="95" height="2"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="95" id="ZjL-6Z-2uu"/>
+                                    </constraints>
+                                    <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="trackTintColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                                </progressView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="z6g-YR-tGE" firstAttribute="top" secondItem="a94-AL-Snq" secondAttribute="top" constant="24" id="5CQ-4r-kYm"/>
+                                <constraint firstItem="ANR-mm-MXu" firstAttribute="leading" secondItem="z6g-YR-tGE" secondAttribute="leading" id="6ae-pA-wxx"/>
+                                <constraint firstItem="ANR-mm-MXu" firstAttribute="top" secondItem="z6g-YR-tGE" secondAttribute="bottom" constant="2" id="BY4-p1-X3T"/>
+                                <constraint firstItem="Ayu-n9-9m6" firstAttribute="leading" secondItem="ANR-mm-MXu" secondAttribute="leading" id="HBM-pX-ybv"/>
+                                <constraint firstItem="2Rz-Bd-615" firstAttribute="top" secondItem="ANR-mm-MXu" secondAttribute="bottom" constant="6" id="Wgn-jz-tYT"/>
+                                <constraint firstItem="z6g-YR-tGE" firstAttribute="leading" secondItem="a94-AL-Snq" secondAttribute="leading" constant="15" id="XAe-o0-U1W"/>
+                                <constraint firstItem="Ayu-n9-9m6" firstAttribute="top" secondItem="2Rz-Bd-615" secondAttribute="bottom" constant="6" id="sZU-b4-u4g"/>
+                                <constraint firstItem="2Rz-Bd-615" firstAttribute="leading" secondItem="ANR-mm-MXu" secondAttribute="leading" id="vKW-GQ-xt7"/>
+                            </constraints>
+                        </view>
+                    </subviews>
                     <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="128" id="8XX-kE-RHO"/>
+                        <constraint firstAttribute="trailing" secondItem="Xnf-JE-a4t" secondAttribute="trailing" id="93s-7n-NgI"/>
+                        <constraint firstItem="a94-AL-Snq" firstAttribute="leading" secondItem="XXk-jH-oZS" secondAttribute="trailing" id="ABR-rY-q5n"/>
+                        <constraint firstAttribute="bottom" secondItem="Xnf-JE-a4t" secondAttribute="bottom" id="PBr-I4-qUK"/>
+                        <constraint firstItem="XXk-jH-oZS" firstAttribute="width" secondItem="HsU-60-eV8" secondAttribute="width" multiplier="0.3334" id="UBe-9W-qdk"/>
+                        <constraint firstAttribute="height" constant="128" id="YBd-UM-wtT"/>
+                        <constraint firstItem="Xnf-JE-a4t" firstAttribute="top" secondItem="HsU-60-eV8" secondAttribute="top" id="ZpW-2p-XGc"/>
+                        <constraint firstItem="29M-px-Lce" firstAttribute="top" secondItem="HsU-60-eV8" secondAttribute="top" id="dSY-I3-IiT"/>
+                        <constraint firstItem="a94-AL-Snq" firstAttribute="width" secondItem="HsU-60-eV8" secondAttribute="width" multiplier="0.334" id="heW-P5-g1N"/>
+                        <constraint firstAttribute="bottom" secondItem="29M-px-Lce" secondAttribute="bottom" id="jGF-Nd-Wi2"/>
+                        <constraint firstItem="a94-AL-Snq" firstAttribute="top" secondItem="HsU-60-eV8" secondAttribute="top" id="kjK-of-TiF"/>
+                        <constraint firstItem="29M-px-Lce" firstAttribute="width" secondItem="HsU-60-eV8" secondAttribute="width" multiplier="0.334" id="mT1-Ra-WMH"/>
+                        <constraint firstItem="29M-px-Lce" firstAttribute="leading" secondItem="HsU-60-eV8" secondAttribute="leading" id="rb6-Cc-pgU"/>
+                        <constraint firstItem="Xnf-JE-a4t" firstAttribute="leading" secondItem="HsU-60-eV8" secondAttribute="leading" id="slt-oc-Qil"/>
+                        <constraint firstItem="XXk-jH-oZS" firstAttribute="top" secondItem="HsU-60-eV8" secondAttribute="top" id="u2v-xZ-F7b"/>
+                        <constraint firstAttribute="bottom" secondItem="a94-AL-Snq" secondAttribute="bottom" id="udw-Ne-F2K"/>
+                        <constraint firstAttribute="bottom" secondItem="XXk-jH-oZS" secondAttribute="bottom" id="w05-49-dTc"/>
+                        <constraint firstItem="XXk-jH-oZS" firstAttribute="leading" secondItem="29M-px-Lce" secondAttribute="trailing" id="z7y-uu-3RL"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9s2-PO-SBJ">
-                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                     <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Mrh-SD-eBk"/>
+                        <constraint firstAttribute="height" id="Mrh-SD-eBk"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" name="knobColor" catalog="System" colorSpace="catalog"/>
             <constraints>
+                <constraint firstItem="HsU-60-eV8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0Y1-Yo-X6P"/>
                 <constraint firstAttribute="trailing" secondItem="9s2-PO-SBJ" secondAttribute="trailing" id="7SU-m4-sQs"/>
-                <constraint firstItem="CNs-ZN-ilR" firstAttribute="top" secondItem="m4a-ch-Ce1" secondAttribute="bottom" id="8Gg-r8-J68"/>
+                <constraint firstItem="CNs-ZN-ilR" firstAttribute="top" secondItem="HsU-60-eV8" secondAttribute="bottom" id="89t-pT-4rC"/>
                 <constraint firstItem="9s2-PO-SBJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Dhu-Zb-Dat"/>
                 <constraint firstAttribute="trailing" secondItem="CNs-ZN-ilR" secondAttribute="trailing" id="JbY-QY-VFu"/>
-                <constraint firstItem="m4a-ch-Ce1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="N1r-9N-M7O"/>
                 <constraint firstItem="9s2-PO-SBJ" firstAttribute="top" secondItem="CNs-ZN-ilR" secondAttribute="bottom" id="QGm-wK-InD"/>
-                <constraint firstItem="m4a-ch-Ce1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fID-hC-zp7"/>
+                <constraint firstItem="HsU-60-eV8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hn4-ai-GMZ"/>
+                <constraint firstAttribute="trailing" secondItem="HsU-60-eV8" secondAttribute="trailing" id="jRy-hL-ZMH"/>
                 <constraint firstAttribute="bottom" secondItem="9s2-PO-SBJ" secondAttribute="bottom" id="mEa-zR-3Fg"/>
                 <constraint firstItem="CNs-ZN-ilR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wXV-l3-LqP"/>
-                <constraint firstAttribute="trailing" secondItem="m4a-ch-Ce1" secondAttribute="trailing" id="ymr-bQ-roq"/>
             </constraints>
             <point key="canvasLocation" x="24.5" y="52.5"/>
         </view>
