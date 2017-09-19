@@ -142,7 +142,7 @@ public struct CourseOutline {
                                 completionMsg = completedMsg
                             }
                             
-                            let title = body[Fields.DisplayName].stringValue
+                            let title = requiredComponent[Fields.DisplayName].stringValue
                             let question = requiredComponent[Fields.Question]
                             let id = requiredComponent["id"]
                             let freeText = FreeText(id: id.stringValue, title: title, question: question.stringValue, message: completionMsg)
