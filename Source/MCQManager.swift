@@ -22,12 +22,12 @@ class MCQManager: NSObject, MCQResultMatching {
         self.networkManager = networkManager
     }
     
-    public func matchMCQ(selectedValue: String, for questionId: String, completion: @escaping (Bool) -> Swift.Void) {
+    public func matchMCQ(selectedValue: String, for questionId: String, completion: @escaping (Bool,String?) -> Swift.Void) {
         stream = mcqResponseStream(questionId: questionId, value: selectedValue, courseId: self.courseID, blockId: self.blockID)
         stream?.listen(self, action: { (result) in
             
         result.ifSuccess({ (mcqResponseData: MCQResponse) -> Void in
-                completion(mcqResponseData.status)
+                completion(mcqResponseData.status, mcqResponseData.message)
             })
             result.ifFailure({ (error) in
                 Logger.logInfo("MCQ", error.localizedDescription)

@@ -4776,6 +4776,7 @@
 				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
 				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TPKeyboardAvoidingKit.framework",
 				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/DynamicOoyalaWrapper.framework",
+				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TTTAttributedLabel.framework",
 			);
 			outputPaths = (
 			);
