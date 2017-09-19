@@ -12,8 +12,7 @@ extension OEXSession : AuthorizationHeaderProvider {
     public var authorizationHeaders : [String:String] {
         if let accessToken = self.token?.accessToken, let tokenType = self.token?.tokenType {
             return [
-                "Authorization" : "\(tokenType) \(accessToken)",
-                "X-edx-api-key" : OEXConfig.shared().authAPIKey()
+                "Authorization" : "\(tokenType) \(accessToken)"
             ]
         }
         else {
