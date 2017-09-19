@@ -21,7 +21,7 @@ pod 'GVRSDK', '~>1.20.0'
 pod 'DownloadButton'
 pod 'UrbanAirship-iOS-SDK'
 pod 'MBCircularProgressBar'
-pod "SMFloatingLabelTextField"
+pod 'SMFloatingLabelTextField'
 end
 
 target 'edXTests' do
