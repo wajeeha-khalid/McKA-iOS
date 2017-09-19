@@ -1,0 +1,126 @@
+PODS:
+  - Analytics (3.0.7)
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - Crashlytics (3.8.4):
+    - Fabric (~> 1.6.3)
+  - DateTools (1.6.1)
+  - DownloadButton (0.1.0)
+  - Fabric (1.6.11)
+  - FBSDKCoreKit (4.21.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.21.0):
+    - FBSDKCoreKit
+  - FBSnapshotTestCase/Core (2.0.1)
+  - GoogleAnalytics (3.17.0)
+  - GoogleAppUtilities (1.1.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleAuthUtilities (1.0.1):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleIDFASupport (3.14.0)
+  - GoogleNetworkingUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSignIn (2.4.0):
+    - GoogleAppUtilities (~> 1.0)
+    - GoogleAuthUtilities (~> 1.0)
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - GoogleSymbolUtilities (1.1.2)
+  - GoogleToolboxForMac/Defines (2.1.0)
+  - GoogleToolboxForMac/Logger (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+  - GoogleUtilities (1.3.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GTMSessionFetcher/Core (1.1.6)
+  - GVRSDK (1.20.0):
+    - GoogleToolboxForMac/Logger (= 2.1.0)
+    - GTMSessionFetcher/Core (= 1.1.6)
+  - Masonry (0.6.4)
+  - MBCircularProgressBar (0.3.5)
+  - NewRelicAgent (4.186.1)
+  - OCMock (3.4)
+  - OHHTTPStubs (4.8.0):
+    - OHHTTPStubs/Default (= 4.8.0)
+  - OHHTTPStubs/Core (4.8.0)
+  - OHHTTPStubs/Default (4.8.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (4.8.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (4.8.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (4.8.0)
+  - Parse (1.14.4):
+    - Bolts/Tasks (~> 1.8)
+  - Segment-GoogleAnalytics (1.0.1):
+    - Analytics (~> 3.0.0)
+    - GoogleAnalytics (~> 3.14)
+    - GoogleIDFASupport (~> 3.14)
+  - Smartling.i18n (1.0.13)
+  - SMFloatingLabelTextField (0.3.1)
+  - UrbanAirship-iOS-SDK (8.2.2)
+
+DEPENDENCIES:
+  - Analytics (~> 3.0.0)
+  - Crashlytics (~> 3.2)
+  - DateTools (~> 1.6.1)
+  - DownloadButton
+  - Fabric (~> 1.5)
+  - FBSDKCoreKit (~> 4.6)
+  - FBSDKLoginKit (~> 4.6)
+  - FBSnapshotTestCase/Core (= 2.0.1)
+  - GoogleSignIn (~> 2.4)
+  - GVRSDK (~> 1.20.0)
+  - Masonry (~> 0.6)
+  - MBCircularProgressBar
+  - NewRelicAgent (~> 4.1)
+  - OCMock (~> 3.1)
+  - OHHTTPStubs (~> 4.0)
+  - Parse (~> 1.7)
+  - Segment-GoogleAnalytics (~> 1.0.0)
+  - Smartling.i18n (~> 1.0)
+  - SMFloatingLabelTextField
+  - UrbanAirship-iOS-SDK
+
+SPEC CHECKSUMS:
+  Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  DateTools: 9bcc89e4f2f9004d8a7a2bd1b49269cf78968e65
+  DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FBSDKCoreKit: 8a372ab194b5c7c26355c1920ef52dbeb44bc222
+  FBSDKLoginKit: a1a5f4b4ac445823a020fbeeaf5f03714a67ff9c
+  FBSnapshotTestCase: bdb997ab2397495205f11156d4d444606daebd27
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
+  GoogleAppUtilities: a8a552aa74f6597f805e45b5a3962766c3134973
+  GoogleAuthUtilities: 049ffd3a297cdffd271451b82fd4e75304f15ef3
+  GoogleIDFASupport: aaf8c10bd429abb1c15349d5252244f5eda8ead1
+  GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
+  GoogleSignIn: 79929b51e6299c69f1197bbd9c7a1367d523ecd8
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
+  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
+  GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
+  GVRSDK: da2d19fc7693816d65ad49cc9dac5c44c2fd3c1d
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
+  NewRelicAgent: 5cd52dafe03e74c5066073a00fd500df9d966e7e
+  OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
+  OHHTTPStubs: b393565822317305b87a1440d4c7aff131679f66
+  Parse: b0aa91d2c435e53d4a9af26e741e014c9b35c42e
+  Segment-GoogleAnalytics: ffea73c99196720b28b58ea93bcc0e6d11f172e1
+  Smartling.i18n: 03ef7a5643965212c6ca9ed7d65385950ca4a989
+  SMFloatingLabelTextField: 4e2e0dedb9a39b9a2d754290abb1a749c07f9829
+  UrbanAirship-iOS-SDK: b73b08b28f1b1366b671da21fac261072ef3fe19
+
+PODFILE CHECKSUM: c8327e359db42efa1d0d0bd0241fd58631095dc0
+
+COCOAPODS: 1.1.1
