@@ -158,7 +158,6 @@ public struct CourseOutline {
                     case CourseBlock.Category.IMAGEEXPLORER:
                         let studentViewData = body[Fields.StudentViewData]
                         let content = studentViewData[Fields.html].stringValue
-                        multiDevice = true
                         type = .html(content)
                     case CourseBlock.Category.Problem:
                         type = .problem
@@ -195,8 +194,14 @@ public struct CourseOutline {
                     }
                 }
                 else {
-                    type = .unknown(typeName)
-                    continue
+                    if multiDevice {
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .html(content)
+                    } else {
+                        type = .unknown(typeName)
+                        continue
+                    }
                 }
                 
                 validBlocks[blockID] = CourseBlock(
