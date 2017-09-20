@@ -143,7 +143,7 @@ final class LessonViewModelDataSourceImplementation: LessonViewModelDataSource  
 
 public struct LessonViewModel {
     let lessonID: CourseBlockID
-    let state: ComponentProgressState
+    var state: ComponentProgressState
     let title: String
     let number: Int
 }
@@ -156,16 +156,21 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     fileprivate let courseID: String
     fileprivate let blockIDStream = BackedStream<CourseBlockID?>()
     fileprivate let courseQuerier : CourseOutlineQuerier
-    fileprivate let loadController : LoadStateViewController
+    fileprivate var loadController : LoadStateViewController
     fileprivate var titleType : TitleType
     fileprivate var lesssons : [CourseBlock] = []
     private let lessonViewModelDataSource: LessonViewModelDataSource
     var downloadController  : DownloadController
     var lessonViewModel: [LessonViewModel] = []
+    var courseProgressStats: ProgressStats?
+    fileprivate var courseProgressStatsStream: edXCore.Stream<ProgressStats>?
     
     @IBOutlet weak var lessonsTableView: UITableView!
     @IBOutlet weak var statsTopView: UIView!
     @IBOutlet weak var StatsTopViewBackgroundImageView: UIImageView!
+    @IBOutlet weak var progressPercentageLabel: UILabel!
+    @IBOutlet weak var progressBarView: UIProgressView!
+    @IBOutlet weak var progressCohortAvgLabel: UILabel!
     
     public init(environment: Environment, courseID: String, rootID : CourseBlockID?, lessonViewModelDataSource: LessonViewModelDataSource) {
         self.environment = environment
@@ -176,6 +181,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
         downloadController  = DownloadController(courseQuerier: courseQuerier, analytics: environment.analytics)
         self.lessonViewModelDataSource = lessonViewModelDataSource
         super.init(env : environment)
+        self.courseProgressStatsStream = getCourseProgressStatsStream()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -185,7 +191,6 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
         addRightBarButtonsItems()
         self.lessonsTableView.register(UINib(nibName: "CourseLessonTableViewCell", bundle: nil), forCellReuseIdentifier: "CourseLessonTableViewCell")
         
@@ -198,7 +203,9 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.loadController.setupInController(self, contentView: self.lessonsTableView)
         self.addListeners()
+        self.setupProgressListener()
         self.addRightBarButtonsItems()
         self.applyThemeingToStatsTopView()
     }
@@ -230,6 +237,34 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
             }
         }
         
+    }
+    
+    fileprivate func setupProgressListener() {
+        self.courseProgressStatsStream?.listen(self, action: { (result) in
+            
+            switch result {
+            case let .success(courseProgress):
+                self.courseProgressStats = courseProgress
+                self.progressPercentageLabel.text = String(Int(self.courseProgressStats!.ratio * 100))
+                self.progressBarView.setProgress(self.courseProgressStats!.ratio, animated: true)
+                self.progressCohortAvgLabel.text = "Cohort Avg: \(Int(self.courseProgressStats!.cohortAvg! * 100))%"
+                if let lessonsProgress = self.courseProgressStats?.lessonsProgress {
+                    self.lessonViewModel.enumerated().forEach({ (lesson: (offset: Int, element: LessonViewModel)) in
+                        let filteredLesson = lessonsProgress.filter({ (lessonProgress) -> Bool in
+                            lessonProgress.blockID == lesson.element.lessonID
+                        })
+                        if filteredLesson.count > 0{
+                            self.lessonViewModel[lesson.offset].state = filteredLesson.first!.componentProgress
+                        }
+                    })
+                }
+                self.lessonsTableView.reloadData()
+                self.loadController.state = .loaded
+            case .failure:
+                self.loadController.state = .initial
+                break
+            }
+        })
     }
     
     //MARK: Tableview DataSource
@@ -265,7 +300,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     //MARK: Table view delegate
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let blockID = lessonViewModel[indexPath.row].lessonID
-        if let controller = self.environment.router?.unitControllerForCourseID(courseID, sequentialID:nil, blockID: blockID, initialChildID: nil) {
+        if let controller = self.environment.router?.unitControllerForCourseID(courseID, sequentialID:nil, blockID: blockID, initialChildID: nil, courseProgressStats: self.courseProgressStats) {
             
             controller.chapterID = blockID
             self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
@@ -312,5 +347,12 @@ extension CourseLessonsViewController {
         } else {
             statsTopView.backgroundColor = BrandingThemes.shared.getNavigationBarColor()
         }
+    }
+}
+
+extension CourseLessonsViewController {
+    func getCourseProgressStatsStream() -> edXCore.Stream<ProgressStats> {
+        let request = CourseProgressAPI.getProgressFor(courseId: self.courseID)
+        return self.environment.networkManager.streamForRequest(request, persistResponse: true)
     }
 }

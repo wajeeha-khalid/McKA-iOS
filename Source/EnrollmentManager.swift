@@ -11,7 +11,7 @@ import Foundation
 open class EnrollmentManager : NSObject {
     fileprivate let interface: OEXInterface?
     fileprivate let networkManager : NetworkManager
-    fileprivate let enrollmentFeed = BackedFeed<[UserCourseEnrollment]?>()
+    fileprivate let enrollmentFeed = BackedFeed<[(UserCourseEnrollment, ProgressStats)]?>()
     fileprivate let config: OEXConfig
     
     public init(interface: OEXInterface?, networkManager: NetworkManager, config: OEXConfig) {
@@ -32,19 +32,20 @@ open class EnrollmentManager : NSObject {
             }
         }
         
-        // Eventutally we should remove responsibility for knowing about the course list
-        // from OEXInterface and remove these
-        feed.output.listen(self) {[weak self] enrollments in
-            enrollments.ifSuccess {
-                let courses = $0?.flatMap { $0.course } ?? []
-                self?.interface?.setRegisteredCourses(courses)
-                self?.interface?.deleteUnregisteredItems()
-                self?.interface?.courses = $0 ?? []
+        let output = feed.output
+        output.listen(self) { result in
+            result.ifSuccess {
+                if let enrollmentsWithProgress = $0 {
+                    let courses = enrollmentsWithProgress.flatMap { (enrollment, _) in enrollment.course }
+                    self.interface?.setRegisteredCourses(courses)
+                    self.interface?.deleteUnregisteredItems()
+                    self.interface?.courses = enrollmentsWithProgress.flatMap {(enrollment, _) in enrollment }
+                }
             }
         }
     }
     
-    open var feed: Feed<[UserCourseEnrollment]?> {
+    open var feed: Feed<[(UserCourseEnrollment, ProgressStats)]?> {
         return enrollmentFeed
     }
     
@@ -53,28 +54,32 @@ open class EnrollmentManager : NSObject {
     }
     
     open func streamForCourseWithID(_ courseID: String) -> edXCore.Stream<UserCourseEnrollment> {
-        let hasCourse = enrollmentFeed.output.value??.contains {
-            $0.course.course_id == courseID
+        let hasCourse = enrollmentFeed.output.value??.contains { (enrollment, progress) in
+            enrollment.course.course_id == courseID
             } ?? false
         
         if !hasCourse {
             enrollmentFeed.refresh()
         }
         
-        let courseStream = feed.output.flatMap(fireIfAlreadyLoaded: hasCourse || !enrollmentFeed.output.active) { enrollments in
-            return enrollments.toResult().flatMap { enrollments -> Result<UserCourseEnrollment> in
-                let courseEnrollment = enrollments.firstObjectMatching {
-                    return $0.course.course_id == courseID
+    
+        let courseStream = feed.output.flatMap(fireIfAlreadyLoaded: hasCourse || !enrollmentFeed.output.active) { optionalEnrollmentsWithProgress  in
+            return optionalEnrollmentsWithProgress.toResult().flatMap({ enrollmentsWithProgress -> Result<UserCourseEnrollment>  in
+                if let (enrollment, _) = enrollmentsWithProgress.firstObjectMatching({ (enrollment, courseProgress)  in
+                    return enrollment.course.course_id == courseID
+                }) {
+                    return .success(enrollment)
+                } else {
+                    return .failure(NSError.oex_unknownError())
                 }
-                return courseEnrollment.toResult()
-            }
+               // return enrollmentWithProgress?.enrollment.toResult()
+            })
         }
-        
         return courseStream
     }
     
     fileprivate func clearFeed() {
-        let feed = Feed<[UserCourseEnrollment]?> { stream in
+        let feed = Feed<[(UserCourseEnrollment, ProgressStats)]?> { stream in
             stream.removeAllBackings()
             stream.send(Success(nil))
         }
@@ -93,8 +98,32 @@ open class EnrollmentManager : NSObject {
         enrollmentFeed.refresh()
     }
     
-    func freshFeedWithUsername(_ username: String, organizationCode: String?) -> Feed<[UserCourseEnrollment]> {
+    func freshFeedWithUsername(_ username: String, organizationCode: String?) -> Feed<[(UserCourseEnrollment,ProgressStats)]> {
+        
+        
+        
         let request = CoursesAPI.getUserEnrollments(username, organizationCode: organizationCode)
-        return Feed(request: request, manager: networkManager, persistResponse: true)
+        let enrollmentStream = networkManager.streamForRequest(request, persistResponse: true)
+        let progressStream = networkManager.streamForRequest(CourseProgressAPI.getAllCoursesProgress(), persistResponse: true)
+        
+        
+        let combinedStream: edXCore.Stream<[(UserCourseEnrollment, ProgressStats)]> = joinStreams(enrollmentStream, progressStream).map { (enrollements, progress) in
+            
+            //Done because of in-consistent number of elements returned in CourseEnrollments & CourseProgress from API
+            return enrollements.flatMap { enrollment -> (UserCourseEnrollment, ProgressStats)? in
+                guard let courseProgress = progress.index(where: {
+                    $0.courseID == enrollment.course.course_id
+                })
+                .map ({
+                    progress[$0]
+                }) else {
+                        return nil
+                }
+                return (enrollment, courseProgress)
+            }
+        }
+        return Feed { backing in
+            backing.backWithStream(combinedStream)
+        }
     }
 }

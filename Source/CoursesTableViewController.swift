@@ -55,19 +55,7 @@ struct CourseViewModel {
         return course.name
     }
     var lessonCount: Int?
-    var progress: CourseProgress {
-        if let progress = (course.progress?.doubleValue).map({round($0)}).map({Int($0)}) {
-            if  progress == 100 {
-                return .completed
-            }
-            if progress == 0 {
-                return .notStarted
-            }
-            return .inPorgress(progress: Int(progress))
-        } else {
-            return .notStarted
-        }
-    }
+    var progress: CourseProgress
     var courseImageURL: String? {
         return course.courseImageURL
     }
@@ -120,7 +108,6 @@ class CoursesTableViewController: UITableViewController {
     weak var delegate : CoursesTableViewControllerDelegate?
     var streams: [edXCore.Stream<Int>] = []
     fileprivate var _courses: [CourseViewModel] = []
-    
     var courses : [CourseViewModel]  {
         get {
             return _courses

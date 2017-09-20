@@ -24,7 +24,7 @@ public extension JSON {
 public protocol DictionaryExtractionExtension {
     associatedtype Key
     associatedtype Value
-    subscript(key: Key) -> Value? { get }
+    subscript(key: Key) -> Value? { get set }
 }
 
 extension Dictionary: DictionaryExtractionExtension {}
@@ -32,7 +32,13 @@ extension Dictionary: DictionaryExtractionExtension {}
 public extension DictionaryExtractionExtension where Self.Key == String {
     
     subscript(key : RawStringExtractable) -> Value? {
-        return self[key.rawValue]
+        get {
+            return self[key.rawValue]
+        } set {
+            self[key.rawValue] = newValue
+        }
     }
+    
+    
     
 }
