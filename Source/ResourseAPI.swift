@@ -55,8 +55,9 @@ struct ResourseAPI {
         return .success(courseContents)
     }
 
-    static func getCourseContent(_ courseId: String) -> NetworkRequest<[CourseContent]> {
-        let path = "/api/server/courses/{course_id}/static_tabs?detail=true".oex_format(withParameters: ["course_id": courseId])
+    static func getCourseContent(_ courseId: String, username: String) -> NetworkRequest<[CourseContent]> {
+        let path = "/api/server/mobile/v1/courses/{course_id}/static_tabs/?username={user_name}&detail=true".oex_format(withParameters: ["course_id": courseId,
+                                                                                                                                         "user_name": username])
         return NetworkRequest(
             method: .GET,
             path: path,

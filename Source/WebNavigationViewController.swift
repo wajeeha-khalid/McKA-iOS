@@ -57,6 +57,7 @@ extension WebNavigationViewController: UIWebViewDelegate {
         progressView.isHidden = false
         progressView.setProgress(0.0, animated: false)
         progressView.setProgress(0.3, animated: true)
+        self.loadController.state = .initial
     }
     
     func webViewDidFinishLoad(_ webView :UIWebView){
@@ -64,13 +65,14 @@ extension WebNavigationViewController: UIWebViewDelegate {
         progressView.setProgress(1.0, animated: true)
         self.webView.isUserInteractionEnabled = true
         setBarButtonItemStatus()
-//        progressView.isHidden = true
+        self.loadController.state = .loaded
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         setBarButtonItemStatus()
         progressView.setProgress(1.0, animated: true)
         progressView.isHidden = true
+        self.loadController.state = LoadState.failed(error as NSError)
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -82,9 +84,9 @@ extension WebNavigationViewController: UIWebViewDelegate {
 extension WebNavigationViewController {
     
     func setBarButtonItemActions() {
-        farwardBarButtonItem.action = #selector(OEXResourcesViewController.farwardBarButtonItemAction)
-        backBarButtonItem.action = #selector(OEXResourcesViewController.backBarButtonItemAction)
-        refreshBarButtonItem.action = #selector(OEXResourcesViewController.refreshBarButtonItemAction)
+        farwardBarButtonItem.action = #selector(farwardBarButtonItemAction)
+        backBarButtonItem.action = #selector(backBarButtonItemAction)
+        refreshBarButtonItem.action = #selector(refreshBarButtonItemAction)
     }
     
     func backBarButtonItemAction() {
@@ -139,7 +141,9 @@ extension WebNavigationViewController {
 
 extension WebNavigationViewController {
     fileprivate func uiSetup() {
+        loadController.setupInController(self, contentView: self.webView)
         navigationItem.title = navigationBarTitle
         progressView.isHidden = true
+        webView.scalesPageToFit = true
     }
 }

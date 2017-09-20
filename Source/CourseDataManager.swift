@@ -48,7 +48,7 @@ open class CourseDataManager: NSObject {
     }
     
     func streamForCourseContent(_ courseID: String) -> edXCore.Stream<[CourseContent]> {
-        let request = ResourseAPI.getCourseContent(courseID)
+        let request = ResourseAPI.getCourseContent(courseID, username: session.currentUser?.username ?? "")
         return networkManager.streamForRequest(request)
     }
     

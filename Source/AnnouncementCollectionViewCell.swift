@@ -13,7 +13,11 @@ public protocol AnnouncementsWebViewEvent {
 }
 
 class AnnouncementCollectionViewCell: UICollectionViewCell {
-
+    struct Keys {
+        static let baseUrl = OEXConfig.shared().apiHostURL()?.absoluteString ?? ""
+        static let mckinseyPlaceholder = "MCKINSEY_PLACEHOLDER"
+    }
+    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
 
@@ -58,9 +62,9 @@ extension AnnouncementCollectionViewCell {
     func loadTemplateHTML() {
         let htmlFile = Bundle.main.path(forResource: "template", ofType: "html")
         let htmlString = try? String(contentsOfFile: htmlFile!, encoding: String.Encoding.utf8)
-        let htmlLoadingString = htmlString?.replacingOccurrences(of: "MCKINSEY_PLACEHOLDER",
+        let htmlLoadingString = htmlString?.replacingOccurrences(of: Keys.mckinseyPlaceholder,
                                                              with: courseAnnounement?.content ?? "")
-        let baseURL = URL.init(string: "https://courses.qa.mckinsey.edx.org")
+        let baseURL = URL.init(string: Keys.baseUrl)
         webView.loadHTMLString(htmlLoadingString ?? "", baseURL: baseURL)
     }
     

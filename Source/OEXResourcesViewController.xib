@@ -11,11 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OEXResourcesViewController" customModule="edX" customModuleProvider="target">
             <connections>
-                <outlet property="backBarButtonItem" destination="SVe-zQ-nlo" id="klK-u0-aov"/>
-                <outlet property="farwardBarButtonItem" destination="YMC-sj-ibb" id="pIP-ts-8f1"/>
                 <outlet property="progressView" destination="Iy9-L4-Qdv" id="v06-0d-bI8"/>
-                <outlet property="refreshBarButtonItem" destination="oeQ-34-FbT" id="9vb-Qo-8SX"/>
-                <outlet property="toolbar" destination="2wr-8A-Af4" id="nIT-Ph-hbJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="Fyk-Mi-d8R" id="DjZ-c8-9qL"/>
             </connections>
@@ -33,21 +29,12 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyk-Mi-d8R">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="y4m-lw-Ckv"/>
                     </connections>
                 </webView>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2wr-8A-Af4">
-                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                    <items>
-                        <barButtonItem image="backWeb" id="SVe-zQ-nlo"/>
-                        <barButtonItem image="forwardWeb" id="YMC-sj-ibb"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="pFb-cI-Xsd"/>
-                        <barButtonItem systemItem="refresh" id="oeQ-34-FbT"/>
-                    </items>
-                </toolbar>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Iy9-L4-Qdv">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                 </progressView>
@@ -55,25 +42,18 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Iy9-L4-Qdv" secondAttribute="trailing" id="9Iw-uQ-QZV"/>
-                <constraint firstAttribute="trailing" secondItem="2wr-8A-Af4" secondAttribute="trailing" id="G7s-D5-a9l"/>
                 <constraint firstItem="HI8-fr-N3x" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="K1r-dY-kHa"/>
-                <constraint firstAttribute="bottom" secondItem="2wr-8A-Af4" secondAttribute="bottom" id="M8y-8P-jD2"/>
-                <constraint firstItem="2wr-8A-Af4" firstAttribute="top" secondItem="Fyk-Mi-d8R" secondAttribute="bottom" id="XR6-On-og8"/>
                 <constraint firstItem="Fyk-Mi-d8R" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Xhf-3I-hMY"/>
                 <constraint firstItem="Fyk-Mi-d8R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Zh0-Na-X90"/>
-                <constraint firstItem="2wr-8A-Af4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="e4r-kn-6kU"/>
                 <constraint firstAttribute="trailing" secondItem="Fyk-Mi-d8R" secondAttribute="trailing" id="fmz-nd-aHm"/>
                 <constraint firstItem="Iy9-L4-Qdv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jcp-TG-PHS"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HI8-fr-N3x" secondAttribute="trailing" constant="10" id="mh7-BO-Eo7"/>
                 <constraint firstItem="Iy9-L4-Qdv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pzx-Uh-Ghl"/>
+                <constraint firstAttribute="bottom" secondItem="Fyk-Mi-d8R" secondAttribute="bottom" id="qJV-Nx-mh3"/>
                 <constraint firstItem="HI8-fr-N3x" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="tDD-az-CGd"/>
                 <constraint firstItem="HI8-fr-N3x" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="ujR-xW-bh8"/>
             </constraints>
             <point key="canvasLocation" x="35.5" y="122.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="backWeb" width="24" height="24"/>
-        <image name="forwardWeb" width="24" height="24"/>
-    </resources>
 </document>
