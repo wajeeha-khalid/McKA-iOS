@@ -22,6 +22,7 @@ pod 'DownloadButton'
 pod 'UrbanAirship-iOS-SDK'
 pod 'MBCircularProgressBar'
 pod 'SMFloatingLabelTextField'
+pod 'Instabug'
 end
 
 target 'edXTests' do

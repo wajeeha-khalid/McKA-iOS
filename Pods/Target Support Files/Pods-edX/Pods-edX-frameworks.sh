@@ -82,3 +82,13 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${PODS_ROOT}/Instabug/Instabug.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${PODS_ROOT}/Instabug/Instabug.framework"
+fi
+if [[ "$CONFIGURATION" == "Profile" ]]; then
+  install_framework "${PODS_ROOT}/Instabug/Instabug.framework"
+fi

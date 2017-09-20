@@ -40,6 +40,7 @@ PODS:
   - GVRSDK (1.20.0):
     - GoogleToolboxForMac/Logger (= 2.1.0)
     - GTMSessionFetcher/Core (= 1.1.6)
+  - Instabug (7.2.3)
   - Masonry (0.6.4)
   - MBCircularProgressBar (0.3.5)
   - NewRelicAgent (4.186.1)
@@ -78,6 +79,7 @@ DEPENDENCIES:
   - FBSnapshotTestCase/Core (= 2.0.1)
   - GoogleSignIn (~> 2.4)
   - GVRSDK (~> 1.20.0)
+  - Instabug
   - Masonry (~> 0.6)
   - MBCircularProgressBar
   - NewRelicAgent (~> 4.1)
@@ -110,6 +112,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
   GVRSDK: da2d19fc7693816d65ad49cc9dac5c44c2fd3c1d
+  Instabug: fe62d90218ff56d1f54c869bba7a1dc75e1cbafa
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
   NewRelicAgent: 5cd52dafe03e74c5066073a00fd500df9d966e7e
@@ -121,6 +124,6 @@ SPEC CHECKSUMS:
   SMFloatingLabelTextField: 4e2e0dedb9a39b9a2d754290abb1a749c07f9829
   UrbanAirship-iOS-SDK: b73b08b28f1b1366b671da21fac261072ef3fe19
 
-PODFILE CHECKSUM: d1d8f5ba2bb5f34a3c9df732afbf16e32bbb520d
+PODFILE CHECKSUM: 2294d4158d81923bcc98dae740bf849cf4070441
 
 COCOAPODS: 1.1.1
