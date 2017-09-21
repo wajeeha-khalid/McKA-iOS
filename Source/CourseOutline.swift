@@ -129,10 +129,6 @@ public struct CourseOutline {
                         let studentViewData = body[Fields.StudentViewData]
                         let content = studentViewData[Fields.html].stringValue
                         type = .html(content)
-                    case CourseBlock.Category.IMAGEEXPLORER:
-                        let studentViewData = body[Fields.StudentViewData]
-                        let content = studentViewData[Fields.html].stringValue
-                        type = .html(content)
                     case CourseBlock.Category.Problem:
                         type = .problem
                     case .OOYALA:
@@ -259,7 +255,6 @@ open class CourseBlock {
         case Chapter = "chapter"
         case Course = "course"
         case HTML = "html"
-        case IMAGEEXPLORER = "image-explorer"
         case OOYALA = "ooyala-player"
         case Problem = "problem"
         case Section = "sequential"
