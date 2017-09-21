@@ -16,18 +16,21 @@ struct MCQResponse {
         static let value = "submission"
         static let status = "completed"
         static let tip = "tips"
+        static let message = "message"
     }
 
     let id: String
     let value: String
     let status: Bool
     let tip: String
+    let message: String?
     
-    init(id: String, value: String, status: Bool, tip: String) {
+    init(id: String, value: String, status: Bool, tip: String, message: String) {
         self.id = id
         self.value = value
         self.status = status
         self.tip = tip
+        self.message = message
     }
     init?(dictionary: [String: Any]) {
         guard let id = dictionary[Keys.id] as? String,
@@ -36,10 +39,13 @@ struct MCQResponse {
         let tip = dictionary[Keys.tip] as? String else {
             return nil
         }
+        let message = dictionary[Keys.message] as? String ?? ""
+        
         self.id = id
         self.value = value
         self.status = status
         self.tip = tip
+        self.message = message
     }
     
     init?(json: JSON) {
@@ -61,6 +67,7 @@ struct MCQAPI {
         static let tip = "tips"
         static let results = "results"
         static let status = "status"
+        static let message = "message"
     }
 
     static func deserializerResponse(_ response: HTTPURLResponse, json: JSON) -> Result<MCQResponse> {
@@ -74,10 +81,10 @@ struct MCQAPI {
         var id: String = ""
         var value: String = ""
         var tip: String = ""
-        
+        let message = json[Keys.message].stringValue
         guard let result = mcqResponse[Keys.results]?.arrayValue.first?.arrayValue,
             result.count >= 2  else {
-                let mcqResponseData = MCQResponse(id: id, value: value, status: questionCorrectStatus, tip: tip)
+                let mcqResponseData = MCQResponse(id: id, value: value, status: questionCorrectStatus, tip: tip, message: message)
                 return .success(mcqResponseData)
         }
         id = result[0].stringValue
@@ -86,7 +93,7 @@ struct MCQAPI {
         value = (optionResult[Keys.value]?.stringValue) ?? ""
         tip = (optionResult[Keys.value]?.stringValue) ?? ""
         
-        let mcqResponseData = MCQResponse(id: id, value: value, status: questionCorrectStatus, tip: tip)
+        let mcqResponseData = MCQResponse(id: id, value: value, status: questionCorrectStatus, tip: tip, message: message)
         return .success(mcqResponseData)
     }
     
