@@ -65,6 +65,7 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
     fileprivate lazy var webController : WebContentController = {
         let controller = UIWebViewContentController()
         controller.webView.delegate = self
+        controller.webView.scalesPageToFit = true
         return controller
     }()
     
@@ -186,7 +187,7 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
         loadController.state = .initial
         state = webController.initialContentState
         
-        if webController.alwaysRequiresOAuthUpdate && EVURLCache.storagePathForRequest(request) == nil {
+        if webController.alwaysRequiresOAuthUpdate /* && EVURLCache.storagePathForRequest(request) == nil */ {
             loadOAuthRefreshRequest()
         }
         else {

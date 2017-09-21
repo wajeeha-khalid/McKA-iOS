@@ -11,7 +11,7 @@ import UIKit
 struct ModuleViewModel {
     let identifier: CourseBlockID
     let title: String
-    let progress: ComponentProgressState
+    var progress: ComponentProgressState
     let duration: Int
     let number: Int
     
