@@ -68,8 +68,10 @@ open class WebViewLocalLoadingProtocol: URLProtocol {
             if let dic = NSDictionary(contentsOfFile: path) as? [String: String] {
                 let filepath = request.url?.relativePath ?? ""
                 
-                if dic[filepath] != nil {
-                    return true
+                for each in dic {
+                    if filepath.contains(each.key) {
+                        return true
+                    }
                 }
             }
         }
@@ -117,7 +119,14 @@ open class WebViewLocalLoadingProtocol: URLProtocol {
         }
         var urlPathString = urlPath.relativePath
         urlPathString = urlPathString.replacingOccurrences(of: "file://", with: "")
-        guard let resourseFilePath = Bundle.main.path(forResource: substitutionPath[urlPathString], ofType: urlPath.pathExtension) else {
+        var urlFilePath = ""
+        for each in substitutionPath {
+            if urlPathString.contains(each.key) {
+                urlFilePath = each.key
+            }
+        }
+
+        guard let resourseFilePath = Bundle.main.path(forResource: substitutionPath[urlFilePath], ofType: urlPath.pathExtension) else {
             client?.urlProtocol(self,
                                 didFailWithError: NSError(domain: "", code: 0, userInfo: nil))
             return nil

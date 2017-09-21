@@ -4,5 +4,7 @@
 <dict>
 	<key>/assets/mckenzie/template/compiled/layout/mckenzietemplate.css</key>
 	<string>template</string>
+	<key>/static/xblock/resources/image_explorer.image_explorer/public/css/image_explorer</key>
+	<string>imageExplorer</string>
 </dict>
 </plist>
