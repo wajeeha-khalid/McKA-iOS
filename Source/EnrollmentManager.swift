@@ -72,7 +72,6 @@ open class EnrollmentManager : NSObject {
                 } else {
                     return .failure(NSError.oex_unknownError())
                 }
-               // return enrollmentWithProgress?.enrollment.toResult()
             })
         }
         return courseStream
