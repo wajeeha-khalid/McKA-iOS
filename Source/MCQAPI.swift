@@ -81,7 +81,7 @@ struct MCQAPI {
         var id: String = ""
         var value: String = ""
         var tip: String = ""
-        let message = mcqResponse[Keys.message]?.stringValue ?? ""
+        let message = json[Keys.message].stringValue
         guard let result = mcqResponse[Keys.results]?.arrayValue.first?.arrayValue,
             result.count >= 2  else {
                 let mcqResponseData = MCQResponse(id: id, value: value, status: questionCorrectStatus, tip: tip, message: message)
