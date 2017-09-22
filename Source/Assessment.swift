@@ -40,7 +40,7 @@ public struct MCQ {
     
     init(json: JSON) {
         question = json["question"].stringValue
-        title = json["title"].stringValue
+        title = json["display_name"].stringValue
         var choiceToTipMap: [String: String] = [:]
         json["tips"].arrayValue.forEach { tip in
             for choiceID in tip["for_choices"].arrayValue where choiceID.string != nil {
@@ -54,6 +54,12 @@ public struct MCQ {
         id = json["id"].stringValue
         message = json["message"].string
         allowsMultipleSelection = json["type"].stringValue == "pb-mrq"
+    }
+}
+
+extension MCQ: Equatable {
+    public static func == (lhs: MCQ, rhs: MCQ) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
@@ -132,9 +138,6 @@ struct MRQEvaluator: Evaluator {
     }
 }
 
-
-
-
 public struct MultipleChoiceQuestion: MckinseyXBlocks.MultipleChoiceQuestion {
     public var choices: [MckinseyXBlocks.Choice] {
         return question.choices
@@ -184,15 +187,23 @@ public struct Assessment {
     public init(id: String, json: JSON) {
         self.id = id
         maximumAttempts = json["max_attempts"].intValue
-        let stepsJSON = json["components"].arrayValue
-            .filter {
-                $0.dictionaryValue["type"] == "sb-step"
-            }
-            .flatMap {
-            $0.dictionaryValue["components"]?.arrayValue.first
+        let stepsJSON = json["components"].arrayValue.filter {
+            $0["type"].string == "sb-step"
         }
-        questions = stepsJSON.map {
+        let questionJSON = stepsJSON.flatMap { json -> JSON? in
+            json["components"].arrayValue
+                .filter{ ["pb-mrq", "pb-mcq"]
+                    .contains($0["type"].stringValue)}.first
+            
+        }
+        questions = questionJSON.map {
             MCQ(json: $0)
+        }
+    }
+    
+    func indexOf(questionWithID questionID: String) -> Int? {
+        return questions.index {
+            $0.id == questionID
         }
     }
 }
@@ -201,7 +212,7 @@ public struct Assessment {
 struct AssessmentState {
     var numberOfAttemptsMade: Int
     let activeStep: Int?
-    let userResults: [Evaluated]
+    let userResults: [AssessmentComponentResult]
 }
 
 struct AssessmentStateAPI {
@@ -215,7 +226,7 @@ struct AssessmentStateAPI {
         
         let step = json["active_step"].intValue
         let components = json["components"].dictionaryValue
-        let results = components.flatMap { (_,componentJSON) -> Evaluated?  in
+        let results = components.flatMap { (_,componentJSON) -> AssessmentComponentResult?  in
             if let studentResults = componentJSON["student_results"].arrayValue.first?.arrayValue,
                 let id = studentResults.first?.string {
                 let resultDict = studentResults[1]
@@ -235,11 +246,18 @@ struct AssessmentStateAPI {
                     return nil
                 }
                
-                if let _ = resultDict["choices"].array{
-                    return MRQResult(questionId: id, submissionIds: [], evaluationResult: status)
+                if let choicesArray = resultDict["choices"].array {
+                    let choices = choicesArray.map { json in
+                        return MRQResult.SelctedChoice(
+                            completed: json["completed"].boolValue,
+                            selected: json["selected"].boolValue,
+                            value: json["value"].stringValue
+                        )
+                    }
+                    return AssessmentComponentResult.mrq(MRQResult(questionId: id, selectedChoices: choices, evaluationResult: status, message: resultDict["message"].stringValue))
                 } else  {
                     let submission = resultDict["submission"].stringValue
-                    return MCQResult(evaluationResult: status, questionId: id, submissionId: submission)
+                    return AssessmentComponentResult.mcq(MCQResult(evaluationResult: status, questionId: id, submissionId: submission, message: resultDict["message"].stringValue))
                 }
             } else {
                 return nil
@@ -355,7 +373,8 @@ public class AssessmentAdapter: MckinseyXBlocks.Assessment {
                     module.delegate = self.moduleDelegate
                     completion(.success(module))
                 } else {
-                    let module = AssessmentGradesViewController()
+                    let finalGrade = FinalGrade(results: state.userResults, assessment: self.assessment)
+                    let module = ReviewGradeViewController(grade: finalGrade)
                     completion(.success(module))
                 }
             }
