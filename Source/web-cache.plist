@@ -6,5 +6,7 @@
 	<string>template</string>
 	<key>/static/xblock/resources/image_explorer.image_explorer/public/css/image_explorer</key>
 	<string>imageExplorer</string>
+	<key>/static/css/lms-style-vendor</key>
+	<string>pollsurveys</string>
 </dict>
 </plist>
