@@ -3800,7 +3800,6 @@
 				BECB7B0D1924C0C3009C77F1 /* Frameworks */,
 				BECB7B0C1924C0C3009C77F1 /* Products */,
 				54A076344959CD5B33345034 /* Pods */,
-				411C06651F6BD92F002A5083 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
