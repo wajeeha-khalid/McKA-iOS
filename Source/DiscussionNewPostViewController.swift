@@ -51,7 +51,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     fileprivate let tapButton = UIButton()
     
     var titleTextStyle : OEXTextStyle{
-        return OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.neutralDark())
+        return OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralDark())
     }
     
     fileprivate var selectedThreadType: DiscussionThreadType = .Discussion {
@@ -229,7 +229,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
                 assert(true, "Invalid Segment ID, Remove this segment index OR handle it in the ThreadType enum")
             }
             } , for: UIControlEvents.valueChanged)
-        discussionQuestionSegmentedControl.tintColor = OEXStyles.shared.neutralDark()
+        discussionQuestionSegmentedControl.tintColor = UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)//OEXStyles.shared.neutralDark()
         discussionQuestionSegmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName: OEXStyles.shared.neutralWhite()], for: UIControlState.selected)
         discussionQuestionSegmentedControl.selectedSegmentIndex = 0
         
@@ -242,7 +242,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
             if (subView as? UIControl)?.isSelected == true {
                 subView.tintColor = OEXStyles.shared.primaryBaseColor()
             } else {
-                subView.tintColor = OEXStyles.shared.neutralDark()
+                subView.tintColor = UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)//OEXStyles.shared.neutralDark()
             }
         }
     }
@@ -273,7 +273,7 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
     fileprivate func setTopicsButtonTitle() {
         if let topic = selectedTopic, let name = topic.name {
             let title = Strings.topic(topic: name)
-            topicButton.setAttributedTitle(OEXTextStyle(weight : .normal, size: .small, color: OEXStyles.shared.neutralDark()).attributedString(withText: title), for: .normal)
+            topicButton.setAttributedTitle(OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralDark()).attributedString(withText: title), for: .normal)
         }
     }
     
