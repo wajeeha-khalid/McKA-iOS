@@ -26,15 +26,15 @@ private class StatusMessageView : UIView {
         messageLabel.numberOfLines = 0
         addSubview(messageLabel)
         
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         //always fill the view
         blurEffectView.frame = self.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.insertSubview(blurEffectView, belowSubview: messageLabel)
-        
-        self.backgroundColor = UIColor.clear
+        //TODO: Styles should be handled from OEXStyles.shared. We will control it later from OEXStyles.shared
+        self.backgroundColor = UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)//UIColor.clear
         messageLabel.attributedText = statusMessageStyle.attributedString(withText: message)
         messageLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(margin)

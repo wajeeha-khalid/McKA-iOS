@@ -118,14 +118,13 @@
     CGFloat pointSize = [[self class] pointSizeForTextSize:size];
     switch (weight) {
         case OEXTextWeightNormal:
-            return [[OEXStyles sharedStyles] sansSerifOfSize:pointSize] ?: [UIFont systemFontOfSize:pointSize];
+            return [UIFont systemFontOfSize:pointSize];
         case OEXTextWeightLight:
-            return [[OEXStyles sharedStyles] lightSansSerifOfSize:pointSize] ?: [UIFont systemFontOfSize:pointSize];
+            return [UIFont systemFontOfSize:pointSize];
         case OEXTextWeightSemiBold:
-           // return [[OEXStyles sharedStyles] semiBoldSansSerifOfSize:pointSize] ?: [UIFont boldSystemFontOfSize:pointSize];
-            return [[OEXStyles sharedStyles] semiBoldRaleWayOfSize:pointSize] ?: [UIFont boldSystemFontOfSize:pointSize]; // Added By Ravi.
+            return [UIFont boldSystemFontOfSize:pointSize];
         case OEXTextWeightBold:
-            return [[OEXStyles sharedStyles] boldSansSerifOfSize:pointSize] ?: [UIFont boldSystemFontOfSize:pointSize];
+            return [UIFont boldSystemFontOfSize:pointSize];
     }
 }
 

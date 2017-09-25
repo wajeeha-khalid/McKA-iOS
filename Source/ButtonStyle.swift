@@ -28,7 +28,9 @@ open class ButtonStyle : NSObject {
         button.setAttributedTitle(textStyle.attributedString(withText: text), for: .normal)
         button.applyBorderStyle(borderStyle ?? BorderStyle.clearStyle())
         // Use a background image instead of a backgroundColor so that it picks up a pressed state automatically
-        button.setBackgroundImage(backgroundColor.map { UIImage.oex_image(with: $0) }, for: UIControlState())
+        //button.setBackgroundImage(backgroundColor.map { UIImage.oex_image(with: $0) }, for: UIControlState())
+        button.setBackgroundColor(UIColor(red:0.15, green:0.56, blue:0.94, alpha:1), for: .normal)
+        button.setBackgroundColor(UIColor(red:0.76, green:0.81, blue:0.85, alpha:1), for: .disabled)
         button.contentEdgeInsets = contentInsets
         if let shadowStyle = shadow {
             button.layer.shadowColor = shadowStyle.color.cgColor
@@ -42,5 +44,15 @@ open class ButtonStyle : NSObject {
 extension UIButton {
     func applyButtonStyle(_ style : ButtonStyle, withTitle text : String?) {
         style.applyToButton(self, withTitle: text)
+    }
+    
+    func setBackgroundColor(_ color: UIColor, for state: UIControlState) {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0.0)
+        UIGraphicsGetCurrentContext()!.setFillColor(color.cgColor)
+        UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        self.setBackgroundImage(colorImage, for: state)
     }
 }
