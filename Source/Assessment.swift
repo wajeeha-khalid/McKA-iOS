@@ -184,14 +184,16 @@ public struct Assessment {
     public init(id: String, json: JSON) {
         self.id = id
         maximumAttempts = json["max_attempts"].intValue
-        let stepsJSON = json["components"].arrayValue
-            .filter {
-                $0.dictionaryValue["type"] == "sb-step"
-            }
-            .flatMap {
-            $0.dictionaryValue["components"]?.arrayValue.first
+        let stepsJSON = json["components"].arrayValue.filter {
+            $0["type"].string == "sb-step"
         }
-        questions = stepsJSON.map {
+        let questionJSON = stepsJSON.flatMap { json -> JSON? in
+            json["components"].arrayValue
+                .filter{ ["pb-mrq", "pb-mcq"]
+                    .contains($0["type"].stringValue)}.first
+            
+        }
+        questions = questionJSON.map {
             MCQ(json: $0)
         }
     }
