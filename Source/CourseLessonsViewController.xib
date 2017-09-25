@@ -22,6 +22,9 @@
             <connections>
                 <outlet property="StatsTopViewBackgroundImageView" destination="Xnf-JE-a4t" id="RBU-6x-HxR"/>
                 <outlet property="lessonsTableView" destination="CNs-ZN-ilR" id="rZ3-8w-RVQ"/>
+                <outlet property="progressBarView" destination="YMq-4r-Ka8" id="4WW-Cw-osF"/>
+                <outlet property="progressCohortAvgLabel" destination="Ble-6N-RQZ" id="apr-vC-JQZ"/>
+                <outlet property="progressPercentageLabel" destination="CAM-7b-gOw" id="Z83-76-uiP"/>
                 <outlet property="statsTopView" destination="HsU-60-eV8" id="HRk-5H-TjI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

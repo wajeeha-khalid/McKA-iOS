@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import edXCore
 
 var isActionTakenOnUpgradeSnackBar: Bool = false
 let brandingHeaderViewHeight:CGFloat = 50.0
@@ -20,7 +21,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
     fileprivate let loadController = LoadStateViewController()
     fileprivate let refreshController = PullRefreshController()
     fileprivate let insetsController = ContentInsetsController()
-    fileprivate let enrollmentFeed: Feed<[UserCourseEnrollment]?>
+    fileprivate let enrollmentFeed: Feed<[(UserCourseEnrollment, ProgressStats)]?>
     fileprivate let userPreferencesFeed: Feed<UserPreference?>
 
     init(environment: Environment) {
@@ -28,7 +29,6 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
         self.enrollmentFeed = environment.dataManager.enrollmentManager.feed
         self.userPreferencesFeed = environment.dataManager.userPreferenceManager.feed
         self.environment = environment
-        
         super.init(env: environment)
         self.navigationItem.title = Strings.myCourses
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
@@ -95,18 +95,19 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
             }
             
             switch result {
-            case let .success(enrollments):
-                if let enrollments = enrollments {
-                    self?.tableController.courses = enrollments.filter{$0.isActive}.flatMap { CourseViewModel(lessonCount: nil,  persistImage: true, course: $0.course) } 
-                    self?.tableController.tableView.reloadData()
-                    self?.loadController.state = .loaded
-                    if enrollments.count <= 0 {
-                        self?.enrollmentsEmptyState()
-                    }
+            case let .success(result?):
+                self?.tableController.courses = result.filter{ (enrollment, progress)  in
+                    enrollment.isActive
+                    }.flatMap { (enrollment, progress) in
+                    CourseViewModel(lessonCount: nil, progress: progress.progress,  persistImage: true, course: enrollment.course)
                 }
-                else {
-                    self?.loadController.state = .initial
+                self?.tableController.tableView.reloadData()
+                self?.loadController.state = .loaded
+                if result.count <= 0 {
+                    self?.enrollmentsEmptyState()
                 }
+            case .success:
+                self?.loadController.state = .initial
             case let .failure(error):
                 self?.loadController.state = LoadState.failed(error)
                 if error.errorIsThisType(NSError.oex_outdatedVersionError()) {
@@ -115,6 +116,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
             }
         }
     }
+
     
     /// Setup branding header view
     fileprivate func setupHeaderView() {

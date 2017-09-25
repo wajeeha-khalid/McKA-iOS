@@ -297,7 +297,7 @@
     NetworkRequestLoader *loader = [[NetworkRequestLoader alloc] initWithSession:[NSURLSession sharedSession]];
     CachedRequestLoader *cachedLoader = [[CachedRequestLoader alloc] initWithCache:[EVURLCache sharedURLCache] loader:loader];
     [WebViewLoadingProtocol setRequestLoader:cachedLoader];
-    [NSURLProtocol registerClass:[WebViewLoadingProtocol class]];
+//    [NSURLProtocol registerClass:[WebViewLoadingProtocol class]];
     
 }
 

@@ -24,6 +24,10 @@ extension ActionViewProvider where Self: XBlock {
     }
 }
 
+
+extension AssessmentViewController: ActionViewProvider {}
+
+
 extension MRQViewController: ActionViewProvider {
     
 }
@@ -112,6 +116,7 @@ extension CourseBlockDisplayType {
         case .video: return false
         case .mcq: return false
         case .mrq: return false
+        case .assessment: return false
         case .freeText: return false
         case .ooyalaVideo: return false
         case .audio: return false //Added By Ravi on 22Jan'17 to Implement AudioPodcast
@@ -203,13 +208,14 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
     ///Removes the ViewControllers from memory in case of a memory warning
     fileprivate let cacheManager : BlockViewControllerCacheManager
     var components : [CourseOutlineQuerier.BlockGroup]? = []
-
+    fileprivate var courseProgressStats: ProgressStats?
     
-    public init(environment : Environment, courseID : CourseBlockID, rootID : CourseBlockID?, sequentialID: CourseBlockID?, initialChildID: CourseBlockID? = nil) {
+    public init(environment : Environment, courseID : CourseBlockID, rootID : CourseBlockID?, sequentialID: CourseBlockID?, initialChildID: CourseBlockID? = nil, courseProgressStats: ProgressStats?) {
         self.environment = environment
         self.blockID = rootID
         self.sequentialID = sequentialID
         self.componentID = initialChildID
+        self.courseProgressStats = courseProgressStats
         courseQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
         initialLoadController = LoadStateViewController()
         cacheManager = BlockViewControllerCacheManager()
@@ -254,7 +260,17 @@ open class CourseContentPageViewController : UIViewController,UIPageViewControll
             })
         }.extendLifetimeUntilFirstResult { result in
             switch result {
-            case .success(let modules):
+            case .success(var modules):
+                if let modulesProgress = self.courseProgressStats?.modulesProgress {
+                    modules.enumerated().forEach({ (module: (offset: Int, element: ModuleViewModel)) in
+                        let filteredModule = modulesProgress.filter({ (moduleProgress) -> Bool in
+                            moduleProgress.blockID == module.element.identifier
+                        })
+                        if filteredModule.count > 0{
+                            modules[module.offset].progress = filteredModule.first!.componentProgress
+                        }
+                    })
+                }
                 
                 let moduleListViewController = ModuleTableViewController(lessonTitle: lessonTitle ?? "", modules: modules)
                 moduleListViewController.delegate = self
