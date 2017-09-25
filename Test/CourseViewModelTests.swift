@@ -23,19 +23,19 @@ class CourseViewModelTests: XCTestCase {
     
     func testFormattedLessonCountTextWhenCountIsNil() {
         let course = OEXCourse(dictionary: [:])
-        let courseModel = CourseViewModel(lessonCount: nil, persistImage: false, course: course)
+        let courseModel = CourseViewModel(lessonCount: nil, progress: .completed, persistImage: false, course: course)
         XCTAssertEqual(courseModel.formattedLessonCount, "fetching lesson count...")
     }
  
     func testFormattedLessonCountTextWhenCountIsMoreThanOne()  {
         let course = OEXCourse(dictionary: [:])
-        let courseModel = CourseViewModel(lessonCount: 2, persistImage: false, course: course)
+        let courseModel = CourseViewModel(lessonCount: 2, progress: .completed, persistImage: false, course: course)
         XCTAssertEqual(courseModel.formattedLessonCount, "2 Lessons")
     }
     
     func testFormattedLessonCountWhenCountIsOne() {
         let course = OEXCourse(dictionary: [:])
-        let courseModel = CourseViewModel(lessonCount: 1, persistImage: false, course: course)
+        let courseModel = CourseViewModel(lessonCount: 1, progress: .completed, persistImage: false, course: course)
         XCTAssertEqual(courseModel.formattedLessonCount, "1 Lesson")
     }
 }

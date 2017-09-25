@@ -36,10 +36,11 @@ class MockEnrollmentManager: EnrollmentManager {
         }
     }
     
-    override func freshFeedWithUsername(_ username: String, organizationCode: String?) -> Feed<[UserCourseEnrollment]> {
-        return Feed {[unowned self] in
+    override func freshFeedWithUsername(_ username: String, organizationCode: String?) -> Feed<[(UserCourseEnrollment,ProgressStats)]> {
+        fatalError("Implement this")
+       /* return Feed {[unowned self] in
             $0.backWithStream(self.enrollmentSink)
             return
-        }
+        } */
     }
 }
