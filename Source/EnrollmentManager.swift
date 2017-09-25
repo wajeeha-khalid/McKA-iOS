@@ -98,25 +98,22 @@ open class EnrollmentManager : NSObject {
     }
     
     func freshFeedWithUsername(_ username: String, organizationCode: String?) -> Feed<[(UserCourseEnrollment,ProgressStats)]> {
-        
-        
-        
         let request = CoursesAPI.getUserEnrollments(username, organizationCode: organizationCode)
         let enrollmentStream = networkManager.streamForRequest(request, persistResponse: true)
         let progressStream = networkManager.streamForRequest(CourseProgressAPI.getAllCoursesProgress(), persistResponse: true)
         
-        
         let combinedStream: edXCore.Stream<[(UserCourseEnrollment, ProgressStats)]> = joinStreams(enrollmentStream, progressStream).map { (enrollements, progress) in
-            
             //Done because of in-consistent number of elements returned in CourseEnrollments & CourseProgress from API
-            return enrollements.flatMap { enrollment -> (UserCourseEnrollment, ProgressStats)? in
+            return enrollements.map { enrollment -> (UserCourseEnrollment, ProgressStats) in
                 guard let courseProgress = progress.index(where: {
                     $0.courseID == enrollment.course.course_id
                 })
                 .map ({
                     progress[$0]
                 }) else {
-                        return nil
+                        return (
+                            enrollment, ProgressStats(courseID: enrollment.course.course_id!, earned: 0, possible: 0, ratio: 0.0)
+                        )
                 }
                 return (enrollment, courseProgress)
             }
