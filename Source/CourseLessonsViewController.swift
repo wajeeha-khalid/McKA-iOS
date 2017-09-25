@@ -261,7 +261,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
                 self.lessonsTableView.reloadData()
                 self.loadController.state = .loaded
             case .failure:
-                self.loadController.state = .initial
+                self.loadController.state = .loaded
                 break
             }
         })
