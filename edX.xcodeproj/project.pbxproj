@@ -134,6 +134,33 @@
 		416F09271F39DBF90074D32A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09261F39DBF90074D32A /* MediaPlayer.framework */; };
 		416F09291F39DC1B0074D32A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F09281F39DC1A0074D32A /* AVFoundation.framework */; };
 		416F092B1F39DC680074D32A /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416F092A1F39DC680074D32A /* JavaScriptCore.framework */; };
+		4179F6421F7992E3008EC6C7 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B716BA1F25FBA500AE5151 /* Kingfisher.framework */; };
+		4179F6431F7992E3008EC6C7 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B716BA1F25FBA500AE5151 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6441F7992F3008EC6C7 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; };
+		4179F6451F7992F3008EC6C7 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6461F7992FD008EC6C7 /* TZStackView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F101F2F1C6200D6A880 /* TZStackView.framework */; };
+		4179F6471F7992FD008EC6C7 /* TZStackView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F101F2F1C6200D6A880 /* TZStackView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6481F799307008EC6C7 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
+		4179F6491F799307008EC6C7 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F64A1F799312008EC6C7 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F141F2F1C6500D6A880 /* SnapKit.framework */; };
+		4179F64B1F799312008EC6C7 /* SnapKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F141F2F1C6500D6A880 /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F64C1F79931D008EC6C7 /* FontAwesome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */; };
+		4179F64D1F79931D008EC6C7 /* FontAwesome.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6501F79936B008EC6C7 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755111F4F33D30059B73A /* Pulley.framework */; };
+		4179F65D1F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6561F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework */; };
+		4179F65E1F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6561F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F65F1F7993C0008EC6C7 /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6571F7993C0008EC6C7 /* Pulley.framework */; };
+		4179F6601F7993C0008EC6C7 /* Pulley.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6571F7993C0008EC6C7 /* Pulley.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6611F7993C0008EC6C7 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6581F7993C0008EC6C7 /* Result.framework */; };
+		4179F6621F7993C0008EC6C7 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6581F7993C0008EC6C7 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6631F7993C0008EC6C7 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6591F7993C0008EC6C7 /* SnapKit.framework */; };
+		4179F6641F7993C0008EC6C7 /* SnapKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F6591F7993C0008EC6C7 /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6651F7993C0008EC6C7 /* ToastSwiftFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F65A1F7993C0008EC6C7 /* ToastSwiftFramework.framework */; };
+		4179F6661F7993C0008EC6C7 /* ToastSwiftFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F65A1F7993C0008EC6C7 /* ToastSwiftFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6671F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F65B1F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework */; };
+		4179F6681F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F65B1F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4179F6691F7993C0008EC6C7 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F65C1F7993C0008EC6C7 /* TTTAttributedLabel.framework */; };
+		4179F66A1F7993C0008EC6C7 /* TTTAttributedLabel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4179F65C1F7993C0008EC6C7 /* TTTAttributedLabel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		418BCB221F53F36C0058470E /* DrawerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418BCB211F53F36C0058470E /* DrawerAnimation.swift */; };
 		41A0FC9A1EF7B331004FE882 /* ContentNavigationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */; };
 		41A0FC9C1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */; };
@@ -623,7 +650,6 @@
 		94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */; };
 		9487550C1F4F33250059B73A /* MckinseyXBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */; };
 		948755101F4F33CE0059B73A /* DynamicOoyalaWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */; };
-		948755121F4F33D30059B73A /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755111F4F33D30059B73A /* Pulley.framework */; };
 		948755141F4F33D60059B73A /* TPKeyboardAvoidingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755131F4F33D60059B73A /* TPKeyboardAvoidingKit.framework */; };
 		94F2353E1F55A9AE00FE8339 /* FTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353D1F55A9AE00FE8339 /* FTManager.swift */; };
 		94F235401F55AA7800FE8339 /* FTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2353F1F55AA7800FE8339 /* FTAPI.swift */; };
@@ -977,8 +1003,21 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4179F66A1F7993C0008EC6C7 /* TTTAttributedLabel.framework in Embed Frameworks */,
 				411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */,
+				4179F6621F7993C0008EC6C7 /* Result.framework in Embed Frameworks */,
+				4179F6601F7993C0008EC6C7 /* Pulley.framework in Embed Frameworks */,
+				4179F6641F7993C0008EC6C7 /* SnapKit.framework in Embed Frameworks */,
+				4179F64D1F79931D008EC6C7 /* FontAwesome.framework in Embed Frameworks */,
+				4179F6471F7992FD008EC6C7 /* TZStackView.framework in Embed Frameworks */,
+				4179F6491F799307008EC6C7 /* SwiftyJSON.framework in Embed Frameworks */,
+				4179F64B1F799312008EC6C7 /* SnapKit.framework in Embed Frameworks */,
+				4179F6431F7992E3008EC6C7 /* Kingfisher.framework in Embed Frameworks */,
+				4179F6661F7993C0008EC6C7 /* ToastSwiftFramework.framework in Embed Frameworks */,
 				77E647CB1C90CA1400B6740D /* edXCore.framework in Embed Frameworks */,
+				4179F6681F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework in Embed Frameworks */,
+				4179F65E1F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework in Embed Frameworks */,
+				4179F6451F7992F3008EC6C7 /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1150,6 +1189,13 @@
 		416F09261F39DBF90074D32A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		416F09281F39DC1A0074D32A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		416F092A1F39DC680074D32A /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		4179F6561F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DynamicOoyalaWrapper.framework; path = "xblock-component-library-ios/Carthage/Build/iOS/DynamicOoyalaWrapper.framework"; sourceTree = "<group>"; };
+		4179F6571F7993C0008EC6C7 /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = "xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework"; sourceTree = "<group>"; };
+		4179F6581F7993C0008EC6C7 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = "xblock-component-library-ios/Carthage/Build/iOS/Result.framework"; sourceTree = "<group>"; };
+		4179F6591F7993C0008EC6C7 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "xblock-component-library-ios/Carthage/Build/iOS/SnapKit.framework"; sourceTree = "<group>"; };
+		4179F65A1F7993C0008EC6C7 /* ToastSwiftFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ToastSwiftFramework.framework; path = "xblock-component-library-ios/Carthage/Build/iOS/ToastSwiftFramework.framework"; sourceTree = "<group>"; };
+		4179F65B1F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TPKeyboardAvoidingKit.framework; path = "xblock-component-library-ios/Carthage/Build/iOS/TPKeyboardAvoidingKit.framework"; sourceTree = "<group>"; };
+		4179F65C1F7993C0008EC6C7 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = "xblock-component-library-ios/Carthage/Build/iOS/TTTAttributedLabel.framework"; sourceTree = "<group>"; };
 		418BCB211F53F36C0058470E /* DrawerAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerAnimation.swift; sourceTree = "<group>"; };
 		41A0FC991EF7B331004FE882 /* ContentNavigationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationPolicy.swift; sourceTree = "<group>"; };
 		41A0FC9B1EF7E7EC004FE882 /* ContentCompletionPolicyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCompletionPolicyTests.swift; sourceTree = "<group>"; };
@@ -2080,12 +2126,16 @@
 			files = (
 				776F39291B4EF4CD00ED11E3 /* WebKit.framework in Frameworks */,
 				416F092B1F39DC680074D32A /* JavaScriptCore.framework in Frameworks */,
+				4179F6481F799307008EC6C7 /* SwiftyJSON.framework in Frameworks */,
+				4179F65F1F7993C0008EC6C7 /* Pulley.framework in Frameworks */,
 				416F09291F39DC1B0074D32A /* AVFoundation.framework in Frameworks */,
 				416F09271F39DBF90074D32A /* MediaPlayer.framework in Frameworks */,
 				416F09251F39DBDF0074D32A /* libxml2.tbd in Frameworks */,
 				416F09231F39DBC90074D32A /* libc++.tbd in Frameworks */,
 				41D50F811F3F9176008DAAD7 /* MckinseyXBlocks.framework in Frameworks */,
 				416F09211F39DBA40074D32A /* MediaAccessibility.framework in Frameworks */,
+				4179F64C1F79931D008EC6C7 /* FontAwesome.framework in Frameworks */,
+				4179F6691F7993C0008EC6C7 /* TTTAttributedLabel.framework in Frameworks */,
 				41B716BB1F25FBA500AE5151 /* Kingfisher.framework in Frameworks */,
 				41B43F151F2F1C6500D6A880 /* SnapKit.framework in Frameworks */,
 				41B43F131F2F1C6300D6A880 /* SwiftyJSON.framework in Frameworks */,
@@ -2093,25 +2143,34 @@
 				9487550C1F4F33250059B73A /* MckinseyXBlocks.framework in Frameworks */,
 				805329121B0EA2DC0093B177 /* QuartzCore.framework in Frameworks */,
 				8F562F901A1F451600320DB3 /* CoreMotion.framework in Frameworks */,
+				4179F6421F7992E3008EC6C7 /* Kingfisher.framework in Frameworks */,
+				4179F6671F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework in Frameworks */,
 				41B43F171F2F1C6D00D6A880 /* FontAwesome.framework in Frameworks */,
+				4179F64A1F799312008EC6C7 /* SnapKit.framework in Frameworks */,
 				41B43F111F2F1C6200D6A880 /* TZStackView.framework in Frameworks */,
 				8F562F8E1A1F450A00320DB3 /* AssetsLibrary.framework in Frameworks */,
+				4179F6441F7992F3008EC6C7 /* Alamofire.framework in Frameworks */,
 				8F562F8C1A1F44FC00320DB3 /* AddressBook.framework in Frameworks */,
 				77E647A31C90C10300B6740D /* edXCore.framework in Frameworks */,
+				4179F6461F7992FD008EC6C7 /* TZStackView.framework in Frameworks */,
 				B4A24D0D19EE8A6600CE5010 /* CoreMedia.framework in Frameworks */,
+				4179F6611F7993C0008EC6C7 /* Result.framework in Frameworks */,
+				4179F65D1F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework in Frameworks */,
+				4179F6501F79936B008EC6C7 /* Pulley.framework in Frameworks */,
 				77ACA1CB1A323C2500039AD1 /* Fabric.framework in Frameworks */,
 				BE8163F61954244E00F9A2C5 /* MessageUI.framework in Frameworks */,
 				BE0EE28B192B78DA00F9FF98 /* libz.dylib in Frameworks */,
 				948755141F4F33D60059B73A /* TPKeyboardAvoidingKit.framework in Frameworks */,
 				77ACA1CA1A323C2500039AD1 /* Crashlytics.framework in Frameworks */,
-				948755121F4F33D30059B73A /* Pulley.framework in Frameworks */,
 				BE0EE289192B78CF00F9FF98 /* SystemConfiguration.framework in Frameworks */,
 				948755101F4F33CE0059B73A /* DynamicOoyalaWrapper.framework in Frameworks */,
 				BE0EE287192B78C400F9FF98 /* CoreTelephony.framework in Frameworks */,
 				BECB7B111924C0C3009C77F1 /* CoreGraphics.framework in Frameworks */,
+				4179F6651F7993C0008EC6C7 /* ToastSwiftFramework.framework in Frameworks */,
 				BECB7B131924C0C3009C77F1 /* UIKit.framework in Frameworks */,
 				BECB7B0F1924C0C3009C77F1 /* Foundation.framework in Frameworks */,
 				AC3180DF4EF22B254B87A773 /* libPods-edX.a in Frameworks */,
+				4179F6631F7993C0008EC6C7 /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3777,6 +3836,13 @@
 		BECB7B021924C0C3009C77F1 = {
 			isa = PBXGroup;
 			children = (
+				4179F6561F7993C0008EC6C7 /* DynamicOoyalaWrapper.framework */,
+				4179F6571F7993C0008EC6C7 /* Pulley.framework */,
+				4179F6581F7993C0008EC6C7 /* Result.framework */,
+				4179F6591F7993C0008EC6C7 /* SnapKit.framework */,
+				4179F65A1F7993C0008EC6C7 /* ToastSwiftFramework.framework */,
+				4179F65B1F7993C0008EC6C7 /* TPKeyboardAvoidingKit.framework */,
+				4179F65C1F7993C0008EC6C7 /* TTTAttributedLabel.framework */,
 				412FB57B1F7043FA00353072 /* Configs */,
 				411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */,
 				112CB1A61E41DB62001D4C29 /* AirshipConfig.plist */,
@@ -4254,7 +4320,6 @@
 				BECB7B081924C0C3009C77F1 /* Frameworks */,
 				BECB7B091924C0C3009C77F1 /* Resources */,
 				77E647AC1C90C10400B6740D /* Embed Frameworks */,
-				41B716BD1F25FD5400AE5151 /* ShellScript */,
 				226765FFAB67F99C5F10B3FC /* [CP] Embed Pods Frameworks */,
 				F9A04A4F5A13347689511D17 /* [CP] Copy Pods Resources */,
 			);
@@ -4730,31 +4795,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		41B716BD1F25FD5400AE5151 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/TZStackView.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FontAwesome.framework",
-				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Pulley.framework",
-				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TPKeyboardAvoidingKit.framework",
-				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/DynamicOoyalaWrapper.framework",
-				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/TTTAttributedLabel.framework",
-				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/Result.framework",
-				"$(SRCROOT)/xblock-component-library-ios/Carthage/Build/iOS/ToastSwiftFramework.framework",
 			);
 			outputPaths = (
 			);
