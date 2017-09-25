@@ -161,6 +161,7 @@ public struct CourseOutline {
                             type = .unknown(typeName)
                             continue
                         }
+                    // TODO: Need to remove when we are getting multi device true.
                     case CourseBlock.Category.Poll, CourseBlock.Category.Survey, CourseBlock.Category.ImageExplorer:
                         let studentViewData = body[Fields.StudentViewData]
                         let content = studentViewData[Fields.html].stringValue
