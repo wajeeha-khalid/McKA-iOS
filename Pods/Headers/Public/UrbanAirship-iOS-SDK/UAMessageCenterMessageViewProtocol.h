@@ -1,1 +1,0 @@
-../../../UrbanAirship-iOS-SDK/AirshipKit/AirshipKit/UAMessageCenterMessageViewProtocol.h
