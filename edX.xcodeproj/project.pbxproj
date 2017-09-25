@@ -27,7 +27,7 @@
 		114A30C01E56CD9F00EBCF6B /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B61E56CD9F00EBCF6B /* Icon-60@3x.png */; };
 		114A30C11E56CD9F00EBCF6B /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B71E56CD9F00EBCF6B /* Icon-76.png */; };
 		114A30C21E56CD9F00EBCF6B /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B81E56CD9F00EBCF6B /* Icon-76@2x.png */; };
-		118421FE1E4B310C00E3AD82 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		118421FE1E4B310C00E3AD82 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		181A99831E22888900ECDA75 /* round-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 181A99821E22888900ECDA75 /* round-pause-button.png */; };
 		1894051A1E33A22000AD6776 /* OEXAudioSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 189405191E33A22000AD6776 /* OEXAudioSummary.m */; };
 		1894051C1E34AB4500AD6776 /* CourseAudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1894051B1E34AB4500AD6776 /* CourseAudioTableViewCell.swift */; };
@@ -120,7 +120,7 @@
 		4105B7391F6AC83E00E0FC05 /* Assessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105B7381F6AC83E00E0FC05 /* Assessment.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
 		411C066D1F6BD960002A5083 /* HTMLStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411C066C1F6BD960002A5083 /* HTMLStyles.swift */; };
-		411E2C1D1F5FEFE000A73FAD /* ReferenceProxy in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		412FB5811F70440900353072 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 412FB5801F70440900353072 /* config.plist */; };
 		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
@@ -977,7 +977,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				411E2C1D1F5FEFE000A73FAD /* ReferenceProxy in Embed Frameworks */,
+				411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */,
 				77E647CB1C90CA1400B6740D /* edXCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -4253,7 +4253,6 @@
 				BECB7B071924C0C3009C77F1 /* Sources */,
 				BECB7B081924C0C3009C77F1 /* Frameworks */,
 				BECB7B091924C0C3009C77F1 /* Resources */,
-				77B4BAF31A52152A00B14C39 /* Upload Debugging Symbols */,
 				77E647AC1C90C10400B6740D /* Embed Frameworks */,
 				41B716BD1F25FD5400AE5151 /* ShellScript */,
 				226765FFAB67F99C5F10B3FC /* [CP] Embed Pods Frameworks */,
@@ -4792,20 +4791,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# copy config from app bundle to test bundle\n\nSOURCE=$BUILT_PRODUCTS_DIR/$TEST_TARGET_NAME.app/config.plist\nDEST=$TARGET_BUILD_DIR/$WRAPPER_NAME/config.plist\ncp $SOURCE $DEST";
 		};
-		77B4BAF31A52152A00B14C39 /* Upload Debugging Symbols */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Debugging Symbols";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION == 'Release' ]\nthen\n    ${SRCROOT}/gradlew uploadDebuggingSymbols --stacktrace --info\nfi";
-		};
 		77BFD8641BB637DB001D7BE5 /* Compile Localizations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5066,7 +5051,7 @@
 				77E647CE1C90CAB800B6740D /* NSAttributedString+OEXFormatting.m in Sources */,
 				E09B9D6B1D06C9700080BAE0 /* VersionUpgradeInfoController.swift in Sources */,
 				9E882B6A1BBA9825007347A2 /* DiscussionTopicCell.swift in Sources */,
-				118421FE1E4B310C00E3AD82 /* BuildFile in Sources */,
+				118421FE1E4B310C00E3AD82 /* (null) in Sources */,
 				B4B285ED1A9B429200DD603A /* OEXNetworkUtility.m in Sources */,
 				BE0D454A192DD4F800D720D6 /* OEXNetworkInterface.m in Sources */,
 				B419295E1A8A3F1900448AD5 /* OEXNetworkManager.m in Sources */,
