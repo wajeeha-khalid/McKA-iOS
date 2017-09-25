@@ -107,13 +107,10 @@ open class EnrollmentManager : NSObject {
             return enrollements.map { enrollment -> (UserCourseEnrollment, ProgressStats) in
                 guard let courseProgress = progress.index(where: {
                     $0.courseID == enrollment.course.course_id
-                })
-                .map ({
-                    progress[$0]
-                }) else {
-                        return (
-                            enrollment, ProgressStats(courseID: enrollment.course.course_id!, earned: 0, possible: 0, ratio: 0.0)
-                        )
+                }) .map ({
+                        progress[$0]
+                    }) else {
+                        return (enrollment, ProgressStats(courseID: enrollment.course.course_id!, earned: 0, possible: 0, ratio: 0.0))
                 }
                 return (enrollment, courseProgress)
             }
