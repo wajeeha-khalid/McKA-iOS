@@ -38,6 +38,7 @@
 #import "OEXRouter.h"
 #import "OEXSession.h"
 #import "OEXSegmentConfig.h"
+#import <Instabug/Instabug.h>
 
 @interface OEXAppDelegate () <UIApplicationDelegate>
 
@@ -190,6 +191,9 @@
     
     self.environment = [[OEXEnvironment alloc] init];
     [self.environment setupEnvironment];
+    
+    //Instabug
+    [Instabug startWithToken:@"f6c33cda31323c5633ac0d332e5a6d89" invocationEvent:IBGInvocationEventShake];
 
     OEXConfig* config = self.environment.config;
 
