@@ -9,7 +9,19 @@
 import Foundation
 import edXCore
 import SwiftyJSON
+import Alamofire
 
+extension Float {
+    var roundTo2f: Float {return Float(roundf(100*self)/100)}
+}
+
+public struct CourseProgressCompletion {
+    let completed: Bool
+    
+    init() {
+        completed = true
+    }
+}
 
 public struct ProgressStats {
     struct Fields {
@@ -43,7 +55,7 @@ public struct ProgressStats {
         self.lessonsProgress = lessonsProgress
         self.modulesProgress = modulesProgress
         self.blockID = blockID
-        let percentageRatio = Int(ratio * 100)
+        let percentageRatio = Int(ratio.roundTo2f * 100)
         switch percentageRatio {
         case 100:
             progress = .completed
@@ -128,7 +140,7 @@ struct CourseProgressAPI {
         static let modules = "vertical"
     }
     
-    static func allCoursesProgressResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<[ProgressStats]> {
+    static func allCoursesProgressResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> edXCore.Result<[ProgressStats]> {
         return .success(
             json[Fields.results].arrayValue.map { json  -> ProgressStats in
                 let courseID = json[Fields.courseKey].stringValue
@@ -141,9 +153,17 @@ struct CourseProgressAPI {
         )
     }
     
-    static func completeCourseProgressResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> Result<ProgressStats> {
+    static func completeCourseProgressResponseDeserializer(_ response: HTTPURLResponse, json: JSON) -> edXCore.Result<ProgressStats> {
         if let courseProgress = ProgressStats(json: json) {
             return .success(courseProgress)
+        } else {
+            return .failure(NSError())
+        }
+    }
+    
+    static func updateCourseProgressResponseDeserializer(_ response: HTTPURLResponse) -> edXCore.Result<CourseProgressCompletion> {
+        if response.statusCode == 200 || response.statusCode == 201 {
+            return .success(CourseProgressCompletion())
         } else {
             return .failure(NSError())
         }
@@ -167,4 +187,23 @@ struct CourseProgressAPI {
         )
     }
 
+    static func updateProgressRequestFor(courseId: String, blockId: String) -> NetworkRequest<CourseProgressCompletion> {
+        let path = "api/completion/v0/course/{course_id}/blocks/{block_id}/".oex_format(withParameters: ["course_id": courseId, "block_id": blockId])
+        let requestBody = ["completion": 1]
+        return NetworkRequest(method: .POST,
+                              path: path,
+                              requiresAuth: true,
+                              body: .jsonBody(JSON(requestBody)),
+                              deserializer: .noContent(updateCourseProgressResponseDeserializer))
+    }
+    
+    static func updateProgressFor(environment: RouterEnvironment, owner: NSObject, courseId: String, blockId: String) {
+        let updateProgressStream = environment.networkManager.streamForRequest(CourseProgressAPI.updateProgressRequestFor(courseId: courseId, blockId: blockId))
+        updateProgressStream.extendLifetimeUntilFirstResult { result in
+            result.ifSuccess { _ in
+            }
+            result.ifFailure { _ in
+            }
+        }
+    }
 }

@@ -21,7 +21,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CourseLessonsViewController" customModule="edX" customModuleProvider="target">
             <connections>
                 <outlet property="StatsTopViewBackgroundImageView" destination="Xnf-JE-a4t" id="RBU-6x-HxR"/>
+                <outlet property="engagmentBarView" destination="2Rz-Bd-615" id="FhR-wB-fLQ"/>
+                <outlet property="engagmentCohortAvgLabel" destination="Ayu-n9-9m6" id="D9P-do-qSg"/>
+                <outlet property="engagmentScoreLabel" destination="z6g-YR-tGE" id="Utx-Fv-y75"/>
                 <outlet property="lessonsTableView" destination="CNs-ZN-ilR" id="rZ3-8w-RVQ"/>
+                <outlet property="proficiencyBarView" destination="J44-sI-mCN" id="h9t-Ij-EIE"/>
+                <outlet property="proficiencyCohortAvgLabel" destination="JbJ-vj-3mm" id="ncD-uN-eTo"/>
+                <outlet property="proficiencyScoreLabel" destination="sdd-1k-4aV" id="9qH-dt-P1C"/>
                 <outlet property="progressBarView" destination="YMq-4r-Ka8" id="4WW-Cw-osF"/>
                 <outlet property="progressCohortAvgLabel" destination="Ble-6N-RQZ" id="apr-vC-JQZ"/>
                 <outlet property="progressPercentageLabel" destination="CAM-7b-gOw" id="Z83-76-uiP"/>
@@ -52,8 +58,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="29M-px-Lce" userLabel="Proficiency View">
                             <rect key="frame" x="0.0" y="0.0" width="125.5" height="128"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="79" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdd-1k-4aV">
-                                    <rect key="frame" x="15" y="24" width="45" height="43"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdd-1k-4aV">
+                                    <rect key="frame" x="15" y="24" width="24" height="43"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="36"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -64,13 +70,13 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 57" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JbJ-vj-3mm">
-                                    <rect key="frame" x="15" y="100" width="88.5" height="14"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JbJ-vj-3mm">
+                                    <rect key="frame" x="15" y="100" width="81.5" height="14"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.56999999284744263" translatesAutoresizingMaskIntoConstraints="NO" id="J44-sI-mCN">
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J44-sI-mCN">
                                     <rect key="frame" x="15" y="92" width="95" height="2"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="95" id="hb8-rk-9XF"/>
@@ -94,8 +100,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXk-jH-oZS" userLabel="My Progress View">
                             <rect key="frame" x="125.5" y="0.0" width="125" height="128"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAM-7b-gOw">
-                                    <rect key="frame" x="15.5" y="24" width="46" height="43"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAM-7b-gOw">
+                                    <rect key="frame" x="15.5" y="24" width="24" height="43"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="36"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -106,13 +112,13 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 74%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ble-6N-RQZ">
-                                    <rect key="frame" x="15.5" y="100" width="97.5" height="14"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ble-6N-RQZ">
+                                    <rect key="frame" x="15.5" y="100" width="91" height="14"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="YMq-4r-Ka8">
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YMq-4r-Ka8">
                                     <rect key="frame" x="15.5" y="92" width="95" height="2"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="95" id="NDJ-98-U68"/>
@@ -121,7 +127,7 @@
                                     <color key="trackTintColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
                                 </progressView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8M-3E-Un3">
-                                    <rect key="frame" x="61" y="36" width="24" height="28"/>
+                                    <rect key="frame" x="39" y="36" width="24" height="28"/>
                                     <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="24"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -144,8 +150,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a94-AL-Snq" userLabel="Engagment View">
                             <rect key="frame" x="250.5" y="0.0" width="125.5" height="128"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6g-YR-tGE">
-                                    <rect key="frame" x="15.5" y="24" width="24.5" height="43"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6g-YR-tGE">
+                                    <rect key="frame" x="15.5" y="24" width="24" height="43"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="36"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -156,13 +162,13 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ayu-n9-9m6">
-                                    <rect key="frame" x="15.5" y="100" width="80.5" height="14"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cohort Avg: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ayu-n9-9m6">
+                                    <rect key="frame" x="15.5" y="100" width="81.5" height="14"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="2Rz-Bd-615">
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Rz-Bd-615">
                                     <rect key="frame" x="15.5" y="92" width="95" height="2"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="95" id="ZjL-6Z-2uu"/>

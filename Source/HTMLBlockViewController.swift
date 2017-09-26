@@ -10,7 +10,7 @@ import UIKit
 
 open class HTMLBlockViewController: UIViewController, CourseBlockViewController, PreloadableBlockController {
     
-    public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & OEXSessionProvider
+    public typealias Environment = RouterEnvironment//OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & OEXSessionProvider
     
     open let courseID : String
     open var appDelegate : OEXAppDelegate
@@ -25,7 +25,7 @@ open class HTMLBlockViewController: UIViewController, CourseBlockViewController,
         self.courseID = courseID
         self.blockID = blockID
         
-        webController = CachedWebViewController(environment: environment, blockID: self.blockID)
+        webController = CachedWebViewController(environment: environment,courseID: courseID,blockID: self.blockID)
         courseQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
         appDelegate = UIApplication.shared.delegate as! OEXAppDelegate
         super.init(nibName : nil, bundle : nil)

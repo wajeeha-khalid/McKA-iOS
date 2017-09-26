@@ -15,7 +15,7 @@ private let StandardVideoAspectRatio : CGFloat = 0.6
 
 class VideoBlockViewController : UIViewController, CourseBlockViewController, OEXVideoPlayerInterfaceDelegate,GVRVideoPlayerInterfaceDelegate, StatusBarOverriding, InterfaceOrientationOverriding {
     
-    typealias Environment = DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider
+    typealias Environment = RouterEnvironment //DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider
     
     let environment : Environment
     let blockID : CourseBlockID?
@@ -200,6 +200,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
                     self.gvrTransitionView.isHidden = true
                     self.gvrVideoController.displayVRPlayerInStereoMode()
                     self.gvrVideoController.gvrVideoView?.play()
+                    CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: self.courseID, blockId: self.blockID!)
                 })
             } else {
                 
@@ -400,11 +401,13 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             //Added by Ravi on 24Feb'17 for smooth scrolling.
             DispatchQueue.main.async {
                 self.gvrVideoController.playVideo(for: video)
+                CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: self.courseID, blockId: self.blockID!)
             }
         }
         else
         {
             videoController.playVideo(for: video)
+            CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: courseID, blockId: blockID!)
         }
         
         
