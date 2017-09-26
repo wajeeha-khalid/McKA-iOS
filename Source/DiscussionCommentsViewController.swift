@@ -9,15 +9,15 @@
 import UIKit
 
 private var commentTextStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralDark())
+    return OEXTextStyle(weight: .normal, size: .large, color : OEXStyles.shared.neutralDark())
 }
 
 private var smallTextStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color : OEXStyles.shared.neutralDark())
+    return OEXTextStyle(weight: .normal, size: .large, color : OEXStyles.shared.neutralDark())
 }
 
 private var smallIconStyle : OEXTextStyle {
-    return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
+    return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralDark())
 }
 
 private let smallIconSelectedStyle = smallIconStyle.withColor(OEXStyles.shared.primaryBaseColor())
@@ -37,7 +37,7 @@ class DiscussionCommentCell: UITableViewCell {
     fileprivate let dateLabel = UILabel()
     
     fileprivate var endorsedTextStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.utilitySuccessBase())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.utilitySuccessBase())
     }
     
     fileprivate func setEndorsed(_ endorsed : Bool) {
@@ -274,14 +274,13 @@ class DiscussionCommentsViewController: UIViewController, UITableViewDataSource,
     //Since didSet doesn't get called from within initialization context, we need to set it with another variable.
     fileprivate var commentsClosed : Bool = false {
         didSet {
-            let styles = OEXStyles.shared
+            //TODO: Styles should be handled from OEXStyles.shared. We will control it later from OEXStyles.shared
+            addCommentButton.backgroundColor = commentsClosed ? UIColor(red:0.76, green:0.81, blue:0.85, alpha:1) : UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)
             
-            addCommentButton.backgroundColor = commentsClosed ? styles.neutralBase() : styles.primaryXDarkColor()
-            
-            let textStyle = OEXTextStyle(weight : .normal, size: .base, color: OEXStyles.shared.neutralWhite())
+            let textStyle = OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared.neutralWhite())
             let icon = commentsClosed ? Icon.closed : Icon.create
             let buttonText = commentsClosed ? Strings.commentsClosed : Strings.addAComment
-            let buttonTitle = NSAttributedString.joinInNaturalLayout([icon.attributedTextWithStyle(textStyle.withSize(.xSmall)), textStyle.attributedString(withText: buttonText)])
+            let buttonTitle = NSAttributedString.joinInNaturalLayout([icon.attributedTextWithStyle(textStyle.withSize(.small)), textStyle.attributedString(withText: buttonText)])
             
             addCommentButton.setAttributedTitle(buttonTitle, for: [])
             addCommentButton.isEnabled = !commentsClosed
