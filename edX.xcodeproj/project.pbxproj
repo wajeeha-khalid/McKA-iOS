@@ -646,6 +646,8 @@
 		944C79321F6937E50008753B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792D1F6937E50008753B /* Default.png */; };
 		944C79331F6937E50008753B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792E1F6937E50008753B /* Default@2x.png */; };
 		94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */; };
+		946E79E01F766AE9003B85BF /* EngagmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E79DF1F766AE9003B85BF /* EngagmentAPI.swift */; };
+		946E79E61F767F14003B85BF /* CourseProficiencyStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E79E51F767F14003B85BF /* CourseProficiencyStats.swift */; };
 		9487550C1F4F33250059B73A /* MckinseyXBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D50D961F4F27410004DE4A /* MckinseyXBlocks.framework */; };
 		948755101F4F33CE0059B73A /* DynamicOoyalaWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */; };
 		948755121F4F33D30059B73A /* Pulley.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948755111F4F33D30059B73A /* Pulley.framework */; };
@@ -1747,6 +1749,8 @@
 		944C792D1F6937E50008753B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		944C792E1F6937E50008753B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentPageViewController.swift; sourceTree = "<group>"; };
+		946E79DF1F766AE9003B85BF /* EngagmentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngagmentAPI.swift; sourceTree = "<group>"; };
+		946E79E51F767F14003B85BF /* CourseProficiencyStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseProficiencyStats.swift; sourceTree = "<group>"; };
 		9487550D1F4F33C10059B73A /* DynamicOoyalaWrapper.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = DynamicOoyalaWrapper.framework.dSYM; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework.dSYM; sourceTree = "<group>"; };
 		9487550F1F4F33CE0059B73A /* DynamicOoyalaWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DynamicOoyalaWrapper.framework; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework; sourceTree = "<group>"; };
 		948755111F4F33D30059B73A /* Pulley.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pulley.framework; path = Carthage/Build/iOS/Pulley.framework; sourceTree = "<group>"; };
@@ -3544,6 +3548,8 @@
 				94F2353D1F55A9AE00FE8339 /* FTManager.swift */,
 				94F2353F1F55AA7800FE8339 /* FTAPI.swift */,
 				94F3114B1F6D3954002E45C4 /* CourseProgressAPI.swift */,
+				946E79DF1F766AE9003B85BF /* EngagmentAPI.swift */,
+				946E79E51F767F14003B85BF /* CourseProficiencyStats.swift */,
 			);
 			name = XBlockManager;
 			sourceTree = "<group>";
@@ -5088,6 +5094,7 @@
 				118421FE1E4B310C00E3AD82 /* BuildFile in Sources */,
 				B4B285ED1A9B429200DD603A /* OEXNetworkUtility.m in Sources */,
 				BE0D454A192DD4F800D720D6 /* OEXNetworkInterface.m in Sources */,
+				946E79E61F767F14003B85BF /* CourseProficiencyStats.swift in Sources */,
 				B419295E1A8A3F1900448AD5 /* OEXNetworkManager.m in Sources */,
 				890D027F1967343A002CE7EC /* OEXCourseInfoCell.m in Sources */,
 				E0A2461D1D5CA6950066C766 /* LogoutApi.swift in Sources */,
@@ -5244,6 +5251,7 @@
 				77BC3E691AE0091400E51529 /* OEXPushNotificationProcessor.m in Sources */,
 				775E5A811BE1C88A0046B26B /* LiveObjectCache.swift in Sources */,
 				7EEE2F6A1E6D811800483959 /* DownloadController.swift in Sources */,
+				946E79E01F766AE9003B85BF /* EngagmentAPI.swift in Sources */,
 				77DC295E1ABC9D4400FAD22C /* NSObject+OEXReplaceNull.m in Sources */,
 				B4B6D6031A949EFC000F44E8 /* OEXRegistrationOption.m in Sources */,
 				5D43B1871B0C1F9200448B52 /* PostsViewController.swift in Sources */,

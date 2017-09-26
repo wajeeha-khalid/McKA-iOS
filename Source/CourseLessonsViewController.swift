@@ -163,7 +163,8 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     var downloadController  : DownloadController
     var lessonViewModel: [LessonViewModel] = []
     var courseProgressStats: ProgressStats?
-    fileprivate var courseProgressStatsStream: edXCore.Stream<ProgressStats>?
+    fileprivate var courseStatsStream: edXCore.Stream<(CourseEngagmentStats,CourseProficiencyStats)>?
+    fileprivate var courseProgressStatsStream: edXCore.Stream<(ProgressStats)>?
     
     @IBOutlet weak var lessonsTableView: UITableView!
     @IBOutlet weak var statsTopView: UIView!
@@ -171,6 +172,12 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     @IBOutlet weak var progressPercentageLabel: UILabel!
     @IBOutlet weak var progressBarView: UIProgressView!
     @IBOutlet weak var progressCohortAvgLabel: UILabel!
+    @IBOutlet weak var engagmentScoreLabel: UILabel!
+    @IBOutlet weak var engagmentCohortAvgLabel: UILabel!
+    @IBOutlet weak var engagmentBarView: UIProgressView!
+    @IBOutlet weak var proficiencyScoreLabel: UILabel!
+    @IBOutlet weak var proficiencyCohortAvgLabel: UILabel!
+    @IBOutlet weak var proficiencyBarView: UIProgressView!
     
     public init(environment: Environment, courseID: String, rootID : CourseBlockID?, lessonViewModelDataSource: LessonViewModelDataSource) {
         self.environment = environment
@@ -182,6 +189,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
         self.lessonViewModelDataSource = lessonViewModelDataSource
         super.init(env : environment)
         self.courseProgressStatsStream = getCourseProgressStatsStream()
+        self.courseStatsStream = getCourseStatsStream()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -241,6 +249,19 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     
     fileprivate func setupProgressListener() {
         self.courseProgressStatsStream?.listen(self, action: { (result) in
+            self.courseStatsStream?.listen(self, action: { (result) in
+                switch result {
+                case let .success((engagment, proficiency)):
+                    self.engagmentScoreLabel.text = String(engagment.score)
+                    self.engagmentBarView.setProgress(Float(engagment.score), animated: true)
+                    self.engagmentCohortAvgLabel.text = "Cohort Avg: \(engagment.courseAvg)"
+                    self.proficiencyScoreLabel.text = String(proficiency.courseGrade)
+                    self.proficiencyBarView.setProgress(Float(proficiency.courseGrade), animated: true)
+                    self.proficiencyCohortAvgLabel.text = "Cohort Avg: \(proficiency.cohortAvgGrade)"
+                case .failure:
+                    break
+                }
+            })
             
             switch result {
             case let .success(courseProgress):
@@ -351,8 +372,13 @@ extension CourseLessonsViewController {
 }
 
 extension CourseLessonsViewController {
-    func getCourseProgressStatsStream() -> edXCore.Stream<ProgressStats> {
-        let request = CourseProgressAPI.getProgressFor(courseId: self.courseID)
-        return self.environment.networkManager.streamForRequest(request, persistResponse: true)
+    func getCourseProgressStatsStream() -> edXCore.Stream<(ProgressStats)> {
+        return self.environment.networkManager.streamForRequest(CourseProgressAPI.getProgressFor(courseId: self.courseID), persistResponse: true)
+    }
+    
+    func getCourseStatsStream() -> edXCore.Stream<(CourseEngagmentStats,CourseProficiencyStats)> {
+        let engagmentStream = self.environment.networkManager.streamForRequest(CourseEngagmentAPI.getEngagementFor(username: self.environment.session.currentUser!.username!, courseId: self.courseID), persistResponse: true)
+        let proficiencyStream = self.environment.networkManager.streamForRequest(CourseProficiencyAPI.getProficiencyFor(username: self.environment.session.currentUser!.username!, courseId: self.courseID), persistResponse: true)
+        return joinStreams(engagmentStream, proficiencyStream)
     }
 }

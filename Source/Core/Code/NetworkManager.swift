@@ -333,13 +333,13 @@ open class NetworkManager : NSObject {
         let URLRequest = URLRequestWithRequest(networkRequest)
         let authenticator = self.authenticator
         let interceptors = jsonInterceptors
-        print ("Request is \(URLRequest)")
 
         let task = URLRequest.map {URLRequest -> NetworkTask in
             Logger.logInfo(NetworkManager.NETWORK, "Request is \(URLRequest)")
             let task: DataRequest = request(URLRequest)
             
             let dataResponseSerializer: DataResponseSerializer<DeserializationResult<Out>> = DataResponseSerializer(serializeResponse: { (request, response, data, error)  in
+               
                 switch authenticator?(response, data!) ?? .proceed {
                 case .proceed:
                     let result = NetworkManager.deserialize(networkRequest.deserializer, interceptors: interceptors, response: response, data: data, error: NetworkManager.unknownError)

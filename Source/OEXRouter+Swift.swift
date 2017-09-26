@@ -162,6 +162,9 @@ extension OEXRouter {
             if #available(iOS 9.0, *) {
                 let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: "5zdHcxOlM7fQJOMrCdwnnu16WP-d" , description: description)
                 player.play()
+                if let blockID = blockID {
+                   CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: courseID, blockId: blockID)
+                }
                 let adapter = CourseBlockViewControllerAdapter(blockID: blockID, courseID: courseID, adaptedViewController: player)
 
                 return adapter
