@@ -248,6 +248,7 @@ class DiscussionResponsesViewController: UIViewController, UITableViewDataSource
             footerStyle.attributedString(withText: text)])
         
         addResponseButton.setAttributedTitle(buttonTitle, for: [])
+        //TODO: Styles should be handled from OEXStyles.shared. We will control it later from OEXStyles.shared
         addResponseButton.backgroundColor = postClosed ? UIColor(red:0.76, green:0.81, blue:0.85, alpha:1) : UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)
         addResponseButton.isEnabled = !postClosed
         

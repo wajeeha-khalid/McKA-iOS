@@ -333,6 +333,7 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
             filterTextStyle.attributedString(withText: Strings.recentActivity)])
         sortButton.setAttributedTitle(buttonTitle, forState: [], animated : false)
         
+        //TODO: Styles should be handled from OEXStyles.shared. We will control it later from OEXStyles.shared
         newPostButton.backgroundColor = UIColor(colorLiteralRed:0.15, green:0.56, blue:0.94, alpha:1)
         
         let style = OEXTextStyle(weight : .normal, size: .large, color: styles.neutralWhite())

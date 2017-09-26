@@ -229,7 +229,8 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
                 assert(true, "Invalid Segment ID, Remove this segment index OR handle it in the ThreadType enum")
             }
             } , for: UIControlEvents.valueChanged)
-        discussionQuestionSegmentedControl.tintColor = UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)//OEXStyles.shared.neutralDark()
+        //TODO: Styles should be handled from OEXStyles.shared. We will control it later from OEXStyles.shared
+        discussionQuestionSegmentedControl.tintColor = UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)
         discussionQuestionSegmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName: OEXStyles.shared.neutralWhite()], for: UIControlState.selected)
         discussionQuestionSegmentedControl.selectedSegmentIndex = 0
         
@@ -242,7 +243,8 @@ open class DiscussionNewPostViewController: UIViewController, UITextViewDelegate
             if (subView as? UIControl)?.isSelected == true {
                 subView.tintColor = OEXStyles.shared.primaryBaseColor()
             } else {
-                subView.tintColor = UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)//OEXStyles.shared.neutralDark()
+                //TODO: Styles should be handled from OEXStyles.shared. We will control it later from OEXStyles.shared
+                subView.tintColor = UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)
             }
         }
     }

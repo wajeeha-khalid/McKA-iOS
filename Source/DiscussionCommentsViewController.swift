@@ -274,6 +274,7 @@ class DiscussionCommentsViewController: UIViewController, UITableViewDataSource,
     //Since didSet doesn't get called from within initialization context, we need to set it with another variable.
     fileprivate var commentsClosed : Bool = false {
         didSet {
+            //TODO: Styles should be handled from OEXStyles.shared. We will control it later from OEXStyles.shared
             addCommentButton.backgroundColor = commentsClosed ? UIColor(red:0.76, green:0.81, blue:0.85, alpha:1) : UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)
             
             let textStyle = OEXTextStyle(weight : .normal, size: .large, color: OEXStyles.shared.neutralWhite())
