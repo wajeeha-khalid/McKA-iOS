@@ -161,6 +161,14 @@ public struct CourseOutline {
                             type = .unknown(typeName)
                             continue
                         }
+                    case CourseBlock.Category.Poll:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .html(content)
+                    case CourseBlock.Category.Survey:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .html(content)
                     }
                 }
                 else {
@@ -263,7 +271,9 @@ open class CourseBlock {
         case ProblemBuilder = "problem-builder"
         case StepBuilder = "step-builder"
         case Discussion = "discussion-forum"
-        case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
+        case Audio = "audio"
+        case Poll = "poll"
+        case Survey = "survey"// Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
     open var type : CourseBlockType

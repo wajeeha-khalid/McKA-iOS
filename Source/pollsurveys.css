@@ -1,0 +1,225 @@
+section#course-content {
+    display: block;
+    width: 100%;
+    padding: 20px 15px;
+    margin-top: 0;
+}
+
+.poll-block{
+    color: #173b55;
+    font-family: 'Roboto', sans-serif;
+}
+
+.poll-block .poll-header {
+    display: none;
+}
+
+.poll-block form {
+    background-color: #fff;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 1px 1px 5px #bbb;
+    overflow: hidden;
+}
+
+.poll-block form .poll-answers{
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.poll-block form legend {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    display: block;
+    background-color: #2a90ee;
+    border-radius: 6px 6px 0 0;
+}
+
+.poll-block form legend p{
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px !important;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    padding-top: 20px;
+}
+
+.poll-block form .poll-input-container, .poll-answer-text{
+    border-bottom: 1px solid #ddd;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.poll-block form .poll-input-container{
+    padding-left: 20px;
+}
+
+.poll-block .poll-answer-text{
+    font-size: 14px;
+    color: #173b55;
+    font-weight: 400;
+}
+
+.poll-block form .input-main, .view-results-button-wrapper .view-results-button{
+    background-color: #2a90ee;
+    border-radius: 100px;
+    box-shadow: none;
+    border: 0;
+    color: #fff;
+    text-shadow: none;
+    font-weight: 600;
+    padding: 7px 30px;
+    height: 40px;
+    background-image: none;
+    margin-bottom: 15px;
+}
+
+.view-results-button-wrapper{
+    text-align: center !important;
+}
+
+.view-results-button-wrapper {
+    margin-top: 20px;
+}
+
+/*Poll Results*/
+
+.poll-results{
+    padding: 0;
+    margin: 0;
+}
+
+.poll-result{
+    margin-bottom:0 !important;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.poll-question p{
+    padding: 15px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    background-color: #2a90ee;
+    color: #fff;
+    margin-bottom: 0 !important;
+}
+
+.poll-result-input-container{
+    display: none !important;
+    visibility: hidden;
+}
+
+.percentage-gauge-container{
+    width: 100% !important;
+    padding: 15px 70px 15px 10px;
+    box-sizing: border-box
+}
+
+.poll-results.has-images .percentage-gauge-container{
+    width: 78% !important;
+}
+
+.percentage-gauge-container label{
+    color: #173b55;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.poll-percent-container{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.poll-results-wrapper .input-main{
+    display: none;
+    visibility: hidden;
+}
+
+.poll-answers-results{
+    border-radius: 0 0 6px 6px;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+.poll-answers-results li:last-child{
+    border-radius: 0 0 6px 6px;
+}
+
+.poll-answers-results li:last-child percentage-gauge-container{
+    border-radius: 0 0 6px 0;
+}
+
+.poll-image{
+    border-bottom: 1px solid #ddd;
+}
+
+.poll-answers-results .poll-image{
+    border-bottom: 0;
+}
+
+.poll-image > label{
+    margin-bottom: 0;
+}
+
+
+/*Surveys*/
+
+.survey-table .survey-row th.survey-question{
+    background-color: #2a90ee;
+    padding-bottom: 5px;
+    padding-top: 20px;
+}
+
+.survey-table .survey-row th.survey-question p{
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+}
+
+.pol-question{
+    display: block !important;
+}
+
+.survey-table .survey-row:first-child th.survey-question , .poll-question p{
+    border-radius: 6px 6px 0 0;
+}
+
+.survey-table .survey-option{
+    margin-bottom: 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #ddd !important;
+    border-radius: 0 !important;
+}
+
+.survey-table .survey-option label{
+    margin-bottom: 0;
+    padding: 18px 0 !important;
+}
+
+.survey-table .survey-option input{
+    height: 20px;
+    vertical-align: middle;
+}
+
+.survey-table .survey-option .visible-mobile-only{
+    width: calc(100% - 25px) !important;
+    font-size: 14px;
+}
+
+form .input-main {
+    margin-top: 15px;
+}
+
+input[type="button"]:disabled {
+    background-color: #c2cfd8;
+}
+
+.poll-results.survey-table{
+    border-right: 1px solid #ddd !important;
+    border-left: 1px solid #ddd !important;
+}

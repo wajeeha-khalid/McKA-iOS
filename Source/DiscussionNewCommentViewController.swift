@@ -269,7 +269,7 @@ open class DiscussionNewCommentViewController: UIViewController, UITextViewDeleg
         
         
         responseTextView.attributedText = responseTextViewStyle.markdownString(withText: context.renderedBody ?? "")
-        
+        //addCommentButton.backgroundColor = UIColor(red:0.76, green:0.81, blue:0.85, alpha:1)//addResponseButton.backgroundColor = postClosed ? UIColor(red:0.76, green:0.81, blue:0.85, alpha:1) : UIColor(red:0.15, green:0.56, blue:0.94, alpha:1)
         addCommentButton.applyButtonStyle(environment.styles.filledPrimaryButtonStyle, withTitle: buttonTitle)
         
         var attributes = [String: AnyObject]()
