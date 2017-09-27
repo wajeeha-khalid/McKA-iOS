@@ -173,7 +173,7 @@ class UserProfileView : UIView, UIScrollViewDelegate {
             messageLabel.attributedText = messageStyle.attributedString(withText: message)
         } else {
             messageLabel.isHidden = true
-            messageLabel.snp.updateConstraints({ (make) -> Void in
+            messageLabel.snp.makeConstraints({ (make) -> Void in
                 make.height.equalTo(0)
             })
 
