@@ -166,6 +166,7 @@ public struct CourseOutline {
                         let studentViewData = body[Fields.StudentViewData]
                         let content = studentViewData[Fields.html].stringValue
                         type = .html(content)
+                        multiDevice = true
                     }
                 }
                 else {

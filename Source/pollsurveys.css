@@ -219,7 +219,16 @@ input[type="button"]:disabled {
     background-color: #c2cfd8;
 }
 
-.poll-results.survey-table{
+.poll-results.survey-table .survey-option{
     border-right: 1px solid #ddd !important;
     border-left: 1px solid #ddd !important;
+    padding: 10px;
+}
+
+.survey-table .survey-percentage .visible-mobile-only{
+    width: calc(100% - 60px) !important;
+}
+
+.survey-percentage .percentage{
+    font-size: 14px;
 }
