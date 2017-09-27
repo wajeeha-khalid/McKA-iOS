@@ -1,6 +1,6 @@
 github "onevcat/Kingfisher" ~> 3.0
 github "Alamofire/Alamofire" ~> 4.4
 github "SnapKit/SnapKit" ~> 3.2.0
-github "thii/FontAwesome.swift"
+github "thii/FontAwesome.swift" == 1.2.0
 github "SwiftyJSON/SwiftyJSON"
 github "tomvanzummeren/TZStackView" ~> 1.2.0

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>API_HOST_URL</key>
-	<string>https://courses.qa.mckinsey.edx.org</string>
+	<string>https://courses.stage.mckinsey.edx.org</string>
 	<key>ENVIRONMENT_DISPLAY_NAME</key>
 	<string>PiQUE</string>
 	<key>FEEDBACK_EMAIL_ADDRESS</key>
@@ -13,7 +13,7 @@
 	<key>DISCUSSIONS_ENABLED</key>
 	<string>true</string>
 	<key>OAUTH_CLIENT_ID</key>
-	<string>80617b4047f690ad84fa</string>
+	<string>d2ca889d1aff63bdbcf4</string>
 	<key>AUTH_API_KEY</key>
 	<string>apikey</string>
 </dict>
