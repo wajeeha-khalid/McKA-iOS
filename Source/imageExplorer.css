@@ -1,0 +1,265 @@
+.image-explorer-description {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.image-explorer-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.image-explorer-wrapper img{
+    max-width: 100%;
+}
+
+.image-explorer-hotspot-reveal {
+    position: absolute;
+    background-color: rgba(42, 144, 238, 0.9) !important;
+    color: #000000;
+    left: 100%;
+    top: 25%;
+    z-index: 100;
+    display: none;
+    overflow-y: auto;
+    cursor: default;
+}
+
+.image-explorer-hotspot-content-wrapper {
+    color: #FFFFFF;
+    margin: 35px 15px 15px 15px;
+}
+
+.image-explorer-hotspot-reveal.active {
+    display: block;
+    opacity: 1;
+}
+
+.image-explorer-hotspot-reveal-header {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+}
+
+
+.image-explorer-wrapper div.image-explorer-hotspot {
+    background: url("/static/xblock/resources/image_explorer.image_explorer/public/images/hotspot-sprite.8e637638fd95.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    width: 41px;
+    height: 41px;
+    display: block;
+    text-decoration: none;
+    -webkit-transition: all 0.0s linear 0s;
+    -moz-transition: all 0.0s linear 0s;
+    transition: all 0.0s linear 0s;
+}
+
+div.image-explorer-hotspot a{
+    color: #FFFFFF;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.image-explorer-wrapper div.image-explorer-hotspot:hover {
+    background-position: 0 -43px
+}
+
+div.image-explorer-hotspot .image-explorer-hotspot-reveal .image-explorer-hotspot-reveal-header p {
+    margin: 10px 0 10px 20px;
+}
+
+.image-explorer-hotspot-reveal-body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
+
+.image-explorer-hotspot .image-explorer-hotspot-reveal .image-explorer-hotspot-reveal-body ul {
+    list-style-type: disc;
+}
+
+div.image-explorer-hotspot .image-explorer-hotspot-reveal .image-explorer-hotspot-reveal-body ul li {
+    margin: 0 0 24px 17px;
+}
+
+.image-explorer-close-reveal {
+    /* background: url("/static/xblock/resources/image_explorer.image_explorer/public/images/image-explorer-reveal-close.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); */
+    float: right;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-left: 20px;
+    color: #FFFFFF;
+    font-family: "fontawesome";
+    font-size: 18pt;
+    cursor: pointer;
+}
+
+.codemirror-editor-wrapper {
+    border-style: solid;
+    border-width: 1px;
+}
+
+.xblock-editor-error-message {
+    display: none;
+    padding-left: 10px;
+    color: red;
+}
+
+@media only screen and (max-width: 767px){
+    .image-explorer-wrapper div.image-explorer-hotspot{
+        background-size: 100%;
+        width: 16px;
+        height: 16px;
+    }
+    
+    .image-explorer-wrapper div.image-explorer-hotspot:hover{
+        background-position: 0 -17px;
+    }
+    
+    .image-explorer-hotspot-reveal{
+        right: 0;
+        left: 0;
+        top: 143px;
+        bottom: 10vh;
+        width: auto !important;
+        height: auto !important;
+        position: fixed;
+        overflow: auto;
+    }
+    
+        .image-explorer-description {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .image-explorer-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .image-explorer-wrapper img{
+            max-width: 100%;
+        }
+        
+        .image-explorer-hotspot-reveal {
+            position: absolute;
+            background-color: rgba(102, 165, 181, 0.90);
+            color: #000000;
+            left: 100%;
+            top: 25%;
+            z-index: 100;
+            display: none;
+            overflow-y: auto;
+            cursor: default;
+        }
+        
+        .image-explorer-hotspot-content-wrapper {
+            color: #FFFFFF;
+            margin: 35px 15px 15px 15px;
+        }
+        
+        .image-explorer-hotspot-reveal.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .image-explorer-hotspot-reveal-header {
+            font-family: "Open Sans", sans-serif;
+            font-size: 16px;
+        }
+        
+        
+        .image-explorer-wrapper div.image-explorer-hotspot {
+            background: url("/static/xblock/resources/image_explorer.image_explorer/public/images/hotspot-sprite.8e637638fd95.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+            width: 41px;
+            height: 41px;
+            display: block;
+            text-decoration: none;
+            -webkit-transition: all 0.0s linear 0s;
+            -moz-transition: all 0.0s linear 0s;
+            transition: all 0.0s linear 0s;
+        }
+        
+        div.image-explorer-hotspot a{
+            color: #FFFFFF;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        .image-explorer-wrapper div.image-explorer-hotspot:hover {
+            background-position: 0 -43px
+        }
+        
+        div.image-explorer-hotspot .image-explorer-hotspot-reveal .image-explorer-hotspot-reveal-header p {
+            margin: 10px 0 10px 20px;
+        }
+        
+        .image-explorer-hotspot-reveal-body {
+            font-family: "Open Sans", sans-serif;
+            font-size: 14px;
+        }
+        
+        .image-explorer-hotspot .image-explorer-hotspot-reveal .image-explorer-hotspot-reveal-body ul {
+            list-style-type: disc;
+        }
+        
+        div.image-explorer-hotspot .image-explorer-hotspot-reveal .image-explorer-hotspot-reveal-body ul li {
+            margin: 0 0 24px 17px;
+        }
+        
+        .image-explorer-close-reveal {
+            /* background: url("/static/xblock/resources/image_explorer.image_explorer/public/images/image-explorer-reveal-close.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0); */
+            float: right;
+            margin-right: 8px;
+            margin-top: 8px;
+            margin-left: 20px;
+            color: #FFFFFF;
+            font-family: "fontawesome";
+            font-size: 18pt;
+            cursor: pointer;
+        }
+        
+        .codemirror-editor-wrapper {
+            border-style: solid;
+            border-width: 1px;
+        }
+        
+        .xblock-editor-error-message {
+            display: none;
+            padding-left: 10px;
+            color: red;
+        }
+        
+        
+            .image-explorer-wrapper div.image-explorer-hotspot{
+                background-size: 100%;
+                width: 16px;
+                height: 16px;
+            }
+            
+            .image-explorer-wrapper div.image-explorer-hotspot:hover{
+                background-position: 0 -17px;
+            }
+            
+            .image-explorer-hotspot-reveal{
+                right: 0;
+                left: 0;
+                top: 143px;
+                bottom: 10vh;
+                width: auto !important;
+                height: auto !important;
+                position: fixed;
+                overflow: auto;
+                z-index: 99999;
+            }
+            
+            .image-explorer-hotspot-reveal iframe{
+                width: 100% !important;
+            }
+        
+    
+    
+    .image-explorer-hotspot-reveal iframe{
+        width: 100% !important;
+    }
+}
+
+.image-explorer-hotspot-reveal {
+    background-color: #2A90EE;
+}
