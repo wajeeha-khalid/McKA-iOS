@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-public typealias Environment = RouterEnvironment//OEXConfigProvider & OEXSessionProvider
+public typealias Environment = OEXConfigProvider & OEXSessionProvider & NetworkManagerProvider
 
 
 class UIWebViewContentController : WebContentController {

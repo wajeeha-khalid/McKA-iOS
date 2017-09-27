@@ -15,7 +15,7 @@ private let StandardVideoAspectRatio : CGFloat = 0.6
 
 class VideoBlockViewController : UIViewController, CourseBlockViewController, OEXVideoPlayerInterfaceDelegate,GVRVideoPlayerInterfaceDelegate, StatusBarOverriding, InterfaceOrientationOverriding {
     
-    typealias Environment = RouterEnvironment //DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider
+    typealias Environment = DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider & NetworkManagerProvider
     
     let environment : Environment
     let blockID : CourseBlockID?

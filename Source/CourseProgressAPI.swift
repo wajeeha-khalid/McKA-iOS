@@ -197,7 +197,7 @@ struct CourseProgressAPI {
                               deserializer: .noContent(updateCourseProgressResponseDeserializer))
     }
     
-    static func updateProgressFor(environment: RouterEnvironment, owner: NSObject, courseId: String, blockId: String) {
+    static func updateProgressFor(environment: NetworkManagerProvider, owner: NSObject, courseId: String, blockId: String) {
         let updateProgressStream = environment.networkManager.streamForRequest(CourseProgressAPI.updateProgressRequestFor(courseId: courseId, blockId: blockId))
         updateProgressStream.extendLifetimeUntilFirstResult { result in
             result.ifSuccess { _ in

@@ -38,12 +38,11 @@ public struct CourseProficiencyStats {
     }
     
     init?(json: JSON) {
-        let responseDic = json.dictionary
         var proficiencyDic: [String:Any] = [:]
-        proficiencyDic[Fields.courseGrade] = responseDic?[Fields.courseGrade]?.intValue
-        proficiencyDic[Fields.courseId] = responseDic?[Fields.courseId]?.stringValue
-        proficiencyDic[Fields.cohortAvgGrade] = responseDic?[Fields.cohortAvgGrade]?.intValue
-        proficiencyDic[Fields.username] = responseDic?[Fields.username]?.intValue
+        proficiencyDic[Fields.courseGrade] = json[Fields.courseGrade].intValue
+        proficiencyDic[Fields.courseId] = json[Fields.courseId].stringValue
+        proficiencyDic[Fields.cohortAvgGrade] = json[Fields.cohortAvgGrade].intValue
+        proficiencyDic[Fields.username] = json[Fields.username].intValue
         self.init(dictionary: proficiencyDic)
     }
 }

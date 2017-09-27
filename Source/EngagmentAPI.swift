@@ -30,10 +30,9 @@ public struct CourseEngagmentStats {
     }
     
     init?(json: JSON) {
-        let responseDic = json.dictionary
         var engagmentDic: [String:Int] = [:]
-        engagmentDic[Fields.score] = responseDic?[Fields.score]?.intValue
-        engagmentDic[Fields.courseAvg] = responseDic?[Fields.courseAvg]?.intValue
+        engagmentDic[Fields.score] = json[Fields.score].intValue
+        engagmentDic[Fields.courseAvg] = json[Fields.courseAvg].intValue
         self.init(dictionary: engagmentDic)
     }
 }
