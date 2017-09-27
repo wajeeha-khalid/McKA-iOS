@@ -121,7 +121,6 @@
 		4105B7391F6AC83E00E0FC05 /* Assessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105B7381F6AC83E00E0FC05 /* Assessment.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
 		411C066D1F6BD960002A5083 /* HTMLStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411C066C1F6BD960002A5083 /* HTMLStyles.swift */; };
-		411E2C1D1F5FEFE000A73FAD /* ReferenceProxy in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		412FB5811F70440900353072 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 412FB5801F70440900353072 /* config.plist */; };
 		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
@@ -164,6 +163,8 @@
 		5DD0FFD21B1D23DA00837121 /* DiscussionNewPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DD0FFD11B1D23DA00837121 /* DiscussionNewPostViewController.xib */; };
 		5DEA47D71B62F64300831EC9 /* DiscussionObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEA47D61B62F64300831EC9 /* DiscussionObjectModel.swift */; };
 		63049D1A1EE544DB00B9D18D /* MediaPlaybackDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63049D191EE544DB00B9D18D /* MediaPlaybackDecision.swift */; };
+		630BF9D01F7B9580008683D9 /* MckinseyXBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; };
+		630BF9D11F7B9580008683D9 /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		631B35201F1D1F3A00914C59 /* CourseLessonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B351E1F1D1F3A00914C59 /* CourseLessonsViewController.swift */; };
 		631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */; };
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
@@ -930,19 +931,19 @@
 			remoteGlobalIDString = 943A3D441F5EE38900B9BB3B;
 			remoteInfo = FreeTextClient;
 		};
-		411E2C1E1F5FEFE000A73FAD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 41E0C4F41F3B185E000D95AA;
-			remoteInfo = MckinseyXBlocks;
-		};
 		415F846E1F32EDCF004E54EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BECB7B031924C0C3009C77F1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = BECB7B0A1924C0C3009C77F1;
 			remoteInfo = edX;
+		};
+		630BF9D21F7B9580008683D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 411E2C0A1F5FEFB600A73FAD /* MckinseyXBlocks.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41E0C4F41F3B185E000D95AA;
+			remoteInfo = MckinseyXBlocks;
 		};
 		77E647991C90C10300B6740D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -981,18 +982,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				411E2C1D1F5FEFE000A73FAD /* ReferenceProxy in Embed Frameworks */,
-				63430EF91F7A411D00AA91A7 /* Result.framework in Embed Frameworks */,
-				63430EF71F7A411D00AA91A7 /* Pulley.framework in Embed Frameworks */,
-				63430EED1F7A40D300AA91A7 /* FontAwesome.framework in Embed Frameworks */,
-				63430EE71F7A40BD00AA91A7 /* TZStackView.framework in Embed Frameworks */,
-				63430EE91F7A40C500AA91A7 /* SwiftyJSON.framework in Embed Frameworks */,
-				63430EFD1F7A411D00AA91A7 /* TPKeyboardAvoidingKit.framework in Embed Frameworks */,
-				63430EEB1F7A40CD00AA91A7 /* SnapKit.framework in Embed Frameworks */,
-				63430EFF1F7A411D00AA91A7 /* TTTAttributedLabel.framework in Embed Frameworks */,
-				63430EFB1F7A411D00AA91A7 /* ToastSwiftFramework.framework in Embed Frameworks */,
-				63430EE31F7A40AD00AA91A7 /* Kingfisher.framework in Embed Frameworks */,
-				411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */,
+				630BF9D11F7B9580008683D9 /* MckinseyXBlocks.framework in Embed Frameworks */,
 				77E647CB1C90CA1400B6740D /* edXCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -2118,6 +2108,7 @@
 				8F562F8C1A1F44FC00320DB3 /* AddressBook.framework in Frameworks */,
 				77E647A31C90C10300B6740D /* edXCore.framework in Frameworks */,
 				B4A24D0D19EE8A6600CE5010 /* CoreMedia.framework in Frameworks */,
+				630BF9D01F7B9580008683D9 /* MckinseyXBlocks.framework in Frameworks */,
 				77ACA1CB1A323C2500039AD1 /* Fabric.framework in Frameworks */,
 				BE8163F61954244E00F9A2C5 /* MessageUI.framework in Frameworks */,
 				BE0EE28B192B78DA00F9FF98 /* libz.dylib in Frameworks */,
@@ -4285,7 +4276,7 @@
 			);
 			dependencies = (
 				77E647A21C90C10300B6740D /* PBXTargetDependency */,
-				411E2C1F1F5FEFE000A73FAD /* PBXTargetDependency */,
+				630BF9D31F7B9580008683D9 /* PBXTargetDependency */,
 			);
 			name = edX;
 			productName = edXVideoLocker;
@@ -5519,15 +5510,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		411E2C1F1F5FEFE000A73FAD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MckinseyXBlocks;
-			targetProxy = 411E2C1E1F5FEFE000A73FAD /* PBXContainerItemProxy */;
-		};
 		415F846F1F32EDCF004E54EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BECB7B0A1924C0C3009C77F1 /* edX */;
 			targetProxy = 415F846E1F32EDCF004E54EE /* PBXContainerItemProxy */;
+		};
+		630BF9D31F7B9580008683D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MckinseyXBlocks;
+			targetProxy = 630BF9D21F7B9580008683D9 /* PBXContainerItemProxy */;
 		};
 		77E6479A1C90C10300B6740D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
