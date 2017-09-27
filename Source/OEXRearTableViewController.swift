@@ -34,7 +34,6 @@ class OEXRearTableViewController : UITableViewController {
     
     @IBOutlet weak var profileCell: UITableViewCell!
     @IBOutlet var coursesLabel: UILabel!
-//    @IBOutlet var videosLabel: UILabel!
     //@IBOutlet var recentMediaLabel: UILabel!
     @IBOutlet var appSettingsLabel: UILabel!
     @IBOutlet var settingsLabel: UILabel!
@@ -68,7 +67,6 @@ class OEXRearTableViewController : UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(OEXRearTableViewController.dataAvailable(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_URL_RESPONSE), object: nil)
         
         coursesLabel.text = Strings.myCourses
-//        videosLabel.text = Strings.myMedia
         //recentMediaLabel.text = Strings.recentMedia
         appSettingsLabel.text = Strings.appSettings
         settingsLabel.text = Strings.mySettings
@@ -134,7 +132,6 @@ class OEXRearTableViewController : UITableViewController {
     
     fileprivate func setNaturalTextAlignment() {
         coursesLabel.textAlignment = .natural
-//        videosLabel.textAlignment = .natural
         //recentMediaLabel.textAlignment = .Natural
         appSettingsLabel.textAlignment = .natural
         settingsLabel.textAlignment = .natural
@@ -149,7 +146,6 @@ class OEXRearTableViewController : UITableViewController {
         userNameLabel.accessibilityLabel = userNameLabel.text
         userEmailLabel.accessibilityLabel = userEmailLabel.text
         coursesLabel.accessibilityLabel = coursesLabel.text
-//        videosLabel.accessibilityLabel = videosLabel.text
         //recentMediaLabel.accessibilityLabel = recentMediaLabel.text
         appSettingsLabel.accessibilityLabel = appSettingsLabel.text
         settingsLabel.accessibilityLabel = settingsLabel.text
@@ -163,7 +159,6 @@ class OEXRearTableViewController : UITableViewController {
         let RearTableFont = UIFont.init(name: "Raleway-Medium", size: 16)
         
         coursesLabel.font = RearTableFont
-//        videosLabel.font = RearTableFont
         //recentMediaLabel.font = UIFont.init(name: "Raleway-Medium", size: 16)
         appSettingsLabel.font = RearTableFont
         settingsLabel.font = RearTableFont
@@ -206,8 +201,6 @@ class OEXRearTableViewController : UITableViewController {
                 environment.router?.showProfileForUsername(username: currentUserName)
             case .myCourse:
                 environment.router?.showMyCourses()
-//            case .myMedia:
-//                environment.router?.showMyVideos()
             //case .RecentMedia:
               //  environment.router?.showMyVideos()
             case .appSettings:
