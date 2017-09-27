@@ -121,7 +121,7 @@
 		4105B7391F6AC83E00E0FC05 /* Assessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105B7381F6AC83E00E0FC05 /* Assessment.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
 		411C066D1F6BD960002A5083 /* HTMLStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411C066C1F6BD960002A5083 /* HTMLStyles.swift */; };
-		411E2C1D1F5FEFE000A73FAD /* ReferenceProxy in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		412FB5811F70440900353072 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 412FB5801F70440900353072 /* config.plist */; };
 		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
