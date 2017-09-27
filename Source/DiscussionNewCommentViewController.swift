@@ -132,19 +132,19 @@ open class DiscussionNewCommentViewController: UIViewController, UITextViewDeleg
     }
     
     fileprivate var responseTitleStyle : OEXTextStyle {
-        return OEXTextStyle(weight : .normal, size : .large, color : OEXStyles.shared.neutralXDark())
+        return OEXTextStyle(weight : .normal, size : .xLarge, color : OEXStyles.shared.neutralXDark())
     }
     
     fileprivate var answerLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .small, color: OEXStyles.shared.utilitySuccessBase())
+        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.utilitySuccessBase())
     }
     
     fileprivate var responseTextViewStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .base, color: OEXStyles.shared.neutralDark())
+        return OEXTextStyle(weight: .normal, size: .large, color: OEXStyles.shared.neutralDark())
     }
     
     fileprivate var personTimeLabelStyle : OEXTextStyle {
-        return OEXTextStyle(weight: .normal, size: .xxSmall, color: OEXStyles.shared.neutralBase())
+        return OEXTextStyle(weight: .normal, size: .xSmall, color: OEXStyles.shared.neutralBase())
     }
     
     override open func viewDidLoad() {

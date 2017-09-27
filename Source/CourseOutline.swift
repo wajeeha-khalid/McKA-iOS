@@ -161,6 +161,12 @@ public struct CourseOutline {
                             type = .unknown(typeName)
                             continue
                         }
+                    // TODO: Need to remove when we are getting multi device true.
+                    case CourseBlock.Category.Poll, CourseBlock.Category.Survey, CourseBlock.Category.ImageExplorer:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .html(content)
+                        multiDevice = true
                     }
                 }
                 else {
@@ -263,7 +269,10 @@ open class CourseBlock {
         case ProblemBuilder = "problem-builder"
         case StepBuilder = "step-builder"
         case Discussion = "discussion-forum"
-        case Audio = "audio"    // Added by Ravi on 18/01/17 to implement Audio Podcasts.
+        case Audio = "audio"
+        case Poll = "poll"
+        case Survey = "survey"
+        case ImageExplorer = "image-explorer"// Added by Ravi on 18/01/17 to implement Audio Podcasts.
     }
     
     open var type : CourseBlockType

@@ -21,8 +21,13 @@ pod 'GVRSDK', '~>1.20.0'
 pod 'DownloadButton'
 pod 'UrbanAirship-iOS-SDK'
 pod 'MBCircularProgressBar'
+<<<<<<< HEAD
 pod 'SMFloatingLabelTextField'
 pod 'Instabug'
+=======
+pod 'Instabug'
+pod 'SMFloatingLabelTextField'
+>>>>>>> master
 end
 
 target 'edXTests' do

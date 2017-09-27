@@ -55,7 +55,7 @@ class DiscussionHelper: NSObject {
     }
     
     class func styleAuthorDetails(_ author: String?, authorLabel: String?, createdAt: Date?, hasProfileImage: Bool, imageURL: String?, authoNameLabel: UILabel, dateLabel: UILabel, authorButton: UIButton, imageView: UIImageView, viewController: UIViewController, router: OEXRouter?) {
-        let textStyle = OEXTextStyle(weight:.normal, size:.base, color: OEXStyles.shared.neutralXDark())
+        let textStyle = OEXTextStyle(weight:.normal, size:.large, color: OEXStyles.shared.neutralXDark())
         // formate author name
         let highlightStyle = OEXMutableTextStyle(textStyle: textStyle)
         if let _ = author, OEXConfig.shared().profilesEnabled {

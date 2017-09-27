@@ -13,18 +13,24 @@ Building
 ========
 1. Install Carthage, if you don't have it. (`brew install carthage`)
 1. Install CocoaPods, if you don't have it. (`brew install cocoapods`)
-1. Check out the source code:
+1. Check out the source code. Please do a recursive clone since we are using XBlock library as a submodule:
     
     ```
-    git clone git@github.com:mckinseyacademy/PiQUE-iOS.git
+    git clone --recursive git@github.com:mckinseyacademy/PiQUE-iOS.git
+    or if you already have cloned the repo non recursively
+    cd PiQUE-iOS
+    git submodule update --init --recursive
     ```
 
-1. Install the required frameworks using Carthage:
+1. Install the required frameworks using Carthage. (Install Carthage dependencies seperately for both the main app and
+   XBlock submodule):
 
     ```
     cd PiQUE-iOS
-    carthage update
+    carthage update --platform iOS
     pod install
+    cd xblock-component-library-ios
+    carthage update --platform iOS
     ```
 
 1. Launch the workspace: `open edX.xcworkspace` (Important: always open the .xcworkspace

@@ -13,7 +13,7 @@ private let StandardVideoAspectRatio : CGFloat = 0.6
 
 class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAudioPlayerInterfaceDelegate, StatusBarOverriding, InterfaceOrientationOverriding {
 
-    typealias Environment = DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider
+    typealias Environment = DataManagerProvider & OEXInterfaceProvider & ReachabilityProvider & NetworkManagerProvider
     
     let environment : Environment
     let blockID : CourseBlockID?
@@ -250,8 +250,8 @@ class AudioBlockViewController: UIViewController,CourseBlockViewController,OEXAu
             self.loadController.state = .loaded
         }
         
-    audioController.playAudio(for: audio!)
-        
+        audioController.playAudio(for: audio!)
+        CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: courseID, blockId: blockID!)
         
     }
     
