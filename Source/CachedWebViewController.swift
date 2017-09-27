@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-public typealias Environment = OEXConfigProvider & OEXSessionProvider
+public typealias Environment = OEXConfigProvider & OEXSessionProvider & NetworkManagerProvider
 
 
 class UIWebViewContentController : WebContentController {
@@ -56,7 +56,8 @@ class UIWebViewContentController : WebContentController {
 open class CachedWebViewController: UIViewController, UIWebViewDelegate {
 
     open let blockID: CourseBlockID?
-
+    open let courseID: String
+    
     internal let environment : Environment
     fileprivate let loadController : LoadStateViewController
     fileprivate let insetsController : ContentInsetsController
@@ -76,9 +77,10 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
         return contentRequest?.url
     }
     
-    public init(environment : Environment, blockID: CourseBlockID?) {
+    public init(environment : Environment, courseID: String, blockID: CourseBlockID?) {
         self.environment = environment
         self.blockID = blockID
+        self.courseID = courseID
         
         loadController = LoadStateViewController()
         insetsController = ContentInsetsController()
@@ -212,7 +214,8 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
             }
         case .loadingContent:
             loadController.state = .loaded
-
+            CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: self.courseID, blockId: self.blockID!)
+            
             if let url = contentRequest?.url?.absoluteString, let source = webView.stringByEvaluatingJavaScript(from: "document.documentElement.outerHTML"), (url.contains("type@chat") || url.range(of: "i4x://.*/chat/", options: .regularExpression) != nil) {
 
                 if source.contains(">COMPLETE<") || source.contains(">Complete<") {
