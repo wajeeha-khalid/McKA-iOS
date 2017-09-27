@@ -25,10 +25,10 @@ class BrandingHeaderView: UIView {
         brandingLogoImageView.image = UIImage(named: companyBrandingLogo)
         brandingLogoImageView.contentMode = .center
         brandingLogoImageView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
+            maker.top.equalTo(15)
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
-            maker.bottom.equalToSuperview()
+            maker.bottom.equalTo(0)
         }
     }
     
