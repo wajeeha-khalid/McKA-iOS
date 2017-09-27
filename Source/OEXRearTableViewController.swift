@@ -56,7 +56,7 @@ class OEXRearTableViewController : UITableViewController {
         updateUIWithUserInfo()
        
         let environmentName = "McKA"//self.environment.config.environmentName()
-        let appVersion = "0.8"//Bundle.main.oex_buildVersionString()
+        let appVersion = Bundle.main.oex_shortVersionString()
         appVersionButton.setAttributedTitle(versionButtonStyle.attributedString(withText: Strings.versionDisplay(number: appVersion, environment: environmentName)), for:.normal)
         appVersionButton.accessibilityTraits = UIAccessibilityTraitStaticText
         
