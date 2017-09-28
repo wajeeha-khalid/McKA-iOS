@@ -309,6 +309,7 @@ open class CourseOutlineQuerier : NSObject {
             // combine the html blocks followed by video blocks
             if case .unit = block.type {
                 childBlocks  = combineDescriptionBlocksFollowedByVideoBlocks(from: childBlocks)
+                childBlocks = swapRawHTMLAndFreeTextPositions(from: childBlocks)
             }
             
             if childBlocks.count > 0  {
@@ -355,6 +356,22 @@ open class CourseOutlineQuerier : NSObject {
         })
     }
     
+    func swapRawHTMLAndFreeTextPositions(from blocks: [CourseBlock]) -> [CourseBlock] {
+        var swappedBlocks = blocks
+        for (index, block) in blocks.enumerated() {
+            if case .freeText(_) = block.type {
+                if index < blocks.count - 1 {
+                    if case .html (_) = blocks[index + 1].type {
+                        swappedBlocks[index] = blocks[index + 1]
+                        swappedBlocks[index + 1] = blocks[index]
+                    }
+                }
+            }
+        }
+        
+        return swappedBlocks
+        
+    }
     
     fileprivate func flatMapRootedAtBlockWithID<A>(_ id : CourseBlockID, inOutline outline : CourseOutline, transform : (CourseBlock) -> [A], accumulator : inout [A]) {
         if let block = self.blockWithID(id, inOutline: outline) {
