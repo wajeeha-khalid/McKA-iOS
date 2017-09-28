@@ -428,7 +428,7 @@ extension OEXRouter {
         showContentStack(withRootController: debugMenu, animated: true)
     }
     
-    func showMenuAlert(controller: UIViewController, courseId: String) {
+    func showMenuAlert(controller: UIViewController, courseId: String, sourceView: UIView) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let announcementsButton = UIAlertAction(title: "Announcements", style: .default, handler: { (action) -> Void in
@@ -462,6 +462,12 @@ extension OEXRouter {
         alertController.addAction(discussions)
         alertController.addAction(cancelButton)
         
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = sourceView
+            popoverController.sourceRect = CGRect(x: sourceView.bounds.midX, y: sourceView.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+
         controller.present(alertController, animated: true, completion: nil)
     }
 }

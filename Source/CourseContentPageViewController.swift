@@ -808,7 +808,7 @@ extension CourseContentPageViewController {
     }
     
     @objc fileprivate func showMenu()  {
-        environment.router?.showMenuAlert(controller: self, courseId: self.courseID)
+        environment.router?.showMenuAlert(controller: self, courseId: self.courseID, sourceView: self.view)
     }
 }
 
