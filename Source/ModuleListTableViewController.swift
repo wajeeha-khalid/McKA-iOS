@@ -54,6 +54,15 @@ final class ModuleTableHeaderView: UIView {
             make.bottom.equalTo(self).inset(ModuleListOffsets.headerVerticalOffset)
         }
         
+        let collapseImageView = UIImageView(image: UIImage(named: "ic.CollapseOverlay"))
+        addSubview(collapseImageView)
+        collapseImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.top.equalTo(self).offset(10.0)
+            make.width.equalTo(35.0)
+            make.height.equalTo(11.0)
+        }
+        
         let seperatorView = UIView()
         self.addSubview(seperatorView)
         seperatorView.backgroundColor = UIColor.lightGray
