@@ -60,15 +60,17 @@ struct MCQResult: Evaluated, Equatable {
 
 struct MRQSelectedChoice: MckinseyXBlocks.MRQSelectedChoice {
     let selected: Bool
-    let result: SelectionResult
+    let correct: Bool
     let description: Statement
     let tip: Statement
+    let optionViewImage: UIImage?
     
-    init(selected: Bool, result: SelectionResult, description: Statement, tip: Statement) {
+    init(selected: Bool, correct: Bool, description: Statement, tip: Statement, optionViewImage: UIImage?) {
         self.selected = selected
-        self.result = result
+        self.correct = correct
         self.description = description
         self.tip = tip
+        self.optionViewImage = optionViewImage
     }
 }
 
@@ -78,14 +80,38 @@ struct MCQResultAdapter: MckinseyXBlocks.MRQResult{
     let title: String
     let selectedChoices: [MckinseyXBlocks.MRQSelectedChoice]
     
-    /*init(question: MCQ, result: MCQResult) {
+    init(question: MCQ, result: MCQResult) {
         self.statement = NSAttributedString(styled: question.question.styled(with: questionTemplate)) ?? NSAttributedString(string: question.question)
         self.message = NSAttributedString(styled: result.message.styled(with: questionTemplate), textAlignment: .center, color: UIColor(red:0.45, green:0.56, blue:0.65, alpha:1)) ?? NSAttributedString(string: result.message)
         self.title = question.title ?? ""
-        let selectedChoice = MRQSelectedChoice(
-            selected: true,
-            result: result., description: <#T##Statement#>, tip: <#T##Statement#>)
-    }*/
+        
+        guard let choice = question.choices.filter ({
+            $0.value == result.submissionId
+        }).first else {
+            fatalError("Could not find the selected choice in question")
+        }
+        
+        let correct: Bool = { 
+            if case .correct = result.evaluationResult {
+                return true
+            } else {
+                return false
+            }
+        }()
+        let tipColor = correct ? UIColor(red:0.38, green:0.61, blue:0.17, alpha:1) : UIColor(red:1, green:0.08, blue:0.24, alpha:1)
+        selectedChoices = [
+            MRQSelectedChoice(
+                selected: true,
+                correct: correct,
+                description: choice.content,
+                tip: NSAttributedString(
+                    styled: choice.tip.styled(with: questionTemplate),
+                    textAlignment: .left,
+                    color: tipColor) ?? NSAttributedString(string: choice.tip),
+                optionViewImage: correct ? Images.correctImage : Images.incorrectImage
+            )
+        ]
+    }
 }
 
 struct MRQResultAdapter: MckinseyXBlocks.MRQResult {
@@ -102,11 +128,16 @@ struct MRQResultAdapter: MckinseyXBlocks.MRQResult {
             question.choices.filter {
                 $0.value == choice.value
                 }.first.map {
-                    MRQSelectedChoice(
+                    let tipColor = choice.completed ? UIColor(red:0.38, green:0.61, blue:0.17, alpha:1) : UIColor(red:1, green:0.08, blue:0.24, alpha:1)
+                    return MRQSelectedChoice(
                         selected: choice.selected,
-                        result: choice.completed ? .correct : .incorrect,
+                        correct: choice.completed,
                         description: $0.content,
-                        tip: NSAttributedString(styled: $0.tip.styled(with: questionTemplate), textAlignment: .justified, color: .black) ?? NSAttributedString(string: $0.tip)
+                        tip: NSAttributedString(
+                            styled: $0.tip.styled(with: questionTemplate),
+                            textAlignment: .justified,
+                            color: tipColor) ?? NSAttributedString(string: $0.tip),
+                        optionViewImage: choice.selected ? Images.mrqSelectedImage : Images.mrqUnSelectedImage
                     )
             }
         }
@@ -128,73 +159,5 @@ struct MRQResult: Evaluated, Equatable {
     
     static func == (lhs: MRQResult, rhs: MRQResult) -> Bool {
         return lhs.questionId == rhs.questionId
-    }
-}
-
-final class FinalGrade: GradeProtocol {
-    
-    let correct: [QuestionLink]
-    let incorrect: [QuestionLink]
-    let partiallyCorrect: [QuestionLink]
-    let modules: [Module]
-    let score: Float
-    
-    init(results: [AssessmentComponentResult], assessment: Assessment) {
-        
-        let sorted = results.sorted { (lhs, rhs) -> Bool in
-            assessment.indexOf(questionWithID: lhs.questionID)! < assessment.indexOf(questionWithID: rhs.questionID)!
-        }.enumerated()
-        
-        modules = sorted.flatMap { (offset, result) in
-            switch result {
-            case .mcq:
-                return MCQResultModule()
-            case .mrq(let result):
-                return MRQResultModule(
-                    result: MRQResultAdapter(
-                        question: assessment.questions[offset],
-                        result: result
-                    ),
-                    selectedImage: StaticImages.mrqSelectedImage,
-                    unselectedImage: StaticImages.mrqUnSelectedImage
-                )
-            }
-        }
-        
-        correct = sorted.filter { (offset, result) in
-            if case .correct = result.evaluationResult {
-                return true
-            }
-            return false
-            }.map { (offset, _) in
-                QuestionLink(title: "Question \(offset + 1)", index: offset)
-         }
-        
-        incorrect = sorted.filter { (offset, result) in
-            if case .incorrect = result.evaluationResult {
-                return true
-            }
-            return false
-            }.map { (offset, _) in
-                QuestionLink(title: "Question \(offset + 1)", index: offset)
-        }
-        
-        partiallyCorrect = sorted.filter { (offset, result) in
-            if case .partiallyCorrect = result.evaluationResult {
-                return true
-            }
-            return false
-            }.map { (offset, _) in
-                QuestionLink(title: "Question \(offset + 1)", index: offset)
-        }
-        
-        let obtained = results.reduce(Float(0)) {
-            return $0 + $1.evaluationResult.score
-        }
-        score = (obtained * 100) / Float(results.count)
-    }
-    
-    func makeCursor(startingAt link: QuestionLink) -> QuestionLinkCursor {
-        return ArrayCursor(modules: modules, startingAt: link.index)
     }
 }
