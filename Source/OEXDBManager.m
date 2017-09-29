@@ -1050,7 +1050,11 @@ static OEXDBManager* _sharedManager = nil;
     NSMutableArray *compIDs = [NSMutableArray new];
     NSArray *resultArray = [self executeFetchRequest:fetchRequest];
     for (ComponentData *compData in resultArray) {
-        [compIDs addObject:compData.componentID];
+        if (compData.componentID != nil) {
+            //TODO: We need to find out the root cause of why this can be nil. Currently we are not supporting offline so
+            // we are going with this hack for now...
+            [compIDs addObject:compData.componentID];
+        }
     }
     return compIDs;
 }
