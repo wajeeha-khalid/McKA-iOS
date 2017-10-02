@@ -180,8 +180,22 @@ class BottomDrawerViewController: UIViewController {
         gestureRecognizer.delegate = self
         modalPresentationStyle = .custom
         transitioningDelegate = self
+        
+        let collapseButton = UIButton()
+        collapseButton.setImage(UIImage(named: "ic.CollapseOverlay"), for: .normal)
+        collapseButton.addTarget(self, action: #selector(self.collapseTapped(_:)), for: .touchUpInside)
+        view.addSubview(collapseButton)
+        collapseButton.snp.makeConstraints { make in
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(self.view).offset(10.0)
+            make.width.equalTo(35.0)
+            make.height.equalTo(11.0)
+        }
     }
     
+    @objc private func collapseTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @objc private func handleSwipe(_ sender: UISwipeGestureRecognizer) {
         dismiss(animated: true, completion: nil)
