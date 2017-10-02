@@ -168,6 +168,7 @@
 		631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */; };
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
 		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
+		634A0C7D1F8249D300B8BF8D /* OyalaPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634A0C7C1F8249D300B8BF8D /* OyalaPlayerManager.swift */; };
 		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
 		63D0F5C91F51E6CC005F56BE /* MCQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5C81F51E6CC005F56BE /* MCQManager.swift */; };
 		63D0F5CB1F51F62B005F56BE /* MRQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CA1F51F62B005F56BE /* MRQManager.swift */; };
@@ -1192,6 +1193,7 @@
 		631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonsViewController.xib; sourceTree = "<group>"; };
 		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
 		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
+		634A0C7C1F8249D300B8BF8D /* OyalaPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OyalaPlayerManager.swift; sourceTree = "<group>"; };
 		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
 		63D0F5C81F51E6CC005F56BE /* MCQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCQManager.swift; sourceTree = "<group>"; };
 		63D0F5CA1F51F62B005F56BE /* MRQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRQManager.swift; sourceTree = "<group>"; };
@@ -2494,6 +2496,7 @@
 				63D0F5CC1F51F7D2005F56BE /* XBlock API */,
 				63D0F5C81F51E6CC005F56BE /* MCQManager.swift */,
 				63D0F5CA1F51F62B005F56BE /* MRQManager.swift */,
+				634A0C7C1F8249D300B8BF8D /* OyalaPlayerManager.swift */,
 			);
 			name = "XBlock Managers";
 			sourceTree = "<group>";
@@ -5220,6 +5223,7 @@
 				9C9B7F731A8CC80E00A857B2 /* OEXURLSessionManager.m in Sources */,
 				199627A71945D95D0022C489 /* OEXFrontTableViewCell.m in Sources */,
 				9EB9C5251BAFEE9F00300E55 /* OEXDateFormatting+Swift.swift in Sources */,
+				634A0C7D1F8249D300B8BF8D /* OyalaPlayerManager.swift in Sources */,
 				1913DD3D194B267000573977 /* OEXDownloadViewController.m in Sources */,
 				7764597F1A096339008404CC /* NSString+OEXEncoding.m in Sources */,
 				77BC3E691AE0091400E51529 /* OEXPushNotificationProcessor.m in Sources */,
