@@ -4332,8 +4332,10 @@
 				BECB7B081924C0C3009C77F1 /* Frameworks */,
 				BECB7B091924C0C3009C77F1 /* Resources */,
 				77E647AC1C90C10400B6740D /* Embed Frameworks */,
-				226765FFAB67F99C5F10B3FC /* [CP] Embed Pods Frameworks */,
-				F9A04A4F5A13347689511D17 /* [CP] Copy Pods Resources */,
+				849A7D1B624AE43BFD49BB8D /* [CP] Embed Pods Frameworks */,
+				FA083CB872BEE065AEF9BB21 /* [CP] Copy Pods Resources */,
+				41B716BD1F25FD5400AE5151 /* ShellScript */,
+				41A654BE1F82853100052E98 /* Upload Debugging Symbols */,
 			);
 			buildRules = (
 			);
@@ -4816,7 +4818,21 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		6FABA6DBBD3CA8D356C820FD /* [CP] Check Pods Manifest.lock */ = {
+		41A654BE1F82853100052E98 /* Upload Debugging Symbols */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debugging Symbols";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#--- SCRIPT BEGIN ---\n# SKIP_SIMULATOR_BUILDS=1\nSCRIPT_SRC=$(find \"$PROJECT_DIR\" -name 'Instabug_dsym_upload.sh' | head -1)\nif [ ! \"${SCRIPT_SRC}\" ]; then\necho \"Instabug: err: script not found. Make sure that you're including Instabug.bundle in your project directory\"\nexit 1\nfi\nAPP_TOKEN=\"f6c33cda31323c5633ac0d332e5a6d89\"\nsource \"${SCRIPT_SRC}\"\n#--- SCRIPT END ---";
+		};
+		41B716BD1F25FD5400AE5151 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
