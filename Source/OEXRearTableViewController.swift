@@ -252,11 +252,13 @@ class OEXRearTableViewController : UITableViewController {
 
 extension OEXRearTableViewController : MFMailComposeViewControllerDelegate {
 
+//     body footer - Academy for Mobile, Version X.YZ, iOS
     static func supportEmailMessageTemplate() -> String {
+        let mobileAcademyText = "Academy for Mobile"
         let osVersionText = Strings.SubmitFeedback.osVersion(version: UIDevice.current.systemVersion)
         let appVersionText = Strings.SubmitFeedback.appVersion(version: Bundle.main.oex_shortVersionString(), build: Bundle.main.oex_buildVersionString())
         let deviceModelText = Strings.SubmitFeedback.deviceModel(model: UIDevice.current.model)
-        let body = ["\n", Strings.SubmitFeedback.marker, osVersionText, appVersionText, deviceModelText].joined(separator: "\n")
+        let body = ["\n", Strings.SubmitFeedback.marker, mobileAcademyText, osVersionText, appVersionText].joined(separator: "\n")
         return body
     }
 
