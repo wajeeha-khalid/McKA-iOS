@@ -182,7 +182,7 @@ extension OEXRouter {
             // it would take some time to fix those warnigns so for now i have wrapped the framework
             // usage around iOS 9.0 availability
             if #available(iOS 9.0, *) {
-                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: "5zdHcxOlM7fQJOMrCdwnnu16WP-d" , description: description)
+                let player = OyalaPlayerViewController(contentID: contentID, domain: "https://secure-cf-c.ooyala.com", pcode: "5zdHcxOlM7fQJOMrCdwnnu16WP-d" , description: description, oyalaPlayerDelegate:OyalaPlayerManager())
                 player.play()
                 if let blockID = blockID {
                    CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: courseID, blockId: blockID)
