@@ -162,10 +162,21 @@ public struct CourseOutline {
                             continue
                         }
                     // TODO: Need to remove when we are getting multi device true.
-                    case CourseBlock.Category.Poll, CourseBlock.Category.Survey, CourseBlock.Category.ImageExplorer:
+                    case CourseBlock.Category.Poll:
                         let studentViewData = body[Fields.StudentViewData]
                         let content = studentViewData[Fields.html].stringValue
-                        type = .html(content)
+                        type = .poll(content)
+                        multiDevice = true
+                    
+                    case CourseBlock.Category.Survey:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .survey(content)
+                        multiDevice = true
+                    case CourseBlock.Category.ImageExplorer:
+                        let studentViewData = body[Fields.StudentViewData]
+                        let content = studentViewData[Fields.html].stringValue
+                        type = .imageExplorer(content)
                         multiDevice = true
                     }
                 }
@@ -220,6 +231,9 @@ public enum CourseBlockType {
     case ooyalaVideo(contentID: String, playerCode: String, htmlDescription: String?)
     case problem
     case html(String)
+    case poll(String)
+    case survey(String)
+    case imageExplorer(String)
     case discussion(DiscussionModel)
     case audio(OEXAudioSummary)// Added by Ravi on 18/01/17 to implement Audio Podcasts.
     

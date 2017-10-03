@@ -10,7 +10,7 @@ import UIKit
 
 open class HTMLBlockViewController: UIViewController, CourseBlockViewController, PreloadableBlockController {
     
-    public typealias Environment = RouterEnvironment//OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & OEXSessionProvider
+    public typealias Environment = OEXAnalyticsProvider & OEXConfigProvider & DataManagerProvider & OEXSessionProvider & NetworkManagerProvider
     
     open let courseID : String
     open var appDelegate : OEXAppDelegate
@@ -20,16 +20,20 @@ open class HTMLBlockViewController: UIViewController, CourseBlockViewController,
     
     fileprivate let loader = BackedStream<CourseBlock>()
     fileprivate let courseQuerier : CourseOutlineQuerier
+    let type: CourseBlockDisplayType
+    fileprivate let environment: Environment
     
-    public init(blockID : CourseBlockID?, courseID : String, environment : Environment) {
+    public init(blockID : CourseBlockID?, courseID : String, environment : Environment, type: CourseBlockDisplayType) {
         self.courseID = courseID
         self.blockID = blockID
-        
-        webController = CachedWebViewController(environment: environment,courseID: courseID,blockID: self.blockID)
+        self.type = type
+        self.environment = environment
+        webController = CachedWebViewController(environment: environment,blockID: self.blockID)
         courseQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
         appDelegate = UIApplication.shared.delegate as! OEXAppDelegate
         super.init(nibName : nil, bundle : nil)
         
+        webController.contentLoadDelegate = self
         addChildViewController(webController)
         webController.didMove(toParentViewController: self)
     }
@@ -108,4 +112,18 @@ open class HTMLBlockViewController: UIViewController, CourseBlockViewController,
 		}) 
 		UserDefaults.standard.set(true, forKey: "Unit FTUE")
 	}
+}
+
+extension HTMLBlockViewController: CachedWebViewControllerContentLoadDelegate {
+    public func contentLoaded() {
+        switch type {
+        case .html:
+            CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: self.courseID, blockId: self.blockID!)
+        case .imageExplorer:
+            CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: self.courseID, blockId: self.blockID!)
+        default:
+            break
+        }
+        
+    }
 }

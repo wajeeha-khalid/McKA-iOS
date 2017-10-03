@@ -138,6 +138,30 @@ class CourseOutlineTableController : UITableViewController, CourseVideoTableView
             let cell = tableView.dequeueReusableCell(withIdentifier: CourseProblemTableViewCell.identifier, for: indexPath) as! CourseProblemTableViewCell
             cell.block = block
             return cell
+        case .poll(.base):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseHTMLTableViewCell.identifier, for: indexPath) as! CourseHTMLTableViewCell
+            cell.block = block
+            return cell
+        case .poll(.problem):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseProblemTableViewCell.identifier, for: indexPath) as! CourseProblemTableViewCell
+            cell.block = block
+            return cell
+        case .survey(.base):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseHTMLTableViewCell.identifier, for: indexPath) as! CourseHTMLTableViewCell
+            cell.block = block
+            return cell
+        case .survey(.problem):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseProblemTableViewCell.identifier, for: indexPath) as! CourseProblemTableViewCell
+            cell.block = block
+            return cell
+        case .imageExplorer(.base):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseHTMLTableViewCell.identifier, for: indexPath) as! CourseHTMLTableViewCell
+            cell.block = block
+            return cell
+        case .imageExplorer(.problem):
+            let cell = tableView.dequeueReusableCell(withIdentifier: CourseProblemTableViewCell.identifier, for: indexPath) as! CourseProblemTableViewCell
+            cell.block = block
+            return cell
         case .unknown:
             let cell = tableView.dequeueReusableCell(withIdentifier: CourseUnknownTableViewCell.identifier, for: indexPath) as! CourseUnknownTableViewCell
             cell.block = block

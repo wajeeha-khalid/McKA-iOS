@@ -15,12 +15,12 @@ import MckinseyXBlocks
 // We should gradually migrate the existing router class here and then
 // get rid of the objc version
 
-enum CourseHTMLBlockSubkind {
+public enum CourseHTMLBlockSubkind {
     case base
     case problem
 }
 
-enum CourseBlockDisplayType {
+public enum CourseBlockDisplayType {
     case unknown
     case outline
     case lesson
@@ -34,6 +34,9 @@ enum CourseBlockDisplayType {
     case freeText(FreeText)
     case mrq(MCQ)
     case assessment(Assessment)
+    case poll(CourseHTMLBlockSubkind)
+    case survey(CourseHTMLBlockSubkind)
+    case imageExplorer(CourseHTMLBlockSubkind)
     
     var isUnknown : Bool {
         switch self {
@@ -61,6 +64,9 @@ extension CourseBlock {
         case let .mcq(question): return .mcq(question)
         case let .mrq(question): return .mrq(question)
         case let .assessment(assessment): return .assessment(assessment)
+        case .poll: return multiDevice ? .poll(.base) : .unknown
+        case .survey: return multiDevice ? .survey(.base) : .unknown
+        case .imageExplorer: return multiDevice ? .imageExplorer(.base) : .unknown
         }
     }
 }
@@ -120,6 +126,12 @@ extension OEXRouter {
             fallthrough
         case .audio:
             fallthrough
+        case .poll:
+            fallthrough
+        case .survey:
+            fallthrough
+        case .imageExplorer:
+            fallthrough
         case .unknown:
             let pageController = unitControllerForCourseID(courseID, sequentialID:nil, blockID: parentID, initialChildID: blockID, courseProgressStats: nil)
             if let delegate = controller as? CourseContentPageViewControllerDelegate {
@@ -133,6 +145,7 @@ extension OEXRouter {
             }
             controller.navigationController?.pushViewController(pageController, animated: true)
         }
+        
     }
     
     fileprivate func controllerForBlockWithID(_ blockID : CourseBlockID?, type : CourseBlockDisplayType, courseID : String) -> UIViewController {
@@ -149,7 +162,16 @@ extension OEXRouter {
         case .unit:
             return unitControllerForCourseID(courseID, sequentialID: nil, blockID: blockID, initialChildID: nil, courseProgressStats: nil)
         case .html:
-            let controller = HTMLBlockViewController(blockID: blockID, courseID : courseID, environment : environment)
+            let controller = HTMLBlockViewController(blockID: blockID, courseID : courseID, environment : environment, type: type)
+            return controller
+        case .poll:
+            let controller = HTMLBlockViewController(blockID: blockID, courseID : courseID, environment : environment, type: type)
+            return controller
+        case .survey:
+            let controller = HTMLBlockViewController(blockID: blockID, courseID : courseID, environment : environment, type: type)
+            return controller
+        case .imageExplorer:
+            let controller = HTMLBlockViewController(blockID: blockID, courseID : courseID, environment : environment, type: type)
             return controller
         case .video:
             let controller = VideoBlockViewController(environment: environment, blockID: blockID, courseID: courseID)

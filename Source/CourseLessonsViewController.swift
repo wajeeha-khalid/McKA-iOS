@@ -188,8 +188,6 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
         downloadController  = DownloadController(courseQuerier: courseQuerier, analytics: environment.analytics)
         self.lessonViewModelDataSource = lessonViewModelDataSource
         super.init(env : environment)
-        self.courseProgressStatsStream = getCourseProgressStatsStream()
-        self.courseStatsStream = getCourseStatsStream()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -248,6 +246,9 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
     }
     
     fileprivate func setupProgressListener() {
+        self.courseProgressStatsStream = getCourseProgressStatsStream()
+        self.courseStatsStream = getCourseStatsStream()
+    
         self.courseProgressStatsStream?.listen(self, action: { (result) in
             self.courseStatsStream?.listen(self, action: { (result) in
                 switch result {
@@ -266,7 +267,7 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
             switch result {
             case let .success(courseProgress):
                 self.courseProgressStats = courseProgress
-                self.progressPercentageLabel.text = String(Int(self.courseProgressStats!.ratio * 100))
+                self.progressPercentageLabel.text = String(self.courseProgressStats!.percentageRatio)
                 self.progressBarView.setProgress(self.courseProgressStats!.ratio, animated: true)
                 self.progressCohortAvgLabel.text = "Cohort Avg: \(Int(self.courseProgressStats!.cohortAvg! * 100))%"
                 if let lessonsProgress = self.courseProgressStats?.lessonsProgress {

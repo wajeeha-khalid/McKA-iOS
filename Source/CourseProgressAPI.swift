@@ -12,7 +12,7 @@ import SwiftyJSON
 import Alamofire
 
 extension Float {
-    var roundTo2f: Float {return Float(roundf(100*self)/100)}
+    var roundTo2f: Float {return Float((100*self).rounded()/100)}
 }
 
 public struct CourseProgressCompletion {
@@ -45,6 +45,7 @@ public struct ProgressStats {
     let ratio: Float
     let progress: CourseProgress
     let componentProgress: ComponentProgressState
+    let percentageRatio: Int
     
     init(courseID: String, earned: Int, possible: Int, ratio: Float, cohortAvg: Double? = nil, lessonsProgress: [ProgressStats]? = nil, modulesProgress: [ProgressStats]? = nil, blockID: String? = nil) {
         self.courseID = courseID
@@ -55,7 +56,8 @@ public struct ProgressStats {
         self.lessonsProgress = lessonsProgress
         self.modulesProgress = modulesProgress
         self.blockID = blockID
-        let percentageRatio = Int(ratio.roundTo2f * 100)
+        percentageRatio = Int(self.ratio.roundTo2f * 100)
+        
         switch percentageRatio {
         case 100:
             progress = .completed
@@ -79,7 +81,7 @@ public struct ProgressStats {
         self.lessonsProgress = dictionary[Fields.lessonsProgress] as? [ProgressStats]
         self.modulesProgress = dictionary[Fields.modulesProgress] as? [ProgressStats]
         self.blockID = dictionary[Fields.blockID] as? String
-        let percentageRatio = Int(ratio * 100)
+        percentageRatio = Int(ratio.roundTo2f * 100)
         switch percentageRatio {
         case 100:
             progress = .completed

@@ -21,7 +21,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
     fileprivate let loadController = LoadStateViewController()
     fileprivate let refreshController = PullRefreshController()
     fileprivate let insetsController = ContentInsetsController()
-    fileprivate let enrollmentFeed: Feed<[(UserCourseEnrollment, ProgressStats)]?>
+    fileprivate var enrollmentFeed: Feed<[(UserCourseEnrollment, ProgressStats)]?>
     fileprivate let userPreferencesFeed: Feed<UserPreference?>
 
     init(environment: Environment) {

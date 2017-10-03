@@ -120,7 +120,7 @@ extension CourseBlockDisplayType {
         case .freeText: return false
         case .ooyalaVideo: return false
         case .audio: return false //Added By Ravi on 22Jan'17 to Implement AudioPodcast
-        case .unknown, .html(_), .outline, .lesson, .unit, .discussion: return true
+        case .unknown, .html(_), .outline, .lesson, .unit, .discussion, .poll(_), .survey(_), .imageExplorer(_): return true
         }
     }
 }

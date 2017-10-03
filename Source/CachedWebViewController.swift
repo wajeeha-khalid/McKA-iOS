@@ -9,7 +9,11 @@
 import UIKit
 import SnapKit
 
-public typealias Environment = OEXConfigProvider & OEXSessionProvider & NetworkManagerProvider
+public protocol CachedWebViewControllerContentLoadDelegate {
+    func contentLoaded()
+}
+
+public typealias Environment = OEXConfigProvider & OEXSessionProvider
 
 
 class UIWebViewContentController : WebContentController {
@@ -56,7 +60,6 @@ class UIWebViewContentController : WebContentController {
 open class CachedWebViewController: UIViewController, UIWebViewDelegate {
 
     open let blockID: CourseBlockID?
-    open let courseID: String
     
     internal let environment : Environment
     fileprivate let loadController : LoadStateViewController
@@ -77,10 +80,12 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
         return contentRequest?.url
     }
     
-    public init(environment : Environment, courseID: String, blockID: CourseBlockID?) {
+    var contentLoadDelegate: CachedWebViewControllerContentLoadDelegate?
+    
+    public init(environment : Environment, blockID: CourseBlockID?, contentLoadDelegate: CachedWebViewControllerContentLoadDelegate? = nil) {
         self.environment = environment
         self.blockID = blockID
-        self.courseID = courseID
+        self.contentLoadDelegate = contentLoadDelegate
         
         loadController = LoadStateViewController()
         insetsController = ContentInsetsController()
@@ -214,8 +219,7 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
             }
         case .loadingContent:
             loadController.state = .loaded
-            CourseProgressAPI.updateProgressFor(environment: self.environment, owner: self, courseId: self.courseID, blockId: self.blockID!)
-            
+            self.contentLoadDelegate?.contentLoaded()
             if let url = contentRequest?.url?.absoluteString, let source = webView.stringByEvaluatingJavaScript(from: "document.documentElement.outerHTML"), (url.contains("type@chat") || url.range(of: "i4x://.*/chat/", options: .regularExpression) != nil) {
 
                 if source.contains(">COMPLETE<") || source.contains(">Complete<") {
