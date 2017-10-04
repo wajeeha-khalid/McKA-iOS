@@ -7,7 +7,8 @@
 */
 
 // Please keep in alphabetical order
-
+/* Label for feedack email body */
+"ACADEMY_FOR_MOBILE"="Academy for Mobile";
 /* Alert dialog confirmation button when user chooses to download a large video */
 "ACCEPT_LARGE_VIDEO_DOWNLOAD"="Download";
 /* Label for check box when it's checked. */
