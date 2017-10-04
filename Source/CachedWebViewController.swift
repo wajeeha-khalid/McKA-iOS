@@ -62,6 +62,7 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
     fileprivate let loadController : LoadStateViewController
     fileprivate let insetsController : ContentInsetsController
     fileprivate let headerInsets : HeaderViewInsets
+    fileprivate var loadedFirstTime = true
     
     fileprivate lazy var webController : WebContentController = {
         let controller = UIWebViewContentController()
@@ -201,6 +202,13 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
     
     // MARK: UIWebView delegate
     
+    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if !loadedFirstTime {
+            loadRequest(request: request, navigationType:  navigationType)
+        }
+        return loadedFirstTime
+    }
+
     open func webViewDidFinishLoad(_ webView: UIWebView) {
         
         switch state {
@@ -230,6 +238,7 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
 
             if let controller = webController as? UIWebViewContentController {
                 _ = controller.webView.stringByEvaluatingJavaScript(from: jsString)
+                loadedFirstTime = false
             }
         case .needingSession:
             state = .creatingSession
@@ -242,4 +251,18 @@ open class CachedWebViewController: UIViewController, UIWebViewDelegate {
             showError(error as NSError)
         }
     }
+    
+   fileprivate func loadRequest(request: URLRequest, navigationType: UIWebViewNavigationType) {
+        if !loadedFirstTime && navigationType == .linkClicked {
+            showWebNavigationViewController(request: request)
+        }
+    }
+    
+    fileprivate func showWebNavigationViewController(request: URLRequest) {
+        let webNavigationViewController = WebNavigationViewController(request: request,
+                                                                      title: Strings.rawHtml)
+        let navigationController = UINavigationController(rootViewController: webNavigationViewController)
+        self.present(navigationController, animated: false, completion: nil)
+    }
+
 }

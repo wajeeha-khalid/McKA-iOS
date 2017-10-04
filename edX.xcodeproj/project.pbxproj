@@ -596,6 +596,7 @@
 		882140451F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */; };
 		882465301F74F10D00CF0D75 /* pollsurveys.css in Resources */ = {isa = PBXBuildFile; fileRef = 8824652F1F74F10D00CF0D75 /* pollsurveys.css */; };
 		8847A9451F45886500127FE3 /* ResourseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847A9441F45886500127FE3 /* ResourseAPI.swift */; };
+		8873980D1F83B5B7000D71CE /* rawHTML.css in Resources */ = {isa = PBXBuildFile; fileRef = 8873980C1F83B5B7000D71CE /* rawHTML.css */; };
 		888A7F8B1F3C9472000FD7C8 /* OEXResourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */; };
 		888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */; };
 		888A7FC51F3DF854000FD7C8 /* CourseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */; };
@@ -1680,6 +1681,7 @@
 		882140441F42E27E00D8BBFB /* CourseLessonsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonsViewControllerTests.swift; sourceTree = "<group>"; };
 		8824652F1F74F10D00CF0D75 /* pollsurveys.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = pollsurveys.css; sourceTree = "<group>"; };
 		8847A9441F45886500127FE3 /* ResourseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourseAPI.swift; sourceTree = "<group>"; };
+		8873980C1F83B5B7000D71CE /* rawHTML.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = rawHTML.css; sourceTree = "<group>"; };
 		888A7F891F3C9472000FD7C8 /* OEXResourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXResourcesViewController.swift; sourceTree = "<group>"; };
 		888A7F8A1F3C9472000FD7C8 /* OEXResourcesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXResourcesViewController.xib; sourceTree = "<group>"; };
 		888A7FC41F3DF854000FD7C8 /* CourseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseViewModelTests.swift; sourceTree = "<group>"; };
@@ -3451,6 +3453,7 @@
 		88CDEAF01F60471A00CC99FB /* HTML + CSS */ = {
 			isa = PBXGroup;
 			children = (
+				8873980C1F83B5B7000D71CE /* rawHTML.css */,
 				8824652F1F74F10D00CF0D75 /* pollsurveys.css */,
 				88C114621F73D34A007CD732 /* imageExplorer.css */,
 				88CDEAF11F6047B800CC99FB /* template.css */,
@@ -4492,6 +4495,7 @@
 				D07DD5EC1E586B6D00A8BC01 /* ic_tickmark@2x.png in Resources */,
 				882465301F74F10D00CF0D75 /* pollsurveys.css in Resources */,
 				412FB5811F70440900353072 /* config.plist in Resources */,
+				8873980D1F83B5B7000D71CE /* rawHTML.css in Resources */,
 				D0FA80101E1E191600FB1226 /* Raleway-ExtraBold.ttf in Resources */,
 				69ECC6341D50D1170030CF87 /* ic_next_deactive.png in Resources */,
 				1AFEB1B91BBD88F3004C471D /* languages.json in Resources */,

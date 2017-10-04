@@ -8,5 +8,7 @@
 	<string>imageExplorer</string>
 	<key>/static/css/lms-style-vendor</key>
 	<string>pollsurveys</string>
+	<key>/static/css/lms-course</key>
+	<string>rawHTML</string>
 </dict>
 </plist>
