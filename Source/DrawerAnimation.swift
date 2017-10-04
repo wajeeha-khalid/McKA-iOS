@@ -166,9 +166,19 @@ class BottomDrawerViewController: UIViewController {
         self.scrollToManage = scrollView
         super.init(nibName: nil, bundle: nil)
         addChildViewController(childViewController)
+        view.backgroundColor = childViewController.view.backgroundColor
+        
+        let collapseButton = UIButton()
+        collapseButton.setImage(UIImage(named: "ic.CollapseOverlay"), for: .normal)
+        collapseButton.addTarget(self, action: #selector(self.collapseTapped(_:)), for: .touchUpInside)
+        view.addSubview(collapseButton)
+        
         view.addSubview(childViewController.view)
         childViewController.view.snp.makeConstraints { make in
-            make.edges.equalTo(view)
+            make.leading.equalTo(view)
+            make.trailing.equalTo(view)
+            make.bottom.equalTo(view)
+            make.top.equalTo(collapseButton.snp.bottom)
         }
         childViewController.didMove(toParentViewController: self)
         view.addGestureRecognizer(gestureRecognizer)
@@ -181,16 +191,14 @@ class BottomDrawerViewController: UIViewController {
         modalPresentationStyle = .custom
         transitioningDelegate = self
         
-        let collapseButton = UIButton()
-        collapseButton.setImage(UIImage(named: "ic.CollapseOverlay"), for: .normal)
-        collapseButton.addTarget(self, action: #selector(self.collapseTapped(_:)), for: .touchUpInside)
-        view.addSubview(collapseButton)
+        
         collapseButton.snp.makeConstraints { make in
             make.centerX.equalTo(self.view)
             make.top.equalTo(self.view).offset(10.0)
             make.width.equalTo(35.0)
             make.height.equalTo(11.0)
         }
+
     }
     
     @objc private func collapseTapped(_ sender: UIButton) {
