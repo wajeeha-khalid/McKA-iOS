@@ -9,7 +9,7 @@
 import Foundation
 
 let questionTemplate: (String) -> String = { body in
-    return "<html> <head> <style type=\"text/css\">  body {  font-size: 14px;  font-family: -apple-system, Arial, sans-serif;  color: white; margin-bottom: 0px; padding-bottom: 0px; line-height: 20px; } </style> </head> <body> \(body) </body> </html>"
+    return "<html> <head> <style type=\"text/css\">  body {  font-size: 16px;  font-family: -apple-system, Arial, sans-serif; font-weight: 500;  color: white; margin-bottom: 0px; padding-bottom: 0px; line-height: 20px; } </style> </head> <body> \(body) </body> </html>"
 }
 
 extension String {

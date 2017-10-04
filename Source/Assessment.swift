@@ -365,17 +365,16 @@ public class AssessmentAdapter: MckinseyXBlocks.Assessment {
                 } else if state.numberOfAttemptsMade < self.assessment.maximumAttempts {
                     let module = ProvisionalResultModule(
                         grade: Grade(
-                            evaluated: state.userResults,
-                            totalAttempts: self.assessment.maximumAttempts,
-                            availedAttempts: state.numberOfAttemptsMade
+                            state: state,
+                            assessment: self.assessment
                         )
                     )
                     module.delegate = self.moduleDelegate
                     completion(.success(module))
                 } else {
-                    let finalGrade = FinalGrade(results: state.userResults, assessment: self.assessment)
-                    let module = ReviewGradeViewController(grade: finalGrade)
-                    completion(.success(module))
+                    let final = Grade(state: state, assessment: self.assessment)
+                    let resultModule = ResultsModule(results: final, assessment: self.assessment)
+                    completion(.success(resultModule))
                 }
             }
             result.ifFailure{ error in
