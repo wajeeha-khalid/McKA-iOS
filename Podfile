@@ -21,21 +21,15 @@ pod 'GVRSDK', '~>1.20.0'
 pod 'DownloadButton'
 pod 'UrbanAirship-iOS-SDK'
 pod 'MBCircularProgressBar'
-<<<<<<< HEAD
 pod 'SMFloatingLabelTextField'
 pod 'Instabug'
-=======
-pod 'Instabug'
-pod 'SMFloatingLabelTextField'
->>>>>>> master
 end
 
 target 'edXTests' do
     pod 'FBSnapshotTestCase/Core', '= 2.0.1'
     pod 'OCMock', '~> 3.1'
     pod 'OHHTTPStubs', '~> 4.0'
-end 
+end
 
 #xcodeproj 'pathof your xcodeproject'
 xcodeproj './edX.xcodeproj'
-
