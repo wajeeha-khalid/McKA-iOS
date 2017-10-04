@@ -88,6 +88,8 @@ NSString* NSStringForOEXStartType(OEXStartType type) {
 @property (nonatomic, copy) NSString* discussionUrl;
 @property (nonatomic, copy) NSDictionary<NSString*, CourseMediaInfo*>* mediaInfo;
 @property ( nonatomic, strong) NSNumber* progress;
+@property ( nonatomic, assign) BOOL mobile_available;
+
 @end
 
 @implementation OEXCourse
@@ -98,6 +100,12 @@ NSString* NSStringForOEXStartType(OEXStartType type) {
         self.course_id = [json objectForKey:@"id"];
         if ([json[@"end"] isEqual:[NSNull null]] == false) {
             self.end = [OEXDateFormatting dateWithServerString:[json objectForKey:@"end"]];
+        }
+        
+        if ([json[@"mobile_available"] isEqual:[NSNull null]] == false) {
+            self.mobile_available = json[@"mobile_available"];
+        } else {
+            self.mobile_available = false;
         }
         self.name = json[@"display_name"];
         self.course_image_url = json[@"course_image_url"];

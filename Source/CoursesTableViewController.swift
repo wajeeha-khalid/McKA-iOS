@@ -70,6 +70,7 @@ struct CourseViewModel {
         card.lessonText = formattedLessonCount
         card.couseTitle = title
         card.progress = progress
+        card.mobileAvailable = course.mobile_available
         
         let placeholder = UIImage(named: "placeholderCourseCardImage")
         let url = courseImageURL.flatMap {
@@ -78,6 +79,7 @@ struct CourseViewModel {
         // We are switching to Kingfisher because `RemoteImage` currently has some probelms 
         // especially with cell reuse in tableView...
         card.imageView.kf.setImage(with:url, placeholder: placeholder)
+        
     }
     
     var formattedLessonCount: String {
@@ -221,7 +223,10 @@ class CoursesTableViewController: UITableViewController {
         
         cell.courseView.tapAction = {[weak self] card in
             //self?.delegate?.coursesTableChoseCourse(course)
-            self!.environment.router?.showLessonForCourseWithID(course.courseID!, fromController: self!)
+            if cell.course?.mobile_available == true {
+                self!.environment.router?.showLessonForCourseWithID(course.courseID!, fromController: self!)
+            }
+            
         }
         
         course.apply(newCard: cell.courseView, networkManager: environment.networkManager)

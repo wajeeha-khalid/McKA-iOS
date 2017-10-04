@@ -73,6 +73,9 @@ class NewCourseCardView: UIView {
     let imageView = UIImageView()
     fileprivate let overlayView = UIView()
     fileprivate let labelsStackView = UIView()
+    fileprivate let courseUnavailableLabel = UILabel()
+    fileprivate let courseUnavailableIcon = UIImageView()
+    fileprivate let courseUnavailableOpaqueView = UIView()
     
     var tapAction : ((NewCourseCardView) -> ())?
     
@@ -115,22 +118,36 @@ class NewCourseCardView: UIView {
         }
     }
     
-    
+    var mobileAvailable: Bool? {
+        didSet {
+            courseUnavailableOpaqueView.isHidden = mobileAvailable!
+            courseUnavailableIcon.isHidden = mobileAvailable!
+            courseUnavailableLabel.isHidden = mobileAvailable!
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        courseUnavailableIcon.image = UIImage(named: "ic.Course.NonMobile")
         addSubview(imageView)
         addSubview(overlayView)
         addSubview(labelsStackView)
         addSubview(progressView)
         labelsStackView.addSubview(courseTitleLabel)
         labelsStackView.addSubview(lessonLabel)
+        addSubview(courseUnavailableOpaqueView)
+        addSubview(courseUnavailableLabel)
+        addSubview(courseUnavailableIcon)
+        courseUnavailableOpaqueView.backgroundColor = UIColor(hexString: "#E695A7B7", alpha: 0.9)
+        courseUnavailableLabel.text = "Course not available on mobile"
+        courseUnavailableIcon.contentMode = .scaleAspectFill
         imageView.contentMode = .scaleAspectFill
         imageView.hidesLoadingSpinner = true
         lessonLabel.textColor = UIColor.white
         courseTitleLabel.textColor = UIColor.white
         courseTitleLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        courseUnavailableLabel.textColor = UIColor.white
+        courseUnavailableLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
         lessonLabel.font = UIFont.systemFont(ofSize: 12.0)
         progressView.backgroundColor = UIColor.clear
         courseTitleLabel.numberOfLines = 2
@@ -186,6 +203,23 @@ class NewCourseCardView: UIView {
             make.trailing.equalTo(labelsStackView)
             make.bottom.equalTo(labelsStackView)
         }
+        
+        courseUnavailableOpaqueView.snp.makeConstraints({ make in
+            make.edges.equalTo(self)
+        })
+        
+        courseUnavailableLabel.snp.makeConstraints({ make in
+            make.centerX.equalTo(self).offset(18)
+            make.centerY.equalTo(self)
+        })
+        
+        courseUnavailableIcon.snp.makeConstraints({ make in
+            make.centerY.equalTo(self)
+            make.width.equalTo(25.0)
+            make.height.equalTo(25.0)
+            make.trailing.equalTo(self.courseUnavailableLabel.snp.leading).offset(-15.0)
+        })
+
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -67,7 +67,7 @@ OEXStartType OEXStartTypeForString(NSString* type);
 @property (readonly, nonatomic, assign) BOOL isEndDateOld;
 
 @property (readonly, nonatomic, strong, nullable) NSString* courseImageURL;
-
+@property (readonly, nonatomic, assign) BOOL mobile_available;
 
 @end
 

@@ -28,7 +28,7 @@ struct CoursesAPI {
     }
     
     static func getUserEnrollments(_ userName: String, organizationCode: String?) -> NetworkRequest<[UserCourseEnrollment]> {
-        let path = "/api/server/mobile/v1/users/courses/progress?mobile_only=true&username={user_name}".oex_format(withParameters: ["user_name": userName])
+        let path = "/api/server/mobile/v1/users/courses/progress?username={user_name}".oex_format(withParameters: ["user_name": userName])
         return NetworkRequest(
             method: .GET,
             path: path,
