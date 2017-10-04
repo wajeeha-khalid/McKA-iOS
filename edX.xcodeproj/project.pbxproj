@@ -18,17 +18,7 @@
 		112CB1A71E41DB62001D4C29 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 112CB1A61E41DB62001D4C29 /* AirshipConfig.plist */; };
 		114A30AA1E544C8A00EBCF6B /* GVRTransitionCounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 114A30A91E544C8A00EBCF6B /* GVRTransitionCounterView.m */; };
 		114A30AE1E56CD0100EBCF6B /* UserLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114A30AD1E56CD0100EBCF6B /* UserLevelView.swift */; };
-		114A30B91E56CD9F00EBCF6B /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30AF1E56CD9F00EBCF6B /* Icon-29.png */; };
-		114A30BA1E56CD9F00EBCF6B /* Icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B01E56CD9F00EBCF6B /* Icon-29@2x.png */; };
-		114A30BB1E56CD9F00EBCF6B /* Icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B11E56CD9F00EBCF6B /* Icon-29@3x.png */; };
-		114A30BC1E56CD9F00EBCF6B /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B21E56CD9F00EBCF6B /* Icon-40.png */; };
-		114A30BD1E56CD9F00EBCF6B /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B31E56CD9F00EBCF6B /* Icon-40@2x.png */; };
-		114A30BE1E56CD9F00EBCF6B /* Icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B41E56CD9F00EBCF6B /* Icon-40@3x.png */; };
-		114A30BF1E56CD9F00EBCF6B /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B51E56CD9F00EBCF6B /* Icon-60@2x.png */; };
-		114A30C01E56CD9F00EBCF6B /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B61E56CD9F00EBCF6B /* Icon-60@3x.png */; };
-		114A30C11E56CD9F00EBCF6B /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B71E56CD9F00EBCF6B /* Icon-76.png */; };
-		114A30C21E56CD9F00EBCF6B /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 114A30B81E56CD9F00EBCF6B /* Icon-76@2x.png */; };
-		118421FE1E4B310C00E3AD82 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		118421FE1E4B310C00E3AD82 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		181A99831E22888900ECDA75 /* round-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 181A99821E22888900ECDA75 /* round-pause-button.png */; };
 		1894051A1E33A22000AD6776 /* OEXAudioSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 189405191E33A22000AD6776 /* OEXAudioSummary.m */; };
 		1894051C1E34AB4500AD6776 /* CourseAudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1894051B1E34AB4500AD6776 /* CourseAudioTableViewCell.swift */; };
@@ -121,7 +111,7 @@
 		4105B7391F6AC83E00E0FC05 /* Assessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4105B7381F6AC83E00E0FC05 /* Assessment.swift */; };
 		411ACEB41F430EC40022BDE5 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411ACEB31F430EC40022BDE5 /* LoginPresenterTests.swift */; };
 		411C066D1F6BD960002A5083 /* HTMLStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411C066C1F6BD960002A5083 /* HTMLStyles.swift */; };
-		411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		411E2C1D1F5FEFE000A73FAD /* ReferenceProxy in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 411E2C131F5FEFB600A73FAD /* MckinseyXBlocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		412FB5811F70440900353072 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 412FB5801F70440900353072 /* config.plist */; };
 		414BBFF41F50010700B0C9C9 /* ModuleListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414BBFF21F50010700B0C9C9 /* ModuleListTableViewController.swift */; };
 		415F84731F32F396004E54EE /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F121F2F1C6300D6A880 /* SwiftyJSON.framework */; };
@@ -148,6 +138,7 @@
 		41B43F171F2F1C6D00D6A880 /* FontAwesome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */; };
 		41B43F191F2F1C6F00D6A880 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B43F181F2F1C6F00D6A880 /* Alamofire.framework */; };
 		41B716BB1F25FBA500AE5151 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B716BA1F25FBA500AE5151 /* Kingfisher.framework */; };
+		41C2329B1F7D021600C77422 /* FinalResultsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C2329A1F7D021600C77422 /* FinalResultsModule.swift */; };
 		41D50F811F3F9176008DAAD7 /* MckinseyXBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D50F801F3F9176008DAAD7 /* MckinseyXBlocks.framework */; };
 		46CECC3A1B041CDC0073C63A /* CourseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CECC391B041CDC0073C63A /* CourseCardView.swift */; };
 		46CECC3C1B041D270073C63A /* CourseDashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CECC3B1B041D270073C63A /* CourseDashboardCell.swift */; };
@@ -168,6 +159,7 @@
 		631B35211F1D1F3A00914C59 /* CourseLessonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */; };
 		631B35241F1E100500914C59 /* CourseLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */; };
 		631B35251F1E100500914C59 /* CourseLessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */; };
+		634A0C7D1F8249D300B8BF8D /* OyalaPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634A0C7C1F8249D300B8BF8D /* OyalaPlayerManager.swift */; };
 		63B0D0B41EE0193700618795 /* CourseContentCompletionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */; };
 		63D0F5C91F51E6CC005F56BE /* MCQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5C81F51E6CC005F56BE /* MCQManager.swift */; };
 		63D0F5CB1F51F62B005F56BE /* MRQManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D0F5CA1F51F62B005F56BE /* MRQManager.swift */; };
@@ -619,11 +611,6 @@
 		8F562F901A1F451600320DB3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F562F8F1A1F451600320DB3 /* CoreMotion.framework */; };
 		8F7F6DAD1A795AA60063B9D6 /* OEXSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F6DAC1A795AA60063B9D6 /* OEXSessionTests.m */; };
 		8FE04B4D1A1E2637007F88B8 /* OEXFBSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE04B4C1A1E2637007F88B8 /* OEXFBSocial.m */; };
-		944C792F1F6937E50008753B /* Default-375w-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792A1F6937E50008753B /* Default-375w-667h@2x.png */; };
-		944C79301F6937E50008753B /* Default-414w-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792B1F6937E50008753B /* Default-414w-736h@3x.png */; };
-		944C79311F6937E50008753B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792C1F6937E50008753B /* Default-568h@2x.png */; };
-		944C79321F6937E50008753B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792D1F6937E50008753B /* Default.png */; };
-		944C79331F6937E50008753B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 944C792E1F6937E50008753B /* Default@2x.png */; };
 		94622FCA1F5856E50094AD28 /* CourseContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */; };
 		946E79E01F766AE9003B85BF /* EngagmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E79DF1F766AE9003B85BF /* EngagmentAPI.swift */; };
 		946E79E61F767F14003B85BF /* CourseProficiencyStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E79E51F767F14003B85BF /* CourseProficiencyStats.swift */; };
@@ -982,7 +969,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				411E2C1D1F5FEFE000A73FAD /* MckinseyXBlocks.framework in Embed Frameworks */,
+				411E2C1D1F5FEFE000A73FAD /* ReferenceProxy in Embed Frameworks */,
 				77E647CB1C90CA1400B6740D /* edXCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -1007,16 +994,6 @@
 		114A30A81E544C8A00EBCF6B /* GVRTransitionCounterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GVRTransitionCounterView.h; sourceTree = "<group>"; };
 		114A30A91E544C8A00EBCF6B /* GVRTransitionCounterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GVRTransitionCounterView.m; sourceTree = "<group>"; };
 		114A30AD1E56CD0100EBCF6B /* UserLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLevelView.swift; sourceTree = "<group>"; };
-		114A30AF1E56CD9F00EBCF6B /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
-		114A30B01E56CD9F00EBCF6B /* Icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@2x.png"; sourceTree = "<group>"; };
-		114A30B11E56CD9F00EBCF6B /* Icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29@3x.png"; sourceTree = "<group>"; };
-		114A30B21E56CD9F00EBCF6B /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
-		114A30B31E56CD9F00EBCF6B /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
-		114A30B41E56CD9F00EBCF6B /* Icon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@3x.png"; sourceTree = "<group>"; };
-		114A30B51E56CD9F00EBCF6B /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
-		114A30B61E56CD9F00EBCF6B /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
-		114A30B71E56CD9F00EBCF6B /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
-		114A30B81E56CD9F00EBCF6B /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
 		181A99821E22888900ECDA75 /* round-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "round-pause-button.png"; sourceTree = "<group>"; };
 		189405181E33A22000AD6776 /* OEXAudioSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXAudioSummary.h; sourceTree = "<group>"; };
 		189405191E33A22000AD6776 /* OEXAudioSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXAudioSummary.m; sourceTree = "<group>"; };
@@ -1170,6 +1147,7 @@
 		41B43F161F2F1C6D00D6A880 /* FontAwesome.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesome.framework; path = Carthage/Build/iOS/FontAwesome.framework; sourceTree = "<group>"; };
 		41B43F181F2F1C6F00D6A880 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		41B716BA1F25FBA500AE5151 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		41C2329A1F7D021600C77422 /* FinalResultsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinalResultsModule.swift; sourceTree = "<group>"; };
 		41D50F801F3F9176008DAAD7 /* MckinseyXBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MckinseyXBlocks.framework; path = Carthage/Build/iOS/MckinseyXBlocks.framework; sourceTree = "<group>"; };
 		41EE66831F45B42F00930274 /* DynamicOoyalaWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DynamicOoyalaWrapper.framework; path = Carthage/Build/iOS/DynamicOoyalaWrapper.framework; sourceTree = "<group>"; };
 		46CECC391B041CDC0073C63A /* CourseCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CourseCardView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1193,6 +1171,7 @@
 		631B351F1F1D1F3A00914C59 /* CourseLessonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonsViewController.xib; sourceTree = "<group>"; };
 		631B35221F1E100500914C59 /* CourseLessonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseLessonTableViewCell.swift; sourceTree = "<group>"; };
 		631B35231F1E100500914C59 /* CourseLessonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseLessonTableViewCell.xib; sourceTree = "<group>"; };
+		634A0C7C1F8249D300B8BF8D /* OyalaPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OyalaPlayerManager.swift; sourceTree = "<group>"; };
 		63B0D0B31EE0193700618795 /* CourseContentCompletionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentCompletionTests.swift; sourceTree = "<group>"; };
 		63D0F5C81F51E6CC005F56BE /* MCQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCQManager.swift; sourceTree = "<group>"; };
 		63D0F5CA1F51F62B005F56BE /* MRQManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRQManager.swift; sourceTree = "<group>"; };
@@ -1707,11 +1686,6 @@
 		8F7F6DAC1A795AA60063B9D6 /* OEXSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXSessionTests.m; sourceTree = "<group>"; };
 		8FE04B4B1A1E2637007F88B8 /* OEXFBSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFBSocial.h; sourceTree = "<group>"; };
 		8FE04B4C1A1E2637007F88B8 /* OEXFBSocial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFBSocial.m; sourceTree = "<group>"; };
-		944C792A1F6937E50008753B /* Default-375w-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-375w-667h@2x.png"; sourceTree = "<group>"; };
-		944C792B1F6937E50008753B /* Default-414w-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-414w-736h@3x.png"; sourceTree = "<group>"; };
-		944C792C1F6937E50008753B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		944C792D1F6937E50008753B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		944C792E1F6937E50008753B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		94622FC91F5856E50094AD28 /* CourseContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseContentPageViewController.swift; sourceTree = "<group>"; };
 		946E79DF1F766AE9003B85BF /* EngagmentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngagmentAPI.swift; sourceTree = "<group>"; };
 		946E79E51F767F14003B85BF /* CourseProficiencyStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseProficiencyStats.swift; sourceTree = "<group>"; };
@@ -2410,6 +2384,7 @@
 			children = (
 				4105B7381F6AC83E00E0FC05 /* Assessment.swift */,
 				4105B7361F6AC83800E0FC05 /* Grades.swift */,
+				41C2329A1F7D021600C77422 /* FinalResultsModule.swift */,
 			);
 			name = Assessments;
 			sourceTree = "<group>";
@@ -2496,6 +2471,7 @@
 				63D0F5CC1F51F7D2005F56BE /* XBlock API */,
 				63D0F5C81F51E6CC005F56BE /* MCQManager.swift */,
 				63D0F5CA1F51F62B005F56BE /* MRQManager.swift */,
+				634A0C7C1F8249D300B8BF8D /* OyalaPlayerManager.swift */,
 			);
 			name = "XBlock Managers";
 			sourceTree = "<group>";
@@ -2534,9 +2510,7 @@
 				63EC02031F3C4CBC00B702C4 /* BrandingTheme */,
 				6919F5FB1D65CD14006935C8 /* Colors */,
 				69ECC5A21D50D1170030CF87 /* Fonts */,
-				69ECC5AE1D50D1170030CF87 /* Icons */,
 				69ECC5B61D50D1170030CF87 /* Images */,
-				69ECC5F41D50D1170030CF87 /* Splash */,
 				69ECC5FA1D50D1170030CF87 /* Stylesheets */,
 				71F1F60F1E27A1D8008FFAE4 /* Image.xcassets */,
 			);
@@ -2580,23 +2554,6 @@
 				69ECC5AD1D50D1170030CF87 /* OpenSans-SemiboldItalic.ttf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		69ECC5AE1D50D1170030CF87 /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				114A30AF1E56CD9F00EBCF6B /* Icon-29.png */,
-				114A30B01E56CD9F00EBCF6B /* Icon-29@2x.png */,
-				114A30B11E56CD9F00EBCF6B /* Icon-29@3x.png */,
-				114A30B21E56CD9F00EBCF6B /* Icon-40.png */,
-				114A30B31E56CD9F00EBCF6B /* Icon-40@2x.png */,
-				114A30B41E56CD9F00EBCF6B /* Icon-40@3x.png */,
-				114A30B51E56CD9F00EBCF6B /* Icon-60@2x.png */,
-				114A30B61E56CD9F00EBCF6B /* Icon-60@3x.png */,
-				114A30B71E56CD9F00EBCF6B /* Icon-76.png */,
-				114A30B81E56CD9F00EBCF6B /* Icon-76@2x.png */,
-			);
-			path = Icons;
 			sourceTree = "<group>";
 		};
 		69ECC5B61D50D1170030CF87 /* Images */ = {
@@ -2745,18 +2702,6 @@
 				69ECC5F31D50D1170030CF87 /* placeholderCourseCardImage.png */,
 			);
 			path = Images;
-			sourceTree = "<group>";
-		};
-		69ECC5F41D50D1170030CF87 /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				944C792A1F6937E50008753B /* Default-375w-667h@2x.png */,
-				944C792B1F6937E50008753B /* Default-414w-736h@3x.png */,
-				944C792C1F6937E50008753B /* Default-568h@2x.png */,
-				944C792D1F6937E50008753B /* Default.png */,
-				944C792E1F6937E50008753B /* Default@2x.png */,
-			);
-			path = Splash;
 			sourceTree = "<group>";
 		};
 		69ECC5FA1D50D1170030CF87 /* Stylesheets */ = {
@@ -4516,16 +4461,13 @@
 				69ECC61E1D50D1170030CF87 /* bt_scrollbar_tap.png in Resources */,
 				D0FA800D1E1E191600FB1226 /* Raleway-BlackItalic.ttf in Resources */,
 				69ECC62B1D50D1170030CF87 /* downloading.png in Resources */,
-				944C79311F6937E50008753B /* Default-568h@2x.png in Resources */,
 				69ECC6221D50D1170030CF87 /* bt_view_active.png in Resources */,
 				D0871E5A1E3F590D00B2C41F /* CourseUnitsViewCell.xib in Resources */,
-				114A30BD1E56CD9F00EBCF6B /* Icon-40@2x.png in Resources */,
 				D0FA800F1E1E191600FB1226 /* Raleway-BoldItalic.ttf in Resources */,
 				69ECC6191D50D1170030CF87 /* bt_grey_deactive.png in Resources */,
 				6926CDAC1D59BE3600A16E22 /* ic_next.png in Resources */,
 				88CDEAF41F6047B800CC99FB /* template.html in Resources */,
 				69ECC6241D50D1170030CF87 /* bt_view_default.png in Resources */,
-				114A30BF1E56CD9F00EBCF6B /* Icon-60@2x.png in Resources */,
 				D0FA801D1E1E191600FB1226 /* Raleway-ThinItalic.ttf in Resources */,
 				D0FA801B1E1E191600FB1226 /* Raleway-SemiBoldItalic.ttf in Resources */,
 				D0249F7A1E68590C00A55613 /* Right-Gray@2x.png in Resources */,
@@ -4546,7 +4488,6 @@
 				D0249F741E68590C00A55613 /* Left-Gray@2x.png in Resources */,
 				D0FA80181E1E191600FB1226 /* Raleway-MediumItalic.ttf in Resources */,
 				69ECC62D1D50D1170030CF87 /* ic_blue2_pressed.png in Resources */,
-				114A30C01E56CD9F00EBCF6B /* Icon-60@3x.png in Resources */,
 				D0249F671E66996400A55613 /* ic_completed@3x.png in Resources */,
 				D05B25D81E13CED400D1E77F /* FTUE5@2x.png in Resources */,
 				D0FA80111E1E191600FB1226 /* Raleway-ExtraBoldItalic.ttf in Resources */,
@@ -4563,8 +4504,6 @@
 				D0BF32AE1E0CEAEE007EF8A3 /* OEXFTUEViewController.xib in Resources */,
 				69ECC64A1D50D1170030CF87 /* launchBackground.png in Resources */,
 				D0FA800E1E1E191600FB1226 /* Raleway-Bold.ttf in Resources */,
-				944C79301F6937E50008753B /* Default-414w-736h@3x.png in Resources */,
-				944C79321F6937E50008753B /* Default.png in Resources */,
 				69ECC6201D50D1170030CF87 /* bt_signin_deactive.png in Resources */,
 				D05B07801E2CDB3C00ED8184 /* OEXWebViewController.xib in Resources */,
 				69ECC62F1D50D1170030CF87 /* ic_cancel@3x.png in Resources */,
@@ -4572,14 +4511,11 @@
 				198826E91952FE39005D4D8A /* OEXOpenInBrowserViewController.xib in Resources */,
 				63EC02151F3C84C700B702C4 /* img_logo_mckinsey@3x.png in Resources */,
 				D05B25CD1E13CED400D1E77F /* FTUE1@3x.png in Resources */,
-				114A30C11E56CD9F00EBCF6B /* Icon-76.png in Resources */,
 				D0842C6B1E5ECFBD002FC330 /* ic_backchevron@3x.png in Resources */,
 				D0249F731E68590C00A55613 /* Left-Gray.png in Resources */,
 				D0249F771E68590C00A55613 /* Mountain_header@2x.png in Resources */,
 				69ECC63C1D50D1170030CF87 /* icon_facebook_white.png in Resources */,
-				114A30B91E56CD9F00EBCF6B /* Icon-29.png in Resources */,
 				69ECC6381D50D1170030CF87 /* ic_unwatched@2x.png in Resources */,
-				114A30BA1E56CD9F00EBCF6B /* Icon-29@2x.png in Resources */,
 				69ECC6281D50D1170030CF87 /* check.png in Resources */,
 				5DD0FFD21B1D23DA00837121 /* DiscussionNewPostViewController.xib in Resources */,
 				69ECC6521D50D1170030CF87 /* inline-content.css in Resources */,
@@ -4595,7 +4531,6 @@
 				69ECC6141D50D1170030CF87 /* bt_blue2.png in Resources */,
 				69ECC6321D50D1170030CF87 /* ic_download_arrow.png in Resources */,
 				69ECC6111D50D1170030CF87 /* bg_card_image.png in Resources */,
-				944C792F1F6937E50008753B /* Default-375w-667h@2x.png in Resources */,
 				41A8C3681F2EFE8100869CAD /* LoginViewController.xib in Resources */,
 				69ECC6391D50D1170030CF87 /* ic_unwatched@3x.png in Resources */,
 				69ECC61B1D50D1170030CF87 /* bt_logout_active.png in Resources */,
@@ -4647,7 +4582,6 @@
 				1A03DEA31BBC72BA006783FB /* countries.json in Resources */,
 				888A7F8C1F3C9472000FD7C8 /* OEXResourcesViewController.xib in Resources */,
 				69ECC63F1D50D1170030CF87 /* icon_google_white@2x.png in Resources */,
-				114A30BE1E56CD9F00EBCF6B /* Icon-40@3x.png in Resources */,
 				D09C25431E308A0000E39CA8 /* pique_logo.png in Resources */,
 				D0871E5E1E3F592F00B2C41F /* CourseLiveUnitViewCell.xib in Resources */,
 				69ECC6301D50D1170030CF87 /* ic_circle.png in Resources */,
@@ -4657,8 +4591,6 @@
 				6960892B1D53935500EE66DD /* courseCertificate.png in Resources */,
 				63EC02101F3C84C700B702C4 /* img_logo_chemours@1x.png in Resources */,
 				69ECC6071D50D1170030CF87 /* OpenSans-SemiboldItalic.ttf in Resources */,
-				114A30BC1E56CD9F00EBCF6B /* Icon-40.png in Resources */,
-				944C79331F6937E50008753B /* Default@2x.png in Resources */,
 				6926CDAB1D59BE3600A16E22 /* ic_next_press.png in Resources */,
 				BEEEBF80196AAACF00EF2C35 /* Localizable.strings in Resources */,
 				D0249F661E66996400A55613 /* ic_completed@2x.png in Resources */,
@@ -4676,7 +4608,6 @@
 				69ECC63B1D50D1170030CF87 /* ic_watched@3x.png in Resources */,
 				69ECC6211D50D1170030CF87 /* bt_signin_default.png in Resources */,
 				19A1339519CAAC21003ADD24 /* OEXClosedCaptionTableViewCell.xib in Resources */,
-				114A30C21E56CD9F00EBCF6B /* Icon-76@2x.png in Resources */,
 				D085DDA71E483989009AA666 /* ic_blue_download.png in Resources */,
 				805329101B0E80E50093B177 /* DiscussionResponses.storyboard in Resources */,
 				D05B25D61E13CED400D1E77F /* FTUE4@3x.png in Resources */,
@@ -4686,7 +4617,6 @@
 				6926CDB11D59BE3600A16E22 /* ic_seek_thumb@2x.png in Resources */,
 				69ECC6351D50D1170030CF87 /* ic_next_default.png in Resources */,
 				888B89281F67C48D008F87E8 /* WebNavigationViewController.xib in Resources */,
-				114A30BB1E56CD9F00EBCF6B /* Icon-29@3x.png in Resources */,
 				D0871E781E41A27100B2C41F /* next@3x.png in Resources */,
 				69ECC6311D50D1170030CF87 /* ic_download.png in Resources */,
 				69ECC6001D50D1170030CF87 /* OpenSans-ExtraBold.ttf in Resources */,
@@ -4723,7 +4653,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		079C63796EA191B1B4A275B3 /* [CP] Copy Pods Resources */ = {
@@ -4868,7 +4798,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		849A7D1B624AE43BFD49BB8D /* [CP] Embed Pods Frameworks */ = {
@@ -5084,7 +5014,7 @@
 				77E647CE1C90CAB800B6740D /* NSAttributedString+OEXFormatting.m in Sources */,
 				E09B9D6B1D06C9700080BAE0 /* VersionUpgradeInfoController.swift in Sources */,
 				9E882B6A1BBA9825007347A2 /* DiscussionTopicCell.swift in Sources */,
-				118421FE1E4B310C00E3AD82 /* (null) in Sources */,
+				118421FE1E4B310C00E3AD82 /* BuildFile in Sources */,
 				B4B285ED1A9B429200DD603A /* OEXNetworkUtility.m in Sources */,
 				BE0D454A192DD4F800D720D6 /* OEXNetworkInterface.m in Sources */,
 				946E79E61F767F14003B85BF /* CourseProficiencyStats.swift in Sources */,
@@ -5212,6 +5142,7 @@
 				775DF4181AFAAC8C00F96B2F /* DataManager.swift in Sources */,
 				77C182AC1CD2E60E00AE1474 /* StackPaginationManipulator.swift in Sources */,
 				5D7EACC81B3E202C000A6C36 /* DiscussionAPI.swift in Sources */,
+				41C2329B1F7D021600C77422 /* FinalResultsModule.swift in Sources */,
 				77EA92261BB4590A00EC625A /* DownloadsAccessoryView.swift in Sources */,
 				77ADF4A61AC1B35000AC8955 /* OEXExternalAuthProviderButton.m in Sources */,
 				77C182AA1CD2E46900AE1474 /* TablePaginationManipulator.swift in Sources */,
@@ -5239,6 +5170,7 @@
 				9C9B7F731A8CC80E00A857B2 /* OEXURLSessionManager.m in Sources */,
 				199627A71945D95D0022C489 /* OEXFrontTableViewCell.m in Sources */,
 				9EB9C5251BAFEE9F00300E55 /* OEXDateFormatting+Swift.swift in Sources */,
+				634A0C7D1F8249D300B8BF8D /* OyalaPlayerManager.swift in Sources */,
 				1913DD3D194B267000573977 /* OEXDownloadViewController.m in Sources */,
 				7764597F1A096339008404CC /* NSString+OEXEncoding.m in Sources */,
 				77BC3E691AE0091400E51529 /* OEXPushNotificationProcessor.m in Sources */,
@@ -5644,6 +5576,8 @@
 			baseConfigurationReference = A5399A3B2D253E56212627EC /* Pods-edX.profile.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
@@ -6096,6 +6030,8 @@
 			baseConfigurationReference = 0CE5C566B6E2419A2A99B2EF /* Pods-edX.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
@@ -6138,6 +6074,8 @@
 			baseConfigurationReference = C1AA20153140DFAAA0EAA0FB /* Pods-edX.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = edX.entitlements;
