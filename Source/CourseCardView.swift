@@ -123,6 +123,7 @@ class NewCourseCardView: UIView {
             courseUnavailableOpaqueView.isHidden = mobileAvailable!
             courseUnavailableIcon.isHidden = mobileAvailable!
             courseUnavailableLabel.isHidden = mobileAvailable!
+            progressView.isHidden = !mobileAvailable!
         }
     }
     
@@ -215,9 +216,7 @@ class NewCourseCardView: UIView {
         
         courseUnavailableIcon.snp.makeConstraints({ make in
             make.centerY.equalTo(self)
-            make.width.equalTo(25.0)
-            make.height.equalTo(25.0)
-            make.trailing.equalTo(self.courseUnavailableLabel.snp.leading).offset(-15.0)
+            make.trailing.equalTo(self.courseUnavailableLabel.snp.leading).offset(-8.0)
         })
 
     }

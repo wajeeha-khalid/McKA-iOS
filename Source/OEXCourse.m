@@ -103,9 +103,9 @@ NSString* NSStringForOEXStartType(OEXStartType type) {
         }
         
         if ([json[@"mobile_available"] isEqual:[NSNull null]] == false) {
-            self.mobile_available = json[@"mobile_available"];
+            self.mobile_available =   [[json objectForKey:@"mobile_available"] boolValue];
         } else {
-            self.mobile_available = false;
+            self.mobile_available = true;
         }
         self.name = json[@"display_name"];
         self.course_image_url = json[@"course_image_url"];
