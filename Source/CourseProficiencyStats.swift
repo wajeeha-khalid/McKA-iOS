@@ -21,17 +21,20 @@ public struct CourseProficiencyStats {
     let username: String
     let cohortAvgGrade: Int
     let courseId: String
-    let courseGrade: Int
+    let courseGrade: Float
+    let courseGradePercentage: Int
     
-    init(username: String, cohortAvgGrade: Int, courseId: String, courseGrade: Int) {
+    init(username: String, cohortAvgGrade: Int, courseId: String, courseGrade: Float) {
         self.username = username
         self.cohortAvgGrade = cohortAvgGrade
         self.courseId = courseId
         self.courseGrade = courseGrade
+        self.courseGradePercentage = Int(courseGrade.roundTo2f * 100)
     }
     
     init?(dictionary: [String: Any]) {
-        self.courseGrade = dictionary[Fields.courseGrade] as? Int ?? 0
+        self.courseGrade = dictionary[Fields.courseGrade] as? Float ?? 0.0
+        self.courseGradePercentage = Int(self.courseGrade.roundTo2f * 100)
         self.courseId = dictionary[Fields.courseId] as? String ?? ""
         self.cohortAvgGrade = dictionary[Fields.cohortAvgGrade] as? Int ?? 0
         self.username = dictionary[Fields.username] as? String ?? ""
@@ -39,7 +42,7 @@ public struct CourseProficiencyStats {
     
     init?(json: JSON) {
         var proficiencyDic: [String:Any] = [:]
-        proficiencyDic[Fields.courseGrade] = json[Fields.courseGrade].intValue
+        proficiencyDic[Fields.courseGrade] = json[Fields.courseGrade].floatValue
         proficiencyDic[Fields.courseId] = json[Fields.courseId].stringValue
         proficiencyDic[Fields.cohortAvgGrade] = json[Fields.cohortAvgGrade].intValue
         proficiencyDic[Fields.username] = json[Fields.username].intValue

@@ -255,8 +255,8 @@ open class CourseLessonsViewController: OfflineSupportViewController, UITableVie
                     self.engagmentScoreLabel.text = String(engagment.score)
                     self.engagmentBarView.setProgress(Float(engagment.score), animated: true)
                     self.engagmentCohortAvgLabel.text = "Cohort Avg: \(engagment.courseAvg)"
-                    self.proficiencyScoreLabel.text = String(proficiency.courseGrade)
-                    self.proficiencyBarView.setProgress(Float(proficiency.courseGrade), animated: true)
+                    self.proficiencyScoreLabel.text = String(proficiency.courseGradePercentage)
+                    self.proficiencyBarView.setProgress(proficiency.courseGrade, animated: true)
                     self.proficiencyCohortAvgLabel.text = "Cohort Avg: \(proficiency.cohortAvgGrade)"
                 case .failure:
                     break
